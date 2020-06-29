@@ -1,6 +1,6 @@
 import pathFolder
 import dataset
-
+import analysis
 
 
 
@@ -22,17 +22,21 @@ c_dataset = dataset.dataset(p_dataset, PR_RESULTS)
 c_dataset.loadDataset()
 
 
-# compute desc
-p_desc = c_dataset.computeDesc()
+# compute desc 2D
+p_desc = c_dataset.computeStructuralDesc()
+
+# compute PNG
 #c_dataset.computePNG()
 
-ss
+# compute OPERA
+#p_desc_opera = c_dataset.computeOPERADesc()
 
 
+# compute biotransformation 
+c_dataset.predictBiotransformation()
+dd
 
-
-
-
+#### add OPERA prediction
 
 
 # 2. analysis
@@ -40,14 +44,22 @@ ss
 COR_VAL = 0.90
 MAX_QUANTILE = 90
 
-#cAnalysis = analysis.analysis(p_AC50, p_desc, PR_RESULTS, COR_VAL, MAX_QUANTILE)
+cAnalysis = analysis.analysis(p_desc, PR_RESULTS, COR_VAL, MAX_QUANTILE)
 #cAnalysis.prepDesc()
 
-# 2.1. histogram AC50 and summary
-#cAnalysis.sumAC50()
-
-# 2.2 PCA
+# 2.1 PCA
 #cAnalysis.PCA_plot()
+
+# 2.2 Hclust
+cAnalysis.HClust_plot(p_desc_opera)
+
+# 2.3 Clustering 
+cAnalysis.clustering()
+
+
+# map on the PFAS map
+
+wwww
 
 # 2.3 SOM
 size = 15
@@ -56,6 +68,5 @@ size = 15
 #cAnalysis.extract_actBySOMCluster(pr_desc + "PNG/") # have to run !!!!
 
 
-# 2.4 Hclust
-#cAnalysis.HClust_plot()
+
 
