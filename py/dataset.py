@@ -21,11 +21,28 @@ class dataset:
         self.p_SALTS = path.abspath("./Salts.txt")
 
 
-    def loadDataset(self):
+    def loadDataset(self, loadDb =0):
 
         # define output
         d_out = toolbox.loadMatrix(self.p_data, sep = ",")
         self.d_dataset = d_out
+
+
+        if loadDb == 1:
+        # load SMILES from comptox
+        l_header = list(d_dataset[list(d_dataset.keys())[0]].keys())
+        if not "SMILES" in l_header:
+            for chem in d_dataset.keys():
+                CASRN = d_dataset[chem]["CASRN"]
+                print("CASRN:", CASRN, "LOAD chem")
+                c_search = searchInComptox.loadComptox(CASRN)
+                c_search.searchInDB()
+                if c_search.err != 1:
+                    self.d_dataset[chem]["SMILES"] = c_search.SMILES
+                else:
+                    self.d_dataset[chem]["SMILES"] = "--"
+
+                print("Load done:", self.d_dataset[chem]["SMILES"])
 
 
     def computeStructuralDesc(self):
@@ -77,7 +94,9 @@ class dataset:
         if path.exists(p_filout):
             return p_filout
 
+
         print("ERROR - OPERA desc no computed")
+        return 0
 
 
     def computePNG(self):
