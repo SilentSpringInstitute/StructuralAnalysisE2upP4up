@@ -5,7 +5,7 @@ import subprocess
 P_RSCRIPTS = "../R/"
 PR_BIOTRANSFORMER = "C:/Users/Aborrel/research/Silent_Spring/PFAS/BioTransformerJar/biotransformerjar"
 
-
+R_BIN = "& 'C:\\Program Files\\R\\R-3.6.2\\bin\\Rscript.exe'"
 ######
 # Main functions
 
@@ -13,15 +13,14 @@ def runRCMD(cmd, out = 0):
 
     workdir = getcwd()
     chdir(P_RSCRIPTS)
-    wrkdir = getcwd()
-    print(cmd)
+    print(R_BIN + " " + cmd)
     if out == 0:
         system(cmd)
         output = 0
     else:
         import subprocess
         output = subprocess.check_output(cmd, shell=True)
-    chdir(wrkdir)
+    chdir(workdir)
     return output
 
 

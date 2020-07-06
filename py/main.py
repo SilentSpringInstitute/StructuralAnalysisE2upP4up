@@ -15,7 +15,7 @@ PR_DATA = PR_ROOT + "data/"
 
 # Extract data and compute desc #
 #################################
-p_dataset = PR_DATA + "PFAS_45.csv"
+p_dataset = PR_DATA + "PFAS_45_updated.csv"
 
 # load dataset
 c_dataset = dataset.dataset(p_dataset, PR_RESULTS)
@@ -31,13 +31,15 @@ p_desc = c_dataset.computeStructuralDesc()
 # compute OPERA
 #p_desc_opera = c_dataset.computeOPERADesc()
 
-
 # compute biotransformation 
-c_dataset.predictBiotransformation()
-dd
+#c_dataset.predictBiotransformation()
 
-#### add OPERA prediction
+# extract biostransformation
+c_dataset.extractBioTranformationChemical(p_check=PR_DATA + "Master_chemical_List.csv")
+c_dataset.searchBiotransformedProduceInDB()
 
+#c_dataset.computeDescProductBiotransformed()
+ddd
 
 # 2. analysis
 #####
