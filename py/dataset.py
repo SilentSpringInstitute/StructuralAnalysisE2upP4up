@@ -29,31 +29,36 @@ class dataset:
 
 
         if loadDb == 1:
-        # load SMILES from comptox
-        l_header = list(d_dataset[list(d_dataset.keys())[0]].keys())
-        if not "SMILES" in l_header:
-            for chem in d_dataset.keys():
-                CASRN = d_dataset[chem]["CASRN"]
-                print("CASRN:", CASRN, "LOAD chem")
-                c_search = searchInComptox.loadComptox(CASRN)
-                c_search.searchInDB()
-                if c_search.err != 1:
-                    self.d_dataset[chem]["SMILES"] = c_search.SMILES
-                else:
-                    self.d_dataset[chem]["SMILES"] = "--"
+            # load SMILES from comptox
+            l_header = list(self.d_dataset[list(self.d_dataset.keys())[0]].keys())
+            if not "SMILES" in l_header:
+                for chem in self.d_dataset.keys():
+                    CASRN = self.d_dataset[chem]["CASRN"]
+                    print("CASRN:", CASRN, "LOAD chem")
+                    c_search = searchInComptox.loadComptox(CASRN)
+                    c_search.searchInDB()
+                    if c_search.err != 1:
+                        self.d_dataset[chem]["SMILES"] = c_search.SMILES
+                    else:
+                        self.d_dataset[chem]["SMILES"] = "--"
 
-                print("Load done:", self.d_dataset[chem]["SMILES"])
+                    print("Load done:", self.d_dataset[chem]["SMILES"])
 
 
-    def computeStructuralDesc(self):
+    def computeStructuralDesc(self, test=0):
 
         if not "pr_desc" in self.__dict__:
             pr_desc = pathFolder.createFolder(self.pr_out + "DESC/")
             self.pr_desc = pr_desc
 
         p_filout = self.pr_desc + "desc_1D2D.csv"
-        if path.exists(p_filout):
-            return p_filout
+        if path.exists(p_filout) and test == 0:
+            # check is not a corrupt file
+            filout = open(p_filout, "r")
+            l_lines = filout.readlines()
+            filout.close()
+            if len(l_lines) > 2:
+                return p_filout
 
         # extract descriptor 2D
         l_desc = Chemical.getLdesc("1D2D")
@@ -65,7 +70,6 @@ class dataset:
         # compute descriptor
         for CASRN in self.d_dataset.keys():
             SMILES = self.d_dataset[CASRN]["SMILES"]
-            print(SMILES)
             cChem = Chemical.Chemical(SMILES, self.pr_desc, p_salts=self.p_SALTS)
             cChem.prepChem() # prep
             # case error cleaning
@@ -94,6 +98,18 @@ class dataset:
         if path.exists(p_filout):
             return p_filout
 
+        # write list of SMILES for OPERA
+        pr_OPERA = pathFolder.createFolder(self.pr_desc + "OPERA/")
+        p_lSMI = pr_OPERA + "listChem.smi"
+        flSMI = open(p_lSMI, "w")
+        for CASRN in self.d_dataset.keys():
+            SMILES = self.d_dataset[CASRN]["SMILES"]
+            print(SMILES)
+            if SMILES != "--":
+                flSMI.write(self.d_dataset[CASRN]["SMILES"] + "\n")
+        flSMI.close()
+
+        print("RUN OPERA COMMAND LINE")
 
         print("ERROR - OPERA desc no computed")
         return 0

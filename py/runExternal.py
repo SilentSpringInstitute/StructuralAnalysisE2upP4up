@@ -50,6 +50,9 @@ def Clust(p_desc_cleaned, pr_out):
     runRCMD(cmd)
 
 
+def projectToSpace(p_listchem, p_1D2D, p_3D, name_map, pr_out):
+    cmd = "./densityMapOverlap.R %s %s %s %s %s"%(p_1D2D, p_3D, p_listchem, name_map, pr_out)
+    runRCMD(cmd)
 
 ##############
 # run biotransformer tool

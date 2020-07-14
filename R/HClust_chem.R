@@ -51,9 +51,9 @@ p_desc = args[1]
 p_pred = args[2]
 pr_out = args[3]
 
-p_desc = "../../results/Cleaned_Data/desc1D2D_cleaned.csv"
-p_pred = "../../results/DESC/desc_OPERA.csv"
-pr_out = "../../results/HClust/"
+#p_desc = "../../results/Cleaned_Data/desc1D2D_cleaned.csv"
+#p_pred = "../../results/DESC/desc_OPERA.csv"
+#pr_out = "../../results/HClust/"
 
 
 # open files

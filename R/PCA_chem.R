@@ -57,12 +57,12 @@ PCAplot = function (din, vcolor, prout){
 
 args <- commandArgs(TRUE)
 p_desc = args[1]
-pr_out = args[3]
+pr_out = args[2]
 
 
 
-p_desc = "../../results/Cleaned_Data/desc1D2D_cleaned.csv"
-pr_out = "../../results/PCA/"
+#p_desc = "../../results/Cleaned_Data/desc1D2D_cleaned.csv"
+#pr_out = "../../results/PCA/"
 
 
 ddesc = read.csv(p_desc, sep = ",", header = TRUE)

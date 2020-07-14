@@ -3,6 +3,10 @@ library(factoextra)
 library(ggplot2)
 require(cluster)
 library(RootsExtremaInflections)
+library(ape)
+library(phangorn)
+library(ggtree)
+library(factoextra)
 
 
 optimalCluters = function (din, prout, metcluster, metOptNB, metagregation){
@@ -10,11 +14,12 @@ optimalCluters = function (din, prout, metcluster, metOptNB, metagregation){
   
   # scale data in input
   din = scale (din)
+  kmax = dim(din)[1]-1
   if (metcluster == "hclust"){
-    p = fviz_nbclust(din, hcut, hcut_metho = metagregation, method = metOptNB, k.max = 20)
-    ggsave(paste(prout, metcluster, "_" , metagregation, "_", metOptNB, ".png", sep = ""), dpi=300, height = 8, width = 15)
+    p = fviz_nbclust(din, hcut, hcut_metho = metagregation, method = metOptNB, k.max = kmax)
+    ggsave(paste(prout, metcluster, "_" , metagregation, "_", metOptNB, ".png", sep = ""), dpi=300, height = 8, width = 8)
   }else if(metcluster == "kmeans"){
-    p = fviz_nbclust(din, kmeans, method = metOptNB, k.max = 20)
+    p = fviz_nbclust(din, kmeans, method = metOptNB, k.max = kmax)
     ggsave(paste(prout, metcluster, "_" , metOptNB, ".png", sep = ""), dpi=300, height = 8, width = 15)    
   }
   
@@ -108,8 +113,8 @@ p_desc = args[1]
 prout = args[2]
 
 
-p_desc = "./../../results/Cleaned_Data/desc1D2D_cleaned.csv"
-prout = "./../../results/ClustAlgoTest/"
+#p_desc = "../../results/Phthalates_alternatives/Cleaned_Data/desc1D2D_cleaned.csv"
+#prout = "./../results/Phthalates_alternatives/ClustAlgoTest/"
 
 
 
