@@ -61,21 +61,19 @@ def analysisDescBasedData(p_desc, p_desc_opera, pr_results, cor_val, max_quantil
     cAnalysis.PCA_plot()
 
     # 2.2 Hclust
-    cAnalysis.HClust_plot(p_desc_opera)
+    #cAnalysis.HClust_plot(p_desc_opera)
 
     # 2.3 Clustering 
-    cAnalysis.clustering()
+    #cAnalysis.clustering()
 
-    # 2.4 map on PFAS map
-    cAnalysis.mapOnSpace()
-
-    # map on the PFAS map
-
-    # 2.3 SOM
+    # 2.4 SOM
     #size = 15
     #cAnalysis.generate_SOM(15)
     #cAnalysis.signifDescBySOMCluster()
     #cAnalysis.extract_actBySOMCluster(pr_desc + "PNG/") # have to run !!!!
+
+    # 2.5 histogram by descriptor
+    cAnalysis.histDesc()  
 
 
     return 
@@ -167,33 +165,33 @@ p_dataset = PR_DATA + "Phthalates.csv"
 pr_results = pathFolder.createFolder(PR_RESULTS + "Phthalates/")
 l_file_desc = computeDesc(p_dataset, pr_results)
 
-## analysis with RDKIT desc
-#pr_results_analysis = pathFolder.createFolder(pr_results + "RDKIT_desc/")
-#analysisDescBasedData(l_file_desc[0], l_file_desc[1], pr_results, COR_VAL, MAX_QUANTILE)
+# analysis with RDKIT desc
+pr_results_analysis = pathFolder.createFolder(pr_results + "RDKIT_desc/")
+analysisDescBasedData(l_file_desc[0], l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
 
-## analysis with RDKIT + OPERA physico chemical
-#pr_results_analysis = pathFolder.createFolder(pr_results + "RDKIT-OPERA_desc/")
-#p_desc = buildDescSet(l_file_desc[0], l_file_desc[1], ["rdkit", "opera"], pr_results_analysis)
-#analysisDescBasedData(p_desc, l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
+# analysis with RDKIT + OPERA physico chemical
+pr_results_analysis = pathFolder.createFolder(pr_results + "RDKIT-OPERA_desc/")
+p_desc = buildDescSet(l_file_desc[0], l_file_desc[1], ["rdkit", "opera"], pr_results_analysis)
+analysisDescBasedData(p_desc, l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
 
-## analysis with OPERA physico chemical only
-#pr_results_analysis = pathFolder.createFolder(pr_results + "OPERA_desc/")
-#p_desc = buildDescSet(l_file_desc[0], l_file_desc[1], ["opera"], pr_results_analysis)
-#analysisDescBasedData(p_desc, l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
+# analysis with OPERA physico chemical only
+pr_results_analysis = pathFolder.createFolder(pr_results + "OPERA_desc/")
+p_desc = buildDescSet(l_file_desc[0], l_file_desc[1], ["opera"], pr_results_analysis)
+analysisDescBasedData(p_desc, l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
+
 
 ### map on space
 #####
-#pr_results_mapped = pathFolder.createFolder(pr_results + "mapped/")
-#c_mapped = mapOnSpace.mapOnSpace(l_file_desc[0], P_COORD_1D2D, P_COORD_3D, pr_results_mapped)
-#c_mapped.map("Phthalates")
-
+pr_results_mapped = pathFolder.createFolder(pr_results + "mapped/")
+c_mapped = mapOnSpace.mapOnSpace(l_file_desc[0], P_COORD_1D2D, P_COORD_3D, pr_results_mapped)
+c_mapped.map("Phthalates")
 
 
 ########## Phthalates alternative
 #################################
-p_dataset = PR_DATA + "Phthalates_alternatives.csv"
-pr_results = pathFolder.createFolder(PR_RESULTS + "Phthalates_alternatives/")
-l_file_desc = computeDesc(p_dataset, pr_results)
+#p_dataset = PR_DATA + "Phthalates_alternatives.csv"
+#pr_results = pathFolder.createFolder(PR_RESULTS + "Phthalates_alternatives/")
+#l_file_desc = computeDesc(p_dataset, pr_results)
 
 ## analysis with RDKIT desc
 #pr_results_analysis = pathFolder.createFolder(pr_results + "RDKIT_desc/")
@@ -213,16 +211,16 @@ l_file_desc = computeDesc(p_dataset, pr_results)
 
 ### map on space
 #####
-pr_results_mapped = pathFolder.createFolder(pr_results + "mapped/")
-c_mapped = mapOnSpace.mapOnSpace(l_file_desc[0], P_COORD_1D2D, P_COORD_3D, pr_results_mapped)
-c_mapped.map("Phthalates_alternatives")
+#pr_results_mapped = pathFolder.createFolder(pr_results + "mapped/")
+#c_mapped = mapOnSpace.mapOnSpace(l_file_desc[0], P_COORD_1D2D, P_COORD_3D, pr_results_mapped)
+#c_mapped.map("Phthalates_alternatives")
 
 
 ############### PFAS
 #####################
-p_dataset = PR_DATA + "PFAS.csv"
-pr_results = pathFolder.createFolder(PR_RESULTS + "PFAS/")
-l_file_desc = computeDesc(p_dataset, pr_results)
+#p_dataset = PR_DATA + "PFAS.csv"
+#pr_results = pathFolder.createFolder(PR_RESULTS + "PFAS/")
+#l_file_desc = computeDesc(p_dataset, pr_results)
 
 # analysis with RDKIT desc
 #pr_results_analysis = pathFolder.createFolder(pr_results + "RDKIT_desc/")
@@ -240,6 +238,6 @@ l_file_desc = computeDesc(p_dataset, pr_results)
 #analysisDescBasedData(p_desc, l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
 
 
-pr_results_mapped = pathFolder.createFolder(pr_results + "mapped/")
-c_mapped = mapOnSpace.mapOnSpace(l_file_desc[0], P_COORD_1D2D, P_COORD_3D, pr_results_mapped)
-c_mapped.map("PFAS_NTP")
+#pr_results_mapped = pathFolder.createFolder(pr_results + "mapped/")
+#c_mapped = mapOnSpace.mapOnSpace(l_file_desc[0], P_COORD_1D2D, P_COORD_3D, pr_results_mapped)
+#c_mapped.map("PFAS_NTP")

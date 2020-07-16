@@ -43,3 +43,9 @@ class analysis:
 
         pr_out = pathFolder.createFolder(self.pr_out + "ClustAlgoTest/")
         runExternal.Clust(self.p_desc_cleaned, pr_out)
+
+
+    def histDesc(self):
+        
+        pr_out = pathFolder.createFolder(self.pr_out + "histDesc/")
+        runExternal.drawHist(self.p_desc, self.p_desc_cleaned, pr_out)

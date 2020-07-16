@@ -112,4 +112,10 @@ hexbinplot(DIM3~DIM1,data=dcoorMap,xlab="DIM1",
            ylab="DIM3",colramp=rf, xbins = 50, cex.labels = 0.6, cex.title=0.6 )
 dev.off()
 
+print(lchem)
+lchem = append(as.character(lchem), "end")
+lchem = append(lchem, "begin")
+print(lchem)
+rownames(dcoorMap) = lchem
+write.csv(x = dcoorMap, file = paste(prout , "coords.csv", sep = ""))
 
