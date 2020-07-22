@@ -164,3 +164,11 @@ def formatLineDataset(linein):
 
     linenew = linenew.replace('\"', "")
     return linenew
+
+
+
+
+def colNameDict(dict_in):
+
+    k1 = list(dict_in.keys())[0]
+    return list(dict_in[k1].keys())

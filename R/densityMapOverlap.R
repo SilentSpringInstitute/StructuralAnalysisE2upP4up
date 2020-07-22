@@ -16,6 +16,15 @@ name_map = args[4]
 prout = args[5]
 
 
+
+#pcoordMain1D2D = '../../data/Tox21_coord1D2D.csv'
+#pcoordMain3D =  '../../data/Tox21_coord3D.csv'
+#plistChem = '../../results/PFAS/Tox21_mapped/list_chem.csv'
+#name_map = 'Tox21-PFAS'
+#prout = '../../results/PFAS/Tox21_mapped/'
+
+
+
 # linux 
 #p_listchem, p_1D2D, p_3D, pr_out
 # window
@@ -79,43 +88,43 @@ hexbinplot(DIM3~DIM1,data=dcoord_full,xlab="DIM1",
 dev.off()
 
 
-
+#######################
+# define coordinate for list chem
+#######################
+dcoorMap = cbind(dcoord1D2D[lchem,], dcoord3D[lchem,1])
+colnames(dcoorMap) = c("DIM1", "DIM2", "DIM3")
 
 
 # plot => DIM1 VS DIM2 #
 ########################
-dcoorMap = dcoord1D2D[lchem,]
 
 # calibrate the map
-dcoorMap = rbind(dcoorMap, c(min(dcoord1D2D$DIM1), min(dcoord1D2D$DIM2)))
-dcoorMap = rbind(dcoorMap, c(max(dcoord1D2D$DIM1), max(dcoord1D2D$DIM2)))
+dcoorMap = rbind(dcoorMap, c(min(dcoord1D2D$DIM1), min(dcoord1D2D$DIM2), min(dcoord3D$DIM3.1)))
+dcoorMap = rbind(dcoorMap, c(max(dcoord1D2D$DIM1), max(dcoord1D2D$DIM2), max(dcoord3D$DIM3.1)))
 
 
-png(paste(prout, paste(name_map, "-VS-PFAS_xy.png"), sep = ""), res = 300, width = 2000, height = 2000)
+png(paste(prout, name_map, "_xy.png", sep = ""), res = 300, width = 2000, height = 2000)
 hexbinplot(DIM2~DIM1,data=dcoorMap,xlab="DIM1",
            ylab="DIM2",colramp=rf, xbins = 50, cex.labels = 0.6, cex.title=0.6 )
 dev.off()
 
 
 
+
 # plot => DIM1 VS DIM3 #
 ########################
-dcoorMap = dcoord_xzD[lchem,]
-
 # calibrate the map
-dcoorMap = rbind(dcoorMap, c(min(dcoord_xzD$DIM1), min(dcoord_xzD$DIM3)))
-dcoorMap = rbind(dcoorMap, c(max(dcoord_xzD$DIM1), max(dcoord_xzD$DIM3)))
-
-
-png(paste(prout, paste(name_map, "-VS-PFAS_xz.png"), sep = ""), res = 300, width = 2000, height = 2000)
+png(paste(prout, name_map, "_xz.png", sep = ""), res = 300, width = 2000, height = 2000)
 hexbinplot(DIM3~DIM1,data=dcoorMap,xlab="DIM1",
            ylab="DIM3",colramp=rf, xbins = 50, cex.labels = 0.6, cex.title=0.6 )
 dev.off()
+
 
 print(lchem)
 lchem = append(as.character(lchem), "end")
 lchem = append(lchem, "begin")
 print(lchem)
 rownames(dcoorMap) = lchem
+
 write.csv(x = dcoorMap, file = paste(prout , "coords.csv", sep = ""))
 

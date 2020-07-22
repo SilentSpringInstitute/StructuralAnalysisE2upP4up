@@ -1,6 +1,7 @@
 from os import path, rename, listdir
 from random import shuffle
 from re import search
+from copy import deepcopy
 
 import toolbox
 import pathFolder
@@ -19,6 +20,50 @@ class dataset:
         self.p_data = p_data
         self.pr_out = pr_out
         self.p_SALTS = path.abspath("./Salts.txt")
+
+
+    def combineDataset(self, p_dataset2):
+
+        p_filout = self.pr_out + "DATA.csv"
+        if path.exists(p_filout):
+            return p_filout
+
+        self.loadDataset()
+        l_h1 = toolbox.colNameDict(self.d_dataset)
+
+        d_dataset2 = toolbox.loadMatrix(p_dataset2, sep = ",")
+        l_h2 = toolbox.colNameDict(d_dataset2)
+
+        l_h = list(set().union(l_h1, l_h2))
+
+        d_combine = deepcopy(self.d_dataset)
+        for chem2 in d_dataset2.keys():
+            if not chem2 in list(d_combine.keys()):
+                d_combine[chem2] = d_dataset2[chem2]
+
+        # update header
+        for chem in d_combine.keys():
+            if len(l_h) == len(list(d_combine[chem].keys())):
+                continue
+            else:
+                for h in l_h:
+                    if not h in list(d_combine[chem].keys()):
+                        d_combine[chem][h] = "NA"
+
+        l_h.remove("CASRN")
+        l_h.remove("SMILES")
+        filout = open(p_filout, "w")
+        filout.write("CASRN,SMILES," + ",".join(l_h) + "\n")
+        for chem in d_combine.keys():
+            filout.write("%s,%s,%s\n"%(d_combine[chem]["CASRN"], d_combine[chem]["SMILES"], ",".join([d_combine[chem][h] for h in l_h])))
+        filout.close()
+
+        return p_filout          
+
+
+
+
+
 
 
     def loadDataset(self, loadDb =0):

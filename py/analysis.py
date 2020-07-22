@@ -9,8 +9,9 @@ import toolbox
 
 
 class analysis:
-    def __init__(self, p_desc, pr_out, cor_val, max_quantile):
+    def __init__(self, p_dataset, p_desc, pr_out, cor_val, max_quantile):
         self.p_desc = p_desc
+        self.p_dataset = p_dataset
         self.pr_out = pr_out
         self.cor_val = cor_val
         self.max_quantile = max_quantile
@@ -37,7 +38,7 @@ class analysis:
     def HClust_plot(self, p_opera):
 
         pr_out = pathFolder.createFolder(self.pr_out + "HClustCircular/")
-        runExternal.HClust(self.p_desc_cleaned, p_opera, pr_out)
+        runExternal.HClust(self.p_desc_cleaned, self.p_dataset, p_opera, pr_out)
 
     def clustering(self):
 

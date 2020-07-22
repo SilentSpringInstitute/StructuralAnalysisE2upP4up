@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 library(ggplot2)
-source ("../../../../ILS/development/R_toolbox/PCAdrawer.R")
+library(Toolbox)
 
 
 
@@ -61,8 +61,8 @@ pr_out = args[2]
 
 
 
-#p_desc = "../../results/Cleaned_Data/desc1D2D_cleaned.csv"
-#pr_out = "../../results/PCA/"
+#p_desc = "../../results/Phthalates/RDKIT_desc/Cleaned_Data/desc1D2D_cleaned.csv"
+#pr_out = "../../results/Phthalates/RDKIT_desc/PCA/"
 
 
 ddesc = read.csv(p_desc, sep = ",", header = TRUE)

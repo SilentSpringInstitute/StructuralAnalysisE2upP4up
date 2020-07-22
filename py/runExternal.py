@@ -1,11 +1,11 @@
-from os import system, path, remove, chdir, getcwd, listdir
+from os import system, path, remove, chdir, getcwd, listdir, name
 import subprocess 
 
 
 P_RSCRIPTS = "../R/"
 PR_BIOTRANSFORMER = "C:/Users/Aborrel/research/Silent_Spring/PFAS/BioTransformerJar/biotransformerjar"
 
-R_BIN = "& 'C:\\Program Files\\R\\R-3.6.2\\bin\\Rscript.exe'"
+R_BIN = "C:\\Program Files\\R\\R-4.0.2\\bin\\Rscript.exe"
 ######
 # Main functions
 
@@ -13,17 +13,18 @@ def runRCMD(cmd, out = 0):
 
     workdir = getcwd()
     chdir(P_RSCRIPTS)
-    print(R_BIN + " " + cmd)
-    if out == 0:
-        system(cmd)
-        output = 0
+    if name == "nt":
+        l_elem = cmd.split(" ")
+        cmd_line = [R_BIN] + l_elem
+        print(cmd_line)
+        p = subprocess.Popen(cmd_line)
+        (output, err) = p.communicate() 
+        p.wait()
+        print(err)
     else:
-        import subprocess
-        output = subprocess.check_output(cmd, shell=True)
+        print(cmd)
+        system(cmd)
     chdir(workdir)
-    return output
-
-
 
 
 ############
@@ -40,8 +41,8 @@ def PCA(p_desc_cleaned, pr_out):
     runRCMD(cmd)
 
 
-def HClust(p_desc_cleaned, p_opera, pr_out):
-    cmd = "./HClust_chem.R %s %s %s"%(p_desc_cleaned, p_opera, pr_out)
+def HClust(p_desc_cleaned, p_dataset, p_opera, pr_out):
+    cmd = "./HClust_chem.R %s %s %s %s"%(p_desc_cleaned, p_dataset, p_opera, pr_out)
     runRCMD(cmd)
 
 
