@@ -61,6 +61,13 @@ def drawHist(p_desc, p_desc_clean, pr_out):
     cmd = "./drawHist.R %s %s %s"%(p_desc, p_desc_clean, pr_out)
     runRCMD(cmd)
 
+
+def cardSimMatrix(p_filin):
+
+    cmd = "./cardFP.R %s"%(p_filin)
+    runRCMD(cmd)
+    return 
+
 ##############
 # run biotransformer tool
 

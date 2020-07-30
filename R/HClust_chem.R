@@ -67,16 +67,16 @@ dendogramCircleClass = function(ddes, daff, col_desc, prout){
   
   pfilout = paste(prout, "HClust_dendo_group_", col_desc, ".png", sep = "")
   t4 <- ggtree(tupgma2, layout="circular", size=1)
-  t4 <- t4 %<+% daff + geom_text(aes(color=Aff, label=Aff, angle=angle), hjust=-0.5, size=3) +
+  t4 <- t4 %<+% daff + geom_text(aes(color=Aff, label=Aff, angle=angle), vjust=1,hjust=0,  size=3) +
     geom_tippoint(aes(color=Aff), alpha=0.75, size=0.5)+
     theme(legend.position="right")+
     theme(plot.margin = unit(c(0,0,0,0), "cm")) +
-    guides(col=guide_legend(col_desc))+
+    guides( color = FALSE)+
     geom_treescale(x = 1, y = 1, width = NULL, offset = NULL,
                    color = "white", linesize = 1E-100, fontsize = 1E-100)
   
   
-  ggsave(pfilout, dpi=300, height = 10, width = 18)
+  ggsave(pfilout, dpi=300, height = 38, width = 45, units="cm")
   
   
   
@@ -101,10 +101,11 @@ p_pred = args[3]
 pr_out = args[4]
 
 
-#p_desc = "../../results/Phthalates_alternatives-Phthalates/RDKIT-OPERA_desc/Cleaned_Data/desc1D2D_cleaned.csv"
-#p_dataset = "../../results/Phthalates_alternatives-Phthalates/DATA.csv"
-#p_pred = "../../results/Phthalates_alternatives-Phthalates/DESC/desc_OPERA.csv"
-#pr_out = "../../results/Phthalates_alternatives-Phthalates/RDKIT-OPERA_desc/HClustCircular/"
+
+#p_desc =  '../../Silent_Spring/results/Master_list/rdkit/Tier1-2/Cleaned_Data/desc1D2D_cleaned.csv'
+#p_dataset = "../../Silent_Spring/data/Master_chemical_List_7-29-20.csv"
+#p_pred = '../../Silent_Spring/results/Master_list/DESC/desc_OPERA.csv'
+#pr_out = '../../Silent_Spring/results/Master_list/rdkit/Tier1-2/HClustCircular/'
 
 
 # open files
@@ -125,6 +126,8 @@ if(length(unique(d_dataset[,1] == "--" | d_dataset[,1] == "")) != 1){
   d_dataset = d_dataset[-which(d_dataset[,1] == "--" | d_dataset[,1] == ""),]
 }
 
+# remove duplicate
+d_dataset = d_dataset[-which(duplicated(d_dataset$CASRN)),]
 rownames(d_dataset) = d_dataset[,1]
 
 

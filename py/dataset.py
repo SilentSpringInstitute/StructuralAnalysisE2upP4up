@@ -10,7 +10,7 @@ import searchInComptox
 
 # import descriptor computation scripts => precise folder where descriptor are included
 import sys
-sys.path.insert(0, "../../../../ILS/development/molecular-descriptors/")
+sys.path.insert(0, "C:/Users/aborr/research/ILS/development/molecular-descriptors/")
 import Chemical
 
 
@@ -59,11 +59,6 @@ class dataset:
         filout.close()
 
         return p_filout          
-
-
-
-
-
 
 
     def loadDataset(self, loadDb =0):
@@ -147,11 +142,13 @@ class dataset:
         pr_OPERA = pathFolder.createFolder(self.pr_desc + "OPERA/")
         p_lSMI = pr_OPERA + "listChem.smi"
         flSMI = open(p_lSMI, "w")
+        l_w = []
         for CASRN in self.d_dataset.keys():
             SMILES = self.d_dataset[CASRN]["SMILES"]
-            print(SMILES)
             if SMILES != "--":
-                flSMI.write(self.d_dataset[CASRN]["SMILES"] + "\n")
+                l_w.append(self.d_dataset[CASRN]["SMILES"])
+        
+        flSMI.write("\n".join(l_w))
         flSMI.close()
 
         print("RUN OPERA COMMAND LINE")
