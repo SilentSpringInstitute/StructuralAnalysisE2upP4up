@@ -13,8 +13,8 @@ p_dataset = args[1]
 pr_out = args[2]
 
 
-pr_out = "./../../results/PFAS/"
-p_dataset = "./../../data/PFAS.csv"
+#pr_out = "./../../results/PFAS/"
+#p_dataset = "./../../data/PFAS.csv"
 d = read.csv(p_dataset, sep = ",")
 
 d_count = table(d$Group)

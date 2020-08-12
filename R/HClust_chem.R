@@ -102,10 +102,10 @@ pr_out = args[4]
 
 
 
-#p_desc =  '../../Silent_Spring/results/Master_list/rdkit/Tier1-2/Cleaned_Data/desc1D2D_cleaned.csv'
-#p_dataset = "../../Silent_Spring/data/Master_chemical_List_7-29-20.csv"
-#p_pred = '../../Silent_Spring/results/Master_list/DESC/desc_OPERA.csv'
-#pr_out = '../../Silent_Spring/results/Master_list/rdkit/Tier1-2/HClustCircular/'
+#p_desc =  '../../ILS/results/Phthalates/rdkit/Cleaned_Data/desc1D2D_cleaned.csv'
+#p_dataset = "../../ILS/data/Phthalates.csv"
+#p_pred = '../../ILS/results/Phthalates/DESC/desc_OPERA.csv'
+#pr_out = '../../ILS/results/Phthalates/rdkit/HClustCircular/'
 
 
 # open files
@@ -127,7 +127,11 @@ if(length(unique(d_dataset[,1] == "--" | d_dataset[,1] == "")) != 1){
 }
 
 # remove duplicate
-d_dataset = d_dataset[-which(duplicated(d_dataset$CASRN)),]
+if(length(which(duplicated(d_dataset$CASRN))) != 0){
+  d_dataset = d_dataset[-which(duplicated(d_dataset$CASRN)),]
+}
+
+# rowname
 rownames(d_dataset) = d_dataset[,1]
 
 

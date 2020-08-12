@@ -152,7 +152,7 @@ class PFAS:
             self.err = 1
             self.log = "load dataset first"
 
-        cAnalysis = analysis.analysis(self.p_dataset, self.p_desc, self.pr_results, cor_val, max_quantile)
+        cAnalysis = analysis.analysis(self.p_dataset, self.p_desc, self.p_desc_OPERA, self.pr_results, cor_val, max_quantile)
         cAnalysis.prepDesc()
 
         # 2.1 PCA

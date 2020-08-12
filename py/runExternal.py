@@ -46,8 +46,8 @@ def HClust(p_desc_cleaned, p_dataset, p_opera, pr_out):
     runRCMD(cmd)
 
 
-def Clust(p_desc_cleaned, pr_out):
-    cmd = "./ClustAlgo.R %s %s"%(p_desc_cleaned, pr_out)
+def Clust(p_desc_cleaned, p_desc_opera, pr_out):
+    cmd = "./ClustAlgo.R %s %s %s"%(p_desc_cleaned, p_desc_opera, pr_out)
     runRCMD(cmd)
 
 

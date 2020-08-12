@@ -11,9 +11,10 @@ import toolbox
 
 
 class analysis:
-    def __init__(self, p_dataset, p_desc, pr_out, cor_val, max_quantile):
+    def __init__(self, p_dataset, p_desc, p_opera, pr_out, cor_val, max_quantile):
         self.p_desc = p_desc
         self.p_dataset = p_dataset
+        self.p_opera = p_opera
         self.pr_out = pr_out
         self.cor_val = cor_val
         self.max_quantile = max_quantile
@@ -44,8 +45,8 @@ class analysis:
 
     def clustering(self):
 
-        pr_out = pathFolder.createFolder(self.pr_out + "ClustAlgoTest/")
-        runExternal.Clust(self.p_desc_cleaned, pr_out)
+        pr_out = pathFolder.createFolder(self.pr_out + "Clustering/")
+        runExternal.Clust(self.p_desc_cleaned, self.p_opera, pr_out)
 
 
     def histDesc(self):

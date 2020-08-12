@@ -10,7 +10,7 @@ import searchInComptox
 
 # import descriptor computation scripts => precise folder where descriptor are included
 import sys
-sys.path.insert(0, "C:/Users/aborr/research/ILS/development/molecular-descriptors/")
+sys.path.insert(0, "C:/Users/Aborrel/research/ILS/development/molecular-descriptors/")
 import Chemical
 
 

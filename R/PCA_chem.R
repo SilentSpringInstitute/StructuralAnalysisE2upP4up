@@ -39,7 +39,7 @@ PCAplot = function (din, vcolor, prout){
   
   png (paste (prout, "PCA_descriptor.png", sep = ""), 1700, 1500)
   par(mar=c(8,8,8,8))
-  plot(data_plot[,1],data_plot[,2], xlab = paste("CP1: ", signif (var_cap[1], 4), "%", sep = ""), ylab = paste("CP2: ", signif (var_cap[2], 4), "%", sep = ""), pch=20, cex.lab = 4, cex.main = 4, cex.axis = 1.75, cex = 4, type = "n")
+  plot(data_plot[,1],data_plot[,2], xlab = paste("PC1: ", signif (var_cap[1], 4), "%", sep = ""), ylab = paste("PC2: ", signif (var_cap[2], 4), "%", sep = ""), pch=20, cex.lab = 4, cex.main = 4, cex.axis = 1.75, cex = 4, type = "n")
   #points (data_plot[,1][length (color_point):dim(data_plot)[1]],data_plot[,2][length (color_point):dim(data_plot)[1]], pch=17, cex = 4, col = color_point2)
   abline(h=0,v=0)
   arrows (0,0,cp[,1]*factor,cp[,2]*factor, col = color_arrow, lwd = 4 )
