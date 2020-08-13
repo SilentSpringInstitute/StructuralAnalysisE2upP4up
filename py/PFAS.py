@@ -17,24 +17,26 @@ class PFAS:
 
     def computeDesc(self):
         # load dataset
-        c_dataset = dataset.dataset(self.p_dataset, self.pr_out)
-        c_dataset.loadDataset(loadDb=self.loadDB)
+        if not "c_dataset" in self.__dict__:
+            c_dataset = dataset.dataset(self.p_dataset, self.pr_out)
+            c_dataset.loadDataset(loadDb=self.loadDB)
+            self.c_dataset = c_dataset
 
 
         # compute desc 2D
-        p_desc = c_dataset.computeStructuralDesc()
+        p_desc = self.c_dataset.computeStructuralDesc()
 
         # compute PNG
-        c_dataset.computePNG()
+        self.c_dataset.computePNG()
 
         # compute OPERA
-        p_desc_opera = c_dataset.computeOPERADesc()
+        p_desc_opera = self.c_dataset.computeOPERADesc()
 
         # filout
         self.p_desc_rdkit = p_desc
         self.p_desc_OPERA = p_desc_opera
-        self.pr_desc = c_dataset.pr_desc
-        self.c_dataset = c_dataset
+        self.pr_desc = self.c_dataset.pr_desc
+        
 
 
 
@@ -127,6 +129,9 @@ class PFAS:
 
 
     def combineDataset(self, p_dataset2):
+        c_dataset = dataset.dataset(self.p_dataset, self.pr_out)
+        self.c_dataset = c_dataset
+        
         self.c_dataset.combineDataset(p_dataset2)
 
 

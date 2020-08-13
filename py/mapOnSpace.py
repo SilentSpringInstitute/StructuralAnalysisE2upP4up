@@ -27,10 +27,9 @@ class mapOnSpace:
             # load list of chem
             f_list_chem = open(p_chem_prep, "w")
             f_list_chem.write("inchikey\tCASRN\tSMILES\n")
-            d_chem = toolbox.loadMatrix(self.p_chem, sep = "\t")
+            d_chem = toolbox.loadMatrix(self.p_chem, sep = ",")
             for chem in d_chem.keys():
                 SMILES = d_chem[chem]["SMILES"]
-                print(SMILES)
                 cchem = Chemical.Chemical(SMILES, "", self.p_SALTS)
                 inchkey = cchem.generateInchiKey()
                 f_list_chem.write("%s\t%s\t%s\n"%(inchkey, chem, SMILES))

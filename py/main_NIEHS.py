@@ -28,207 +28,221 @@ P_COORD_3D_Tox21 = PR_DATA + "Tox21_coord3D.csv"
 
 ########## Phthalates
 #####################
-p_dataset = PR_DATA + "Phthalates.csv"
-pr_results = pathFolder.createFolder(PR_RESULTS + "Phthalates/")
+#p_dataset = PR_DATA + "Phthalates.csv"
+#pr_results = pathFolder.createFolder(PR_RESULTS + "Phthalates/")
 # RDKIT
-cPFAS = PFAS.PFAS(p_dataset, pr_results)
-cPFAS.computeDesc()
-cPFAS.buildDescSet(["rdkit"])
-cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 1)
+#cPFAS = PFAS.PFAS(p_dataset, pr_results)
+#cPFAS.computeDesc()
+#cPFAS.buildDescSet(["rdkit"])
+#cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 1)
 
 # OPERA
-cPFAS = PFAS.PFAS(p_dataset, pr_results)
-cPFAS.computeDesc()
-cPFAS.buildDescSet(["opera"])
-cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 1)
+#cPFAS = PFAS.PFAS(p_dataset, pr_results)
+#cPFAS.computeDesc()
+#cPFAS.buildDescSet(["opera"])
+#cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 1)
 
 # OPERA + rdkit
-cPFAS = PFAS.PFAS(p_dataset, pr_results)
-cPFAS.computeDesc()
-cPFAS.buildDescSet(["rdkit", "opera"])
-cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 0)
+#cPFAS = PFAS.PFAS(p_dataset, pr_results)
+#cPFAS.computeDesc()
+#cPFAS.buildDescSet(["rdkit", "opera"])
+#cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 0)
 
-###### map on space ===> need some update
+###### map on space ===> need some update on the chemmaps 
 ######
-pr_results_mapped = pathFolder.createFolder(pr_results + "mapped_on_PFASMap/")
-c_mapped = mapOnSpace.mapOnSpace(l_file_desc[0], P_COORD_1D2D_PFAS, P_COORD_3D_PFAS, pr_results_mapped)
-c_mapped.map("Phthalates")
+#p_RDKIT = pr_results + "rdkit/rdkit.csv"
+#pr_results_mapped = pathFolder.createFolder(pr_results + "mapped_on_PFASMap/")
+#c_mapped = mapOnSpace.mapOnSpace(p_RDKIT, P_COORD_1D2D_PFAS, P_COORD_3D_PFAS, pr_results_mapped)
+#c_mapped.map("Phthalates")
 
-pr_results_mapped = pathFolder.createFolder(pr_results + "mapped_on_Tox21Map/")
-c_mapped = mapOnSpace.mapOnSpace(l_file_desc[0], P_COORD_1D2D_Tox21, P_COORD_3D_Tox21, pr_results_mapped)
-c_mapped.map("Phthalates")
+#pr_results_mapped = pathFolder.createFolder(pr_results + "mapped_on_Tox21Map/")
+#c_mapped = mapOnSpace.mapOnSpace(p_RDKIT, P_COORD_1D2D_Tox21, P_COORD_3D_Tox21, pr_results_mapped)
+#c_mapped.map("Phthalates")
 
-dd
 
 ########## Phthalates alternative
 #################################
 #p_dataset = PR_DATA + "Phthalates_alternatives.csv"
 #pr_results = pathFolder.createFolder(PR_RESULTS + "Phthalates_alternatives/")
-#l_file_desc = computeDesc(p_dataset, pr_results)
+## RDKIT
+#cPFAS = PFAS.PFAS(p_dataset, pr_results)
+#cPFAS.computeDesc()
+#cPFAS.buildDescSet(["rdkit"])
+#cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 1)
 
-## analysis with RDKIT desc
-#pr_results_analysis = pathFolder.createFolder(pr_results + "RDKIT_desc/")
-#p_desc = buildDescSet(l_file_desc[0], l_file_desc[1], ["rdkit"], pr_results_analysis)
-#analysisDescBasedData(p_dataset, p_desc, l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
+## OPERA
+#cPFAS = PFAS.PFAS(p_dataset, pr_results)
+#cPFAS.computeDesc()
+#cPFAS.buildDescSet(["opera"])
+#cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 1)
 
-## analysis with RDKIT + OPERA physico chemical
-#pr_results_analysis = pathFolder.createFolder(pr_results + "RDKIT-OPERA_desc/")
-#p_desc = buildDescSet(l_file_desc[0], l_file_desc[1], ["rdkit", "opera"], pr_results_analysis)
-#nalysisDescBasedData(p_dataset, p_desc, l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
-
-## analysis with OPERA physico chemical only
-#pr_results_analysis = pathFolder.createFolder(pr_results + "OPERA_desc/")
-#p_desc = buildDescSet(l_file_desc[0], l_file_desc[1], ["opera"], pr_results_analysis)
-#analysisDescBasedData(p_dataset, p_desc, l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
+## OPERA + rdkit
+#cPFAS = PFAS.PFAS(p_dataset, pr_results)
+#cPFAS.computeDesc()
+#cPFAS.buildDescSet(["rdkit", "opera"])
+#cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 0)
 
 
-### map on space
-#####
-#pr_results_mapped = pathFolder.createFolder(pr_results + "mappedPFAS/")
-#c_mapped = mapOnSpace.mapOnSpace(l_file_desc[0], P_COORD_1D2D_PFAS, P_COORD_3D_PFAS, pr_results_mapped)
-#c_mapped.map("Phthalates_alternatives")
+###### map on space ===> need some update on the chemmaps 
+######
+#p_RDKIT = pr_results + "rdkit/rdkit.csv"
 
-#pr_results_mapped = pathFolder.createFolder(pr_results + "mappedTox21/")
-#c_mapped = mapOnSpace.mapOnSpace(l_file_desc[0], P_COORD_1D2D_Tox21, P_COORD_3D_Tox21, pr_results_mapped)
-#c_mapped.map("Phthalates_alternatives")
 
 
 ############### PFAS
 #####################
 #p_dataset = PR_DATA + "PFAS.csv"
 #pr_results = pathFolder.createFolder(PR_RESULTS + "PFAS/")
-#l_file_desc = computeDesc(p_dataset, pr_results)
+## RDKIT
+#cPFAS = PFAS.PFAS(p_dataset, pr_results)
+#cPFAS.computeDesc()
+#cPFAS.buildDescSet(["rdkit"])
+#cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 1)
 
-## analysis with RDKIT desc
-#pr_results_analysis = pathFolder.createFolder(pr_results + "RDKIT_desc/")
-#p_desc = buildDescSet(l_file_desc[0], l_file_desc[1], ["rdkit"], pr_results_analysis)
-#analysisDescBasedData(l_file_desc[0], l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
+## OPERA
+#cPFAS = PFAS.PFAS(p_dataset, pr_results)
+#cPFAS.computeDesc()
+#cPFAS.buildDescSet(["opera"])
+#cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 1)
 
-## analysis with RDKIT + OPERA physico chemical
-#pr_results_analysis = pathFolder.createFolder(pr_results + "RDKIT-OPERA_desc/")
-#p_desc = buildDescSet(l_file_desc[0], l_file_desc[1], ["rdkit", "opera"], pr_results_analysis)
-#analysisDescBasedData(p_desc, l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
-
-## analysis with OPERA physico chemical only
-#pr_results_analysis = pathFolder.createFolder(pr_results + "OPERA_desc/")
-#p_desc = buildDescSet(l_file_desc[0], l_file_desc[1], ["opera"], pr_results_analysis)
-#analysisDescBasedData(p_desc, l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
-
-
-#pr_results_mapped = pathFolder.createFolder(pr_results + "PFAS_mapped/")
-#c_mapped = mapOnSpace.mapOnSpace(l_file_desc[0], P_COORD_1D2D_PFAS, P_COORD_3D_PFAS, pr_results_mapped)
-#c_mapped.map("PFAS-EPA-PFAS")
+# OPERA + rdkit
+#cPFAS = PFAS.PFAS(p_dataset, pr_results)
+#cPFAS.computeDesc()
+#cPFAS.buildDescSet(["rdkit", "opera"])
+#cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 0)
 
 
-#pr_results_mapped = pathFolder.createFolder(pr_results + "Tox21_mapped/")
-#c_mapped = mapOnSpace.mapOnSpace(l_file_desc[0], P_COORD_1D2D_Tox21, P_COORD_3D_Tox21, pr_results_mapped)
-#c_mapped.map("Tox21_PFAS")
+###### map on space ===> need some update on the chemmaps 
+######
+#p_RDKIT = pr_results + "rdkit/rdkit.csv"
+
 
 
 
 ################# Combine dataset PFAS + Phthalates
 ###################################################
 
-p_dataset1 = PR_DATA + "PFAS.csv"
-p_dataset2 = PR_DATA + "Phthalates.csv"
-pr_results = pathFolder.createFolder(PR_RESULTS + "PFAS-Phthalates/")
+#p_dataset1 = PR_DATA + "PFAS.csv"
+#p_dataset2 = PR_DATA + "Phthalates.csv"
+#pr_results = pathFolder.createFolder(PR_RESULTS + "PFAS-Phthalates/")
 
-cPFAS = PFAS.PFAS(p_dataset, pr_results)
-cPFAS.computeDesc()
-cPFAS.combineDataset(p_dataset2)
-cPFAS.buildDescSet(["rdkit"])
-cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE, PCA=1, Hclust=1)
+#cPFAS = PFAS.PFAS(p_dataset1, pr_results)
+#cPFAS.combineDataset(p_dataset2)
+#cPFAS.computeDesc()
+#cPFAS.buildDescSet(["rdkit"])
+#cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 1)
 
+# OPERA
+#cPFAS = PFAS.PFAS(p_dataset1, pr_results)
+#cPFAS.combineDataset(p_dataset2)
+#cPFAS.computeDesc()
+#cPFAS.buildDescSet(["opera"])
+#cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 1)
 
-# =====> need to be update
-## analysis with RDKIT + OPERA physico chemical
-#pr_results_analysis = pathFolder.createFolder(pr_results + "RDKIT-OPERA_desc/")
-#p_desc = buildDescSet(l_file_desc[0], l_file_desc[1], ["rdkit", "opera"], pr_results_analysis)
-#analysisDescBasedData(p_dataset,p_desc, l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
+# OPERA + rdkit
+#cPFAS = PFAS.PFAS(p_dataset1, pr_results)
+#cPFAS.combineDataset(p_dataset2)
+#cPFAS.computeDesc()
+#cPFAS.buildDescSet(["rdkit", "opera"])
+#cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 0)
 
-## analysis with OPERA physico chemical only
-#pr_results_analysis = pathFolder.createFolder(pr_results + "OPERA_desc/")
-#p_desc = buildDescSet(l_file_desc[0], l_file_desc[1], ["opera"], pr_results_analysis)
-#analysisDescBasedData(p_dataset, p_desc, l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
-
-
-#pr_results_mapped = pathFolder.createFolder(pr_results + "PFAS_mapped/")
-#c_mapped = mapOnSpace.mapOnSpace(l_file_desc[0], P_COORD_1D2D_PFAS, P_COORD_3D_PFAS, pr_results_mapped)
-#c_mapped.map("PFAS-EPA-PFAS")
-
-
-#pr_results_mapped = pathFolder.createFolder(pr_results + "Tox21_mapped/")
-#c_mapped = mapOnSpace.mapOnSpace(l_file_desc[0], P_COORD_1D2D_Tox21, P_COORD_3D_Tox21, pr_results_mapped)
-#c_mapped.map("Tox21_PFAS")
+###### map on space ===> need some update on the chemmaps 
+######
+#p_RDKIT = pr_results + "rdkit/rdkit.csv"
 
 
 
 ################# Combine dataset Phthalates + Phthalates alternative
 ######################################################################
 
-p_dataset1 = PR_DATA + "Phthalates_alternatives.csv"
-p_dataset2 = PR_DATA + "Phthalates.csv"
-pr_results = pathFolder.createFolder(PR_RESULTS + "Phthalates_alternatives-Phthalates/")
+#p_dataset1 = PR_DATA + "Phthalates_alternatives.csv"
+#p_dataset2 = PR_DATA + "Phthalates.csv"
+#pr_results = pathFolder.createFolder(PR_RESULTS + "Phthalates_alternatives-Phthalates/")
 
-p_dataset = combineDataset(p_dataset1, p_dataset2, pr_results)
-l_file_desc = computeDesc(p_dataset, pr_results)
+#cPFAS = PFAS.PFAS(p_dataset1, pr_results)
+#cPFAS.combineDataset(p_dataset2)
+#cPFAS.computeDesc()
+#cPFAS.buildDescSet(["rdkit"])
+#cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 1)
 
+## OPERA
+#cPFAS = PFAS.PFAS(p_dataset1, pr_results)
+#cPFAS.combineDataset(p_dataset2)
+#cPFAS.computeDesc()
+#cPFAS.buildDescSet(["opera"])
+#cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 1)
 
-## analysis with RDKIT desc
-#pr_results_analysis = pathFolder.createFolder(pr_results + "RDKIT_desc/")
-#p_desc = buildDescSet(l_file_desc[0], l_file_desc[1], ["rdkit"], pr_results_analysis)
-#analysisDescBasedData(p_dataset, l_file_desc[0], l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
-
-## analysis with RDKIT + OPERA physico chemical
-pr_results_analysis = pathFolder.createFolder(pr_results + "RDKIT-OPERA_desc/")
-p_desc = buildDescSet(l_file_desc[0], l_file_desc[1], ["rdkit", "opera"], pr_results_analysis)
-analysisDescBasedData(p_dataset,p_desc, l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
-dd
-## analysis with OPERA physico chemical only
-#pr_results_analysis = pathFolder.createFolder(pr_results + "OPERA_desc/")
-#p_desc = buildDescSet(l_file_desc[0], l_file_desc[1], ["opera"], pr_results_analysis)
-#analysisDescBasedData(p_dataset, p_desc, l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
-
-#pr_results_mapped = pathFolder.createFolder(pr_results + "PFAS_mapped/")
-#c_mapped = mapOnSpace.mapOnSpace(l_file_desc[0], P_COORD_1D2D_PFAS, P_COORD_3D_PFAS, pr_results_mapped)
-#c_mapped.map("PFAS-EPA-PFAS")
-
-#pr_results_mapped = pathFolder.createFolder(pr_results + "Tox21_mapped/")
-#c_mapped = mapOnSpace.mapOnSpace(l_file_desc[0], P_COORD_1D2D_Tox21, P_COORD_3D_Tox21, pr_results_mapped)
-#c_mapped.map("Tox21_PFAS")
+## OPERA + rdkit
+#cPFAS = PFAS.PFAS(p_dataset1, pr_results)
+#cPFAS.combineDataset(p_dataset2)
+#cPFAS.computeDesc()
+#cPFAS.buildDescSet(["rdkit", "opera"])
+#cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 0)
 
 
-################# Combine all
-#############################
+
+################# Combine dataset Phthalates-alternative + PFAS
+###################################################
+
+#p_dataset1 = PR_DATA + "PFAS.csv"
+#p_dataset2 = PR_DATA + "Phthalates.csv"
+#pr_results = pathFolder.createFolder(PR_RESULTS + "PFAS-Phthalates/")
+
+#cPFAS = PFAS.PFAS(p_dataset1, pr_results)
+#cPFAS.combineDataset(p_dataset2)
+#cPFAS.computeDesc()
+#cPFAS.buildDescSet(["rdkit"])
+#cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 1)
+
+# OPERA
+#cPFAS = PFAS.PFAS(p_dataset1, pr_results)
+#cPFAS.combineDataset(p_dataset2)
+#cPFAS.computeDesc()
+#cPFAS.buildDescSet(["opera"])
+#cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 1)
+
+# OPERA + rdkit
+#cPFAS = PFAS.PFAS(p_dataset1, pr_results)
+#cPFAS.combineDataset(p_dataset2)
+#cPFAS.computeDesc()
+#cPFAS.buildDescSet(["rdkit", "opera"])
+#cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 0)
+
+###### map on space ===> need some update on the chemmaps 
+######
+#p_RDKIT = pr_results + "rdkit/rdkit.csv"
+
+
+
+
+################# Combine Phthalates + Phthalates alternative + PFAS
+####################################################################
 
 p_dataset1 = PR_DATA + "Phthalates_alternatives.csv"
 p_dataset2 = PR_DATA + "PFAS_phthalates.csv"
-pr_results = pathFolder.createFolder(PR_RESULTS + "All/")
+pr_results = pathFolder.createFolder(PR_RESULTS + "Phthalates-Phthalates_alternative-PFAS/")
 
-p_dataset = combineDataset(p_dataset1, p_dataset2, pr_results)
-l_file_desc = computeDesc(p_dataset, pr_results)
+cPFAS = PFAS.PFAS(p_dataset1, pr_results)
+cPFAS.combineDataset(p_dataset2)
+cPFAS.computeDesc()
+cPFAS.buildDescSet(["rdkit"])
+cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 1)
 
-# analysis with RDKIT desc
-pr_results_analysis = pathFolder.createFolder(pr_results + "RDKIT_desc/")
-p_desc = buildDescSet(l_file_desc[0], l_file_desc[1], ["rdkit"], pr_results_analysis)
-analysisDescBasedData(p_dataset, l_file_desc[0], l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
+# OPERA
+cPFAS = PFAS.PFAS(p_dataset1, pr_results)
+cPFAS.combineDataset(p_dataset2)
+cPFAS.computeDesc()
+cPFAS.buildDescSet(["opera"])
+cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 1)
 
-# analysis with RDKIT + OPERA physico chemical
-pr_results_analysis = pathFolder.createFolder(pr_results + "RDKIT-OPERA_desc/")
-p_desc = buildDescSet(l_file_desc[0], l_file_desc[1], ["rdkit", "opera"], pr_results_analysis)
-analysisDescBasedData(p_dataset,p_desc, l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
+# OPERA + rdkit
+cPFAS = PFAS.PFAS(p_dataset1, pr_results)
+cPFAS.combineDataset(p_dataset2)
+cPFAS.computeDesc()
+cPFAS.buildDescSet(["rdkit", "opera"])
+cPFAS.analysisDescBasedData(COR_VAL, MAX_QUANTILE,  PCA=1, Hclust=1, clustering=1, histDesc = 0)
 
-# analysis with OPERA physico chemical only
-pr_results_analysis = pathFolder.createFolder(pr_results + "OPERA_desc/")
-p_desc = buildDescSet(l_file_desc[0], l_file_desc[1], ["opera"], pr_results_analysis)
-analysisDescBasedData(p_dataset, p_desc, l_file_desc[1], pr_results_analysis, COR_VAL, MAX_QUANTILE)
+###### map on space ===> need some update on the chemmaps 
+######
+#p_RDKIT = pr_results + "rdkit/rdkit.csv"
 
-
-pr_results_mapped = pathFolder.createFolder(pr_results + "PFAS_mapped/")
-c_mapped = mapOnSpace.mapOnSpace(l_file_desc[0], P_COORD_1D2D_PFAS, P_COORD_3D_PFAS, pr_results_mapped)
-c_mapped.map("PFAS-EPA-PFAS")
-
-
-pr_results_mapped = pathFolder.createFolder(pr_results + "Tox21_mapped/")
-c_mapped = mapOnSpace.mapOnSpace(l_file_desc[0], P_COORD_1D2D_Tox21, P_COORD_3D_Tox21, pr_results_mapped)
-c_mapped.map("Tox21_PFAS")

@@ -120,10 +120,10 @@ hexbinplot(DIM3~DIM1,data=dcoorMap,xlab="DIM1",
 dev.off()
 
 
-print(lchem)
+#print(lchem)
 lchem = append(as.character(lchem), "end")
 lchem = append(lchem, "begin")
-print(lchem)
+#print(lchem)
 rownames(dcoorMap) = lchem
 
 write.csv(x = dcoorMap, file = paste(prout , "coords.csv", sep = ""))
