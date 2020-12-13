@@ -9,9 +9,10 @@ import runExternal
 import searchInComptox
 
 # import descriptor computation scripts => precise folder where descriptor are included
-import sys
-sys.path.insert(0, "C:/Users/Aborrel/research/ILS/development/molecular-descriptors/")
-import Chemical
+import CompDesc
+
+# selected physico chemical descriptor from OPERa
+L_OPERA_DESC = ['LogP_pred', 'MP_pred', 'BP_pred', 'LogVP_pred', 'LogWS_pred', 'LogHL_pred', 'RT_pred', 'LogKOA_pred', 'ionization', 'LogD55_pred', 'LogD74_pred', 'LogOH_pred', 'LogBCF_pred', 'BioDeg_LogHalfLife_pred', 'ReadyBiodeg_pred', 'LogKM_pred', 'LogKoc_pred', 'FUB_pred', 'Clint_pred']
 
 
 
@@ -19,8 +20,6 @@ class dataset:
     def __init__(self, p_data, pr_out):
         self.p_data = p_data
         self.pr_out = pr_out
-        self.p_SALTS = path.abspath("./Salts.txt")
-
 
     def combineDataset(self, p_dataset2):
 
@@ -62,30 +61,44 @@ class dataset:
 
             self.d_dataset = d_combine
 
-
     def loadDataset(self, loadDb =0):
 
-        # define output
-        d_out = toolbox.loadMatrix(self.p_data, sep = ",")
-        self.d_dataset = d_out
+        # p_dataset_formated
+        p_dataset_formated = self.pr_out + "dataset.csv"
+        if path.exists(p_dataset_formated):
+            d_out = toolbox.loadMatrix(p_dataset_formated)
+            self.d_dataset = d_out
+        
+        else:
+            # define output
+            d_out = toolbox.loadMatrix(self.p_data, sep = ",")
+            l_header = list(d_out[list(d_out.keys())[0]].keys())
+            if loadDb == 1 :
+                for chem in d_out.keys():
+                    if not "SMILES" in l_header:
+                        d_out[chem]["SMILES"] = ""
+                    
+                    if d_out[chem]["SMILES"] == "":
+                        CASRN = d_out[chem]["CASRN"]
+                        print("CASRN:", CASRN, "LOAD chem")
+                        c_search = searchInComptox.loadComptox(CASRN)
+                        c_search.searchInDB()
+                        if c_search.err != 1:
+                            d_out[chem]["SMILES"] = c_search.SMILES
+                        else:
+                            d_out[chem]["SMILES"] = "--"
 
+                        print("Load done:", d_out[chem]["SMILES"])
 
-        if loadDb == 1:
-            # load SMILES from comptox
-            l_header = list(self.d_dataset[list(self.d_dataset.keys())[0]].keys())
             if not "SMILES" in l_header:
-                for chem in self.d_dataset.keys():
-                    CASRN = self.d_dataset[chem]["CASRN"]
-                    print("CASRN:", CASRN, "LOAD chem")
-                    c_search = searchInComptox.loadComptox(CASRN)
-                    c_search.searchInDB()
-                    if c_search.err != 1:
-                        self.d_dataset[chem]["SMILES"] = c_search.SMILES
-                    else:
-                        self.d_dataset[chem]["SMILES"] = "--"
+                l_header.append("SMILES")
+            
+            filout = open(p_dataset_formated, "w")
+            filout.write("\t".join(l_header) + "\n")
+            for chem in d_out.keys():
+                filout.write("\t".join([str(d_out[chem][h]) for h in l_header]) + "\n")
 
-                    print("Load done:", self.d_dataset[chem]["SMILES"])
-
+            self.d_dataset = d_out
 
     def computeStructuralDesc(self, test=0):
 
@@ -103,7 +116,8 @@ class dataset:
                 return p_filout
 
         # extract descriptor 2D
-        l_desc = Chemical.getLdesc("1D2D")
+        cChem = CompDesc.CompDesc("", "")
+        l_desc = cChem.getLdesc("1D2D")
 
         # open filout
         filout = open(p_filout, "w")
@@ -112,7 +126,7 @@ class dataset:
         # compute descriptor
         for CASRN in self.d_dataset.keys():
             SMILES = self.d_dataset[CASRN]["SMILES"]
-            cChem = Chemical.Chemical(SMILES, self.pr_desc, p_salts=self.p_SALTS)
+            cChem = CompDesc.CompDesc(SMILES, self.pr_desc)
             cChem.prepChem() # prep
             # case error cleaning
             if cChem.err == 1:
@@ -128,7 +142,6 @@ class dataset:
         filout.close()
 
         return p_filout
-
 
     def computeOPERADesc(self):
 
@@ -153,11 +166,30 @@ class dataset:
         flSMI.write("\n".join(l_w))
         flSMI.close()
 
-        print("RUN OPERA COMMAND LINE")
+        p_desc_opera = pr_OPERA + "desc_opera_run.csv"
+        if not path.exists(p_desc_opera):
+            cCompDesc = CompDesc.CompDesc(p_lSMI, pr_OPERA)
+            cCompDesc.computeOperaFromListSMI(p_desc_opera)
 
-        print("ERROR - OPERA desc no computed")
+        l_casrn = list(self.d_dataset.keys())
+        l_ddesc_run = toolbox.loadMatrixToList(p_desc_opera, sep = ",")
+
+        fopera = open(p_filout, "w")
+        fopera.write("CASRN,%s\n"%(",".join(L_OPERA_DESC)))
+
+        i = 0
+        imax = len(l_casrn) 
+        while i < imax:
+            CASRN = l_casrn[i]
+            for ddesc_run in l_ddesc_run:
+                if ddesc_run["MoleculeID"] == "Molecule_%i"%(i+1):
+                    fopera.write("%s,%s\n"%(CASRN, ",".join(ddesc_run[desc] for desc in L_OPERA_DESC)))
+                    break
+            i = i + 1
+
+        fopera.close()
+
         return 0
-
 
     def computePNG(self):
 
@@ -176,14 +208,11 @@ class dataset:
                 continue
             else:
                 SMILES = self.d_dataset[CASRN]["SMILES"]
-                cChem = Chemical.Chemical(SMILES, self.pr_desc, OS="Window", p_salts=self.p_SALTS)
+                cChem = CompDesc.CompDesc(SMILES, self.pr_desc)
                 cChem.prepChem() # prep
                 p_png_inch = cChem.computePNG()
                 if cChem.err == 0:
                     rename(p_png_inch, p_png)
-    
-
-
 
     def predictBiotransformation(self):
 
@@ -214,8 +243,6 @@ class dataset:
                     runExternal.BioTransformer(cChem.smi, "env", p_biotransformation_env)
         
         self.pr_biotransformation_run = pr_out
-
-
 
     def extractBioTranformationChemical(self, p_check = ""):
 
@@ -342,8 +369,6 @@ class dataset:
             self.p_biotransformed_products_cleaned = p_products_cleaned
             self.d_product = toolbox.loadMatrix(p_products_cleaned)
 
-
-
     def searchBiotransformedProduceInDB(self):
 
         if not "d_product" in self.__dict__:
@@ -372,8 +397,6 @@ class dataset:
         for chem_ID in self.d_product.keys():
             filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(self.d_product[chem_ID]["ID"], self.d_product[chem_ID]["name"], self.d_product[chem_ID]["CASRN"], self.d_product[chem_ID]["SMILES"], self.d_product[chem_ID]["DTXSID"], self.d_product[chem_ID]["In master list"], self.d_product[chem_ID]["Type biotransformation"], self.d_product[chem_ID]["CASRN origin"]))     
         filout.close()
-
-
 
     def computeDescProductBiotransformed(self):
 

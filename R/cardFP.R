@@ -96,7 +96,7 @@ cardMatrixCor = function(matrixIN, name_file, nb_color){
   }
   
   
-  png (file = paste (name_file, ".png", sep = ""), width = 1700, height = 1700)
+  png (file = paste (name_file, ".png", sep = ""), width = 2200, height = 2200)
   
   par( mar=c(20,20,1.5,1.5))
   image(as.matrix(matrixIN), yaxt = "n", xaxt = "n", col = list_color, breaks = seq(-1,1, 2/(nb_color+x)))
@@ -236,7 +236,7 @@ cardMatrix = function(matrixIN, name_file, nb_color){
   axis(2,seq(0,1,(1/(nb_col-1))),colnames (matrixIN), cex.axis = 1.75, las = 2)
   dev.off()
   
-  svg (file = paste (name_file, ".svg", sep = ""), 15, 12)
+  svg (file = paste (name_file, ".svg", sep = ""), 20, 20)
   par( mar=c(5,17,0.5,0.5))
   
   image(as.matrix(matrixIN), yaxt = "n", xaxt = "n", col = list_color)

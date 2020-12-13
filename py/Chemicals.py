@@ -9,7 +9,7 @@ from os import path
 L_OPERA_DESC = ['LogP_pred', 'MP_pred', 'BP_pred', 'LogVP_pred', 'LogWS_pred', 'LogHL_pred', 'RT_pred', 'LogKOA_pred', 'ionization', 'LogD55_pred', 'LogD74_pred', 'LogOH_pred', 'LogBCF_pred', 'BioDeg_LogHalfLife_pred', 'ReadyBiodeg_pred', 'LogKM_pred', 'LogKoc_pred', 'FUB_pred', 'Clint_pred']
 
 
-class PFAS:
+class Chemicals:
     def __init__(self, p_dataset, pr_out):
         self.p_dataset = p_dataset
         self.pr_out = pr_out
@@ -36,10 +36,7 @@ class PFAS:
         self.p_desc_rdkit = p_desc
         self.p_desc_OPERA = p_desc_opera
         self.pr_desc = self.c_dataset.pr_desc
-        
-
-
-
+       
     def buildDescSet(self, l_type_desc):
         """Select from OPERA only physico chem descriptors"""
 
@@ -97,8 +94,6 @@ class PFAS:
 
         self.p_desc = p_filout
 
-
-
     def getChemTier(self, l_tiers):
 
         pr_results = pathFolder.createFolder(self.pr_results + "Tier" + "-".join(l_tiers) + "/")
@@ -126,16 +121,11 @@ class PFAS:
 
         self.p_desc = p_desc_out
 
-
-
     def combineDataset(self, p_dataset2):
         c_dataset = dataset.dataset(self.p_dataset, self.pr_out)
         self.c_dataset = c_dataset
         
         self.c_dataset.combineDataset(p_dataset2)
-
-
-
 
     def computeBiotransformation(self, p_list_mater=""):
 
@@ -147,9 +137,6 @@ class PFAS:
         self.c_dataset.searchBiotransformedProduceInDB()
 
         self.c_dataset.computeDescProductBiotransformed()
-
-
-
 
     def analysisDescBasedData(self, cor_val, max_quantile, PCA=0, Hclust=0, clustering=0, SOM=0, histDesc =0, FP = 0):
 
@@ -175,9 +162,9 @@ class PFAS:
         # 2.4 SOM
         if SOM == 1:
             size = 15
-            cAnalysis.generate_SOM(15)
+            cAnalysis.generate_SOM(5)
             cAnalysis.signifDescBySOMCluster()
-            cAnalysis.extract_actBySOMCluster(pr_desc + "PNG/") # have to run !!!!
+            cAnalysis.extract_actBySOMCluster(self.pr_desc + "PNG/") # have to run !!!!
 
         # 2.5 histogram by descriptor
         if histDesc == 1:

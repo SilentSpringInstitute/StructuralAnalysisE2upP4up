@@ -68,6 +68,18 @@ def cardSimMatrix(p_filin):
     runRCMD(cmd)
     return 
 
+
+def SOM(p_desc_cleaned, p_AC50_cleaned, pr_out, grid_size):
+
+    cmd = "./SOM_chem.R %s %s %s %s"%(p_desc_cleaned, p_AC50_cleaned, pr_out, grid_size)
+    runRCMD(cmd)
+
+
+def descSignifByCluster(p_desc, p_cluster, pr_out):
+
+    cmd = "./descSignificantByCluster.R %s %s %s"%(p_desc, p_cluster, pr_out)
+    runRCMD(cmd)
+
 ##############
 # run biotransformer tool
 

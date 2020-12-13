@@ -85,8 +85,13 @@ optimalCluters = function (din, prout, metcluster, metOptNB, metagregation){
   din = scale (din)
   kmax = dim(din)[1]-1
   if (metcluster == "hclust"){
-    p = fviz_nbclust(din, hcut, hcut_metho = metagregation, method = metOptNB, k.max = kmax)
-    ggsave(paste(prout, metcluster, "_" , metagregation, "_", metOptNB, ".png", sep = ""), dpi=300, height = 8, width = 8)
+    if(metOptNB == "gap_stat"){
+      p = fviz_nbclust(din, kmeans, method = metOptNB, k.max = kmax, nboot = 50)
+      ggsave(paste(prout, metcluster, "_" , metagregation, "_", metOptNB, ".png", sep = ""), dpi=300, height = 8, width = 8)
+    }else{
+      p = fviz_nbclust(din, FUN = hcut, metho = metagregation,  method = metOptNB, k.max = kmax, nboot = 50)
+      ggsave(paste(prout, metcluster, "_" , metagregation, "_", metOptNB, ".png", sep = ""), dpi=300, height = 8, width = 8)
+    }
   }else if(metcluster == "kmeans"){
     p = fviz_nbclust(din, kmeans, method = metOptNB, k.max = kmax)
     ggsave(paste(prout, metcluster, "_" , metOptNB, ".png", sep = ""), dpi=300, height = 8, width = 15)    
@@ -101,6 +106,8 @@ optimalCluters = function (din, prout, metcluster, metOptNB, metagregation){
     
   }else if (metOptNB ==   "silhouette"){
     nboptimal = which(p$data[,2] == max(p$data[,2]))
+
+
   }else if (metOptNB == "gap_stat"){
     dcluster = as.matrix(p$data)
     #distorigin = abs(scale(as.double(dcluster[,5]), 0)-scale(-1*as.double(dcluster[,6]), 0))
@@ -214,13 +221,16 @@ d_opera = d_opera[,l_opera_pred]
 
 #lmetclustering = c("hclust", "kmeans")
 lmetclustering = c("hclust") # => to speed up the process
-lmetagregation = c("ward.D2", "complete", "single", "average") # - ward.D
-lmetoptimal = c("silhouette", "wss", "gap_stat")
+#lmetagregation = c("ward.D2", "complete", "single", "average") # - ward.D
+lmetagregation = c("ward.D2") # - ward.D
+#lmetoptimal = c("silhouette", "wss", "gap_stat")
+lmetoptimal = c("gap_stat")
+
 for(metclustering in lmetclustering){
   if (metclustering == "kmeans"){
     lmetagregation = c("ward.D2")
   }else{
-    lmetagregation = c("ward.D2", "complete", "single", "average")
+    lmetagregation = c("ward.D2")
   }
   for (metagregation in lmetagregation){
     for(metoptimal in lmetoptimal){

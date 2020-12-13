@@ -10,6 +10,10 @@ class loadComptox:
 
     def searchInDB(self):
 
+        if self.input == "" or self.input == "NA":
+            self.err = 1
+            return 
+
         try:handle = urllib.request.urlopen('https://comptox.epa.gov/dashboard/dsstoxdb/results?search=' + str(self.input))
         except: 
             self.err = 1

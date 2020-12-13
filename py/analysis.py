@@ -36,8 +36,6 @@ class analysis:
         pr_out = pathFolder.createFolder(self.pr_out + "PCA/")
         runExternal.PCA(self.p_desc_cleaned, pr_out)
 
-
-
     def HClust_plot(self, p_opera):
 
         pr_out = pathFolder.createFolder(self.pr_out + "HClustCircular/")
@@ -48,13 +46,11 @@ class analysis:
         pr_out = pathFolder.createFolder(self.pr_out + "Clustering/")
         runExternal.Clust(self.p_desc_cleaned, self.p_opera, pr_out)
 
-
     def histDesc(self):
         
         pr_out = pathFolder.createFolder(self.pr_out + "histDesc/")
         runExternal.drawHist(self.p_desc, self.p_desc_cleaned, pr_out)
     
-
     def FPTanimoto(self, l_typeFP):
 
         # load SMILES in list
@@ -131,3 +127,42 @@ class analysis:
             
             filout.close()
             runExternal.cardSimMatrix(p_filout)
+
+    def generate_SOM(self, nb_cluster):
+
+        pr_out = pathFolder.createFolder(self.pr_out + "SOM/")
+        p_model = pr_out + "SOM_model.RData"
+        if not path.exists(p_model):
+            runExternal.SOM(self.p_desc_cleaned, "0", pr_out, nb_cluster)
+
+        return
+
+    def signifDescBySOMCluster(self):
+
+        # check if SOM is computed
+        p_cluster = self.pr_out + "SOM/SOM_Clusters"
+        if not path.exists(p_cluster):
+            print("ERROR: no cluster file existed")
+            return 
+        
+        pr_out = pathFolder.createFolder(self.pr_out + "SOM/DescriptorSignif/")
+        runExternal.descSignifByCluster(self.p_desc_cleaned, p_cluster, pr_out)
+
+
+    def extract_actBySOMCluster(self, pr_png):
+
+        p_cluster = pathFolder.createFolder(self.pr_out + "SOM/") + "SOM_Clusters_act"
+        if not path.exists(p_cluster):
+            return "Error"
+
+        pr_out = pathFolder.createFolder(self.pr_out + "SOM/Active_by_cluster/")
+
+        dcluster = toolbox.loadMatrix(p_cluster, sep = ",")
+        for CASRN in dcluster.keys():
+            try:cluster = dcluster[CASRN]["Cluster"]
+            except:cluster = dcluster[CASRN]["x"]
+            pr_cluster = pathFolder.createFolder(self.pr_out + "SOM/Active_by_cluster/" + cluster + "/")
+            pathFolder.createFolder(pr_cluster)
+
+            try:copyfile(pr_png + CASRN + ".png", pr_cluster + CASRN + ".png")
+            except: pass
