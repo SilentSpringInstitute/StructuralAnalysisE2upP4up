@@ -2,6 +2,7 @@ import dataset
 import pathFolder
 import analysis
 import toolbox
+import runExternal
 
 from os import path
 
@@ -13,7 +14,7 @@ class Chemicals:
     def __init__(self, p_dataset, pr_out):
         self.p_dataset = p_dataset
         self.pr_out = pr_out
-        self.loadDB = 1
+        self.loadDB = 0
 
     def computeDesc(self):
         # load dataset
@@ -162,7 +163,7 @@ class Chemicals:
         # 2.4 SOM
         if SOM == 1:
             size = 15
-            cAnalysis.generate_SOM(5)
+            cAnalysis.generate_SOM(10)
             cAnalysis.signifDescBySOMCluster()
             cAnalysis.extract_actBySOMCluster(self.pr_desc + "PNG/") # have to run !!!!
 
@@ -173,3 +174,69 @@ class Chemicals:
         # 2.6 Tanimoto in fingerprint
         if FP == 1:
             cAnalysis.FPTanimoto(["topo", "MACCS", "Morgan"])
+
+    def analysisToxPrint(self, p_ToxPrint):
+        
+        d_toxprint = toolbox.loadMatrix(p_ToxPrint, ",") 
+        pr_out = pathFolder.createFolder(self.pr_out + "ToxPrint/")
+
+        l_toxprints = list(d_toxprint[list(d_toxprint.keys())[0]].keys())
+        l_toxprints.remove('INPUT')
+        l_toxprints.remove('DTXSID')
+        l_toxprints.remove('PREFERRED_NAME')
+
+        d_out = {}
+        for toxprint in l_toxprints:
+            d_out[toxprint] = 0
+
+        for chem in d_toxprint.keys():
+            for toxprint in l_toxprints:
+                if d_toxprint[chem][toxprint] == "1":
+                    d_out[toxprint] = d_out[toxprint] + 1
+
+
+        p_filout = pr_out + "count_toxprint"
+        filout = open(p_filout, "w")
+        filout.write("Toxprint\tcount\n")
+        for toxprint in d_out.keys():
+            if d_out[toxprint] != 0:
+                filout.write("%s\t%s\n"%(toxprint, d_out[toxprint]))
+        filout.close()
+
+        runExternal.barplotToxPrint(p_filout)
+
+
+
+
+    def analysisChemList(self, p_chemlist):
+
+        d_chemList = toolbox.loadMatrix(p_chemlist, ",") 
+        pr_out = pathFolder.createFolder(self.pr_out + "chem_list/")
+
+        l_chemlist = list(d_chemList[list(d_chemList.keys())[0]].keys())
+        l_chemlist.remove('INPUT')
+        l_chemlist.remove('DTXSID')
+        l_chemlist.remove('PREFERRED_NAME')
+        l_chemlist.remove('FOUND_BY')
+
+        d_out = {}
+        for chemlist in l_chemlist:
+            d_out[chemlist] = 0
+
+        for chem in d_chemList.keys():
+            for chemlist in l_chemlist:
+                if d_chemList[chem][chemlist] == "Y":
+                    d_out[chemlist] = d_out[chemlist] + 1
+
+
+        p_filout = pr_out + "count_chemlist"
+        filout = open(p_filout, "w")
+        filout.write("chem_list\tcount\n")
+        for chemlist in d_out.keys():
+            if d_out[chemlist] != 0:
+                filout.write("%s\t%s\n"%(chemlist, d_out[chemlist]))
+        filout.close()
+
+        runExternal.barplotchemlist(p_filout)
+
+        return 

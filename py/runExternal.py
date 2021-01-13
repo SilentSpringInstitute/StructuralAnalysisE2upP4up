@@ -80,6 +80,23 @@ def descSignifByCluster(p_desc, p_cluster, pr_out):
     cmd = "./descSignificantByCluster.R %s %s %s"%(p_desc, p_cluster, pr_out)
     runRCMD(cmd)
 
+def barplotToxPrint(p_filin):
+    
+    cmd = "./barplotToxPrint.R %s"%(p_filin)
+    runRCMD(cmd)
+
+
+def barplotchemlist(p_filin):
+    
+    cmd = "./barplotChemList.R %s"%(p_filin)
+    runRCMD(cmd)
+
+
+def plotX2(p_filin):
+
+    cmd = "./comparisonX2.R %s"%(p_filin)
+    runRCMD(cmd)
+
 ##############
 # run biotransformer tool
 

@@ -200,14 +200,15 @@ class dataset:
         pr_png = pathFolder.createFolder(self.pr_desc + "PNG/")
 
         # compute descriptor
-        l_CASRN = list(self.d_dataset.keys())
-        shuffle(l_CASRN)
-        for CASRN in l_CASRN:
-            p_png = pr_png + CASRN + ".png"
+        l_CHEM = list(self.d_dataset.keys())
+        shuffle(l_CHEM)
+        for CHEM in l_CHEM:
+            CASRN = self.d_dataset[CHEM]["CASRN"]
+            p_png = pr_png + CASRN.replace("/", "-") + ".png"
             if path.exists(p_png):
                 continue
             else:
-                SMILES = self.d_dataset[CASRN]["SMILES"]
+                SMILES = self.d_dataset[CHEM]["SMILES"]
                 cChem = CompDesc.CompDesc(SMILES, self.pr_desc)
                 cChem.prepChem() # prep
                 p_png_inch = cChem.computePNG()
