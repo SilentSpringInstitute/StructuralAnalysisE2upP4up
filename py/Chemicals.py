@@ -16,7 +16,7 @@ class Chemicals:
         self.pr_out = pr_out
         self.loadDB = 0
 
-    def computeDesc(self):
+    def computeDesc(self, pr_desc):
         # load dataset
         if not "c_dataset" in self.__dict__:
             c_dataset = dataset.dataset(self.p_dataset, self.pr_out)
@@ -25,13 +25,13 @@ class Chemicals:
 
 
         # compute desc 2D
-        p_desc = self.c_dataset.computeStructuralDesc()
+        p_desc = self.c_dataset.computeStructuralDesc(pr_desc)
 
         # compute PNG
-        self.c_dataset.computePNG()
+        self.c_dataset.computePNG(pr_desc)
 
         # compute OPERA
-        p_desc_opera = self.c_dataset.computeOPERADesc()
+        p_desc_opera = self.c_dataset.computeOPERADesc(pr_desc)
 
         # filout
         self.p_desc_rdkit = p_desc
@@ -190,10 +190,21 @@ class Chemicals:
             d_out[toxprint] = 0
 
         for chem in d_toxprint.keys():
-            for toxprint in l_toxprints:
-                if d_toxprint[chem][toxprint] == "1":
-                    d_out[toxprint] = d_out[toxprint] + 1
-
+            # case of genotoxic in breast carcinogen list
+            flag = 0
+            for chem_dataset in list(self.c_dataset.d_dataset.keys()):
+                if "DTXSID" in list(self.c_dataset.d_dataset[chem_dataset].keys()):
+                    dtxsid =  d_toxprint[chem]["DTXSID"]
+                    if dtxsid == self.c_dataset.d_dataset[chem_dataset]["DTXSID"]:
+                        for toxprint in l_toxprints:
+                            if d_toxprint[chem][toxprint] == "1":
+                                d_out[toxprint] = d_out[toxprint] + 1
+                        flag=1
+                        break
+            if flag == 0:
+                for toxprint in l_toxprints:
+                    if d_toxprint[chem][toxprint] == "1":
+                        d_out[toxprint] = d_out[toxprint] + 1
 
         p_filout = pr_out + "count_toxprint"
         filout = open(p_filout, "w")
@@ -204,9 +215,6 @@ class Chemicals:
         filout.close()
 
         runExternal.barplotToxPrint(p_filout)
-
-
-
 
     def analysisChemList(self, p_chemlist):
 

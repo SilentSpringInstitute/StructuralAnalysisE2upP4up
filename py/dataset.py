@@ -100,13 +100,12 @@ class dataset:
 
             self.d_dataset = d_out
 
-    def computeStructuralDesc(self, test=0):
+    def computeStructuralDesc(self, pr_desc, test=0):
 
         if not "pr_desc" in self.__dict__:
-            pr_desc = pathFolder.createFolder(self.pr_out + "DESC/")
             self.pr_desc = pr_desc
 
-        p_filout = self.pr_desc + "desc_1D2D.csv"
+        p_filout = self.pr_out + "desc_1D2D.csv"
         if path.exists(p_filout) and test == 0:
             # check is not a corrupt file
             filout = open(p_filout, "r")
@@ -124,8 +123,10 @@ class dataset:
         filout.write("CASRN\tSMILES\t%s\n"%("\t".join(l_desc)))
 
         # compute descriptor
-        for CASRN in self.d_dataset.keys():
-            SMILES = self.d_dataset[CASRN]["SMILES"]
+        for chem in self.d_dataset.keys():
+            print(self.d_dataset[chem])
+            SMILES = self.d_dataset[chem]["SMILES"]
+            CASRN = self.d_dataset[chem]["CASRN"]
             cChem = CompDesc.CompDesc(SMILES, self.pr_desc)
             cChem.prepChem() # prep
             # case error cleaning
@@ -143,15 +144,14 @@ class dataset:
 
         return p_filout
 
-    def computeOPERADesc(self):
+    def computeOPERADesc(self, pr_desc):
 
         if not "pr_desc" in self.__dict__:
-            pr_desc = pathFolder.createFolder(self.pr_out + "DESC/")
             self.pr_desc = pr_desc
 
-        p_filout = self.pr_desc + "desc_OPERA.csv"
+        p_filout = self.pr_out + "desc_OPERA.csv"
         if path.exists(p_filout):
-            return p_filout
+           return p_filout
 
         # write list of SMILES for OPERA
         pr_OPERA = pathFolder.createFolder(self.pr_desc + "OPERA/")
@@ -171,16 +171,16 @@ class dataset:
             cCompDesc = CompDesc.CompDesc(p_lSMI, pr_OPERA)
             cCompDesc.computeOperaFromListSMI(p_desc_opera)
 
-        l_casrn = list(self.d_dataset.keys())
+        l_chem = list(self.d_dataset.keys())
         l_ddesc_run = toolbox.loadMatrixToList(p_desc_opera, sep = ",")
 
         fopera = open(p_filout, "w")
         fopera.write("CASRN,%s\n"%(",".join(L_OPERA_DESC)))
 
         i = 0
-        imax = len(l_casrn) 
+        imax = len(l_chem) 
         while i < imax:
-            CASRN = l_casrn[i]
+            CASRN = self.d_dataset[l_chem[i]]["CASRN"]
             for ddesc_run in l_ddesc_run:
                 if ddesc_run["MoleculeID"] == "Molecule_%i"%(i+1):
                     fopera.write("%s,%s\n"%(CASRN, ",".join(ddesc_run[desc] for desc in L_OPERA_DESC)))
@@ -189,12 +189,11 @@ class dataset:
 
         fopera.close()
 
-        return 0
+        return p_filout
 
-    def computePNG(self):
+    def computePNG(self, pr_desc):
 
         if not "pr_desc" in self.__dict__:
-            pr_desc = pathFolder.createFolder(self.pr_out + "DESC/")
             self.pr_desc = pr_desc
 
         pr_png = pathFolder.createFolder(self.pr_desc + "PNG/")
@@ -400,7 +399,7 @@ class dataset:
         filout.close()
 
     def computeDescProductBiotransformed(self):
-
+        
         if not "d_biotransformed_products" in self.__dict__:
             print("Compute biotransformation first and cleanning function")
             return 
@@ -438,3 +437,31 @@ class dataset:
                 # write direcly descriptor
                 filout.write("%s\t%s\t%s\n"%(self.d_biotransformed_products[SMILES]["ID"], cChem.smi, "\t".join([str(cChem.all2D[desc]) for desc in l_desc])))
         filout.close()
+    
+    def splitDataset(self, column):
+        
+        if not "d_dataset" in self.__dict__:
+            self.loadDataset()
+        
+        d_out = {}
+
+        for chem in self.d_dataset.keys():
+            level_col = self.d_dataset[chem][column]
+            if level_col != "NA" and level_col != "#N/A":
+                if not level_col in list(d_out.keys()):
+                    d_out[level_col] = {}
+                d_out[level_col][chem] = deepcopy(self.d_dataset[chem])
+        
+        # wrtie new dataset
+        l_header = list(self.d_dataset[list(self.d_dataset.keys())[0]].keys())
+        l_pout = []
+        for level_col in d_out.keys():
+            p_filout = "%sdataset_%s_%s.csv"%(self.pr_out, column.replace("/", "-"), level_col)
+            l_pout.append(p_filout)
+            filout = open(p_filout, "w")
+            filout.write(",".join(l_header) + "\n")
+            for chem in d_out[level_col].keys():
+                filout.write("%s\n"%(",".join([str(d_out[level_col][chem][h]) for h in l_header])))
+            filout.close()
+        
+        return l_pout

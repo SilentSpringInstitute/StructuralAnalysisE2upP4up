@@ -97,6 +97,19 @@ def plotX2(p_filin):
     cmd = "./comparisonX2.R %s"%(p_filin)
     runRCMD(cmd)
 
+def upsetPlot(p_filin):
+
+    cmd = "./upsetplot.R %s"%(p_filin)
+    runRCMD(cmd)
+
+def vennPlot(p_filin):
+    cmd = "./vennPlot.R %s"%(p_filin)
+    runRCMD(cmd)
+
+def multiSetsAnalysis(p_desc):
+    cmd = "./multi_sets_analysis.R %s"%(p_desc)
+    runRCMD(cmd)
+
 ##############
 # run biotransformer tool
 
