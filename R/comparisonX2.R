@@ -95,7 +95,7 @@ AFC = function (d, path_file){
 args <- commandArgs(TRUE)
 p_count = args[1]
 
-p_count = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/carcinogen_breast_122120__H295_E2-up__H295_P4-up/forX2Comparison/forX2"
+#p_count = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/carcinogen_breast_122120__H295_E2-up__H295_P4-up/forX2Comparison/forX2"
 housetasks <- read.delim(p_count, row.names = 1)
 
 
