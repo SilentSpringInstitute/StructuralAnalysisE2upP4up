@@ -11,7 +11,7 @@ import searchInComptox
 # import descriptor computation scripts => precise folder where descriptor are included
 import CompDesc
 
-# selected physico chemical descriptor from OPERa
+# selected physico chemical descriptor from OPERA
 L_OPERA_DESC = ['LogP_pred', 'MP_pred', 'BP_pred', 'LogVP_pred', 'LogWS_pred', 'LogHL_pred', 'RT_pred', 'LogKOA_pred', 'ionization', 'LogD55_pred', 'LogD74_pred', 'LogOH_pred', 'LogBCF_pred', 'BioDeg_LogHalfLife_pred', 'ReadyBiodeg_pred', 'LogKM_pred', 'LogKoc_pred', 'FUB_pred', 'Clint_pred']
 
 
@@ -68,10 +68,9 @@ class dataset:
         if path.exists(p_dataset_formated):
             d_out = toolbox.loadMatrix(p_dataset_formated)
             self.d_dataset = d_out
-        
         else:
             # define output
-            d_out = toolbox.loadMatrix(self.p_data, sep = ",")
+            d_out = toolbox.loadMatrix(self.p_data)
             l_header = list(d_out[list(d_out.keys())[0]].keys())
             if loadDb == 1 :
                 for chem in d_out.keys():
@@ -97,7 +96,6 @@ class dataset:
             filout.write("\t".join(l_header) + "\n")
             for chem in d_out.keys():
                 filout.write("\t".join([str(d_out[chem][h]) for h in l_header]) + "\n")
-
             self.d_dataset = d_out
 
     def computeStructuralDesc(self, pr_desc, test=0):
@@ -153,15 +151,15 @@ class dataset:
         if path.exists(p_filout):
            return p_filout
 
+
         # write list of SMILES for OPERA
-        pr_OPERA = pathFolder.createFolder(self.pr_desc + "OPERA/")
+        pr_OPERA = pathFolder.createFolder(self.pr_desc + "OPERA/", clean=1)
         p_lSMI = pr_OPERA + "listChem.smi"
         flSMI = open(p_lSMI, "w")
         l_w = []
         for CASRN in self.d_dataset.keys():
             SMILES = self.d_dataset[CASRN]["SMILES"]
-            if SMILES != "--":
-                l_w.append(self.d_dataset[CASRN]["SMILES"])
+            l_w.append(self.d_dataset[CASRN]["SMILES"])
         
         flSMI.write("\n".join(l_w))
         flSMI.close()
@@ -188,7 +186,6 @@ class dataset:
             i = i + 1
 
         fopera.close()
-
         return p_filout
 
     def computePNG(self, pr_desc):

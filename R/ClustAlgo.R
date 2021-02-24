@@ -85,13 +85,13 @@ optimalCluters = function (din, prout, metcluster, metOptNB, metagregation){
   din = scale (din)
   kmax = dim(din)[1]-1
   if (metcluster == "hclust"){
-    if(metOptNB == "gap_stat"){
-      p = fviz_nbclust(din, kmeans, method = metOptNB, k.max = kmax, nboot = 50)
-      ggsave(paste(prout, metcluster, "_" , metagregation, "_", metOptNB, ".png", sep = ""), dpi=300, height = 8, width = 8)
-    }else{
+    #if(metOptNB == "gap_stat"){
+    #  p = fviz_nbclust(din, kmeans, method = metOptNB, k.max = kmax, nboot = 50)
+    #  ggsave(paste(prout, metcluster, "_" , metagregation, "_", metOptNB, ".png", sep = ""), dpi=300, height = 8, width = 8)
+    #}else{
       p = fviz_nbclust(din, FUN = hcut, metho = metagregation,  method = metOptNB, k.max = kmax, nboot = 50)
       ggsave(paste(prout, metcluster, "_" , metagregation, "_", metOptNB, ".png", sep = ""), dpi=300, height = 8, width = 8)
-    }
+    #}
   }else if(metcluster == "kmeans"){
     p = fviz_nbclust(din, kmeans, method = metOptNB, k.max = kmax)
     ggsave(paste(prout, metcluster, "_" , metOptNB, ".png", sep = ""), dpi=300, height = 8, width = 15)    

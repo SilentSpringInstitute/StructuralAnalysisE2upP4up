@@ -1,3 +1,39 @@
+import pandas
+from re import search
+
+
+def loadExcelSheet(p_excel, name_sheet, k_head):
+    """
+    TO DO: Add check duplicate rownames
+    """
+
+    d_out = {}
+    # load MC list
+    data_frame = pandas.read_excel(p_excel, name_sheet, engine='openpyxl')
+    data_size = data_frame.shape
+    nb_row = data_size[0]
+    nb_col = data_size[1]
+    l_col = data_frame.columns
+
+    i = 0
+    while i < nb_row:
+        rowname = data_frame.iloc[i][k_head]
+        if not rowname in list(d_out.keys()):
+            d_out[rowname] = {}
+        j = 0
+        while j < nb_col:
+            colname = l_col[j]
+            if search("Unnamed:", colname):
+                j = j + 1
+                continue
+            else:
+                d_out[rowname][colname] = data_frame.iloc[i][l_col[j]]
+            j = j + 1
+        i = i + 1
+    
+    return d_out
+
+
 def loadMatrixToList(pmatrixIn, sep = "\t"):
 
     filin = open(pmatrixIn, "r", encoding="utf8", errors='ignore')
@@ -54,6 +90,9 @@ def loadMatrix(pmatrixIn, sep = "\t"):
     line0 = formatLine(llinesMat[0])
     line1 = formatLine(llinesMat[1])
     lheaders = line0.split(sep)
+    if len(lheaders) == 1:
+        sep = ","
+        lheaders = line0.split(sep)
     lval1 = line1.split(sep)
 
     # case where R written

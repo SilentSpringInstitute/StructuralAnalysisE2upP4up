@@ -14,7 +14,7 @@ class Chemicals:
     def __init__(self, p_dataset, pr_out):
         self.p_dataset = p_dataset
         self.pr_out = pr_out
-        self.loadDB = 0
+        self.loadDB = 1
 
     def computeDesc(self, pr_desc):
         # load dataset
@@ -175,47 +175,7 @@ class Chemicals:
         if FP == 1:
             cAnalysis.FPTanimoto(["topo", "MACCS", "Morgan"])
 
-    def analysisToxPrint(self, p_ToxPrint):
-        
-        d_toxprint = toolbox.loadMatrix(p_ToxPrint, ",") 
-        pr_out = pathFolder.createFolder(self.pr_out + "ToxPrint/")
-
-        l_toxprints = list(d_toxprint[list(d_toxprint.keys())[0]].keys())
-        l_toxprints.remove('INPUT')
-        l_toxprints.remove('DTXSID')
-        l_toxprints.remove('PREFERRED_NAME')
-
-        d_out = {}
-        for toxprint in l_toxprints:
-            d_out[toxprint] = 0
-
-        for chem in d_toxprint.keys():
-            # case of genotoxic in breast carcinogen list
-            flag = 0
-            for chem_dataset in list(self.c_dataset.d_dataset.keys()):
-                if "DTXSID" in list(self.c_dataset.d_dataset[chem_dataset].keys()):
-                    dtxsid =  d_toxprint[chem]["DTXSID"]
-                    if dtxsid == self.c_dataset.d_dataset[chem_dataset]["DTXSID"]:
-                        for toxprint in l_toxprints:
-                            if d_toxprint[chem][toxprint] == "1":
-                                d_out[toxprint] = d_out[toxprint] + 1
-                        flag=1
-                        break
-            if flag == 0:
-                for toxprint in l_toxprints:
-                    if d_toxprint[chem][toxprint] == "1":
-                        d_out[toxprint] = d_out[toxprint] + 1
-
-        p_filout = pr_out + "count_toxprint"
-        filout = open(p_filout, "w")
-        filout.write("Toxprint\tcount\n")
-        for toxprint in d_out.keys():
-            if d_out[toxprint] != 0:
-                filout.write("%s\t%s\n"%(toxprint, d_out[toxprint]))
-        filout.close()
-
-        runExternal.barplotToxPrint(p_filout)
-
+    
     def analysisChemList(self, p_chemlist):
 
         d_chemList = toolbox.loadMatrix(p_chemlist, ",") 

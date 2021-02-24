@@ -103,7 +103,7 @@ housetasks <- read.delim(p_count, row.names = 1)
 dt <- as.table(as.matrix(housetasks))
 
 # reduce
-dt = dt[-which(rowSums(dt)<=20),]
+dt = dt[-which(rowSums(dt)<=(5*dim(dt)[2])),]
 
 
 
@@ -133,4 +133,4 @@ corrplot(chisq$residuals, is.cor = FALSE)
 dev.off()
 
 
-AFC(dt, paste(p_count, "_AFC.png",sep = ""))
+AFC(dt, p_count)

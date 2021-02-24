@@ -118,9 +118,12 @@ rownames(daff) = daff[,1]
 daff = as.data.frame(daff)
 daff = daff[rownames(ddesc),]
 
-
 # dataset
-d_dataset = read.csv(p_dataset, sep = ",")
+d_dataset = read.csv(p_dataset, sep = "\t")
+if(dim(d_dataset)[2] == 1){
+  d_dataset = read.csv(p_dataset, sep = ",")
+}
+
 
 if(length(unique(d_dataset[,1] == "--" | d_dataset[,1] == "")) != 1){
   d_dataset = d_dataset[-which(d_dataset[,1] == "--" | d_dataset[,1] == ""),]
@@ -141,30 +144,19 @@ if(exists("Group", d_dataset)){
   rownames(dtemp) = rownames(ddesc)
   colnames(dtemp) = c("ID", "Aff")
   dtemp = as.data.frame(dtemp)
-  
   dendogramCircleClass(ddesc, dtemp, "Group", pr_out)
 }
 
 
 
-
-
 l_aff_to_plot = colnames(daff)
 for(aff_to_plot in l_aff_to_plot){
-  
   if(!is.integer0(grep("_pred", aff_to_plot, fixed = TRUE))){
     dtemp = cbind(rownames(daff), daff[,aff_to_plot])
     rownames(dtemp) = rownames(daff)
     colnames(dtemp) = c("ID", "Aff")
     dtemp = as.data.frame(dtemp)
-    
     dtemp$Aff = as.double(as.character(dtemp$Aff))
-    
     dendogramCircle(ddesc, dtemp, aff_to_plot, pr_out)
-      
   }
-  
 }
-
-
-#dendogramCircle(ddesc, daff, pr_out)

@@ -19,8 +19,6 @@ class analysis:
         self.cor_val = cor_val
         self.max_quantile = max_quantile
 
-
-
     def prepDesc(self):
         pr_out = pathFolder.createFolder(self.pr_out + "Cleaned_Data/")
 
@@ -29,7 +27,6 @@ class analysis:
         if not path.exists(p_desc_cleaned):
             runExternal.preprocData(self.p_desc, pr_out, self.cor_val, self.max_quantile)
         self.p_desc_cleaned = p_desc_cleaned
-
 
     def PCA_plot(self):
 
@@ -147,7 +144,6 @@ class analysis:
         
         pr_out = pathFolder.createFolder(self.pr_out + "SOM/DescriptorSignif/")
         runExternal.descSignifByCluster(self.p_desc_cleaned, p_cluster, pr_out)
-
 
     def extract_actBySOMCluster(self, pr_png):
 

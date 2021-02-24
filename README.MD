@@ -5,6 +5,10 @@
 - R 3.5.X
 - Biotransformer: http://biotransformer.ca/
 
+# to do
+- compute compara and cerap for MC
+- redo veen diagram using ->https://cran.r-project.org/web/packages/eulerr/vignettes/venn-diagrams.html
+- do veen diagram with dataset
 
 
 # Updates
