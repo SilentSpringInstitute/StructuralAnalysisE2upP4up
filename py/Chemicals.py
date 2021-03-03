@@ -38,6 +38,17 @@ class Chemicals:
         self.p_desc_OPERA = p_desc_opera
         self.pr_desc = self.c_dataset.pr_desc
        
+
+    def computeAllOperaPred(self, pr_desc):
+        # load dataset
+        if not "c_dataset" in self.__dict__:
+            c_dataset = dataset.dataset(self.p_dataset, self.pr_out)
+            c_dataset.loadDataset(loadDb=self.loadDB)
+            self.c_dataset = c_dataset
+
+        p_desc_opera = self.c_dataset.computeAllOPERADesc(pr_desc)
+
+
     def buildDescSet(self, l_type_desc):
         """Select from OPERA only physico chem descriptors"""
 
@@ -175,7 +186,6 @@ class Chemicals:
         if FP == 1:
             cAnalysis.FPTanimoto(["topo", "MACCS", "Morgan"])
 
-    
     def analysisChemList(self, p_chemlist):
 
         d_chemList = toolbox.loadMatrix(p_chemlist, ",") 

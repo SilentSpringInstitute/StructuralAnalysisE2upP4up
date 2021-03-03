@@ -16,3 +16,7 @@
 - 29-06: Add function to compute biotransformation using Biotransformer
 - 14-07: Clean function for multiple used and add map projection functions
 - 12-08: Impove clustering function
+
+
+# Prediction
+TEST: https://www.epa.gov/chemical-research/toxicity-estimation-software-tool-test#install

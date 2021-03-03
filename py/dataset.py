@@ -80,6 +80,7 @@ class dataset:
                     if d_out[chem]["SMILES"] == "":
                         CASRN = d_out[chem]["CASRN"]
                         print("CASRN:", CASRN, "LOAD chem")
+                        print(p_dataset_formated)
                         c_search = searchInComptox.loadComptox(CASRN)
                         c_search.searchInDB()
                         if c_search.err != 1:
@@ -182,6 +183,55 @@ class dataset:
             for ddesc_run in l_ddesc_run:
                 if ddesc_run["MoleculeID"] == "Molecule_%i"%(i+1):
                     fopera.write("%s,%s\n"%(CASRN, ",".join(ddesc_run[desc] for desc in L_OPERA_DESC)))
+                    break
+            i = i + 1
+
+        fopera.close()
+        return p_filout
+
+    def computeAllOPERADesc(self, pr_desc):
+
+        if not "pr_desc" in self.__dict__:
+            self.pr_desc = pr_desc
+
+        p_filout = self.pr_out + "desc_OPERA_all.csv"
+        if path.exists(p_filout):
+           return p_filout
+
+
+        # write list of SMILES for OPERA
+        pr_OPERA = pathFolder.createFolder(self.pr_desc + "OPERA/", clean=1)
+        p_lSMI = pr_OPERA + "listChem.smi"
+        flSMI = open(p_lSMI, "w")
+        l_w = []
+        for CASRN in self.d_dataset.keys():
+            SMILES = self.d_dataset[CASRN]["SMILES"]
+            l_w.append(self.d_dataset[CASRN]["SMILES"])
+        
+        flSMI.write("\n".join(l_w))
+        flSMI.close()
+
+        p_desc_opera = pr_OPERA + "desc_opera_run.csv"
+        if not path.exists(p_desc_opera):
+            cCompDesc = CompDesc.CompDesc(p_lSMI, pr_OPERA)
+            cCompDesc.computeOperaFromListSMI(p_desc_opera)
+
+        l_chem = list(self.d_dataset.keys())
+        l_ddesc_run = toolbox.loadMatrixToList(p_desc_opera, sep = ",")
+
+        # extract l_desc
+        l_all_desc = l_ddesc_run[0].keys()
+
+        fopera = open(p_filout, "w")
+        fopera.write("CASRN,%s\n"%(",".join(l_all_desc)))
+
+        i = 0
+        imax = len(l_chem) 
+        while i < imax:
+            CASRN = self.d_dataset[l_chem[i]]["CASRN"]
+            for ddesc_run in l_ddesc_run:
+                if ddesc_run["MoleculeID"] == "Molecule_%i"%(i+1):
+                    fopera.write("%s,%s\n"%(CASRN, ",".join(ddesc_run[desc] for desc in l_all_desc)))
                     break
             i = i + 1
 

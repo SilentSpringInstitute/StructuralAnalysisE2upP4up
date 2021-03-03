@@ -2,7 +2,7 @@
 library(UpSetR)
 library(reshape2)
 library(magrittr)
-
+library(eulerr)
 
 
 ################
@@ -13,6 +13,7 @@ args <- commandArgs(TRUE)
 pgene = args[1]
 
 #pgene = "../../results/PFAS/Upset/upset_gene"
+#pgene = "c:/Users/aborr/research/Silent_Spring/breast_carcinogen/results/OverlapList/MC-Steroid-ER/upset_matrix"
 
 dgene = read.csv(pgene, sep = "\t", header = TRUE)
 rownames(dgene) = dgene[,1]
@@ -25,3 +26,10 @@ png(paste(pgene, ".png", sep = ""), res = 300, 5000, 3000)
 upset(dgene, nsets = nb_gene, matrix.color = "#DC267F", 
       main.bar.color = "#648FFF", sets.bar.color = "#FE6100")
 dev.off()
+
+
+png(paste(pgene, "_venn.png", sep = ""), res = 300, 1000, 1000)
+p = plot(euler(dgene), quantities = TRUE)
+print(p)
+dev.off()
+
