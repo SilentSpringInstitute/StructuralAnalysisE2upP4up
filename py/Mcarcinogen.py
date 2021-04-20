@@ -26,6 +26,8 @@ class Mcarcinogen:
 
         self.COR_VAL = COR_VAL
         self.MAX_QUANTILE = MAX_QUANTILE
+
+        self.pr_desc = pathFolder.createFolder(pr_out + "DESC/")
     
     def loadCrossRefExcel(self, rm_radiation=1):
 
@@ -88,7 +90,6 @@ class Mcarcinogen:
                 self.d_steroid[chem] =  deepcopy(self.d_P4up[chem])
                 self.d_steroid[chem]["Efficacy/potency"] = "P4-%s"%(self.d_steroid[chem]["Efficacy/potency"])
         
-
     def loadToxPrint(self):
         d_toxprint = {}
         l_p_ToxPrint = listdir(self.pr_toxprint)
@@ -187,6 +188,7 @@ class Mcarcinogen:
                     d_all[CASRN]["genotox"] = "NA"
                 else:
                     d_all[CASRN]["genotox"] = self.d_MC[CASRN]["Genotoxic_CCRIS/QSAR/ToxValDB"]
+                d_all[CASRN]["MC"] = "1"
                 d_all[CASRN]["ER"] = []
                 d_all[CASRN]["P4up"] = "NA"
                 d_all[CASRN]["E2up"] = "NA"
@@ -203,6 +205,7 @@ class Mcarcinogen:
                 d_all[CASRN]["P4up"] = "NA"
                 d_all[CASRN]["E2up"] = "NA"
                 d_all[CASRN]["Group"] = ["ER"]
+                d_all[CASRN]["MC"] = "0"
             else:
                 d_all[CASRN]["ER"].append("agonist")
                 d_all[CASRN]["Group"].append("ER")
@@ -217,6 +220,7 @@ class Mcarcinogen:
                 d_all[CASRN]["P4up"] = "NA"
                 d_all[CASRN]["E2up"] = "NA"
                 d_all[CASRN]["Group"] = ["ER"]
+                d_all[CASRN]["MC"] = "0"
             else:
                 d_all[CASRN]["ER"].append("antagonist")
                 if not "ER" in d_all[CASRN]["Group"]:
@@ -232,6 +236,7 @@ class Mcarcinogen:
                 d_all[CASRN]["P4up"] = "NA"
                 d_all[CASRN]["E2up"] = "NA"
                 d_all[CASRN]["Group"] = ["ER"]
+                d_all[CASRN]["MC"] = "0"
             else:
                 if not "ER" in d_all[CASRN]["Group"]:
                     d_all[CASRN]["Group"].append("ER")
@@ -247,6 +252,7 @@ class Mcarcinogen:
                 d_all[CASRN]["P4up"] = self.d_P4up[CASRN]["Efficacy/potency"]
                 d_all[CASRN]["E2up"] = "NA"
                 d_all[CASRN]["Group"] = ["P4up"]
+                d_all[CASRN]["MC"] = "0"
             else:
                 d_all[CASRN]["P4up"] = self.d_P4up[CASRN]["Efficacy/potency"]
                 d_all[CASRN]["Group"].append("P4up")
@@ -261,14 +267,14 @@ class Mcarcinogen:
                 d_all[CASRN]["P4up"] = "NA"
                 d_all[CASRN]["E2up"] = self.d_E2up[CASRN]["Efficacy/potency"]
                 d_all[CASRN]["Group"] = ["E2up"]
+                d_all[CASRN]["MC"] = "0"
             else:
                 d_all[CASRN]["E2up"] = self.d_E2up[CASRN]["Efficacy/potency"]
                 d_all[CASRN]["Group"].append("E2up")
 
         self.d_all = d_all
 
-
-    def formatSetofChem(self, l_chemsets):
+    def formatSetofChem(self, l_chemsets = ["ER", "MC", "Steroid", "E2", "P4", "all", "Steroid-up", "ER-agonist"]):
         pr_dataset = pathFolder.createFolder(self.pr_out + "setOfChemicals/")
 
         d_out = {}
@@ -319,9 +325,9 @@ class Mcarcinogen:
                     filout.write("%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_P4up[CASRN]["SMILES"], self.d_P4up[CASRN]["Chemical name"], self.d_P4up[CASRN]["Efficacy/potency"], self.d_P4up[CASRN]["LEC (µM)"]))
 
             if chemset == "all":
-                filout.write("CASRN\tSMILES\tChemical name\tgenotox\tE2up\tP4up\tER\tGroup\tAff\n")
+                filout.write("CASRN\tSMILES\tChemical name\tMC\tgenotox\tE2up\tP4up\tER\tGroup\tAff\n")
                 for CASRN in self.d_all.keys():
-                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
+                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
             filout.close()
 
         self.d_dataset = d_out
@@ -378,14 +384,35 @@ class Mcarcinogen:
 
         runExternal.plotX2(p_filout)
 
-
-    def main(self):
+    def prepSets(self):
         self.loadCrossRefExcel()
         self.splitMCGenotox()
         self.defineE2P4active(["higher", "medium", "lower"])
         self.defineERactive()
         self.mergeAllSets()
+
+        # write different chemical sets
+        self.formatSetofChem(["ER", "MC", "Steroid", "E2", "P4", "all", "Steroid-up", "ER-agonist"])#["Steroid-up", "Steroid"])#, "ER-agonist", "Steroid"])
+       
+
+    def main(self):
+
+        # prepare set of chemicals
+        self.prepSets()
         
+        STOPMC393
+
+        # Compute descriptor
+        pr_analysis = pathFolder.createFolder(self.pr_out + "desc_by_list/")
+        for dataset in self.d_dataset.keys():
+            pr_chems = pathFolder.createFolder(pr_analysis + dataset + "/")
+            c_Chems = Chemicals.Chemicals(self.d_dataset[dataset], pr_chems)
+            c_Chems.computeDesc(self.pr_desc)
+            c_Chems.computeAllOperaPred(self.pr_desc)
+            c_Chems.buildDescSet(["rdkit"])
+            c_Chems.analysisDescBasedData(self.COR_VAL, self.MAX_QUANTILE, PCA=1, histDesc=1, SOM=1, clustering=0, Hclust=1)
+
+
 
         # overlap between dataset
         self.overlapBetweenListChem(["MC", "genotoxic", "Steroid-up", "ER-agonist"])
@@ -403,21 +430,6 @@ class Mcarcinogen:
         # X2 for toxprint
         self.comparisonToxPrintCount(["MC", "Steroid-up", "Steroid"])
 
-
-        # compute descriptor and analysis
-        for dataset in self.d_dataset.keys():
-            pr_chems = pathFolder.createFolder(self.pr_out + dataset + "/")
-            c_Chems = Chemicals.Chemicals(self.d_dataset[dataset], pr_chems)
-            c_Chems.computeDesc(self.pr_out + "DESC/")
-            c_Chems.computeAllOperaPred(self.pr_out + "DESC/")
-            c_Chems.buildDescSet(["rdkit"])
-            c_Chems.computeAllOperaPred(self.pr_out + "DESC/")
-            c_Chems.analysisDescBasedData(self.COR_VAL, self.MAX_QUANTILE, PCA=1, histDesc=1, SOM=1, clustering=0, Hclust=1)
-
-        # 
-
-
-
     def computeDescAnalysisFromList(p_list, p_ToxPrint, p_chemList, PR_RESULTS):
 
         pr_results = pathFolder.createFolder(PR_RESULTS + "analysis_individual-dataset/" + p_list.split("/")[-1][0:-4] + "/")
@@ -432,10 +444,6 @@ class Mcarcinogen:
 
         cChem.analysisToxPrint(p_ToxPrint)
         cChem.analysisChemList(p_chemList)
-
-
-
-
 
     def mergedataset(l_psetchems, PR_RESULTS):
         

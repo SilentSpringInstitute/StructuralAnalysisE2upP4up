@@ -106,8 +106,20 @@ def vennPlot(p_filin):
     cmd = "./vennPlot.R %s"%(p_filin)
     runRCMD(cmd)
 
-def multiSetsAnalysis(p_desc):
-    cmd = "./multi_sets_analysis.R %s"%(p_desc)
+def multiSetsAnalysis(p_filin):
+    cmd = "./multi_sets_analysis.R %s"%(p_filin)
+    runRCMD(cmd)
+
+def barplotHormones(p_filin):
+    cmd = "./barplotHormones.R %s"%(p_filin)
+    runRCMD(cmd)   
+
+def PCA_SteroiMC(p_matrix_single_hitc):
+    cmd = "./PCA_SteroiMC.R %s"%(p_matrix_single_hitc)
+    runRCMD(cmd)
+
+def FP_card(p_filin):
+    cmd = "./FP_card.R %s"%(p_filin)
     runRCMD(cmd)
 
 ##############
