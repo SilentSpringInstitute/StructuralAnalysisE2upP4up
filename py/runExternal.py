@@ -122,6 +122,11 @@ def FP_card(p_filin):
     cmd = "./FP_card.R %s"%(p_filin)
     runRCMD(cmd)
 
+def dendogramProp(p_dataset, p_desc):
+
+    cmd =  "./dendogramProp.R %s"%(p_desc)
+    runRCMD(cmd)
+
 ##############
 # run biotransformer tool
 

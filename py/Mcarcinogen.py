@@ -109,7 +109,7 @@ class Mcarcinogen:
         
         for chem in self.d_ER.keys():
             if float(self.d_ER[chem]["AUC.Antagonist"]) >= 0.1:
-                self.d_ERantagonist[chem] = deepcopy(self.d_ER[chem])       
+                self.d_ERantagonist[chem] = deepcopy(self.d_ER[chem])
 
     def overlapBetweenListChem(self, l_list_chem):
 
@@ -232,7 +232,7 @@ class Mcarcinogen:
                 d_all[CASRN]["name"] = self.d_ER[CASRN]["Name"]
                 d_all[CASRN]["SMILES"] = self.d_ER[CASRN]["SMILES"]
                 d_all[CASRN]["genotox"] = "NA"
-                d_all[CASRN]["ER"] = []
+                d_all[CASRN]["ER"] = ["tested"]
                 d_all[CASRN]["P4up"] = "NA"
                 d_all[CASRN]["E2up"] = "NA"
                 d_all[CASRN]["Group"] = ["ER"]
@@ -394,6 +394,20 @@ class Mcarcinogen:
         # write different chemical sets
         self.formatSetofChem(["ER", "MC", "Steroid", "E2", "P4", "all", "Steroid-up", "ER-agonist"])#["Steroid-up", "Steroid"])#, "ER-agonist", "Steroid"])
        
+    def clusterMC(self):
+
+        pr_out = pathFolder.createFolder(self.pr_out + "clusterMC/")
+        p_all = self.d_dataset["all"]
+
+        # extract descriptor
+        c_chems = Chemicals.Chemicals(p_all, pr_out)
+        c_chems.computeDesc(self.pr_desc)
+
+        # run dendogram with circle of prop
+        runExternal.dendogramProp(p_all, c_chems.p_desc_rdkit) 
+        STOP402
+
+        return
 
     def main(self):
 

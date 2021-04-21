@@ -32,6 +32,8 @@ MAX_QUANTILE = 90
 ############################
 cMC = Mcarcinogen.Mcarcinogen(p_crossRef, COR_VAL, MAX_QUANTILE, PR_ROOT + "comptox/", PR_RESULTS)
 cMC.prepSets()
+STOPMAIN35
+cMC.clusterMC()
 #cMC.main()
 main36
 
