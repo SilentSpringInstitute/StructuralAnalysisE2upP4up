@@ -37,7 +37,7 @@ class Chemicals:
         self.p_desc_rdkit = p_desc
         self.p_desc_OPERA = p_desc_opera
         self.pr_desc = self.c_dataset.pr_desc
-       
+     
 
     def computeAllOperaPred(self, pr_desc):
         # load dataset
@@ -47,7 +47,6 @@ class Chemicals:
             self.c_dataset = c_dataset
 
         p_desc_opera = self.c_dataset.computeAllOPERADesc(pr_desc)
-
 
     def buildDescSet(self, l_type_desc):
         """Select from OPERA only physico chem descriptors"""
@@ -150,13 +149,14 @@ class Chemicals:
 
         self.c_dataset.computeDescProductBiotransformed()
 
-    def analysisDescBasedData(self, cor_val, max_quantile, PCA=0, Hclust=0, clustering=0, SOM=0, histDesc =0, FP = 0):
+    def analysisDescBasedData(self, cor_val, max_quantile, PCA=0, Hclust=0, clustering=0, SOM=0, SOM_SIZE =10, histDesc =0, FP = 0):
 
-        if not "p_desc" in self.__dict__:
+        if not "p_desc_rdkit" in self.__dict__:
             self.err = 1
             self.log = "load dataset first"
+            return 
 
-        cAnalysis = analysis.analysis(self.p_dataset, self.p_desc, self.p_desc_OPERA, self.pr_results, cor_val, max_quantile)
+        cAnalysis = analysis.analysis(self.p_dataset, self.p_desc_rdkit, self.p_desc_OPERA, self.pr_results, cor_val, max_quantile)
         cAnalysis.prepDesc()
 
         # 2.1 PCA
@@ -173,8 +173,7 @@ class Chemicals:
 
         # 2.4 SOM
         if SOM == 1:
-            size = 15
-            cAnalysis.generate_SOM(10)
+            cAnalysis.generate_SOM(SOM_SIZE)
             cAnalysis.signifDescBySOMCluster()
             cAnalysis.extract_actBySOMCluster(self.pr_desc + "PNG/") # have to run !!!!
 

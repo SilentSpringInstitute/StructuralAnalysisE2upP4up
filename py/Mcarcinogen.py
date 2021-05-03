@@ -394,18 +394,34 @@ class Mcarcinogen:
         # write different chemical sets
         self.formatSetofChem(["ER", "MC", "Steroid", "E2", "P4", "all", "Steroid-up", "ER-agonist"])#["Steroid-up", "Steroid"])#, "ER-agonist", "Steroid"])
        
-    def clusterMC(self):
+    def clusterPropMC(self):
 
-        pr_out = pathFolder.createFolder(self.pr_out + "clusterMC/")
+        pr_out = pathFolder.createFolder(self.pr_out + "clusterMC/all/")
         p_all = self.d_dataset["all"]
+        p_MC = self.d_dataset["MC"]
 
         # extract descriptor
-        c_chems = Chemicals.Chemicals(p_all, pr_out)
-        c_chems.computeDesc(self.pr_desc)
+        #c_chems = Chemicals.Chemicals(p_all, pr_out)
+        #c_chems.computeDesc(self.pr_desc)
 
         # run dendogram with circle of prop
-        runExternal.dendogramProp(p_all, c_chems.p_desc_rdkit) 
-        STOP402
+        #runExternal.dendogramClusterProp(p_all, c_chems.p_desc_rdkit, pr_out) 
+
+        # prepare dataset for MC
+        pr_out = pathFolder.createFolder(self.pr_out + "clusterMC/analysis_desc/")
+        c_chems_MC = Chemicals.Chemicals(p_MC, pr_out)
+        c_chems_MC.computeDesc(self.pr_desc)
+        c_chems_MC.buildDescSet(["rdkit"])
+       
+        # SOM for MC
+        c_chems_MC.analysisDescBasedData(0.9, 90, SOM=1, SOM_SIZE = 0)
+        c_chems_MC.analysisDescBasedData(0.9, 90, SOM=1, SOM_SIZE = 8)
+        p_SOM = pr_out + "rdkit/SOM/SOM_model.RData"
+        
+        # project in SOM the different properties
+        runExternal.projectPropInSOM(p_SOM, p_all, pr_out)
+
+
 
         return
 

@@ -124,7 +124,57 @@ applySOM = function(som_model, d_AC50, pr_out){
 }
 
 
-
+analyzeSOMSize = function(ddesc, l_sizes, pr_out){
+  
+  
+  ddesc = as.matrix(ddesc)
+  
+  M_chem_cluster = NULL
+  l_emptyCluster = NULL
+  
+  for(size in l_sizes){
+    som_grid <- somgrid(xdim=size, ydim=size, topo="hexagonal")
+    som_model <- som(ddesc, 
+                     grid=som_grid, 
+                     rlen=100, 
+                     alpha=c(0.05,0.01), 
+                     keep.data = TRUE) 
+    
+    ltabinit = table(som_model$unit.classif)
+    M_chem_cluster = append(M_chem_cluster, mean(ltabinit))
+    l_emptyCluster = append(l_emptyCluster, size * size - length(ltabinit))
+    
+  }
+  
+  d_out = cbind(M_chem_cluster, l_emptyCluster)
+  d_out = cbind(d_out, l_sizes)
+  rownames(d_out) = l_sizes
+  
+  write.table(d_out, paste(pr_out, "size_analysis.csv", sep = ""), sep = ",")
+  
+  d_out = as.data.frame(d_out)
+  
+  scaleFactor <- max(d_out$M_chem_cluster) / max(d_out$l_emptyCluster)
+  
+  ggplot(d_out, aes(x=l_sizes)) +
+    geom_smooth( aes(y=M_chem_cluster), col="red") + 
+    geom_smooth( aes(y=l_emptyCluster * scaleFactor), col="blue") + 
+    scale_y_continuous(
+      # Features of the first axis
+      name = "Av. chemical by cluster",
+      # Add a second axis and specify its features
+      sec.axis = sec_axis( ~./scaleFactor, name="Nb. empty cluster")
+    )+
+    theme(
+      axis.title.y.left=element_text(color="blue"),
+      axis.text.y.left=element_text(color="blue"),
+      axis.title.y.right=element_text(color="red"),
+      axis.text.y.right=element_text(color="red")
+    )
+  ggsave(paste(pr_out, "SOM_size.png", sep = ""), dpi=300, height = 8, width = 8)
+  
+  
+}
 
 ################
 #     MAIN     #
@@ -143,8 +193,16 @@ size = as.integer(args[4])
 #size = 15
 
 
+
+#p_desc = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/clusterMC/MC/rdkit/Cleaned_Data/desc1D2D_cleaned.csv"
+#pr_out = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/clusterMC/MC/rdkit/"
+
+
 # open files
 ddesc = read.csv(p_desc, sep = ",", header = TRUE)
+if(dim(ddesc)[2] == 1){
+  ddesc = read.csv(p_desc, sep = "\t", header = TRUE)
+}
 rownames(ddesc) = ddesc[,1]
 ddesc = ddesc[,-1]
 
@@ -161,11 +219,15 @@ if (p_AC50 != "0"){
 # define model
 p_model = paste(pr_out , "SOM_model.RData", sep = "")
 if(!file.exists(p_model)){
-  som_model = generateSOM(ddesc, size, size, pr_out)
+  # if size = 0 => need to analyse size of SOM
+  if(size == 0){
+    l_sizes = c(3,4,5,6,7,8,9,10,11,12,13,14,15)
+    analyzeSOMSize (ddesc, l_sizes, pr_out)
+  }else{
+    som_model = generateSOM(ddesc, size, size, pr_out)
+    applySOM(som_model, dAC50, pr_out)
+  }
 }else{
   load(p_model)
+  applySOM(som_model, dAC50, pr_out)
 }
-
-
-# put active in the SOM
-applySOM(som_model, dAC50, pr_out)
