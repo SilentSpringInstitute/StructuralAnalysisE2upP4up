@@ -14,7 +14,7 @@ dendogramCluster = function(ddes, d_cluster, daff, prout){
   
   #calibrate affinity for color
   
-  daff = daff[,c("genotox", "E2up",  "P4up" , "ER")]
+  daff = daff[,c("MC", "genotox", "E2up",  "P4up" , "ER")]
   
   daff = as.data.frame(daff)
   #daff = cbind(rownames(daff), daff)
@@ -58,6 +58,8 @@ clusterChem = function(desc, prout){
   
   # scale data in input
   din = scale (desc)
+
+  print(dim(din))
   
   # hclust with ward D2 and a gap stat approach 
   p = fviz_nbclust(din, hcut, hcut_metho = "ward.D2",  method = "gap_stat", k.max = 50)
@@ -94,20 +96,19 @@ args <- commandArgs(TRUE)
 p_prop = args[1]
 p_desc = args[2]
 pr_out = args[3]
+val_cor = as.double(args[4])
+max_q = as.integer(args[5])
 
-val_cor = 0.9
-max_q = 90
+#val_cor = 0.9
+#max_q = 90
 
-
-p_prop = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/clusterMC/all/dataset.csv"
-p_desc = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/clusterMC/desc_1D2D.csv"
-pr_out = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/clusterMC/"
+#p_prop = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/setOfChemicals/E2.csv"
+#p_desc = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/Clustering/E2_rdkit/rdkit.csv"
+#pr_out = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/Clustering/E2_rdkit/"
 
 
 d_prop = read.csv(p_prop, sep = "\t", row.names = 1)
-d_prop = d_prop[which(d_prop$MC == 1),]
-
-drops = c("Group", "Aff")
+drops = c("Group", "Aff", "Chemical.name", "SMILES")
 d_prop = d_prop[ , !(names(d_prop) %in% drops)]
 
 # for E2up
@@ -122,13 +123,19 @@ d_prop$P4up[which(d_prop$P4up != "NEG" & d_prop$P4up != "NT")] = "POS"
 
 #for ER
 d_prop$ER[which(d_prop$ER == "")] = "NT"
-d_prop$ER[which(d_prop$ER == "agonist")] = "POS"
+d_prop$ER[which(d_prop$ER == "tested")] = "NEG"
+d_prop$ER[which(d_prop$ER == "agonist" | d_prop$ER == "antagonist")] = "POS"
 
 #genotox
-d_prop$genotox[which(d_prop$genotox == "not tested" | d_prop$genotox == "predicted genotoxic")] = "NT"
+d_prop$genotox[which(d_prop$genotox == "not tested" | d_prop$genotox == "predicted genotoxic" | d_prop$genotox == "" | is.na(d_prop$genotox))] = "NT"
 d_prop$genotox[which(d_prop$genotox == "not genotoxic")] = "NEG"
 d_prop$genotox[which(d_prop$genotox != "NEG" & d_prop$genotox != "NT")] = "POS"
 
+
+#forMC
+d_prop$MC[which(d_prop$MC == "" | is.na(d_prop$MC))] = "NT"
+d_prop$MC[which(d_prop$MC == "0")] = "NEG"
+d_prop$MC[which(d_prop$MC == "1")] = "POS"
 
 # open and reduce descriptor
 l_d_desc = openDataVexcluded(p_desc, val_cor, pr_out,c(1,2))
@@ -139,11 +146,12 @@ d_desc = d_desc[,-c(1,2)]
 d_desc = apply(d_desc, 2, as.double)
 d_desc = delnohomogeniousdistribution(d_desc, max_q)
 rownames(d_desc) = l_casrn
+d_desc = as.data.frame(d_desc)
 
-l_casrn = intersect(rownames(d_prop), rownames(d_desc))
+l_casrn = intersect(rownames(d_desc), rownames(d_prop))
+
 d_prop = d_prop[l_casrn,]
 d_desc = d_desc[l_casrn,]
-
 
 #cluster chem for representation
 d_cluster = clusterChem(d_desc, pr_out)

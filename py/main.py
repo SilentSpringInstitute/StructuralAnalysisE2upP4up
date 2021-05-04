@@ -1,5 +1,5 @@
 from os import path
-import Mcarcinogen
+import MCcrossref
 import steroidogenesis
 import pathFolder
 
@@ -13,7 +13,8 @@ PR_DATA = PR_ROOT + "data/"
 
 # Define dataset #
 ##################
-p_crossRef = PR_DATA + "Updated_MC_list_crossref_other_lists_020221.xlsx"
+p_crossRef = PR_DATA + "Updated_MC_list_crossref_other_lists_020221.xlsx" # need to update 
+# 270 chemicals as input
 
 
 # Dataset preparation value #
@@ -28,19 +29,19 @@ MAX_QUANTILE = 90
 #cStereo = steroidogenesis.Steroidogenesis(PR_DATA, PR_RESULTS)
 #cStereo.main()
 
-# LOAD AND RUN MC ANALYSIS #
+# LOAD AND RUN MC crossref ANALYSIS #
 ############################
-cMC = Mcarcinogen.Mcarcinogen(p_crossRef, COR_VAL, MAX_QUANTILE, PR_ROOT + "comptox/", PR_RESULTS)
-cMC.prepSets()
-cMC.clusterPropMC()
-#cMC.main()
-main36
+
+c_MCcrossref = MCcrossref.MCcrossref(p_crossRef, COR_VAL, MAX_QUANTILE, PR_ROOT + "comptox/", PR_RESULTS)
+c_MCcrossref.main()
+#c_MCcrossref.clusterPropMC()
+#c_MCcrossref.main()
 
 
 # MIXTE INFORMATION FROM STEROIDOGENESIS AND MC #
 #################################################
 #cStereo.PCA_FoldChangeMC(cMC.d_MC)
-cStereo.cardTanimoto(cMC.d_MC)
+#cStereo.cardTanimoto(cMC.d_MC)
 
 
 

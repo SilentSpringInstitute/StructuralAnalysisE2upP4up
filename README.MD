@@ -1,22 +1,19 @@
-# Script used to classify PFAS chemicals based on the structre
+# Scripts used structuraly analyze breast carcinogen chemicals
+Project developed to analysis chemicals that can be classified as a breast carcinogens or related to 
 
 # Dependancy
-- Python3.X
-- R 3.5.X
-- Biotransformer: http://biotransformer.ca/
+## Coding language 
+- Python3.9
+- CompDesc library 
+- R 4.0
+- RDKIT (2020) in environement conda rdkit-env
+## Prediction - QSPR models 
+- genotoxicity: TEST (https://www.epa.gov/chemical-research/toxicity-estimation-software-tool-test#install)
+- OPERA ER-AR prediction
 
-# to do
-- compute compara and cerap for MC
-- redo veen diagram using ->https://cran.r-project.org/web/packages/eulerr/vignettes/venn-diagrams.html
-- do veen diagram with dataset
+# to do list
+- make clustering using toxifor on BCC and P4up/E2up chemicals
+- cluster using chemicals type classification 
 
-
-# Updates
-- 25-06: Init folder and project
-- 29-06: Add function to compute biotransformation using Biotransformer
-- 14-07: Clean function for multiple used and add map projection functions
-- 12-08: Impove clustering function
-
-
-# Prediction
-TEST: https://www.epa.gov/chemical-research/toxicity-estimation-software-tool-test#install
+# Main update
+- 05-03-21: init project from chemicals clustering - clean up legacy functions 

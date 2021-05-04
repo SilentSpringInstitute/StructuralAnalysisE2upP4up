@@ -5,18 +5,15 @@ import math
 
 import pathFolder
 import dataset
-import analysis
-import Chemicals
+import MakePlots
+import runDescriptors
 import comparisonChemicalLists
 import toolbox
 import runExternal
 
 
 
-
-
-
-class Mcarcinogen:
+class MCcrossref:
 
     def __init__(self, p_crossref, COR_VAL, MAX_QUANTILE, pr_ToxPrints, pr_out):
 
@@ -116,6 +113,12 @@ class Mcarcinogen:
         pr_out = pathFolder.createFolder(self.pr_out + "OverlapList/")
         pr_results = pathFolder.createFolder(pr_out + "-".join(l_list_chem) + "/")
 
+        # check if file exist to not repete
+        p_upset = pr_results + "upset_matrix"
+        if path.exists(p_upset):
+            return 
+
+
         d_d_chem = {}
         l_CASRN = []
         for list_chem in l_list_chem:
@@ -157,7 +160,7 @@ class Mcarcinogen:
                     d_d_chem[list_chem].append(chem)
                     l_CASRN.append(chem)
             
-        p_upset = pr_results + "upset_matrix"
+        
         f_open = open(p_upset, "w")
         f_open.write("\t" + "\t".join(list(d_d_chem.keys())) + "\n")
         l_CASRN = list(set(l_CASRN))
@@ -284,48 +287,41 @@ class Mcarcinogen:
             if path.exists(p_filout):
                 continue
             filout = open(p_filout, "w")
+            filout.write("CASRN\tSMILES\tChemical name\tMC\tgenotox\tE2up\tP4up\tER\tGroup\tAff\n")
+
             if chemset == "MC":
-                filout.write("CASRN\tDTXSID\tSMILES\tGroup\tAff\n")
                 for CASRN in self.d_MC.keys():
-                    filout.write("%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_MC[CASRN]["DTXSID"],self.d_MC[CASRN]["SMILES"], self.d_MC[CASRN]["Genotoxic_CCRIS/QSAR/ToxValDB"], self.d_MC[CASRN]["Genotoxic_CCRIS/QSAR/ToxValDB"]))
+                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
             
             if chemset == "genotox":
-                filout.write("CASRN\tDTXSID\tSMILES\tGroup\tAff\n")
                 for CASRN in self.d_MCgenotox["genotox"].keys():
-                    filout.write("%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_MC[CASRN]["DTXSID"],self.d_MC[CASRN]["SMILES"], self.d_MC[CASRN]["Genotoxic_CCRIS/QSAR/ToxValDB"], self.d_MC[CASRN]["Genotoxic_CCRIS/QSAR/ToxValDB"]))
+                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
             
             if chemset == "Steroid-up":
-                filout.write("CASRN\tChemical name\tSMILES\tGroup\tAff\n")
                 for CASRN in self.d_steroid_active.keys():
-                    filout.write("%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_steroid_active[CASRN]["Chemical name"],  self.d_steroid_active[CASRN]["SMILES"], self.d_steroid_active[CASRN]["Efficacy/potency"], self.d_steroid_active[CASRN]["LEC (µM)"]))
+                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
             
             if chemset == "Steroid":
-                filout.write("CASRN\tChemical name\tGroup\tSMILES\tAff\n")
                 for CASRN in self.d_steroid.keys():
-                    filout.write("%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_steroid[CASRN]["Chemical name"], self.d_steroid[CASRN]["Efficacy/potency"], self.d_steroid[CASRN]["SMILES"], self.d_steroid[CASRN]["LEC (µM)"]))
+                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
 
             if chemset == "ER-agonist":
-                filout.write("CASRN\tSMILES\tChemical name\tGroup\tAff\n")
                 for CASRN in self.d_ERagonist.keys():
-                    filout.write("%s\t%s\t%s\tactive\t%s\n"%(CASRN, self.d_ERagonist[CASRN]["SMILES"], self.d_ERagonist[CASRN]["Name"], self.d_ERagonist[CASRN]["AUC.Agonist"]))
+                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
 
             if chemset == "ER":
-                filout.write("CASRN\tSMILES\tChemical name\tGroup\tAff\n")
                 for CASRN in self.d_ER.keys():
-                    filout.write("%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_ER[CASRN]["SMILES"], self.d_ER[CASRN]["Name"], self.d_ER[CASRN]["structure_category"], self.d_ER[CASRN]["AUC.Agonist"]))
+                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
 
             if chemset == "E2":
-                filout.write("CASRN\tSMILES\tChemical name\tGroup\tAff\n")
                 for CASRN in self.d_E2up.keys():
-                    filout.write("%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_E2up[CASRN]["SMILES"], self.d_E2up[CASRN]["Chemical name"], self.d_E2up[CASRN]["Efficacy/potency"], self.d_E2up[CASRN]["LEC (µM)"]))
+                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
 
             if chemset == "P4":
-                filout.write("CASRN\tSMILES\tChemical name\tGroup\tAff\n")
                 for CASRN in self.d_P4up.keys():
-                    filout.write("%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_P4up[CASRN]["SMILES"], self.d_P4up[CASRN]["Chemical name"], self.d_P4up[CASRN]["Efficacy/potency"], self.d_P4up[CASRN]["LEC (µM)"]))
+                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
 
             if chemset == "all":
-                filout.write("CASRN\tSMILES\tChemical name\tMC\tgenotox\tE2up\tP4up\tER\tGroup\tAff\n")
                 for CASRN in self.d_all.keys():
                     filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
             filout.close()
@@ -393,74 +389,39 @@ class Mcarcinogen:
 
         # write different chemical sets
         self.formatSetofChem(["ER", "MC", "Steroid", "E2", "P4", "all", "Steroid-up", "ER-agonist"])#["Steroid-up", "Steroid"])#, "ER-agonist", "Steroid"])
-       
-    def clusterPropMC(self):
 
-        pr_out = pathFolder.createFolder(self.pr_out + "clusterMC/all/")
-        p_all = self.d_dataset["all"]
-        p_MC = self.d_dataset["MC"]
+    def analysisByDataset(self, dataset, l_desc, cor_val, max_q, hclust=0, SOM=0, SOM_size=8):
 
-        # extract descriptor
-        #c_chems = Chemicals.Chemicals(p_all, pr_out)
-        #c_chems.computeDesc(self.pr_desc)
-
-        # run dendogram with circle of prop
-        #runExternal.dendogramClusterProp(p_all, c_chems.p_desc_rdkit, pr_out) 
-
-        # prepare dataset for MC
-        pr_out = pathFolder.createFolder(self.pr_out + "clusterMC/analysis_desc/")
-        c_chems_MC = Chemicals.Chemicals(p_MC, pr_out)
-        c_chems_MC.computeDesc(self.pr_desc)
-        c_chems_MC.buildDescSet(["rdkit"])
-       
-        # SOM for MC
-        c_chems_MC.analysisDescBasedData(0.9, 90, SOM=1, SOM_SIZE = 0)
-        c_chems_MC.analysisDescBasedData(0.9, 90, SOM=1, SOM_SIZE = 8)
-        p_SOM = pr_out + "rdkit/SOM/SOM_model.RData"
+        pr_out = pathFolder.createFolder("%sAnalysis_%s/%s/"%(self.pr_out, dataset, "-".join(l_desc)))
         
-        # project in SOM the different properties
-        runExternal.projectPropInSOM(p_SOM, p_all, pr_out)
+        # build dataset - based on list of descriptor available
+        if not "c_Desc" in self.__dict__:
+            return "Error - build descriptor before run clustering"
 
+        # create the descriptor set
+        p_desc = self.c_Desc.buildDescSet(dataset, l_desc, pr_out)
 
-
-        return
-
-    def main(self):
-
-        # prepare set of chemicals
-        self.prepSets()
+        #load the analysis class
+        c_MakePlot = MakePlots.MakePlots(p_dataset=self.d_dataset[dataset], p_desc=p_desc, pr_out=pr_out, p_opera_all = self.c_Desc.d_desc[dataset]["all OPERA pred"], cor_val=cor_val, max_quantile=max_q)
         
-        STOPMC393
-
-        # Compute descriptor
-        pr_analysis = pathFolder.createFolder(self.pr_out + "desc_by_list/")
-        for dataset in self.d_dataset.keys():
-            pr_chems = pathFolder.createFolder(pr_analysis + dataset + "/")
-            c_Chems = Chemicals.Chemicals(self.d_dataset[dataset], pr_chems)
-            c_Chems.computeDesc(self.pr_desc)
-            c_Chems.computeAllOperaPred(self.pr_desc)
-            c_Chems.buildDescSet(["rdkit"])
-            c_Chems.analysisDescBasedData(self.COR_VAL, self.MAX_QUANTILE, PCA=1, histDesc=1, SOM=1, clustering=0, Hclust=1)
+        if hclust == 1:
+            c_MakePlot.hclusterByProp()
 
 
+        if SOM == 1:
+            c_MakePlot.SOMClustering(nb_cluster=0)
+            c_MakePlot.SOMClustering(nb_cluster=SOM_size)
+            #c_MakePlot.SOMMapProp() # maybe need to be developed to extract by cluster the percentage of MC for example or other prop
+        
 
-        # overlap between dataset
-        self.overlapBetweenListChem(["MC", "genotoxic", "Steroid-up", "ER-agonist"])
-        self.overlapBetweenListChem(["MC", "Steroid", "ER"])
-        self.overlapBetweenListChem(["MC", "Steroid", "ER-agonist", "genotoxic"])
-        self.overlapBetweenListChem(["MC", "Steroid-up", "ER-agonist", "genotoxic"])
-        # load ToxPrint
-        self.loadToxPrint()
 
-        # Write datasets
-        self.formatSetofChem(["ER", "MC", "Steroid", "E2", "P4", "all", "Steroid-up", "ER-agonist"])#["Steroid-up", "Steroid"])#, "ER-agonist", "Steroid"])
-        # plot toxplint barplot
-        self.ToxPrintCount(["MC", "Steroid-up", "Steroid", "ER-agonist", "all"])
-
-        # X2 for toxprint
-        self.comparisonToxPrintCount(["MC", "Steroid-up", "Steroid"])
-
+    
     def computeDescAnalysisFromList(p_list, p_ToxPrint, p_chemList, PR_RESULTS):
+
+        """
+        TO DELETE
+        
+        """
 
         pr_results = pathFolder.createFolder(PR_RESULTS + "analysis_individual-dataset/" + p_list.split("/")[-1][0:-4] + "/")
         pr_desc = pathFolder.createFolder(PR_RESULTS + "DESC/")
@@ -475,55 +436,8 @@ class Mcarcinogen:
         cChem.analysisToxPrint(p_ToxPrint)
         cChem.analysisChemList(p_chemList)
 
-    def mergedataset(l_psetchems, PR_RESULTS):
-        
-        pr_desc = pathFolder.createFolder(PR_RESULTS + "DESC/")
-        l_dataset = []
-        d_desc_1D2D = {}
-        d_desc_opera = {}
-        for psetchem in l_psetchems:
-            name_dataset =  psetchem.split("/")[-1][0:-4]
-            pr_results = pathFolder.createFolder(PR_RESULTS + "analysis_individual-dataset/" + name_dataset + "/")       
-            l_dataset.append(name_dataset)
 
-            # Compute desc
-            ###################
-            cChem = Chemicals.Chemicals(psetchem, pr_results)
-            cChem.computeDesc(pr_desc)
 
-            d_desc_1D2D_chem = toolbox.loadMatrix(cChem.p_desc_rdkit)
-            d_desc_opera_chem = toolbox.loadMatrix(cChem.p_desc_OPERA, sep = ",")
-            
-
-            for chem in d_desc_1D2D_chem.keys():
-                if not chem in list(d_desc_1D2D.keys()):
-                    d_desc_1D2D[chem] = deepcopy(d_desc_1D2D_chem[chem])
-                    d_desc_1D2D[chem]["dataset"] = []
-                d_desc_1D2D[chem]["dataset"].append(name_dataset)
-            
-            for chem in d_desc_opera_chem.keys():
-                if not chem in list(d_desc_opera.keys()):
-                    d_desc_opera[chem] = deepcopy(d_desc_opera_chem[chem])
-                    d_desc_opera[chem]["dataset"] = []
-                d_desc_opera[chem]["dataset"].append(name_dataset)
-            
-        pr_out = pathFolder.createFolder(PR_RESULTS + "-".join(l_dataset) + "/")
-        p_desc2D = pr_out + "desc1D2D.csv"
-        l_h = list(d_desc_1D2D[list(d_desc_1D2D.keys())[0]].keys()) 
-        l_h.remove("CASRN")
-        f_desc2D = open(p_desc2D, "w")
-        f_desc2D.write("CASRN\t" + "\t".join(l_h) + "\n")
-        for chem in d_desc_1D2D.keys():
-            f_desc2D.write(chem)
-            for h in l_h:
-                if h == "dataset":
-                    f_desc2D.write("\t%s"%("--".join(d_desc_1D2D[chem][h])))
-                else:
-                    f_desc2D.write("\t%s"%(d_desc_1D2D[chem][h]))
-            f_desc2D.write("\n")
-        f_desc2D.close()
-
-        return [p_desc2D]
 
     def analysisMultiSets(p_desc1D2D):
 
@@ -557,5 +471,57 @@ class Mcarcinogen:
 
         return p_filout
 
+    def main(self):
+
+        # prepare set of chemicals - split by list
+        self.prepSets()
+
+        # compute Venn diagram
+        self.overlapBetweenListChem(["MC", "genotoxic", "Steroid-up", "ER-agonist"])
+        self.overlapBetweenListChem(["MC", "Steroid", "ER"])
+        self.overlapBetweenListChem(["MC", "Steroid", "ER-agonist", "genotoxic"])
+        self.overlapBetweenListChem(["MC", "Steroid-up", "ER-agonist", "genotoxic"])
+        
+        # Compute and/or load descriptors by set of chemicals
+        pr_desc_by_list = pathFolder.createFolder(self.pr_out + "desc_by_list/")
+        self.c_Desc = runDescriptors.runDescriptors(self.d_dataset, self.pr_desc, pr_desc_by_list)
+        self.c_Desc.compute_all() # here included all of the descriptors for the full set of chemicals
+
+        # analyze by daataset and set of descriptors #
+        ##############################################
+        
+        # MC #
+        ######
+        #self.analysisByDataset(dataset="MC", l_desc=["rdkit"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
+
+        # E2 #
+        ######
+        self.analysisByDataset(dataset="E2", l_desc=["rdkit"], hclust=1, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
 
 
+
+        # P4 #
+        ######
+        #self.hclusterByProp("P4", ["rdkit"])
+
+        # E2 - P4 up #
+        ##############
+        #self.hclusterByProp("Steroid-up", ["rdkit"])
+
+        # to change
+        #c_Chems.analysisDescBasedData(self.COR_VAL, self.MAX_QUANTILE, PCA=1, histDesc=1, SOM=1, clustering=0, Hclust=1)
+
+
+
+        # overlap between dataset
+
+        # load ToxPrint
+        #self.loadToxPrint()
+
+        # Write datasets
+        #self.formatSetofChem(["ER", "MC", "Steroid", "E2", "P4", "all", "Steroid-up", "ER-agonist"])#["Steroid-up", "Steroid"])#, "ER-agonist", "Steroid"])
+        # plot toxplint barplot
+        #self.ToxPrintCount(["MC", "Steroid-up", "Steroid", "ER-agonist", "all"])
+
+        # X2 for toxprint
+        #self.comparisonToxPrintCount(["MC", "Steroid-up", "Steroid"])

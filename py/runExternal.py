@@ -122,9 +122,9 @@ def FP_card(p_filin):
     cmd = "./FP_card.R %s"%(p_filin)
     runRCMD(cmd)
 
-def dendogramProp(p_dataset, p_desc, pr_out):
+def dendogramClusterProp(p_dataset, p_desc, pr_out, cor_val, max_q):
 
-    cmd =  "./dendogramProp.R %s %s %s"%(p_dataset, p_desc, pr_out)
+    cmd =  "./dendogramProp.R %s %s %s %s %s"%(p_dataset, p_desc, pr_out, cor_val, max_q)
     runRCMD(cmd)
 
 def projectPropInSOM(p_SOM, p_all, pr_out):

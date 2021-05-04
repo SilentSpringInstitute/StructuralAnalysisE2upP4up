@@ -10,14 +10,23 @@ import toolbox
 
 
 
-class analysis:
-    def __init__(self, p_dataset, p_desc, p_opera, pr_out, cor_val, max_quantile):
+class MakePlots:
+    def __init__(self, p_dataset, p_desc, p_opera_all, pr_out, cor_val, max_quantile):
         self.p_desc = p_desc
         self.p_dataset = p_dataset
-        self.p_opera = p_opera
+        self.p_opera = p_opera_all
         self.pr_out = pr_out
         self.cor_val = cor_val
         self.max_quantile = max_quantile
+
+    def hclusterByProp(self):
+
+        pr_out = pathFolder.createFolder(self.pr_out + "hclustDendo/")
+
+        # run dendogram with circle of prop
+        p_dendo = pr_out + "dendo_cluster_name.png"
+        if not path.exists(p_dendo):
+            runExternal.dendogramClusterProp(self.p_dataset, self.p_desc, pr_out, self.cor_val, self.max_quantile)
 
     def prepDesc(self):
         pr_out = pathFolder.createFolder(self.pr_out + "Cleaned_Data/")
@@ -125,14 +134,17 @@ class analysis:
             filout.close()
             runExternal.cardSimMatrix(p_filout)
 
-    def generate_SOM(self, nb_cluster):
+    def SOMClustering(self, nb_cluster):
+
+        # need to prepare the dataset before the clustering
+        if not "p_desc_cleaned" in self.__dict__:
+            self.prepDesc()
 
         pr_out = pathFolder.createFolder(self.pr_out + "SOM/")
         p_model = pr_out + "SOM_model.RData"
-        if not path.exists(p_model):
+        if not path.exists(p_model) or nb_cluster == 0:
             runExternal.SOM(self.p_desc_cleaned, "0", pr_out, nb_cluster)
 
-        return
 
     def signifDescBySOMCluster(self):
 
