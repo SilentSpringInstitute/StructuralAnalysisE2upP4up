@@ -97,6 +97,15 @@ class MCcrossref:
                 d_temp = toolbox.loadMatrix(self.pr_toxprint + p_ToxPrint, sep=",")
                 d_toxprint.update(d_temp)
         
+        # clean 
+        l_chem = list(d_toxprint.keys())
+        i = 0
+        imax = len(l_chem)
+        while i < imax:
+            if d_toxprint[l_chem[i]]["atom:element_main_group"] == "-":
+                del d_toxprint[l_chem[i]]
+            i = i + 1
+
         self.d_toxprint = d_toxprint
 
     def defineERactive(self):

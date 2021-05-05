@@ -1,3 +1,6 @@
+from os import path
+import toolbox
+
 import FPToolbox
 
 
@@ -12,6 +15,11 @@ class runFPs:
 
 
     def computeTanimotoMatrix(self):
+
+        #if path.exists(p_matrix_out):
+        #    return
+        
+       
 
         d_Tanimoto = {}
         l_casrn = list(self.d_ToxPrint.keys())
@@ -28,7 +36,6 @@ class runFPs:
         
         i = 0
         imax = len(l_casrn)
-        imax = 10
         while i < imax:
             d_Tanimoto[l_casrn[i]] = {}
             c_FP_i = FPToolbox.FingerPrint(self.d_ToxPrint[l_casrn[i]])
@@ -40,9 +47,30 @@ class runFPs:
                 c_FP_j.prepFP()
 
                 # compute score
-                scoreT = c_FP_i.jaccardIndex(c_FP_j.bits)
+                scoreT = c_FP_i.jaccardScore(c_FP_j.bits, exclude0=0)
+                #scoreT = c_FP_i.DICEScore(c_FP_j.bits)
                 d_Tanimoto[l_casrn[i]][l_casrn[j]] = scoreT
                 j = j + 1
             i = i + 1 
                 
-        print(d_Tanimoto)
+
+        for dataset in self.d_dataset.keys():
+            p_dataset = self.d_dataset[dataset]
+            d_dataset = toolbox.loadMatrix(p_dataset)
+
+            l_casrn_dataset = list(set(list(d_Tanimoto.keys())) & set(list(d_dataset.keys())))
+
+            p_matrix_out = "%s%s.csv"%(self.pr_out, dataset)
+
+            #write matrix
+            filout = open(p_matrix_out, "w")
+            filout.write("\t" + "\t".join(l_casrn_dataset) + "\n")
+            for casrn in l_casrn_dataset:
+                filout.write("%s\t%s\n"%(casrn, "\t".join([str(d_Tanimoto[casrn][c]) if c in list(d_Tanimoto[casrn].keys()) else str(d_Tanimoto[c][casrn]) for c in l_casrn_dataset])))
+            filout.close()
+
+            
+        stophere
+
+
+
