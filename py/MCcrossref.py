@@ -10,6 +10,7 @@ import runDescriptors
 import comparisonChemicalLists
 import toolbox
 import runExternal
+import runFPs
 
 
 
@@ -88,12 +89,14 @@ class MCcrossref:
                 self.d_steroid[chem]["Efficacy/potency"] = "P4-%s"%(self.d_steroid[chem]["Efficacy/potency"])
         
     def loadToxPrint(self):
+
         d_toxprint = {}
         l_p_ToxPrint = listdir(self.pr_toxprint)
         for p_ToxPrint in l_p_ToxPrint:
             if search("ToxPrint", p_ToxPrint):
                 d_temp = toolbox.loadMatrix(self.pr_toxprint + p_ToxPrint, sep=",")
                 d_toxprint.update(d_temp)
+        
         self.d_toxprint = d_toxprint
 
     def defineERactive(self):
@@ -390,7 +393,7 @@ class MCcrossref:
         # write different chemical sets
         self.formatSetofChem(["ER", "MC", "Steroid", "E2", "P4", "all", "Steroid-up", "ER-agonist"])#["Steroid-up", "Steroid"])#, "ER-agonist", "Steroid"])
 
-    def analysisByDataset(self, dataset, l_desc, cor_val, max_q, hclust=0, SOM=0, SOM_size=8):
+    def analysisMDescByDataset(self, dataset, l_desc, cor_val, max_q, hclust=0, SOM=0, SOM_size=8):
 
         pr_out = pathFolder.createFolder("%sAnalysis_%s/%s/"%(self.pr_out, dataset, "-".join(l_desc)))
         
@@ -413,6 +416,28 @@ class MCcrossref:
             c_MakePlot.SOMClustering(nb_cluster=SOM_size)
             #c_MakePlot.SOMMapProp() # maybe need to be developed to extract by cluster the percentage of MC for example or other prop
         
+    def analysisToxPrintByDataset(self, dataset, l_desc, hclust=0):
+
+
+        # compute matrix tanimoto score
+
+
+        return 
+
+    def computeMatrixTanimoto(self):
+
+        pr_desc_by_list = pathFolder.createFolder(self.pr_out + "tanimoto_by_list/")
+        d_ptanimoto = {}
+
+        for dataset in self.d_dataset.keys():
+
+
+
+            d_out[dataset] = {}
+            pr_chem = pathFolder.createFolder(self.pr_out + dataset + "/")
+            d_out[dataset].update(self.computeDesc(self.d_dataset[dataset], pr_chem))
+            d_out[dataset]["all OPERA pred"] = self.computeAllOperaPred(self.d_dataset[dataset], pr_chem)
+        self.d_desc = d_out
 
 
     
@@ -475,28 +500,49 @@ class MCcrossref:
 
         # prepare set of chemicals - split by list
         self.prepSets()
-
+        
         # compute Venn diagram
-        self.overlapBetweenListChem(["MC", "genotoxic", "Steroid-up", "ER-agonist"])
-        self.overlapBetweenListChem(["MC", "Steroid", "ER"])
-        self.overlapBetweenListChem(["MC", "Steroid", "ER-agonist", "genotoxic"])
-        self.overlapBetweenListChem(["MC", "Steroid-up", "ER-agonist", "genotoxic"])
+        #self.overlapBetweenListChem(["MC", "genotoxic", "Steroid-up", "ER-agonist"])
+        #self.overlapBetweenListChem(["MC", "Steroid", "ER"])
+        #self.overlapBetweenListChem(["MC", "Steroid", "ER-agonist", "genotoxic"])
+        #self.overlapBetweenListChem(["MC", "Steroid-up", "ER-agonist", "genotoxic"])
         
         # Compute and/or load descriptors by set of chemicals
-        pr_desc_by_list = pathFolder.createFolder(self.pr_out + "desc_by_list/")
-        self.c_Desc = runDescriptors.runDescriptors(self.d_dataset, self.pr_desc, pr_desc_by_list)
-        self.c_Desc.compute_all() # here included all of the descriptors for the full set of chemicals
+        #pr_desc_by_list = pathFolder.createFolder(self.pr_out + "desc_by_list/")
+        #self.c_Desc = runDescriptors.runDescriptors(self.d_dataset, self.pr_desc, pr_desc_by_list)
+        #self.c_Desc.compute_all() # here included all of the descriptors for the full set of chemicals
 
         # analyze by daataset and set of descriptors #
         ##############################################
         
         # MC #
         ######
-        #self.analysisByDataset(dataset="MC", l_desc=["rdkit"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
+        #self.analysisMDescByDataset(dataset="MC", l_desc=["rdkit"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
 
         # E2 #
         ######
-        self.analysisByDataset(dataset="E2", l_desc=["rdkit"], hclust=1, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
+        #self.analysisMDescByDataset(dataset="E2", l_desc=["rdkit"], hclust=1, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
+
+        # p4 #
+        ######
+        #self.analysisMDescByDataset(dataset="P4", l_desc=["rdkit"], hclust=1, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
+
+
+
+        # analysis of the toxprint #
+        ############################
+
+        self.loadToxPrint()
+        pr_FP_by_list = pathFolder.createFolder(self.pr_out + "tanimoto_by_list/")
+
+        self.c_FP = runFPs.runFPs(self.d_dataset, self.d_toxprint, pr_FP_by_list)
+        self.c_FP.computeTanimotoMatrix()
+
+        stop481
+
+
+
+
 
 
 

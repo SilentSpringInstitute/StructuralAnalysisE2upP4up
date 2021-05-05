@@ -4,9 +4,10 @@ Project developed to analysis chemicals that can be classified as a breast carci
 # Dependancy
 ## Coding language 
 - Python3.9
-- CompDesc library 
+- Python library => CompDesc, bitarray, RDKIT
 - R 4.0
 - RDKIT (2020) in environement conda rdkit-env
+
 ## Prediction - QSPR models 
 - genotoxicity: TEST (https://www.epa.gov/chemical-research/toxicity-estimation-software-tool-test#install)
 - OPERA ER-AR prediction
@@ -14,6 +15,8 @@ Project developed to analysis chemicals that can be classified as a breast carci
 # to do list
 - make clustering using toxifor on BCC and P4up/E2up chemicals
 - cluster using chemicals type classification 
+- cluster using the toxiphor
+- reproduce clustering with the 10 hormone tested in kaumas
 
 # Main update
 - 05-03-21: init project from chemicals clustering - clean up legacy functions 

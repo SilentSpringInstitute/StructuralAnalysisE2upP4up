@@ -34,8 +34,9 @@ MAX_QUANTILE = 90
 
 c_MCcrossref = MCcrossref.MCcrossref(p_crossRef, COR_VAL, MAX_QUANTILE, PR_ROOT + "comptox/", PR_RESULTS)
 c_MCcrossref.main()
-#c_MCcrossref.clusterPropMC()
-#c_MCcrossref.main()
+
+
+
 
 
 # MIXTE INFORMATION FROM STEROIDOGENESIS AND MC #
