@@ -16,10 +16,18 @@ class runFPs:
 
     def computeTanimotoMatrix(self):
 
-        #if path.exists(p_matrix_out):
-        #    return
+        all_computed = 1
+        d_out ={}
+        for dataset in self.d_dataset.keys():
+            p_matrix_out = "%s%s.csv"%(self.pr_out, dataset)
+            d_out[dataset] = p_matrix_out
+            if not path.exists (p_matrix_out):
+                all_computed = 0
         
-       
+        self.d_FPMatrix = d_out
+        if all_computed == 1:
+            return
+
 
         d_Tanimoto = {}
         l_casrn = list(self.d_ToxPrint.keys())
@@ -70,7 +78,5 @@ class runFPs:
             filout.close()
 
             
-        stophere
-
 
 

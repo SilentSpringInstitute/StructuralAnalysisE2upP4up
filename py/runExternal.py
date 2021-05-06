@@ -132,6 +132,13 @@ def projectPropInSOM(p_SOM, p_all, pr_out):
     cmd = "./SOM_mapprop.R %s %s %s"%(p_SOM, p_all, pr_out)
     runRCMD(cmd)
 
+def dendogramFPProp(p_dataset, p_FP, pr_out):
+    
+    cmd =  "./dendogramPropFPTanimoto.R %s %s %s"%(p_dataset, p_FP, pr_out)
+    runRCMD(cmd)
+
+
+
 ##############
 # run biotransformer tool
 

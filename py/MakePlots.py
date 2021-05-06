@@ -11,10 +11,11 @@ import toolbox
 
 
 class MakePlots:
-    def __init__(self, p_dataset, p_desc, p_opera_all, pr_out, cor_val, max_quantile):
+    def __init__(self, p_dataset, pr_out, p_desc="", p_FP="", p_opera_all="", cor_val="", max_quantile=""):
         self.p_desc = p_desc
         self.p_dataset = p_dataset
         self.p_opera = p_opera_all
+        self.p_FP = p_FP
         self.pr_out = pr_out
         self.cor_val = cor_val
         self.max_quantile = max_quantile
@@ -27,6 +28,19 @@ class MakePlots:
         p_dendo = pr_out + "dendo_cluster_name.png"
         if not path.exists(p_dendo):
             runExternal.dendogramClusterProp(self.p_dataset, self.p_desc, pr_out, self.cor_val, self.max_quantile)
+
+
+
+    def hclusterFromFPByProp(self):
+
+        pr_out = pathFolder.createFolder(self.pr_out + "hclustDendo/")
+
+        # run dendogram with circle of prop
+        p_dendo = pr_out + "dendo_cluster_name.png"
+        if not path.exists(p_dendo):
+            runExternal.dendogramFPProp(self.p_dataset, self.p_FP, pr_out)
+
+
 
     def prepDesc(self):
         pr_out = pathFolder.createFolder(self.pr_out + "Cleaned_Data/")

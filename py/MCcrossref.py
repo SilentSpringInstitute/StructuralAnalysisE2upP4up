@@ -424,32 +424,33 @@ class MCcrossref:
             c_MakePlot.SOMClustering(nb_cluster=0)
             c_MakePlot.SOMClustering(nb_cluster=SOM_size)
             #c_MakePlot.SOMMapProp() # maybe need to be developed to extract by cluster the percentage of MC for example or other prop
+
+    def analysisToxPrintByDataset(self, dataset, hclust=0):
+
+        pr_out = pathFolder.createFolder("%sAnalysis_%s/ToxPrint/"%(self.pr_out, dataset))
         
-    def analysisToxPrintByDataset(self, dataset, l_desc, hclust=0):
+        # build dataset - based on list of descriptor available
+        if not "c_FP" in self.__dict__:
+            return "Error - build descriptor before run clustering"
 
+        # create the descriptor set
+        p_FPMatrix = self.c_FP.d_FPMatrix[dataset]
 
-        # compute matrix tanimoto score
+        #load the analysis class
+        c_MakePlot = MakePlots.MakePlots(p_dataset=self.d_dataset[dataset], p_FP=p_FPMatrix, pr_out=pr_out)
+        
+        if hclust == 1:
+            c_MakePlot.hclusterFromFPByProp()
 
 
         return 
 
-    def computeMatrixTanimoto(self):
-
-        pr_desc_by_list = pathFolder.createFolder(self.pr_out + "tanimoto_by_list/")
-        d_ptanimoto = {}
-
-        for dataset in self.d_dataset.keys():
 
 
 
-            d_out[dataset] = {}
-            pr_chem = pathFolder.createFolder(self.pr_out + dataset + "/")
-            d_out[dataset].update(self.computeDesc(self.d_dataset[dataset], pr_chem))
-            d_out[dataset]["all OPERA pred"] = self.computeAllOperaPred(self.d_dataset[dataset], pr_chem)
-        self.d_desc = d_out
 
 
-    
+
     def computeDescAnalysisFromList(p_list, p_ToxPrint, p_chemList, PR_RESULTS):
 
         """
@@ -469,6 +470,9 @@ class MCcrossref:
 
         cChem.analysisToxPrint(p_ToxPrint)
         cChem.analysisChemList(p_chemList)
+
+
+
 
 
 
@@ -547,9 +551,11 @@ class MCcrossref:
         self.c_FP = runFPs.runFPs(self.d_dataset, self.d_toxprint, pr_FP_by_list)
         self.c_FP.computeTanimotoMatrix()
 
-        stop481
+        # MC # 
+        ######
+        self.analysisToxPrintByDataset(dataset="MC", hclust=1) #hclust
 
-
+        stop558
 
 
 
