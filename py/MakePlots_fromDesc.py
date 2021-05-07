@@ -10,7 +10,7 @@ import toolbox
 
 
 
-class MakePlots:
+class MakePlots_fromDesc:
     def __init__(self, p_dataset, pr_out, p_desc="", p_FP="", p_opera_all="", cor_val="", max_quantile=""):
         self.p_desc = p_desc
         self.p_dataset = p_dataset

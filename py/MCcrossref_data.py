@@ -5,12 +5,12 @@ import math
 
 import pathFolder
 import dataset
-import MakePlots
+import MakePlots_fromDesc
 import runDescriptors
 import comparisonChemicalLists
 import toolbox
 import runExternal
-import runFPs
+import runToxPrint
 
 
 
@@ -87,26 +87,6 @@ class MCcrossref:
             else:
                 self.d_steroid[chem] =  deepcopy(self.d_P4up[chem])
                 self.d_steroid[chem]["Efficacy/potency"] = "P4-%s"%(self.d_steroid[chem]["Efficacy/potency"])
-        
-    def loadToxPrint(self):
-
-        d_toxprint = {}
-        l_p_ToxPrint = listdir(self.pr_toxprint)
-        for p_ToxPrint in l_p_ToxPrint:
-            if search("ToxPrint", p_ToxPrint):
-                d_temp = toolbox.loadMatrix(self.pr_toxprint + p_ToxPrint, sep=",")
-                d_toxprint.update(d_temp)
-        
-        # clean 
-        l_chem = list(d_toxprint.keys())
-        i = 0
-        imax = len(l_chem)
-        while i < imax:
-            if d_toxprint[l_chem[i]]["atom:element_main_group"] == "-":
-                del d_toxprint[l_chem[i]]
-            i = i + 1
-
-        self.d_toxprint = d_toxprint
 
     def defineERactive(self):
         self.d_ERagonist = {}
@@ -340,58 +320,6 @@ class MCcrossref:
 
         self.d_dataset = d_out
 
-    def ToxPrintCount(self, l_chemsets):
-
-        pr_out = pathFolder.createFolder(self.pr_out + "ToxPrintCount/")
-        l_toxprints = list(self.d_toxprint[list(self.d_toxprint.keys())[0]].keys())
-        l_toxprints.remove('INPUT')
-        l_toxprints.remove('DTXSID')
-        l_toxprints.remove('PREFERRED_NAME')
-
-        for chemset in l_chemsets:
-            d_dataset = toolbox.loadMatrix(self.d_dataset[chemset])
-            d_temp = {}
-            for toxprint in l_toxprints:
-                d_temp[toxprint] = 0
-
-            for chem in d_dataset.keys():
-                if not chem in list(self.d_toxprint.keys()):
-                    continue
-                for toxprint in l_toxprints:
-                    if self.d_toxprint[chem][toxprint] == "1":
-                        d_temp[toxprint] = d_temp[toxprint] + 1
-
-            p_filout = pr_out + chemset
-            filout = open(p_filout, "w")
-            filout.write("Toxprint\tcount\n")
-            for toxprint in l_toxprints:
-                filout.write("%s\t%s\n"%(toxprint, d_temp[toxprint]))
-            filout.close()
-            runExternal.barplotToxPrint(p_filout)
-
-    def comparisonToxPrintCount(self, l_chemsets):
-        pr_out = pathFolder.createFolder(self.pr_out + "ComparisonToxPrintCount/")
-        l_toxprints = list(self.d_toxprint[list(self.d_toxprint.keys())[0]].keys())
-        l_toxprints.remove('INPUT')
-        l_toxprints.remove('DTXSID')
-        l_toxprints.remove('PREFERRED_NAME')
-
-        pr_countToxPrints = pathFolder.createFolder(self.pr_out + "ToxPrintCount/")
-
-        d_out = {}
-        for chemset in l_chemsets:
-            d_count = toolbox.loadMatrix(pr_countToxPrints + chemset)
-            d_out[chemset] = d_count
-
-        p_filout = pr_out + "-".join(l_chemsets) + ""
-        filout = open(p_filout, "w")
-        filout.write("Toxprint\t"+"\t".join(l_chemsets) + "\n")
-        for toxprint in l_toxprints:
-            filout.write("%s\t%s\n"%(toxprint, "\t".join([str(d_out[chemset][toxprint]['count']) for chemset in l_chemsets])))
-        filout.close()
-
-        runExternal.plotX2(p_filout)
-
     def prepSets(self):
         self.loadCrossRefExcel()
         self.splitMCGenotox()
@@ -437,20 +365,16 @@ class MCcrossref:
         p_FPMatrix = self.c_FP.d_FPMatrix[dataset]
 
         #load the analysis class
-        c_MakePlot = MakePlots.MakePlots(p_dataset=self.d_dataset[dataset], p_FP=p_FPMatrix, pr_out=pr_out)
+        c_MakePlot = MakePlots_fromDesc.MakePlots_fromDesc(p_dataset=self.d_dataset[dataset], p_FP=p_FPMatrix, pr_out=pr_out)
         
         if hclust == 1:
             c_MakePlot.hclusterFromFPByProp()
 
 
-        return 
 
 
 
-
-
-
-
+    # to del but need to put back the other analysis in the new class
     def computeDescAnalysisFromList(p_list, p_ToxPrint, p_chemList, PR_RESULTS):
 
         """
@@ -536,7 +460,7 @@ class MCcrossref:
         ######
         #self.analysisMDescByDataset(dataset="E2", l_desc=["rdkit"], hclust=1, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
 
-        # p4 #
+        # P4 #
         ######
         #self.analysisMDescByDataset(dataset="P4", l_desc=["rdkit"], hclust=1, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
 
@@ -544,45 +468,19 @@ class MCcrossref:
 
         # analysis of the toxprint #
         ############################
+        #self.c_FP = runToxPrint.runToxPrint(self.d_dataset, self.pr_toxprint, self.pr_out)
+        #self.c_FP.loadToxPrint()
+        #self.c_FP.ToxPrintCount()
+        #self.c_FP.computeTanimotoMatrix()
 
-        self.loadToxPrint()
-        pr_FP_by_list = pathFolder.createFolder(self.pr_out + "tanimoto_by_list/")
-
-        self.c_FP = runFPs.runFPs(self.d_dataset, self.d_toxprint, pr_FP_by_list)
-        self.c_FP.computeTanimotoMatrix()
 
         # MC # 
         ######
-        self.analysisToxPrintByDataset(dataset="MC", hclust=1) #hclust
-
-        stop558
+        #self.analysisToxPrintByDataset(dataset="MC", hclust=1) #hclust
 
 
+        # Comparison ToxPrint #
+        #######################
+        #self.c_FP.comparisonToxPrintCount(["MC", "Steroid", "all"])
 
-
-
-        # P4 #
-        ######
-        #self.hclusterByProp("P4", ["rdkit"])
-
-        # E2 - P4 up #
-        ##############
-        #self.hclusterByProp("Steroid-up", ["rdkit"])
-
-        # to change
-        #c_Chems.analysisDescBasedData(self.COR_VAL, self.MAX_QUANTILE, PCA=1, histDesc=1, SOM=1, clustering=0, Hclust=1)
-
-
-
-        # overlap between dataset
-
-        # load ToxPrint
-        #self.loadToxPrint()
-
-        # Write datasets
-        #self.formatSetofChem(["ER", "MC", "Steroid", "E2", "P4", "all", "Steroid-up", "ER-agonist"])#["Steroid-up", "Steroid"])#, "ER-agonist", "Steroid"])
-        # plot toxplint barplot
-        #self.ToxPrintCount(["MC", "Steroid-up", "Steroid", "ER-agonist", "all"])
-
-        # X2 for toxprint
-        #self.comparisonToxPrintCount(["MC", "Steroid-up", "Steroid"])
+     

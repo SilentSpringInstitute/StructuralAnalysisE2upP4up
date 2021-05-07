@@ -37,4 +37,4 @@ p<-ggplot(data=d_toxprint, aes(x=reorder(Toxprint, -count), y=count )) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 # Barplot horizontal
-ggsave(paste(p_toxprint, "_barplot.png", sep = ""),  width = 8, height = 14, dpi = 300, bg="transparent")
+ggsave(paste(substr(p_toxprint, 1, nchar(p_toxprint)-4), "_barplot.png", sep = ""),  width = 8, height = 20, dpi = 300, bg="transparent")

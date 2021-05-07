@@ -1,12 +1,13 @@
 from os import path
-import MCcrossref
-import steroidogenesis
+
+import MCcrossref_data
+import steroidogenesis_data
+import merge_MCcrossWithStereo
 import pathFolder
 
 
-
-# Define folder #
-#################
+# Define folders #
+##################
 PR_ROOT = path.abspath("../../") + "/"
 PR_RESULTS = pathFolder.createFolder(PR_ROOT + "results/")
 PR_DATA = PR_ROOT + "data/"
@@ -25,22 +26,24 @@ MAX_QUANTILE = 90
 
 # LOAD Steroidogenesis data from Karmaus2016 #
 ##############################################
+c_Stereo = steroidogenesis_data.Steroidogenesis_data(PR_DATA, PR_RESULTS)
+c_Stereo.main()
 
-#cStereo = steroidogenesis.Steroidogenesis(PR_DATA, PR_RESULTS)
-#cStereo.main()
 
 # LOAD AND RUN MC crossref ANALYSIS #
-############################
-
-c_MCcrossref = MCcrossref.MCcrossref(p_crossRef, COR_VAL, MAX_QUANTILE, PR_ROOT + "comptox/", PR_RESULTS)
+#####################################
+c_MCcrossref = MCcrossref_data.MCcrossref(p_crossRef, COR_VAL, MAX_QUANTILE, PR_ROOT + "comptox/", PR_RESULTS)
 c_MCcrossref.main()
-
-
-
 
 
 # MIXTE INFORMATION FROM STEROIDOGENESIS AND MC #
 #################################################
+pr_out = pathFolder.createFolder(PR_RESULTS + "MC_stereo/")
+c_MC_stereo = merge_MCcrossWithStereo.merge_MCcrossWithStereo(c_MCcrossref, c_Stereo, pr_out)
+c_MC_stereo.main()
+
+
+
 #cStereo.PCA_FoldChangeMC(cMC.d_MC)
 #cStereo.cardTanimoto(cMC.d_MC)
 

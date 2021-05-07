@@ -3,7 +3,7 @@ import toolbox
 import pathFolder
 import runExternal
 
-class Steroidogenesis:
+class Steroidogenesis_data:
     """
     Class use to load and parse table from Kaumaus et al 2006, study develop from H295R
     """
@@ -53,8 +53,10 @@ class Steroidogenesis:
     def summaryHitc(self):
 
         p_filout = self.pr_results + "single_hitc_matrix.csv"
-        #if path.exists(p_filout):
-        #    return 
+        if path.exists(p_filout):
+            d_out = toolbox.loadMatrix(p_filout)
+            self.d_single_hit = d_out
+            return 
         
         if not "d_hitc" in self.__dict__:
             self.loadsinglehitc()
@@ -86,6 +88,7 @@ class Steroidogenesis:
         # write a summary
         runExternal.barplotHormones(p_filout)
 
+        d_out = toolbox.loadMatrix(p_filout)
         self.d_single_hit = d_out
 
     def loadChemicalsMapping(self):
@@ -110,6 +113,11 @@ class Steroidogenesis:
 
     def loadChemicalCR(self):
 
+        p_filout = self.pr_results + "CR_hitc_matrix.csv"
+        if path.exists(p_filout):
+            self.d_CR_hit = toolbox.loadMatrix(p_filout)
+            return
+        
         if not "d_chem_mapping" in self.__dict__:
             self.loadChemicalsMapping
 
@@ -126,15 +134,18 @@ class Steroidogenesis:
             for h in self.l_hormones:
                 d_out[casn][h] = line_CR[h]
         
-        self.d_CR_hit = d_out
-
-        p_filout = self.pr_results + "CR_hitc_matrix.csv"
-        filout = open(p_filout, "w")
-        filout.write("CASRN\t%s\n"%("\t".join(self.l_hormones)))
-        for casn in d_out.keys():
-            filout.write("%s\t%s\n"%(casn, "\t".join([d_out[casn][h] for h in self.l_hormones])))
         
+        filout = open(p_filout, "w")
+        filout.write("CASRN\t%s\tSUM_HORMONE_CHANGED\n"%("\t".join(self.l_hormones)))
+        for casrn in d_out.keys():
+            nb_h_changed = 0
+            for h in self.l_hormones: 
+                if d_out[casrn][h] != "0": 
+                    nb_h_changed = nb_h_changed +1 
+            filout.write("%s\t%s\t%s\n"%(casrn, "\t".join([str(d_out[casrn][h]) for h in self.l_hormones]), nb_h_changed))
         filout.close()
+        runExternal.barplotHormones(p_filout)
+        self.d_CR_hit = toolbox.loadMatrix(p_filout)
 
     def main(self):
 

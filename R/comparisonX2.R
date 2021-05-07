@@ -95,7 +95,8 @@ AFC = function (d, path_file){
 args <- commandArgs(TRUE)
 p_count = args[1]
 
-#p_count = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/carcinogen_breast_122120__H295_E2-up__H295_P4-up/forX2Comparison/forX2"
+#p_count = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/ToxPrintComparisonCount/MC-all/count.csv"
+
 housetasks <- read.delim(p_count, row.names = 1)
 
 
@@ -108,7 +109,7 @@ dt = dt[-which(rowSums(dt)<=(5*dim(dt)[2])),]
 
 
 # 2. Graph - ballon
-png(paste(p_count, "_ballon.png",sep = ""), height = 2500, width = 1000)
+png(paste(substr(p_count, 1, nchar(p_count)-4), "_ballon.png",sep = ""), height = 2500, width = 1000)
 balloonplot(t(dt), main ="ToxPrint", xlab ="", ylab="",
             label = FALSE, show.margins = FALSE)
 
@@ -117,7 +118,7 @@ dev.off()
 
 
 # 2. Graph - mosaic
-png(paste(p_count, "_mosaic.png",sep = ""), height = 2500, width = 4000, res = 300)
+png(paste(substr(p_count, 1, nchar(p_count)-4), "_mosaic.png",sep = ""), height = 2500, width = 4000 , res = 300)
 mosaicplot(dt, shade = TRUE, las=2,
            main = "ToxPrint")
 
@@ -127,10 +128,14 @@ dev.off()
 # apply X2
 chisq <- chisq.test(housetasks)
 pval = chisq$p.value
+res = chisq$residuals[-which(is.na(chisq$residuals[,1])),]
 
-png(paste(p_count, "_corplot.png",sep = ""), height = 6000, width = 5000)
-corrplot(chisq$residuals, is.cor = FALSE)
+png(paste(substr(p_count, 1, nchar(p_count)-4), "_corplot.png",sep = ""), height = 6000, width = 5000)
+corrplot(res, is.cor = FALSE)
 dev.off()
 
+# need at least # dimension to do the plot 2D
+if(dim(dt)[2] > 2){
+  AFC(dt, substr(p_count, 1, nchar(p_count)-4))
+}
 
-AFC(dt, p_count)

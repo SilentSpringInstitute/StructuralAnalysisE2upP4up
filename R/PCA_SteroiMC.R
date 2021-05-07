@@ -62,13 +62,13 @@ ddesc = read.csv(p_desc, sep = "\t", header = TRUE)
 rownames(ddesc) = ddesc[,1]
 ddesc = ddesc[,-1]
 ddesc = as.data.frame(ddesc)
-l_MC = ddesc$MC
-drops = c("MC")
+l_inset = ddesc$inset
+drops = c("inset")
 ddesc = ddesc[ , !(names(ddesc) %in% drops)]
 
 
 vcolor = rep("gray90", dim(ddesc)[1])
-vcolor[which(l_MC == 1)] = "green"
+vcolor[which(l_inset == 1)] = "green"
 
 
 PCAplot(ddesc, vcolor, substr(p_desc, 1, nchar(p_desc)-4))
