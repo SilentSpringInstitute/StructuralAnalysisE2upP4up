@@ -1,3 +1,5 @@
+from os import path
+
 import pathFolder
 import toolbox
 import runExternal
@@ -12,26 +14,27 @@ class merge_MCcrossWithStereo:
     
     
 
-    def analyzeByDataset(self, dataset, PCA=0):
+    def analyzeByDataset(self, dataset, PCA=0, hclust=0):
 
-        self.pr_analysis = pathFolder.createFolder("%s/analysis_%s/"%(self.pr_out, dataset))
+        self.pr_analysis = pathFolder.createFolder("%sanalysis_%s/"%(self.pr_out, dataset))
 
         if PCA == 1:
             self.PCA_FoldChangeMC(dataset)
 
-
+        if hclust == 1:
+            self.addStereoOncluster(dataset)
 
 
     def main(self):
 
         # MC
-        #self.analyzeByDataset("MC", PCA=1)
+        self.analyzeByDataset("MC", PCA=0, hclust=1)
 
         # E2
-        #self.analyzeByDataset("E2", PCA=1)
+        self.analyzeByDataset("E2", PCA=0, hclust=1)
 
-        # Steroid-up
-        self.analyzeByDataset("Steroid-up", PCA=1)
+        # P4
+        self.analyzeByDataset("P4", PCA=0, hclust=1)
 
     
     def PCA_FoldChangeMC(self, dataset):
@@ -44,7 +47,7 @@ class merge_MCcrossWithStereo:
         f_matrix_single_hitc = open(p_matrix_single_hitc, "w")
         f_matrix_single_hitc.write("CASRN\t%s\tinset\n"%("\t".join(self.c_stereo.l_hormones)))
         for casrn in self.c_stereo.d_single_hit.keys():
-            if casrn in list(d_dataset):
+            if casrn in list(d_dataset.keys()):
                 inset = 1
             else:
                 inset = 0
@@ -68,9 +71,39 @@ class merge_MCcrossWithStereo:
         f_matrix_CR_hitc.close()
         runExternal.PCA_SteroiMC(p_matrix_CR_hitc)
 
-    def addStereoOncluster(self, dataset, typeOfSetereo):
+    def addStereoOncluster(self, dataset):
 
-        return 
+        pr_out = pathFolder.createFolder(self.pr_analysis + "hclust_FoldChange/")
+
+    
+
+        # CR hormone
+        p_dendo_CR = pr_out + "dendogram_CR.png"
+        if not path.exists(p_dendo_CR):
+            # write CR
+            p_stereo_CR = pr_out + "stereo_CR.csv"
+            f_stereo_CR = open(p_stereo_CR, "w")
+            f_stereo_CR.write("CASRN\t%s\n"%("\t".join(self.c_stereo.l_hormones)))
+            for casrn in self.c_stereo.d_CR_hit.keys():
+                 f_stereo_CR.write("%s\t%s\n"%(casrn, "\t".join([str(self.c_stereo.d_CR_hit[casrn][h]) for h in self.c_stereo.l_hormones])))
+            f_stereo_CR.close()
+
+            runExternal.dendogramClusterTwoProp(self.c_MC.d_dataset[dataset], p_stereo_CR, self.c_MC.c_Desc.d_desc[dataset]["rdkit"], pr_out, self.c_MC.COR_VAL, self.c_MC.MAX_QUANTILE)
+
+
+        # single point hormone
+        p_dendo_single = pr_out + "dendogram_single.png"
+        if not path.exists(p_dendo_single):
+            # write single
+            p_stereo_single = pr_out + "stereo_single.csv"
+            f_stereo_single = open(p_stereo_single, "w")
+            f_stereo_single.write("CASRN\t%s\n"%("\t".join(self.c_stereo.l_hormones)))
+            for casrn in self.c_stereo.d_single_hit.keys():
+                 f_stereo_single.write("%s\t%s\n"%(casrn, "\t".join([str(self.c_stereo.d_single_hit[casrn][h]) for h in self.c_stereo.l_hormones])))
+            f_stereo_single.close()
+
+            runExternal.dendogramClusterTwoProp(self.c_MC.d_dataset[dataset], p_stereo_single, self.c_MC.c_Desc.d_desc[dataset]["rdkit"], pr_out, self.c_MC.COR_VAL, self.c_MC.MAX_QUANTILE)
+
 
 
 

@@ -4,6 +4,7 @@ import toolbox
 import runExternal
 
 from os import path
+from shutil import copyfile
 
 # selected physico chemical descriptor from OPERa
 L_OPERA_DESC = ['LogP_pred', 'MP_pred', 'BP_pred', 'LogVP_pred', 'LogWS_pred', 'LogHL_pred', 'RT_pred', 'LogKOA_pred', 'ionization', 'LogD55_pred', 'LogD74_pred', 'LogOH_pred', 'LogBCF_pred', 'BioDeg_LogHalfLife_pred', 'ReadyBiodeg_pred', 'LogKM_pred', 'LogKoc_pred', 'FUB_pred', 'Clint_pred']
@@ -246,3 +247,15 @@ class runDescriptors:
             d_out[dataset].update(self.computeDesc(self.d_dataset[dataset], pr_chem))
             d_out[dataset]["all OPERA pred"] = self.computeAllOperaPred(self.d_dataset[dataset], pr_chem)
         self.d_desc = d_out
+
+    def png_by_list(self, pr_png):
+
+        for dataset in self.d_dataset.keys():
+            pr_png_list = pathFolder.createFolder(pr_png + dataset + "/")
+            d_dataset = toolbox.loadMatrix(self.d_dataset[dataset])
+            for chem in d_dataset.keys():
+                p_png_desc = self.pr_desc + "PNG/" + chem + ".png"
+                if path.exists(p_png_desc):
+                    copyfile(p_png_desc, pr_png_list + chem + ".png")
+
+                

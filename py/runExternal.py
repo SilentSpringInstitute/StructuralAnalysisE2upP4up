@@ -127,6 +127,11 @@ def dendogramClusterProp(p_dataset, p_desc, pr_out, cor_val, max_q):
     cmd =  "./dendogramProp.R %s %s %s %s %s"%(p_dataset, p_desc, pr_out, cor_val, max_q)
     runRCMD(cmd)
 
+def dendogramClusterTwoProp(p_dataset, p_stereo, p_desc, pr_out, cor_val, max_q):
+
+    cmd =  "./dendogramTowProp.R %s %s %s %s %s %s"%(p_dataset, p_stereo, p_desc, pr_out, cor_val, max_q)
+    runRCMD(cmd)
+
 def projectPropInSOM(p_SOM, p_all, pr_out):
 
     cmd = "./SOM_mapprop.R %s %s %s"%(p_SOM, p_all, pr_out)
@@ -138,6 +143,9 @@ def dendogramFPProp(p_dataset, p_FP, pr_out):
     runRCMD(cmd)
 
 
+def barplotChemClass(p_count):
+    cmd = "./barplotChemClass.R %s"%(p_count)
+    runRCMD(cmd)   
 
 ##############
 # run biotransformer tool

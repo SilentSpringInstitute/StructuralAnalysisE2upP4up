@@ -16,11 +16,12 @@ import runToxPrint
 
 class MCcrossref:
 
-    def __init__(self, p_crossref, COR_VAL, MAX_QUANTILE, pr_ToxPrints, pr_out):
+    def __init__(self, p_crossref, p_exposure, COR_VAL, MAX_QUANTILE, pr_ToxPrints, pr_out):
 
         self.pr_toxprint = pr_ToxPrints
         self.pr_out = pr_out
         self.p_crossref = p_crossref
+        self.p_exposure = p_exposure
 
         self.COR_VAL = COR_VAL
         self.MAX_QUANTILE = MAX_QUANTILE
@@ -42,6 +43,27 @@ class MCcrossref:
         self.d_P4up = toolbox.loadExcelSheet(self.p_crossref, name_sheet='P4-up', k_head = "CASRN")
         self.d_ER = toolbox.loadExcelSheet(self.p_crossref, name_sheet='Judson ER active', k_head = "CASRN")
 
+    def updateExposureForMC(self):
+        if not "d_MC" in self.__dict__:
+            print("ERROR - load excel file with chemical first")
+            return 
+        
+        d_exposure = toolbox.loadMatrix(self.p_exposure, sep=",")
+        for chem in self.d_MC.keys():
+            self.d_MC[chem]["exposure"] = []
+
+            if chem in list(d_exposure.keys()):
+                if d_exposure[chem]["Diet"] != "NA":
+                    self.d_MC[chem]["exposure"].append("Diet")
+                if d_exposure[chem]["Pharma"] != "NA":
+                    self.d_MC[chem]["exposure"].append("Pharma")
+                if d_exposure[chem]["Consumer"] != "NA":
+                    self.d_MC[chem]["exposure"].append("Consumer")
+                if d_exposure[chem]["Pesticide"] != "NA":
+                    self.d_MC[chem]["exposure"].append("Pesticide")
+                if d_exposure[chem]["Industrial"] != "NA":
+                    self.d_MC[chem]["exposure"].append("Industrial")
+        
     def splitMCGenotox(self):
 
         d_out = {}
@@ -269,7 +291,7 @@ class MCcrossref:
 
         self.d_all = d_all
 
-    def formatSetofChem(self, l_chemsets = ["ER", "MC", "Steroid", "E2", "P4", "all", "Steroid-up", "ER-agonist"]):
+    def formatSetofChem(self, l_chemsets):
         pr_dataset = pathFolder.createFolder(self.pr_out + "setOfChemicals/")
 
         d_out = {}
@@ -309,8 +331,16 @@ class MCcrossref:
                 for CASRN in self.d_E2up.keys():
                     filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
 
+            if chemset == "E2-up": # we consider only actives
+                for CASRN in self.d_E2up_active.keys():
+                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
+
             if chemset == "P4":
                 for CASRN in self.d_P4up.keys():
+                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
+            
+            if chemset == "P4-up":
+                for CASRN in self.d_P4up_active.keys():
                     filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
 
             if chemset == "all":
@@ -320,15 +350,16 @@ class MCcrossref:
 
         self.d_dataset = d_out
 
-    def prepSets(self):
+    def prepSets(self, l_sets):
         self.loadCrossRefExcel()
         self.splitMCGenotox()
-        self.defineE2P4active(["higher", "medium", "lower"])
+        self.defineE2P4active(["higher", "medium", "lower", "borderline"])  # to change E2 - P4 up defintion
         self.defineERactive()
         self.mergeAllSets()
+        self.updateExposureForMC()
 
         # write different chemical sets
-        self.formatSetofChem(["ER", "MC", "Steroid", "E2", "P4", "all", "Steroid-up", "ER-agonist"])#["Steroid-up", "Steroid"])#, "ER-agonist", "Steroid"])
+        self.formatSetofChem(l_sets)#
 
     def analysisMDescByDataset(self, dataset, l_desc, cor_val, max_q, hclust=0, SOM=0, SOM_size=8):
 
@@ -342,7 +373,7 @@ class MCcrossref:
         p_desc = self.c_Desc.buildDescSet(dataset, l_desc, pr_out)
 
         #load the analysis class
-        c_MakePlot = MakePlots.MakePlots(p_dataset=self.d_dataset[dataset], p_desc=p_desc, pr_out=pr_out, p_opera_all = self.c_Desc.d_desc[dataset]["all OPERA pred"], cor_val=cor_val, max_quantile=max_q)
+        c_MakePlot = MakePlots_fromDesc.MakePlots_fromDesc(p_dataset=self.d_dataset[dataset], p_desc=p_desc, pr_out=pr_out, p_opera_all = self.c_Desc.d_desc[dataset]["all OPERA pred"], cor_val=cor_val, max_quantile=max_q)
         
         if hclust == 1:
             c_MakePlot.hclusterByProp()
@@ -370,84 +401,58 @@ class MCcrossref:
         if hclust == 1:
             c_MakePlot.hclusterFromFPByProp()
 
+    def ChemClassesByMC(self):
 
+        pr_out = pathFolder.createFolder(self.pr_out + "ChemClassInMC/")
 
+        d_count = {}
+        for casrn in self.d_MC.keys():
+            lchemClass = self.d_MC[casrn]["exposure"]
+            if lchemClass == []:
+                lchemClass = ["unclassified"]
+            for chemClass in lchemClass:
+                if not chemClass in list(d_count.keys()):
+                    d_count[chemClass] = 0
+                d_count[chemClass] = d_count[chemClass] + 1
 
-
-    # to del but need to put back the other analysis in the new class
-    def computeDescAnalysisFromList(p_list, p_ToxPrint, p_chemList, PR_RESULTS):
-
-        """
-        TO DELETE
+        p_count = pr_out + "count_chemical_class_MC.csv"
+        filout = open(p_count, "w")
+        filout.write("Chem_class\tcount\n")
+        for chemClass in d_count.keys():
+            filout.write("%s\t%s\n"%(chemClass, str(d_count[chemClass])))
         
-        """
-
-        pr_results = pathFolder.createFolder(PR_RESULTS + "analysis_individual-dataset/" + p_list.split("/")[-1][0:-4] + "/")
-        pr_desc = pathFolder.createFolder(PR_RESULTS + "DESC/")
-
-        # Compute desc
-        ###################
-        cChem = Chemicals.Chemicals(p_list, pr_results)
-        cChem.computeDesc(pr_desc)
-        #cChem.buildDescSet(["rdkit"])
-        #cChem.analysisDescBasedData(COR_VAL, MAX_QUANTILE, PCA=1, Hclust=1, clustering=1, FP=1, SOM=1, histDesc=1)
-
-        cChem.analysisToxPrint(p_ToxPrint)
-        cChem.analysisChemList(p_chemList)
-
-
-
-
-
-
-
-    def analysisMultiSets(p_desc1D2D):
-
-        # draw hclust circular and PCA
-        runExternal.multiSetsAnalysis(p_desc1D2D)
-
-    def unionListChem(l_p_set, name_setchem, PR_RESULTS):
-        pr_union = pathFolder.createFolder(PR_RESULTS + "union_sets/")
-        l_name_set = []
-        d_out = {}
-        for p_set in l_p_set:
-            name_set = p_set.split("/")[-1][0:-4]
-            l_name_set.append(name_set)
-            l_chemset = toolbox.loadMatrixToList(p_set, sep = ",")
-            for chemset in l_chemset:
-                print(chemset)
-                CASRN = chemset["CASRN"]
-                SMILES = chemset["SMILES"]
-                if not CASRN in list(d_out.keys()):
-                    d_out[CASRN] = {}
-                    d_out[CASRN]["SMILES"] = SMILES
-                    d_out[CASRN]["list"] = []
-                d_out[CASRN]["list"].append(name_set)
-
-        p_filout = pr_union + name_setchem + ".csv"
-        filout = open(p_filout, "w")
-        filout.write("CASRN,SMILES,list\n")
-        for chem in d_out.keys():
-            filout.write("%s,%s,%s\n"%(chem, d_out[chem]["SMILES"], "--".join(d_out[chem]["list"])))
         filout.close()
+        runExternal.barplotChemClass(p_count)
 
-        return p_filout
+        stop395
+
+
+
 
     def main(self):
 
         # prepare set of chemicals - split by list
-        self.prepSets()
-        
+        self.prepSets(["ER", "MC", "Steroid", "E2-up", "P4-up", "all", "Steroid-up", "ER-agonist", "genotoxic"])
+
         # compute Venn diagram
         #self.overlapBetweenListChem(["MC", "genotoxic", "Steroid-up", "ER-agonist"])
         #self.overlapBetweenListChem(["MC", "Steroid", "ER"])
         #self.overlapBetweenListChem(["MC", "Steroid", "ER-agonist", "genotoxic"])
         #self.overlapBetweenListChem(["MC", "Steroid-up", "ER-agonist", "genotoxic"])
+        #self.overlapBetweenListChem(["Steroid", "E2-up", "P4-up"])
         
+        # analyse class of chemical by MC
+        #self.ChemClassesByMC()
+
         # Compute and/or load descriptors by set of chemicals
         #pr_desc_by_list = pathFolder.createFolder(self.pr_out + "desc_by_list/")
         #self.c_Desc = runDescriptors.runDescriptors(self.d_dataset, self.pr_desc, pr_desc_by_list)
         #self.c_Desc.compute_all() # here included all of the descriptors for the full set of chemicals
+
+        # put png in a different folder
+        #pr_png_by_list = pathFolder.createFolder(self.pr_out + "png_by_list/")
+        #self.c_Desc.png_by_list(pr_png_by_list)
+
 
         # analyze by daataset and set of descriptors #
         ##############################################
@@ -456,13 +461,9 @@ class MCcrossref:
         ######
         #self.analysisMDescByDataset(dataset="MC", l_desc=["rdkit"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
 
-        # E2 #
+        # Steroid #
         ######
-        #self.analysisMDescByDataset(dataset="E2", l_desc=["rdkit"], hclust=1, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
-
-        # P4 #
-        ######
-        #self.analysisMDescByDataset(dataset="P4", l_desc=["rdkit"], hclust=1, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
+        #self.analysisMDescByDataset(dataset="Steroid", l_desc=["rdkit"], hclust=1, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
 
 
 
@@ -483,4 +484,45 @@ class MCcrossref:
         #######################
         #self.c_FP.comparisonToxPrintCount(["MC", "Steroid", "all"])
 
-     
+
+
+
+
+## not used anymore but can be reintegrate 
+#######
+
+## need to reintegrate chemlinst in the sources as do with toxprint ##
+#cChem.analysisChemList(p_chemList)
+
+
+def analysisMultiSets(p_desc1D2D):
+
+    # draw hclust circular and PCA
+    runExternal.multiSetsAnalysis(p_desc1D2D)
+
+def unionListChem(l_p_set, name_setchem, PR_RESULTS):
+    pr_union = pathFolder.createFolder(PR_RESULTS + "union_sets/")
+    l_name_set = []
+    d_out = {}
+    for p_set in l_p_set:
+        name_set = p_set.split("/")[-1][0:-4]
+        l_name_set.append(name_set)
+        l_chemset = toolbox.loadMatrixToList(p_set, sep = ",")
+        for chemset in l_chemset:
+            print(chemset)
+            CASRN = chemset["CASRN"]
+            SMILES = chemset["SMILES"]
+            if not CASRN in list(d_out.keys()):
+                d_out[CASRN] = {}
+                d_out[CASRN]["SMILES"] = SMILES
+                d_out[CASRN]["list"] = []
+            d_out[CASRN]["list"].append(name_set)
+
+    p_filout = pr_union + name_setchem + ".csv"
+    filout = open(p_filout, "w")
+    filout.write("CASRN,SMILES,list\n")
+    for chem in d_out.keys():
+        filout.write("%s,%s,%s\n"%(chem, d_out[chem]["SMILES"], "--".join(d_out[chem]["list"])))
+    filout.close()
+
+    return p_filout
