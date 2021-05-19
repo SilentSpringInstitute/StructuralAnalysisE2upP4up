@@ -109,7 +109,7 @@ max_q = as.integer(args[5])
 
 d_in = read.csv(p_prop, sep = "\t", row.names = 1)
 drops = c("Group", "Aff", "Chemical.name", "SMILES")
-d_prop = d_prop[ , !(names(d_in) %in% drops)]
+d_prop = d_in[ , !(names(d_in) %in% drops)]
 
 # for E2up
 d_prop$E2up[which(is.na(d_prop$E2up))] = "NT"

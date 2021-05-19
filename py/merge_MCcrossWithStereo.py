@@ -11,9 +11,6 @@ class merge_MCcrossWithStereo:
         self.c_MC = c_MC
         self.c_stereo = c_stereo
 
-    
-    
-
     def analyzeByDataset(self, dataset, PCA=0, hclust=0):
 
         self.pr_analysis = pathFolder.createFolder("%sanalysis_%s/"%(self.pr_out, dataset))
@@ -31,10 +28,12 @@ class merge_MCcrossWithStereo:
         self.analyzeByDataset("MC", PCA=0, hclust=1)
 
         # E2
-        self.analyzeByDataset("E2", PCA=0, hclust=1)
+        #self.analyzeByDataset("E2", PCA=0, hclust=1)
 
         # P4
-        self.analyzeByDataset("P4", PCA=0, hclust=1)
+        #self.analyzeByDataset("P4", PCA=0, hclust=1)
+
+
 
     
     def PCA_FoldChangeMC(self, dataset):

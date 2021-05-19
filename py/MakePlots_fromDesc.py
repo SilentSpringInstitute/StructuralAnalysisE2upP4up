@@ -21,14 +21,20 @@ class MakePlots_fromDesc:
         self.max_quantile = max_quantile
 
     def hclusterByProp(self):
+        """clustering of Hclust and compute enrichement by cluster
+        - agreg: ward2
+        - clustering: hclust
+        - opt number of cluster gap-stat
+        """
 
         pr_out = pathFolder.createFolder(self.pr_out + "hclustDendo/")
 
         # run dendogram with circle of prop
-        p_dendo = pr_out + "dendo_cluster_name.png"
-        if not path.exists(p_dendo):
+        p_enrich = pr_out + "prob_by_clusters.csv"
+        if not path.exists(p_enrich):
             runExternal.dendogramClusterProp(self.p_dataset, self.p_desc, pr_out, self.cor_val, self.max_quantile)
-
+            p_clusters = pr_out + "cluster_hclust_ward2_gapstat.csv"
+            runExternal.enrichmentByCluster(self.p_dataset, p_clusters, pr_out)
 
 
     def hclusterFromFPByProp(self):
@@ -39,7 +45,6 @@ class MakePlots_fromDesc:
         p_dendo = pr_out + "dendo_cluster_name.png"
         if not path.exists(p_dendo):
             runExternal.dendogramFPProp(self.p_dataset, self.p_FP, pr_out)
-
 
 
     def prepDesc(self):

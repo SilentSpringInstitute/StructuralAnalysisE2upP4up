@@ -152,7 +152,6 @@ class dataset:
         if path.exists(p_filout):
            return p_filout
 
-
         # write list of SMILES for OPERA
         pr_OPERA = pathFolder.createFolder(self.pr_desc + "OPERA/", clean=1)
         p_lSMI = pr_OPERA + "listChem.smi"

@@ -28,7 +28,7 @@ MAX_QUANTILE = 90
 # LOAD Steroidogenesis data from Karmaus2016 #
 ##############################################
 c_Stereo = steroidogenesis_data.Steroidogenesis_data(PR_DATA, PR_RESULTS)
-c_Stereo.main()
+#c_Stereo.main()
 
 
 # LOAD AND RUN MC crossref ANALYSIS #
@@ -42,7 +42,6 @@ c_MCcrossref.main()
 pr_out = pathFolder.createFolder(PR_RESULTS + "MC_stereo/")
 c_MC_stereo = merge_MCcrossWithStereo.merge_MCcrossWithStereo(c_MCcrossref, c_Stereo, pr_out)
 c_MC_stereo.main()
-
 
 
 #cStereo.PCA_FoldChangeMC(cMC.d_MC)

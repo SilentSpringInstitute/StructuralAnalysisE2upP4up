@@ -42,6 +42,7 @@ class MCcrossref:
         self.d_E2up = toolbox.loadExcelSheet(self.p_crossref, name_sheet='E2-up', k_head = "CASRN")
         self.d_P4up = toolbox.loadExcelSheet(self.p_crossref, name_sheet='P4-up', k_head = "CASRN")
         self.d_ER = toolbox.loadExcelSheet(self.p_crossref, name_sheet='Judson ER active', k_head = "CASRN")
+        self.d_H295R = toolbox.loadExcelSheet(self.p_crossref, name_sheet='H295R_steroid_synth', k_head = "CASRN")
 
     def updateExposureForMC(self):
         if not "d_MC" in self.__dict__:
@@ -132,7 +133,6 @@ class MCcrossref:
         if path.exists(p_upset):
             return 
 
-
         d_d_chem = {}
         l_CASRN = []
         for list_chem in l_list_chem:
@@ -173,7 +173,10 @@ class MCcrossref:
                 for chem in self.d_steroid.keys():
                     d_d_chem[list_chem].append(chem)
                     l_CASRN.append(chem)
-            
+            elif list_chem == "H295R":
+                for chem in self.d_H295R.keys():
+                    d_d_chem[list_chem].append(chem)
+                    l_CASRN.append(chem)
         
         f_open = open(p_upset, "w")
         f_open.write("\t" + "\t".join(list(d_d_chem.keys())) + "\n")
@@ -210,6 +213,7 @@ class MCcrossref:
                 d_all[CASRN]["P4up"] = "NA"
                 d_all[CASRN]["E2up"] = "NA"
                 d_all[CASRN]["Group"] = ["MC"]
+                d_all[CASRN]["H295R"] = "0"
 
         ## ER lists    
         for CASRN in self.d_ERagonist.keys():
@@ -223,6 +227,7 @@ class MCcrossref:
                 d_all[CASRN]["E2up"] = "NA"
                 d_all[CASRN]["Group"] = ["ER"]
                 d_all[CASRN]["MC"] = "0"
+                d_all[CASRN]["H295R"] = "0"
             else:
                 d_all[CASRN]["ER"].append("agonist")
                 d_all[CASRN]["Group"].append("ER")
@@ -238,6 +243,7 @@ class MCcrossref:
                 d_all[CASRN]["E2up"] = "NA"
                 d_all[CASRN]["Group"] = ["ER"]
                 d_all[CASRN]["MC"] = "0"
+                d_all[CASRN]["H295R"] = "0"
             else:
                 d_all[CASRN]["ER"].append("antagonist")
                 if not "ER" in d_all[CASRN]["Group"]:
@@ -254,6 +260,7 @@ class MCcrossref:
                 d_all[CASRN]["E2up"] = "NA"
                 d_all[CASRN]["Group"] = ["ER"]
                 d_all[CASRN]["MC"] = "0"
+                d_all[CASRN]["H295R"] = "0"
             else:
                 if not "ER" in d_all[CASRN]["Group"]:
                     d_all[CASRN]["Group"].append("ER")
@@ -270,6 +277,7 @@ class MCcrossref:
                 d_all[CASRN]["E2up"] = "NA"
                 d_all[CASRN]["Group"] = ["P4up"]
                 d_all[CASRN]["MC"] = "0"
+                d_all[CASRN]["H295R"] = "0"
             else:
                 d_all[CASRN]["P4up"] = self.d_P4up[CASRN]["Efficacy/potency"]
                 d_all[CASRN]["Group"].append("P4up")
@@ -285,9 +293,27 @@ class MCcrossref:
                 d_all[CASRN]["E2up"] = self.d_E2up[CASRN]["Efficacy/potency"]
                 d_all[CASRN]["Group"] = ["E2up"]
                 d_all[CASRN]["MC"] = "0"
+                d_all[CASRN]["H295R"] = "0"
             else:
                 d_all[CASRN]["E2up"] = self.d_E2up[CASRN]["Efficacy/potency"]
                 d_all[CASRN]["Group"].append("E2up")
+
+        # d_H295R
+        for CASRN in self.d_H295R.keys():
+            if not CASRN in list(d_all.keys()):
+                d_all[CASRN] = {}
+                d_all[CASRN]["name"] = self.d_H295R[CASRN]["PREFERRED_NAME"]
+                d_all[CASRN]["SMILES"] = self.d_H295R[CASRN]["SMILES"]
+                d_all[CASRN]["genotox"] = "NA"
+                d_all[CASRN]["ER"] = []
+                d_all[CASRN]["P4up"] = "NA"
+                d_all[CASRN]["E2up"] = "NA"
+                d_all[CASRN]["H295R"] = "1"
+                d_all[CASRN]["Group"] = ["H295R"]
+                d_all[CASRN]["MC"] = "0"
+            else:
+                d_all[CASRN]["H295R"] = "1"
+                d_all[CASRN]["Group"].append("H295R")
 
         self.d_all = d_all
 
@@ -301,51 +327,35 @@ class MCcrossref:
             if path.exists(p_filout):
                 continue
             filout = open(p_filout, "w")
-            filout.write("CASRN\tSMILES\tChemical name\tMC\tgenotox\tE2up\tP4up\tER\tGroup\tAff\n")
+            filout.write("CASRN\tSMILES\tChemical name\tMC\tgenotox\tE2up\tP4up\tER\tH295R\tGroup\tAff\n")
 
             if chemset == "MC":
-                for CASRN in self.d_MC.keys():
-                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
-            
-            if chemset == "genotox":
-                for CASRN in self.d_MCgenotox["genotox"].keys():
-                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
-            
-            if chemset == "Steroid-up":
-                for CASRN in self.d_steroid_active.keys():
-                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
-            
-            if chemset == "Steroid":
-                for CASRN in self.d_steroid.keys():
-                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
+                l_casrn = list(self.d_MC.keys())
+            elif chemset == "genotoxic":
+                l_casrn = list(self.d_MCgenotox["genotoxic"])
+            elif chemset == "Steroid-up":
+                l_casrn = list(self.d_steroid_active.keys())
+            elif chemset == "Steroid":
+                l_casrn = list(self.d_steroid.keys())
+            elif chemset == "ER-agonist":
+                l_casrn = list(self.d_ERagonist.keys())
+            elif chemset == "ER":
+                l_casrn = list(self.d_ER.keys())
+            elif chemset == "E2":
+                l_casrn = list(self.d_E2up.keys())
+            elif chemset == "E2-up":
+                l_casrn = list(self.d_E2up_active.keys())
+            elif chemset == "P4":
+                l_casrn = list(self.d_P4up.keys())
+            elif chemset == "P4-up":
+                l_casrn = list(self.d_P4up_active.keys())
+            elif chemset == "H295R":
+                l_casrn = list(self.d_H295R.keys())
+            elif chemset == "all":
+                l_casrn = list(self.d_all.keys())
 
-            if chemset == "ER-agonist":
-                for CASRN in self.d_ERagonist.keys():
-                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
-
-            if chemset == "ER":
-                for CASRN in self.d_ER.keys():
-                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
-
-            if chemset == "E2":
-                for CASRN in self.d_E2up.keys():
-                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
-
-            if chemset == "E2-up": # we consider only actives
-                for CASRN in self.d_E2up_active.keys():
-                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
-
-            if chemset == "P4":
-                for CASRN in self.d_P4up.keys():
-                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
-            
-            if chemset == "P4-up":
-                for CASRN in self.d_P4up_active.keys():
-                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
-
-            if chemset == "all":
-                for CASRN in self.d_all.keys():
-                    filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]),  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
+            for CASRN in l_casrn:
+                filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(CASRN, self.d_all[CASRN]["SMILES"], self.d_all[CASRN]["name"], self.d_all[CASRN]["MC"], self.d_all[CASRN]["genotox"], self.d_all[CASRN]["E2up"], self.d_all[CASRN]["P4up"], "-".join(self.d_all[CASRN]["ER"]), self.d_all[CASRN]["H295R"],  "-".join(self.d_all[CASRN]["Group"]),  "-".join(self.d_all[CASRN]["Group"])))
             filout.close()
 
         self.d_dataset = d_out
@@ -353,7 +363,7 @@ class MCcrossref:
     def prepSets(self, l_sets):
         self.loadCrossRefExcel()
         self.splitMCGenotox()
-        self.defineE2P4active(["higher", "medium", "lower", "borderline"])  # to change E2 - P4 up defintion
+        self.defineE2P4active(["higher", "medium", "lower", "borderline"])  # to change E2 - P4 up defintion // hormone substrate is not included in the active -> NA
         self.defineERactive()
         self.mergeAllSets()
         self.updateExposureForMC()
@@ -432,7 +442,7 @@ class MCcrossref:
     def main(self):
 
         # prepare set of chemicals - split by list
-        self.prepSets(["ER", "MC", "Steroid", "E2-up", "P4-up", "all", "Steroid-up", "ER-agonist", "genotoxic"])
+        self.prepSets(["ER", "MC", "Steroid", "E2-up", "P4-up", "all", "Steroid-up", "ER-agonist", "genotoxic", "H295R"])
 
         # compute Venn diagram
         #self.overlapBetweenListChem(["MC", "genotoxic", "Steroid-up", "ER-agonist"])
@@ -440,14 +450,20 @@ class MCcrossref:
         #self.overlapBetweenListChem(["MC", "Steroid", "ER-agonist", "genotoxic"])
         #self.overlapBetweenListChem(["MC", "Steroid-up", "ER-agonist", "genotoxic"])
         #self.overlapBetweenListChem(["Steroid", "E2-up", "P4-up"])
-        
+        self.overlapBetweenListChem(["E2-up", "P4-up", "H295R"])
+        self.overlapBetweenListChem(["MC", "genotoxic", "H295R"])
+        stophere
         # analyse class of chemical by MC
         #self.ChemClassesByMC()
-
+        
         # Compute and/or load descriptors by set of chemicals
-        #pr_desc_by_list = pathFolder.createFolder(self.pr_out + "desc_by_list/")
-        #self.c_Desc = runDescriptors.runDescriptors(self.d_dataset, self.pr_desc, pr_desc_by_list)
-        #self.c_Desc.compute_all() # here included all of the descriptors for the full set of chemicals
+        pr_desc_by_list = pathFolder.createFolder(self.pr_out + "desc_by_list/")
+        self.c_Desc = runDescriptors.runDescriptors(self.d_dataset, self.pr_desc, pr_desc_by_list)
+        self.c_Desc.compute_all() # here included all of the descriptors for the full set of chemicals
+
+
+        # compute similarity with hormone derivative
+        d_hormone = {}
 
         # put png in a different folder
         #pr_png_by_list = pathFolder.createFolder(self.pr_out + "png_by_list/")
@@ -466,6 +482,11 @@ class MCcrossref:
         #self.analysisMDescByDataset(dataset="Steroid", l_desc=["rdkit"], hclust=1, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
 
 
+        # H295R #
+        self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit"], hclust=1, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
+        
+        #hormone and precursor similarity
+
 
         # analysis of the toxprint #
         ############################
@@ -482,9 +503,10 @@ class MCcrossref:
 
         # Comparison ToxPrint #
         #######################
-        #self.c_FP.comparisonToxPrintCount(["MC", "Steroid", "all"])
+        #self.c_FP.comparisonToxPrintCount(["Steroid", "E2-up", "P4-up"])
+        #self.c_FP.comparisonToxPrintCount(["H295R", "E2-up", "P4-up"])
 
-
+        stop485
 
 
 

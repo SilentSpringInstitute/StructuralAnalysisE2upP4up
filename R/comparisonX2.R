@@ -66,12 +66,10 @@ AFC = function (d, path_file){
   
   svg (file = paste (path_file, "_AFC_text.svg", sep = ""), bg = "transparent" ,100, 100)
   par(mar=c(5,5,2,2))
-  
   plot (xplot, yplot, xlab = paste("DIM 1 : ", round(r$eig[1,2],1), "%", sep = ""), ylab = paste("DIM 2 : ", round(r$eig[2,2],1), "%", sep = ""), cex.lab = 2.2, cex.axis = 1.8, xlim = c(-lim_x, lim_x), ylim = c(-lim_y, lim_y), pch = l_pch, col = l_col_all, cex = 2.5)
   text (r$col$coord[,1], r$col$coord[,2], label = names(r$col$coord[,1]), col = l_col, cex = 2, pos = 4)
   text (r$row$coord[,1], r$row$coord[,2], col = "black", label = names (r$row$coord[,1]), cex = 2.5, pos = 4)
   abline(h=0,v=0, lwd = 2)
-  
   dev.off()
   
   svg (file = paste (path_file, "_AFC_point.svg", sep = ""), bg = "transparent", 100, 100)
@@ -80,10 +78,17 @@ AFC = function (d, path_file){
   points (r$col$coord[,1], r$col$coord[,2], col = l_col, cex = 4, pch = 16)
   text (r$row$coord[,1], r$row$coord[,2], col = "black", label = names (r$row$coord[,1]), cex = 2.5, pos = 4)
   abline(h=0,v=0, lwd = 2)
-  
   dev.off()
   
   
+  png (file = paste (path_file, "_AFC_text.png", sep = ""), bg = "transparent" ,5000, 5000)
+  par(mar=c(5,5,2,2))
+  plot (xplot, yplot, xlab = paste("DIM 1 : ", round(r$eig[1,2],1), "%", sep = ""), ylab = paste("DIM 2 : ", round(r$eig[2,2],1), "%", sep = ""), cex.lab = 2.2, cex.axis = 1.8, xlim = c(-lim_x, lim_x), ylim = c(-lim_y, lim_y), pch = l_pch, col = l_col_all, cex = 2.5)
+  text (r$col$coord[,1], r$col$coord[,2], label = names(r$col$coord[,1]), col = l_col, cex = 2, pos = 4)
+  text (r$row$coord[,1], r$row$coord[,2], col = "black", label = names (r$row$coord[,1]), cex = 2.5, pos = 4)
+  abline(h=0,v=0, lwd = 2)
+  dev.off()
+
   
 }
 
@@ -105,7 +110,7 @@ dt <- as.table(as.matrix(housetasks))
 
 # reduce
 dt = dt[-which(rowSums(dt)<=(5*dim(dt)[2])),]
-
+dt = dt[-which(dt[,1] == dt[,2]),]
 
 
 # 2. Graph - ballon

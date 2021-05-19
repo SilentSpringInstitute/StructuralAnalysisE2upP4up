@@ -19,11 +19,11 @@ Project developed to analysis chemicals that can be classified as a breast carci
 - cluster using the toxiprint
 - reproduce clustering with the 10 hormone tested in kaumas
 - Add pca for the chemicals overlap in addition to the upset plot
-- do a clustering with the 10 hormones from Agnes paper
+- ~~do a clustering with the 10 hormones from Agnes paper~~
 - check link with SP data in the dropbox folder
-- Add borderline in the E2 up and P4 up !!!
+- ~~Add borderline in the E2 up and P4 up !!!~~
 - change CR value by the file - H295R_AllChemsTested_ANOVA_directionality_filtered_output_2018-08-09.xlsx
-- change hormone order OHPREG - PROG - OHPREG - DOC - CORTISOL - 11DC .. from kaumas 2016
+- ~~change hormone order OHPREG - PROG - OHPREG - DOC - CORTISOL - 11DC .. from kaumas 2016~~
 - AFC with E2 and p4 - take a look on complete matrix
 
 ## Priority 2

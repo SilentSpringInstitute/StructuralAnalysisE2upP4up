@@ -142,10 +142,17 @@ def dendogramFPProp(p_dataset, p_FP, pr_out):
     cmd =  "./dendogramPropFPTanimoto.R %s %s %s"%(p_dataset, p_FP, pr_out)
     runRCMD(cmd)
 
-
 def barplotChemClass(p_count):
     cmd = "./barplotChemClass.R %s"%(p_count)
     runRCMD(cmd)   
+
+def enrichmentByCluster(p_prop, p_clusters, pr_out):
+    cmd = "./enrichmentClusters.R %s %s %s"%(p_prop, p_clusters, pr_out)
+    runRCMD(cmd)
+
+
+
+
 
 ##############
 # run biotransformer tool

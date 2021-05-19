@@ -22,11 +22,13 @@ class Steroidogenesis_data:
         self.pf_raw_hormone_data = pr_SI + "toxsci-15-0570-File011.csv"
         self.pf_hormone_change = pr_SI + "toxsci-15-0570-File014.csv"
         
+        # define hormones for the analysis
+        self.l_hormones = ["OHPREG", "PROG", "OHPROG", "DOC", "CORTISOL", "11DCORT", "ANDR", "TESTO", "ESTRONE", "ESTRADIOL"]
+
     def loadsinglehitc(self):
 
         l_lines_hitc = toolbox.loadMatrixToList(self.pf_hormone_hitc, sep = ",")
         d_hitc = {}
-        l_hormones = []
         if not "d_chem" in self.__dict__:
             self.loadChemicalsMapping()
         
@@ -37,8 +39,6 @@ class Steroidogenesis_data:
             aenm = line_hitc["aenm"]
             hormone = aenm.split("_")[2]
             up_down = aenm.split("_")[-1]
-            if not hormone in l_hormones:
-                l_hormones.append(hormone)
             if not chid in list(d_hitc.keys()):
                 d_hitc[chid] = {}
             if line_hitc["hitc"] != "0":
@@ -48,7 +48,6 @@ class Steroidogenesis_data:
                     d_hitc[chid][aenm] = -float(line_hitc["max_med"])
         
         self.d_hitc = d_hitc
-        self.l_hormones = l_hormones
 
     def summaryHitc(self):
 
@@ -120,9 +119,6 @@ class Steroidogenesis_data:
         
         if not "d_chem_mapping" in self.__dict__:
             self.loadChemicalsMapping
-
-        if not "l_hormones" in self.__dict__:
-            self.loadsinglehitc
 
         d_out = {}
         
