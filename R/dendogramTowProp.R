@@ -15,7 +15,7 @@ dendogramCluster = function(ddes, d_cluster, daff, d_prop2, pfilout){
   
   #calibrate affinity for color
   
-  daff = daff[,c("MC", "genotox", "E2up",  "P4up" , "ER")]
+  daff = daff[,c("MC", "E2up",  "P4up" )]
   
   daff = as.data.frame(daff)
   #daff = cbind(rownames(daff), daff)

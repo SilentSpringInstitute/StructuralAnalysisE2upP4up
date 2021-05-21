@@ -11,9 +11,10 @@ import toolbox
 
 
 class MakePlots_fromDesc:
-    def __init__(self, p_dataset, pr_out, p_desc="", p_FP="", p_opera_all="", cor_val="", max_quantile=""):
+    def __init__(self, p_dataset, pr_out, p_desc="", p_hormone_similarity = "", p_FP="", p_opera_all="", cor_val="", max_quantile=""):
         self.p_desc = p_desc
         self.p_dataset = p_dataset
+        self.p_hormone_similarity = p_hormone_similarity
         self.p_opera = p_opera_all
         self.p_FP = p_FP
         self.pr_out = pr_out
@@ -32,7 +33,7 @@ class MakePlots_fromDesc:
         # run dendogram with circle of prop
         p_enrich = pr_out + "prob_by_clusters.csv"
         if not path.exists(p_enrich):
-            runExternal.dendogramClusterProp(self.p_dataset, self.p_desc, pr_out, self.cor_val, self.max_quantile)
+            runExternal.dendogramClusterProp(self.p_dataset, self.p_desc, self.p_hormone_similarity, pr_out, self.cor_val, self.max_quantile)
             p_clusters = pr_out + "cluster_hclust_ward2_gapstat.csv"
             runExternal.enrichmentByCluster(self.p_dataset, p_clusters, pr_out)
 

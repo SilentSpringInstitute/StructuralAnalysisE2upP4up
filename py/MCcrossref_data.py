@@ -6,7 +6,7 @@ import math
 import pathFolder
 import dataset
 import MakePlots_fromDesc
-import runDescriptors
+import runChemStruct
 import comparisonChemicalLists
 import toolbox
 import runExternal
@@ -16,12 +16,13 @@ import runToxPrint
 
 class MCcrossref:
 
-    def __init__(self, p_crossref, p_exposure, COR_VAL, MAX_QUANTILE, pr_ToxPrints, pr_out):
+    def __init__(self, p_crossref, p_exposure, p_hormones, COR_VAL, MAX_QUANTILE, pr_ToxPrints, pr_out):
 
         self.pr_toxprint = pr_ToxPrints
         self.pr_out = pr_out
         self.p_crossref = p_crossref
         self.p_exposure = p_exposure
+        self.p_hormones = p_hormones
 
         self.COR_VAL = COR_VAL
         self.MAX_QUANTILE = MAX_QUANTILE
@@ -213,7 +214,7 @@ class MCcrossref:
                 d_all[CASRN]["P4up"] = "NA"
                 d_all[CASRN]["E2up"] = "NA"
                 d_all[CASRN]["Group"] = ["MC"]
-                d_all[CASRN]["H295R"] = "0"
+                d_all[CASRN]["H295R"] = "NA"
 
         ## ER lists    
         for CASRN in self.d_ERagonist.keys():
@@ -226,8 +227,8 @@ class MCcrossref:
                 d_all[CASRN]["P4up"] = "NA"
                 d_all[CASRN]["E2up"] = "NA"
                 d_all[CASRN]["Group"] = ["ER"]
-                d_all[CASRN]["MC"] = "0"
-                d_all[CASRN]["H295R"] = "0"
+                d_all[CASRN]["MC"] = "NA"
+                d_all[CASRN]["H295R"] = "NA"
             else:
                 d_all[CASRN]["ER"].append("agonist")
                 d_all[CASRN]["Group"].append("ER")
@@ -242,8 +243,8 @@ class MCcrossref:
                 d_all[CASRN]["P4up"] = "NA"
                 d_all[CASRN]["E2up"] = "NA"
                 d_all[CASRN]["Group"] = ["ER"]
-                d_all[CASRN]["MC"] = "0"
-                d_all[CASRN]["H295R"] = "0"
+                d_all[CASRN]["MC"] = "NA"
+                d_all[CASRN]["H295R"] = "NA"
             else:
                 d_all[CASRN]["ER"].append("antagonist")
                 if not "ER" in d_all[CASRN]["Group"]:
@@ -259,8 +260,8 @@ class MCcrossref:
                 d_all[CASRN]["P4up"] = "NA"
                 d_all[CASRN]["E2up"] = "NA"
                 d_all[CASRN]["Group"] = ["ER"]
-                d_all[CASRN]["MC"] = "0"
-                d_all[CASRN]["H295R"] = "0"
+                d_all[CASRN]["MC"] = "NA"
+                d_all[CASRN]["H295R"] = "NA"
             else:
                 if not "ER" in d_all[CASRN]["Group"]:
                     d_all[CASRN]["Group"].append("ER")
@@ -276,8 +277,8 @@ class MCcrossref:
                 d_all[CASRN]["P4up"] = self.d_P4up[CASRN]["Efficacy/potency"]
                 d_all[CASRN]["E2up"] = "NA"
                 d_all[CASRN]["Group"] = ["P4up"]
-                d_all[CASRN]["MC"] = "0"
-                d_all[CASRN]["H295R"] = "0"
+                d_all[CASRN]["MC"] = "NA"
+                d_all[CASRN]["H295R"] = "NA"
             else:
                 d_all[CASRN]["P4up"] = self.d_P4up[CASRN]["Efficacy/potency"]
                 d_all[CASRN]["Group"].append("P4up")
@@ -292,8 +293,8 @@ class MCcrossref:
                 d_all[CASRN]["P4up"] = "NA"
                 d_all[CASRN]["E2up"] = self.d_E2up[CASRN]["Efficacy/potency"]
                 d_all[CASRN]["Group"] = ["E2up"]
-                d_all[CASRN]["MC"] = "0"
-                d_all[CASRN]["H295R"] = "0"
+                d_all[CASRN]["MC"] = "NA"
+                d_all[CASRN]["H295R"] = "NA"
             else:
                 d_all[CASRN]["E2up"] = self.d_E2up[CASRN]["Efficacy/potency"]
                 d_all[CASRN]["Group"].append("E2up")
@@ -310,7 +311,7 @@ class MCcrossref:
                 d_all[CASRN]["E2up"] = "NA"
                 d_all[CASRN]["H295R"] = "1"
                 d_all[CASRN]["Group"] = ["H295R"]
-                d_all[CASRN]["MC"] = "0"
+                d_all[CASRN]["MC"] = "NA"
             else:
                 d_all[CASRN]["H295R"] = "1"
                 d_all[CASRN]["Group"].append("H295R")
@@ -383,7 +384,7 @@ class MCcrossref:
         p_desc = self.c_Desc.buildDescSet(dataset, l_desc, pr_out)
 
         #load the analysis class
-        c_MakePlot = MakePlots_fromDesc.MakePlots_fromDesc(p_dataset=self.d_dataset[dataset], p_desc=p_desc, pr_out=pr_out, p_opera_all = self.c_Desc.d_desc[dataset]["all OPERA pred"], cor_val=cor_val, max_quantile=max_q)
+        c_MakePlot = MakePlots_fromDesc.MakePlots_fromDesc(p_dataset=self.d_dataset[dataset], p_desc=p_desc, p_hormone_similarity = self.c_Desc.p_hormone_similarity, pr_out=pr_out, p_opera_all = self.c_Desc.d_desc[dataset]["all OPERA pred"], cor_val=cor_val, max_quantile=max_q)
         
         if hclust == 1:
             c_MakePlot.hclusterByProp()
@@ -434,9 +435,6 @@ class MCcrossref:
         filout.close()
         runExternal.barplotChemClass(p_count)
 
-        stop395
-
-
 
 
     def main(self):
@@ -450,20 +448,20 @@ class MCcrossref:
         #self.overlapBetweenListChem(["MC", "Steroid", "ER-agonist", "genotoxic"])
         #self.overlapBetweenListChem(["MC", "Steroid-up", "ER-agonist", "genotoxic"])
         #self.overlapBetweenListChem(["Steroid", "E2-up", "P4-up"])
-        self.overlapBetweenListChem(["E2-up", "P4-up", "H295R"])
-        self.overlapBetweenListChem(["MC", "genotoxic", "H295R"])
-        stophere
+        #self.overlapBetweenListChem(["E2-up", "P4-up", "H295R"])
+        #self.overlapBetweenListChem(["MC", "genotoxic", "H295R"])
         # analyse class of chemical by MC
         #self.ChemClassesByMC()
         
         # Compute and/or load descriptors by set of chemicals
-        pr_desc_by_list = pathFolder.createFolder(self.pr_out + "desc_by_list/")
-        self.c_Desc = runDescriptors.runDescriptors(self.d_dataset, self.pr_desc, pr_desc_by_list)
-        self.c_Desc.compute_all() # here included all of the descriptors for the full set of chemicals
+        
+        self.c_Desc = runChemStruct.runChemStruct(self.d_dataset, self.pr_desc, self.pr_out)
+        self.c_Desc.compute_allDesc() # here included all of the descriptors for the full set of chemicals
 
 
         # compute similarity with hormone derivative
-        d_hormone = {}
+        # = "MACCS", "Morgan", "Mol"], l_dist = ["Dice", "Tanimoto"]
+        self.c_Desc.compute_similarity_with_hormones(self.p_hormones, "MACCS", "Tanimoto")
 
         # put png in a different folder
         #pr_png_by_list = pathFolder.createFolder(self.pr_out + "png_by_list/")
@@ -483,7 +481,7 @@ class MCcrossref:
 
 
         # H295R #
-        self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit"], hclust=1, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
+        self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit"], hclust=1, SOM=0, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
         
         #hormone and precursor similarity
 

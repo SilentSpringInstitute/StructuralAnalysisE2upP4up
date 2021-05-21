@@ -9,12 +9,12 @@ library(ggplot2)
 library(Toolbox)
 
 
-dendogramCluster = function(ddes, d_cluster, daff, prout){
+dendogramCluster = function(ddes, d_cluster, daff, dh, prout){
   
   
   #calibrate affinity for color
   
-  daff = daff[,c("MC", "genotox", "E2up",  "P4up" , "ER")]
+  daff = daff[,c("MC", "E2up",  "P4up")]
   
   daff = as.data.frame(daff)
   #daff = cbind(rownames(daff), daff)
@@ -47,10 +47,18 @@ dendogramCluster = function(ddes, d_cluster, daff, prout){
       values = c("blue", "gray80", "orange"),
       labels = c("NEG", "NT", "POS")
     )
-    open_tree(t2, 10) %>% rotate_tree(10)
   
+  t3 = t2 + ggnewscale::new_scale_fill()
+  
+  t4 = gheatmap(t3, dh, offset=20, width=.2, colnames_angle=95, colnames_offset_y = .25) +
+    scale_fill_viridis_b(option = "A")
+   
+  
+  open_tree(t4, 10) %>% rotate_tree(10)
   ggsave(pfilout, dpi=300, height = 11, width = 11)
 }
+
+dendogramCluster(d_desc, d_cluster, d_prop, d_hormone, pr_out)
 
 
 
@@ -99,12 +107,13 @@ pr_out = args[3]
 val_cor = as.double(args[4])
 max_q = as.integer(args[5])
 
-#val_cor = 0.9
-#max_q = 90
+val_cor = 0.9
+max_q = 90
 
-#p_prop = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/setOfChemicals/E2.csv"
-#p_desc = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/Clustering/E2_rdkit/rdkit.csv"
-#pr_out = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/Clustering/E2_rdkit/"
+p_prop = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/setOfChemicals/H295R.csv"
+p_desc = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/Analysis_H295R/rdkit/rdkit.csv"
+p_hormone = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/similarityHormone/matrix_MACCS-Tanimoto.csv"
+pr_out = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/Analysis_H295R/rdkit/hclustDendo/"
 
 
 d_in = read.csv(p_prop, sep = "\t", row.names = 1)
@@ -137,6 +146,16 @@ d_prop$MC[which(d_prop$MC == "" | is.na(d_prop$MC))] = "NT"
 d_prop$MC[which(d_prop$MC == "0")] = "NEG"
 d_prop$MC[which(d_prop$MC == "1")] = "POS"
 
+
+#hormone
+d_hormone = read.csv(p_hormone, sep = "\t", header = FALSE)
+rownames(d_hormone) = d_hormone[,1]
+d_hormone = d_hormone[,-1]
+colnames(d_hormone) = d_hormone[1,]
+
+# reduce with eastradiol and progesterone
+#d_hormone = d_hormone[,c("57-83-0", "50-28-2")]
+
 # open and reduce descriptor
 l_d_desc = openDataVexcluded(p_desc, val_cor, pr_out,c(1,2))
 d_desc = l_d_desc[[1]]
@@ -152,6 +171,9 @@ l_casrn = intersect(rownames(d_desc), rownames(d_prop))
 
 d_prop = d_prop[l_casrn,]
 d_desc = d_desc[l_casrn,]
+d_hormone = d_hormone[l_casrn,]
+d_hormone = sapply(d_hormone, as.double, 1)
+rownames(d_hormone) = l_casrn
 
 #cluster chem for representation
 d_cluster = clusterChem(d_desc, pr_out)
@@ -161,5 +183,5 @@ write.csv(d_w, paste(pr_out, "cluster_hclust_ward2_gapstat_name.csv", sep = ""),
 
 
 # dendogram
-dendogramCluster(d_desc, d_cluster, d_prop, pr_out)
+dendogramCluster(d_desc, d_cluster, d_prop, d_hormone, pr_out)
 

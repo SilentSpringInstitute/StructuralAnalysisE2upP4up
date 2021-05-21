@@ -1,3 +1,4 @@
+import CompDesc
 import dataset
 import pathFolder
 import toolbox
@@ -10,7 +11,7 @@ from shutil import copyfile
 L_OPERA_DESC = ['LogP_pred', 'MP_pred', 'BP_pred', 'LogVP_pred', 'LogWS_pred', 'LogHL_pred', 'RT_pred', 'LogKOA_pred', 'ionization', 'LogD55_pred', 'LogD74_pred', 'LogOH_pred', 'LogBCF_pred', 'BioDeg_LogHalfLife_pred', 'ReadyBiodeg_pred', 'LogKM_pred', 'LogKoc_pred', 'FUB_pred', 'Clint_pred']
 
 
-class runDescriptors:
+class runChemStruct:
     def __init__(self, d_dataset, pr_desc, pr_out):
         self.d_dataset = d_dataset
         self.pr_out = pr_out
@@ -53,7 +54,7 @@ class runDescriptors:
         """Select from OPERA only physico chem descriptors"""
 
         if not "d_desc" in self.__dict__:
-            self.compute_all()
+            self.compute_allDesc()
 
         p_filout = pr_results + "-".join(l_type_desc) + ".csv"
         if path.exists(p_filout):
@@ -143,11 +144,11 @@ class runDescriptors:
 
         self.p_desc = p_desc_out
 
-    def combineDataset(self, p_dataset2):
-        c_dataset = dataset.dataset(self.p_dataset, self.pr_out)
-        self.c_dataset = c_dataset
-        
-        self.c_dataset.combineDataset(p_dataset2)
+    #def combineDataset(self, p_dataset2): # legacy from previous code
+    #    c_dataset = dataset.dataset(self.p_dataset, self.pr_out)
+    #    self.c_dataset = c_dataset
+    #    
+    #    self.c_dataset.combineDataset(p_dataset2)
 
     def computeBiotransformation(self, p_list_mater=""):
 
@@ -160,80 +161,42 @@ class runDescriptors:
 
         self.c_dataset.computeDescProductBiotransformed()
 
-    def analysisDescBasedData(self, cor_val, max_quantile, PCA=0, Hclust=0, clustering=0, SOM=0, SOM_SIZE =10, histDesc =0, FP = 0):
-        """
-        need to be rewrtie
-        """
-
-
-        if not "p_desc_rdkit" in self.__dict__:
-            self.err = 1
-            self.log = "load dataset first"
-            return 
-
-        cAnalysis = analysis.analysis(self.p_dataset, self.p_desc_rdkit, self.p_desc_OPERA, self.pr_results, cor_val, max_quantile)
-        cAnalysis.prepDesc()
-
-        # 2.1 PCA
-        if PCA == 1:
-            cAnalysis.PCA_plot()
-
-        # 2.2 Hclust
-        if Hclust == 1:
-            cAnalysis.HClust_plot(self.p_desc_OPERA)
-
-        # 2.3 Clustering
-        if clustering == 1: 
-            cAnalysis.clustering()
-
-        # 2.4 SOM
-        if SOM == 1:
-            cAnalysis.generate_SOM(SOM_SIZE)
-            cAnalysis.signifDescBySOMCluster()
-            cAnalysis.extract_actBySOMCluster(self.pr_desc + "PNG/") # have to run !!!!
-
-        # 2.5 histogram by descriptor
-        if histDesc == 1:
-            cAnalysis.histDesc()  
-
-        # 2.6 Tanimoto in fingerprint
-        if FP == 1:
-            cAnalysis.FPTanimoto(["topo", "MACCS", "Morgan"])
-
-    def analysisChemList(self, p_chemlist):
-
-        d_chemList = toolbox.loadMatrix(p_chemlist, ",") 
-        pr_out = pathFolder.createFolder(self.pr_out + "chem_list/")
-
-        l_chemlist = list(d_chemList[list(d_chemList.keys())[0]].keys())
-        l_chemlist.remove('INPUT')
-        l_chemlist.remove('DTXSID')
-        l_chemlist.remove('PREFERRED_NAME')
-        l_chemlist.remove('FOUND_BY')
-
-        d_out = {}
-        for chemlist in l_chemlist:
-            d_out[chemlist] = 0
-
-        for chem in d_chemList.keys():
-            for chemlist in l_chemlist:
-                if d_chemList[chem][chemlist] == "Y":
-                    d_out[chemlist] = d_out[chemlist] + 1
-
-
-        p_filout = pr_out + "count_chemlist"
-        filout = open(p_filout, "w")
-        filout.write("chem_list\tcount\n")
-        for chemlist in d_out.keys():
-            if d_out[chemlist] != 0:
-                filout.write("%s\t%s\n"%(chemlist, d_out[chemlist]))
-        filout.close()
-
-        runExternal.barplotchemlist(p_filout)
-
-        return 
     
-    def compute_all(self):
+    # need a rewrite
+    #def analysisChemList(self, p_chemlist):
+
+    #    d_chemList = toolbox.loadMatrix(p_chemlist, ",") 
+    #    pr_out = pathFolder.createFolder(self.pr_out + "chem_list/")
+
+    #    l_chemlist = list(d_chemList[list(d_chemList.keys())[0]].keys())
+    #    l_chemlist.remove('INPUT')
+    #    l_chemlist.remove('DTXSID')
+    #    l_chemlist.remove('PREFERRED_NAME')
+    #    l_chemlist.remove('FOUND_BY')
+
+    #    d_out = {}
+    #    for chemlist in l_chemlist:
+    #        d_out[chemlist] = 0
+
+    #    for chem in d_chemList.keys():
+    #        for chemlist in l_chemlist:
+    #            if d_chemList[chem][chemlist] == "Y":
+    #                d_out[chemlist] = d_out[chemlist] + 1
+
+
+    #    p_filout = pr_out + "count_chemlist"
+    #    filout = open(p_filout, "w")
+    #    filout.write("chem_list\tcount\n")
+    #    for chemlist in d_out.keys():
+    #        if d_out[chemlist] != 0:
+    #            filout.write("%s\t%s\n"%(chemlist, d_out[chemlist]))
+    #    filout.close()
+
+    #    runExternal.barplotchemlist(p_filout)
+
+    #    return 
+    
+    def compute_allDesc(self):
         """
         Compute all descriptors available for the this project
         - can add option to compute only partially the descriptor set
@@ -243,7 +206,7 @@ class runDescriptors:
 
         for dataset in self.d_dataset.keys():
             d_out[dataset] = {}
-            pr_chem = pathFolder.createFolder(self.pr_out + dataset + "/")
+            pr_chem = pathFolder.createFolder(self.pr_out + "desc_by_list/" + dataset + "/")
             d_out[dataset].update(self.computeDesc(self.d_dataset[dataset], pr_chem))
             d_out[dataset]["all OPERA pred"] = self.computeAllOperaPred(self.d_dataset[dataset], pr_chem)
         self.d_desc = d_out
@@ -258,4 +221,49 @@ class runDescriptors:
                 if path.exists(p_png_desc):
                     copyfile(p_png_desc, pr_png_list + chem + ".png")
 
+    def compute_similarity_with_hormones(self, p_hormones, FP, metric):
+        """
+        Compute similarity score with hormones
+        """
+        pr_out = pathFolder.createFolder(self.pr_out + "similarityHormone/")
+        p_filout = "%s/matrix_%s-%s.csv"%(pr_out, FP, metric)
+        
+        if path.exists(p_filout):
+            self.p_hormone_similarity = p_filout
+            return 
+
+        d_hormones = toolbox.loadMatrix(p_hormones)
+        l_casrn_h = list(d_hormones.keys())
+
+        d_chemicals_all = toolbox.loadMatrix(self.d_dataset["all"])
+
+        l_casrn_all = list(d_chemicals_all.keys())
+
+        d_temp = {}
+        for casrn_hormone in d_hormones.keys():
+            c_chem_h = CompDesc.CompDesc(d_hormones[casrn_hormone]["SMILES"], pr_out)
+            c_chem_h.prepChem()
+            if c_chem_h.err == 1:
+                continue
+            c_chem_h.computeFP(FP)
+            for casrn_all in l_casrn_all:
+
+                c_chem_all = CompDesc.CompDesc(d_chemicals_all[casrn_all]["SMILES"], pr_out)
+                c_chem_all.prepChem()
+                if c_chem_all.err == 1:
+                    continue
+                if not casrn_all in list(d_temp.keys()):
+                    d_temp[casrn_all] = {}
                 
+                #compute FP
+                c_chem_all.computeFP(FP)
+                d_temp[casrn_all][casrn_hormone] = c_chem_h.computeSimilarityFP(c_chem_all, FP, metric)
+
+        
+        filout = open(p_filout, "w")
+        filout.write("CASRN\t%s\n"%("\t".join(l_casrn_h)))
+        for casrn in d_temp.keys():
+            filout.write("%s\t%s\n"%(casrn, "\t".join([str(d_temp[casrn][casrn_h]) for casrn_h in l_casrn_h])))
+        filout.close()        
+
+        self.p_hormone_similarity = p_filout
