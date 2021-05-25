@@ -50,7 +50,7 @@ dendogramCluster = function(ddes, d_cluster, daff, dh, prout){
   
   t3 = t2 + ggnewscale::new_scale_fill()
   
-  t4 = gheatmap(t3, dh, offset=20, width=.2, colnames_angle=95, colnames_offset_y = .25) +
+  t4 = gheatmap(t3, dh, offset=25, width=.2, colnames_angle=95, colnames_offset_y = .25) +
     scale_fill_viridis_b(option = "A")
    
   
@@ -58,7 +58,6 @@ dendogramCluster = function(ddes, d_cluster, daff, dh, prout){
   ggsave(pfilout, dpi=300, height = 11, width = 11)
 }
 
-dendogramCluster(d_desc, d_cluster, d_prop, d_hormone, pr_out)
 
 
 
@@ -103,17 +102,18 @@ clusterChem = function(desc, prout){
 args <- commandArgs(TRUE)
 p_prop = args[1]
 p_desc = args[2]
-pr_out = args[3]
-val_cor = as.double(args[4])
-max_q = as.integer(args[5])
+p_hormone = args[3]
+pr_out = args[4]
+val_cor = as.double(args[5])
+max_q = as.integer(args[6])
 
-val_cor = 0.9
-max_q = 90
+#val_cor = 0.9
+#max_q = 90
 
-p_prop = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/setOfChemicals/H295R.csv"
-p_desc = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/Analysis_H295R/rdkit/rdkit.csv"
-p_hormone = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/similarityHormone/matrix_MACCS-Tanimoto.csv"
-pr_out = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/Analysis_H295R/rdkit/hclustDendo/"
+#p_prop = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/setOfChemicals/H295R.csv"
+#p_desc = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/Analysis_H295R/rdkit/rdkit.csv"
+#p_hormone = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/similarityHormone/matrix_MACCS-Tanimoto.csv"
+#pr_out = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/Analysis_H295R/rdkit/hclustDendo/"
 
 
 d_in = read.csv(p_prop, sep = "\t", row.names = 1)
@@ -154,7 +154,7 @@ d_hormone = d_hormone[,-1]
 colnames(d_hormone) = d_hormone[1,]
 
 # reduce with eastradiol and progesterone
-#d_hormone = d_hormone[,c("57-83-0", "50-28-2")]
+d_hormone = d_hormone[,c("57-83-0", "50-28-2")]
 
 # open and reduce descriptor
 l_d_desc = openDataVexcluded(p_desc, val_cor, pr_out,c(1,2))

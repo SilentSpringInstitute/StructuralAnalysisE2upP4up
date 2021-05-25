@@ -372,7 +372,7 @@ class MCcrossref:
         # write different chemical sets
         self.formatSetofChem(l_sets)#
 
-    def analysisMDescByDataset(self, dataset, l_desc, cor_val, max_q, hclust=0, SOM=0, SOM_size=8):
+    def analysisMDescByDataset(self, dataset, l_desc, cor_val, max_q, hclust=0, SOM=0, SOM_size=12):
 
         pr_out = pathFolder.createFolder("%sAnalysis_%s/%s/"%(self.pr_out, dataset, "-".join(l_desc)))
         
@@ -384,16 +384,16 @@ class MCcrossref:
         p_desc = self.c_Desc.buildDescSet(dataset, l_desc, pr_out)
 
         #load the analysis class
-        c_MakePlot = MakePlots_fromDesc.MakePlots_fromDesc(p_dataset=self.d_dataset[dataset], p_desc=p_desc, p_hormone_similarity = self.c_Desc.p_hormone_similarity, pr_out=pr_out, p_opera_all = self.c_Desc.d_desc[dataset]["all OPERA pred"], cor_val=cor_val, max_quantile=max_q)
+        c_MakePlot = MakePlots_fromDesc.MakePlots_fromDesc(p_dataset=self.d_dataset[dataset], p_desc=p_desc, pr_desc=self.pr_desc, p_hormone_similarity = self.c_Desc.p_hormone_similarity, pr_out=pr_out, p_opera_all = self.c_Desc.d_desc[dataset]["all OPERA pred"], cor_val=cor_val, max_quantile=max_q)
         
         if hclust == 1:
             c_MakePlot.hclusterByProp()
 
-
         if SOM == 1:
             c_MakePlot.SOMClustering(nb_cluster=0)
             c_MakePlot.SOMClustering(nb_cluster=SOM_size)
-            #c_MakePlot.SOMMapProp() # maybe need to be developed to extract by cluster the percentage of MC for example or other prop
+            c_MakePlot.SOMMapProp() # maybe need to be developed to extract by cluster the percentage of MC for example or other prop
+            stop396
 
     def analysisToxPrintByDataset(self, dataset, hclust=0):
 
@@ -461,8 +461,8 @@ class MCcrossref:
 
         # compute similarity with hormone derivative
         # = "MACCS", "Morgan", "Mol"], l_dist = ["Dice", "Tanimoto"]
+        #self.c_Desc.compute_similarity_inter_hormones(self.p_hormones)
         self.c_Desc.compute_similarity_with_hormones(self.p_hormones, "MACCS", "Tanimoto")
-
         # put png in a different folder
         #pr_png_by_list = pathFolder.createFolder(self.pr_out + "png_by_list/")
         #self.c_Desc.png_by_list(pr_png_by_list)
@@ -481,9 +481,8 @@ class MCcrossref:
 
 
         # H295R #
-        self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit"], hclust=1, SOM=0, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
-        
-        #hormone and precursor similarity
+        self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit", "OPERA"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE, SOM_size=8) #hclust
+        stop485
 
 
         # analysis of the toxprint #

@@ -11,12 +11,13 @@ import toolbox
 
 
 class MakePlots_fromDesc:
-    def __init__(self, p_dataset, pr_out, p_desc="", p_hormone_similarity = "", p_FP="", p_opera_all="", cor_val="", max_quantile=""):
+    def __init__(self, p_dataset, pr_out, pr_desc,  p_desc="", p_hormone_similarity = "", p_FP="", p_opera_all="", cor_val="", max_quantile=""):
         self.p_desc = p_desc
         self.p_dataset = p_dataset
         self.p_hormone_similarity = p_hormone_similarity
         self.p_opera = p_opera_all
         self.p_FP = p_FP
+        self.pr_desc = pr_desc
         self.pr_out = pr_out
         self.cor_val = cor_val
         self.max_quantile = max_quantile
@@ -31,11 +32,22 @@ class MakePlots_fromDesc:
         pr_out = pathFolder.createFolder(self.pr_out + "hclustDendo/")
 
         # run dendogram with circle of prop
+        p_cluster = pr_out + "cluster_hclust_ward2_gapstat.csv"
         p_enrich = pr_out + "prob_by_clusters.csv"
-        if not path.exists(p_enrich):
+        if not path.exists(p_enrich) and not path.exists(p_cluster):
             runExternal.dendogramClusterProp(self.p_dataset, self.p_desc, self.p_hormone_similarity, pr_out, self.cor_val, self.max_quantile)
-            p_clusters = pr_out + "cluster_hclust_ward2_gapstat.csv"
-            runExternal.enrichmentByCluster(self.p_dataset, p_clusters, pr_out)
+            if path.exists(p_cluster):
+                runExternal.enrichmentByCluster(self.p_dataset, p_cluster, pr_out)
+
+        # extract png by cluster
+        pr_clusters_png = pathFolder.createFolder(pr_out + "png_by_cluster/")
+        d_cluster = toolbox.loadMatrix(p_cluster)
+
+        for casrn in d_cluster.keys():
+            cluster = d_cluster[casrn]["cluster"]
+            pr_cluster = pathFolder.createFolder(pr_clusters_png + cluster + "/")
+            copyfile("%sPNG/%s.png"%(self.pr_desc, casrn), "%s%s.png"%(pr_cluster, casrn))
+
 
 
     def hclusterFromFPByProp(self):
@@ -165,6 +177,29 @@ class MakePlots_fromDesc:
         if not path.exists(p_model) or nb_cluster == 0:
             runExternal.SOM(self.p_desc_cleaned, "0", pr_out, nb_cluster)
 
+        p_cluster = pr_out + "SOM_Clusters"
+        if path.exists(p_cluster) and nb_cluster != 0:
+            runExternal.enrichmentByCluster(self.p_dataset, p_cluster, pr_out)
+
+            # extract png by cluster
+            pr_clusters_png = pathFolder.createFolder(pr_out + "png_by_cluster/")
+            d_cluster = toolbox.loadMatrix(p_cluster)
+
+            for casrn in d_cluster.keys():
+                cluster = d_cluster[casrn]["cluster"]
+                pr_cluster = pathFolder.createFolder(pr_clusters_png + cluster + "/")
+                copyfile("%sPNG/%s.png"%(self.pr_desc, casrn), "%s%s.png"%(pr_cluster, casrn))
+
+        self.p_model_SOM = p_model
+
+    def SOMMapProp(self):
+
+        if not "p_model_SOM" in self.__dict__:
+            print("Generate SOM first")
+            return 
+
+        pr_out = pathFolder.createFolder(self.pr_out + "SOM/")
+        runExternal.projectPropInSOM(self.p_model_SOM, self.p_dataset, pr_out)
 
     def signifDescBySOMCluster(self):
 

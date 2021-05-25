@@ -33,10 +33,11 @@ pr_out = args[3]
 #p_prop = "./../../results/setOfChemicals/H295R.csv"
 #p_clusters = "./../../results/Analysis_H295R/rdkit/hclustDendo/cluster_hclust_ward2_gapstat.csv"
 #pr_out = "./../../results/Analysis_H295R/rdkit/hclustDendo/"
-#prop_in = "H295R"
+#d_prop_temp = "H295R"
+
 
 prop_in = substr(p_prop, 1, nchar(p_prop)-4)
-prop_in =tail(strsplit(prop_in, "/")[[1]], n=1)
+prop_in = tail(strsplit(prop_in, "/")[[1]], n=1)
 d_clusters = read.csv(p_clusters, sep = ",", row.names = 1)
 
 d_in = read.csv(p_prop, sep = "\t", row.names = 1)
@@ -80,20 +81,28 @@ d_prop$MC[which(d_prop$MC == "1")] = "POS"
 
 
 l_clusters = unique(d_clusters$cluster)
+
 d_out = NULL
 for(cluster in l_clusters){
   l_chem = d_clusters$names[which(d_clusters$cluster == cluster)]
   d_prop_temp = d_prop[l_chem,]
   d_out = rbind(d_out, enrich_by_prop(d_prop_temp))
 }
+
+
+
 rownames(d_out) = l_clusters
 write.csv(d_out, paste(pr_out, "prob_by_clusters.csv", sep = ""))
 
-drops = c("NB chem", prop_in)
+# keep only E2up abd p4 up
+drops = c("NB chem", "MC", "ER", "genotox", prop_in)
 d_out = d_out[ , !(colnames(d_out) %in% drops)]
 
 
-png(paste(pr_out, "cluster_proB_ballon.png",sep = ""), height = 500, width = 500)
-ggballoonplot(d_out, fill = "value")+
+v_size = rep(table(d_clusters$cluster),dim(d_out)[2])/8
+
+
+png(paste(pr_out, "cluster_proB_ballon.png",sep = ""), height = dim(d_out)[1]*10, width = 300)
+ggballoonplot(d_out, fill = "value", size = v_size)+
   scale_fill_viridis_c(option = "C")
 dev.off()

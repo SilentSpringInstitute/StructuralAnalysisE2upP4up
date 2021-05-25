@@ -236,7 +236,7 @@ cardMatrix = function(matrixIN, name_file, nb_color){
 args <- commandArgs(TRUE)
 pFP = args[1]
 
-#pFP = "../../Silent_Spring/results/Master_list/rdkit/Tier1-2/FP/sim_topo"
+#pFP = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/similarityInterHormone/matrix_MACCS-Dice.csv"
 
 dFP = read.csv(pFP, sep = "\t", header = TRUE)
 rownames(dFP) = dFP[,1]

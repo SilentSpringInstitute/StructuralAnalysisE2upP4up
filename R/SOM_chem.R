@@ -20,7 +20,7 @@ coolBlueHotRed <- function(n, alpha = 1) {rainbow(n, end=4/6, alpha=alpha)[n:1]}
 
 generateSOM = function(ddesc, xdim, ydim, pr_out){
   
-  ddesc = as.matrix(ddesc)
+  ddesc = as.matrix(scale(ddesc))
   som_grid <- somgrid(xdim=xdim, ydim=ydim, topo="hexagonal")
   som_model <- som(ddesc, 
                    grid=som_grid, 
@@ -36,12 +36,18 @@ generateSOM = function(ddesc, xdim, ydim, pr_out){
   plot(som_model, type = "count", palette.name=coolBlueHotRed, main = "", dpi=300, height = 20, width = 20, bg = "transparent")
   dev.off()
   
+  # draw in png
+  png(paste(pr_out, "SOM_model_count.png", sep = ""))
+  plot(som_model, type = "count", palette.name=coolBlueHotRed, main = "", dpi=300, height = 500, width = 500, bg = "transparent")
+  dev.off()
+  
   # cluster
   dclust = som_model$unit.classif
   names(dclust) = rownames(som_model$data[[1]])
   dclust = dclust[rownames(ddesc)]# take only active chemical
   dclust = cbind(names(dclust), dclust)
-  write.table(dclust, paste(pr_out, "SOM_Clusters", sep = ""), sep = ",", row.names = FALSE)
+  colnames(dclust) = c("names", "cluster")
+  write.table(dclust, paste(pr_out, "SOM_Clusters", sep = ""), sep = ",", row.names = TRUE)
   
   return(som_model)
 }
@@ -69,8 +75,9 @@ applySOM = function(som_model, d_AC50, pr_out){
     ltable = table(dclust[,2])
     lAct[names(ltable)] = ltable
     colnames(dclust) = c("CASRN", "Cluster")
+  }else{
+    return() # to not run because no classification
   }
-  
   
   
   ltabinit = table(som_model$unit.classif)
@@ -127,23 +134,28 @@ applySOM = function(som_model, d_AC50, pr_out){
 analyzeSOMSize = function(ddesc, l_sizes, pr_out){
   
   
-  ddesc = as.matrix(ddesc)
+  ddesc = as.matrix(scale(ddesc))
   
   M_chem_cluster = NULL
   l_emptyCluster = NULL
   
   for(size in l_sizes){
-    som_grid <- somgrid(xdim=size, ydim=size, topo="hexagonal")
-    som_model <- som(ddesc, 
-                     grid=som_grid, 
-                     rlen=100, 
-                     alpha=c(0.05,0.01), 
-                     keep.data = TRUE) 
-    
-    ltabinit = table(som_model$unit.classif)
-    M_chem_cluster = append(M_chem_cluster, mean(ltabinit))
-    l_emptyCluster = append(l_emptyCluster, size * size - length(ltabinit))
-    
+    M_chem_cluster_temp = NULL
+    l_emptyCluster_temp = NULL
+    for(i in seq(1,5)){
+      som_grid <- somgrid(xdim=size, ydim=size, topo="hexagonal")
+      som_model <- som(ddesc, 
+                      grid=som_grid, 
+                      rlen=100, 
+                      alpha=c(0.05,0.01), 
+                      keep.data = TRUE) 
+      
+      ltabinit = table(som_model$unit.classif)
+      M_chem_cluster_temp = append(M_chem_cluster_temp, mean(ltabinit))
+      l_emptyCluster_temp = append(l_emptyCluster_temp, size * size - length(ltabinit))
+    }
+    M_chem_cluster = append(M_chem_cluster, mean(M_chem_cluster_temp))
+    l_emptyCluster = append(l_emptyCluster, size * size - length(l_emptyCluster_temp))
   }
   
   d_out = cbind(M_chem_cluster, l_emptyCluster)
@@ -157,8 +169,8 @@ analyzeSOMSize = function(ddesc, l_sizes, pr_out){
   scaleFactor <- max(d_out$M_chem_cluster) / max(d_out$l_emptyCluster)
   
   ggplot(d_out, aes(x=l_sizes)) +
-    geom_smooth( aes(y=M_chem_cluster), col="red") + 
-    geom_smooth( aes(y=l_emptyCluster * scaleFactor), col="blue") + 
+    geom_smooth( aes(y=M_chem_cluster), col="blue") + 
+    geom_smooth( aes(y=l_emptyCluster * scaleFactor), col="red") + 
     scale_y_continuous(
       # Features of the first axis
       name = "Av. chemical by cluster",
@@ -187,12 +199,10 @@ pr_out = args[3]
 size = as.integer(args[4])
 
 
-#p_desc = "../../results/Cleaned_Data/desc1D2D_cleaned.csv"
-#p_AC50 = "../../results/Cleaned_Data/AC50_cleaned.csv"
-#pr_out = "../../results/SOM/"
-#size = 15
-
-
+#p_desc = "../../results/Analysis_H295R/rdkit/Cleaned_Data/desc1D2D_cleaned.csv"
+#p_AC50 = "0"
+#pr_out = "../../results/Analysis_H295R/rdkit/SOM/"
+#size = 12
 
 #p_desc = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/clusterMC/MC/rdkit/Cleaned_Data/desc1D2D_cleaned.csv"
 #pr_out = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/clusterMC/MC/rdkit/"
@@ -214,7 +224,7 @@ if (p_AC50 != "0"){
     dAC50 = "0"
 }
 
-
+#som_model = generateSOM(ddesc, size, size, pr_out)
 
 # define model
 p_model = paste(pr_out , "SOM_model.RData", sep = "")

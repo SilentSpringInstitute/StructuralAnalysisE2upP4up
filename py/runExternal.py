@@ -150,7 +150,9 @@ def enrichmentByCluster(p_prop, p_clusters, pr_out):
     cmd = "./enrichmentClusters.R %s %s %s"%(p_prop, p_clusters, pr_out)
     runRCMD(cmd)
 
-
+def cardPlotSimilarity(p_filin):
+    cmd = "./cardPlotFP.R %s"%(p_filin)
+    runRCMD(cmd)
 
 
 

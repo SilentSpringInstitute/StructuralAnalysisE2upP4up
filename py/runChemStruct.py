@@ -267,3 +267,35 @@ class runChemStruct:
         filout.close()        
 
         self.p_hormone_similarity = p_filout
+
+    def compute_similarity_inter_hormones(self, p_hormones):
+        """
+        Compute similarity between hormone 
+        """
+        pr_out = pathFolder.createFolder(self.pr_out + "similarityInterHormone/")
+        l_FP = ["MACCS", "Morgan", "Mol"]
+        l_metrics = ["Dice", "Tanimoto"]
+
+        d_hormones = toolbox.loadMatrix(p_hormones)
+        l_casrn_h = list(d_hormones.keys())
+
+        d_out = {}
+        for FP in l_FP:
+            for metric in l_metrics:
+                p_filout = "%s/matrix_%s-%s"%(pr_out, FP, metric)
+                filout = open(p_filout, "w")
+                filout.write("\t" + "\t".join(l_casrn_h) + "\n")
+                for casrn1 in l_casrn_h:
+                    d_out[casrn1] = {}
+                    c_h1 = CompDesc.CompDesc(d_hormones[casrn1]["SMILES"], self.pr_desc)
+                    c_h1.prepChem()
+                    c_h1.computeFP(FP)
+                    for casrn2 in l_casrn_h:
+                        c_h2 = CompDesc.CompDesc(d_hormones[casrn2]["SMILES"], self.pr_desc)
+                        c_h2.prepChem()
+                        c_h2.computeFP(FP)
+                        d_out[casrn1][casrn2] = c_h1.computeSimilarityFP(c_h2, FP, metric)
+                    filout.write("%s\t%s\n"%(casrn1, "\t".join([str(d_out[casrn1][cas]) for cas in l_casrn_h])))
+                filout.close()                    
+                
+                runExternal.cardSimMatrix(p_filout)
