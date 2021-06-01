@@ -393,7 +393,7 @@ class MCcrossref:
             c_MakePlot.SOMClustering(nb_cluster=0)
             c_MakePlot.SOMClustering(nb_cluster=SOM_size)
             c_MakePlot.SOMMapProp() # maybe need to be developed to extract by cluster the percentage of MC for example or other prop
-            stop396
+            c_MakePlot.SOMHormoneSimilarity()
 
     def analysisToxPrintByDataset(self, dataset, hclust=0):
 
@@ -435,7 +435,16 @@ class MCcrossref:
         filout.close()
         runExternal.barplotChemClass(p_count)
 
+    def DescComparisonChemicals(self, l_datasets):
 
+        pr_out = pathFolder.createFolder(self.pr_out + "comparisonDesc_" + "-".join(l_datasets) + "/")
+
+        if not "c_Desc" in self.__dict__:
+            print("Compute Descriptor first")
+            return 
+        
+        runExternal.comparisonDesc(self.c_Desc.d_desc[l_datasets[0]]["rdkit"], self.c_Desc.d_desc[l_datasets[1]]["rdkit"], pr_out + "rdkit")
+        runExternal.comparisonDesc(self.c_Desc.d_desc[l_datasets[0]]["OPERA"], self.c_Desc.d_desc[l_datasets[1]]["OPERA"], pr_out + "opera")
 
     def main(self):
 
@@ -443,6 +452,7 @@ class MCcrossref:
         self.prepSets(["ER", "MC", "Steroid", "E2-up", "P4-up", "all", "Steroid-up", "ER-agonist", "genotoxic", "H295R"])
 
         # compute Venn diagram
+        ####
         #self.overlapBetweenListChem(["MC", "genotoxic", "Steroid-up", "ER-agonist"])
         #self.overlapBetweenListChem(["MC", "Steroid", "ER"])
         #self.overlapBetweenListChem(["MC", "Steroid", "ER-agonist", "genotoxic"])
@@ -450,13 +460,22 @@ class MCcrossref:
         #self.overlapBetweenListChem(["Steroid", "E2-up", "P4-up"])
         #self.overlapBetweenListChem(["E2-up", "P4-up", "H295R"])
         #self.overlapBetweenListChem(["MC", "genotoxic", "H295R"])
+        
         # analyse class of chemical by MC
+        ####
         #self.ChemClassesByMC()
         
         # Compute and/or load descriptors by set of chemicals
-        
+        ##################
         self.c_Desc = runChemStruct.runChemStruct(self.d_dataset, self.pr_desc, self.pr_out)
         self.c_Desc.compute_allDesc() # here included all of the descriptors for the full set of chemicals
+
+
+        # descriptor comparison between two lists
+        #####
+        #self.DescComparisonChemicals(["E2-up", "H295R"])
+        #self.DescComparisonChemicals(["P4-up", "H295R"])
+        #self.DescComparisonChemicals(["E2-up", "P4-up"])
 
 
         # compute similarity with hormone derivative
@@ -477,12 +496,11 @@ class MCcrossref:
 
         # Steroid #
         ######
-        #self.analysisMDescByDataset(dataset="Steroid", l_desc=["rdkit"], hclust=1, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
-
+        #self.analysisMDescByDataset(dataset="Steroid-up", l_desc=["rdkit", "OPERA"], hclust=1, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
 
         # H295R #
         self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit", "OPERA"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE, SOM_size=8) #hclust
-        stop485
+        stop
 
 
         # analysis of the toxprint #

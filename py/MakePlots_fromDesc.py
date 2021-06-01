@@ -201,6 +201,16 @@ class MakePlots_fromDesc:
         pr_out = pathFolder.createFolder(self.pr_out + "SOM/")
         runExternal.projectPropInSOM(self.p_model_SOM, self.p_dataset, pr_out)
 
+    def SOMHormoneSimilarity(self):
+        if not "p_model_SOM" in self.__dict__:
+            print("Generate SOM first")
+            return 
+
+        pr_out = pathFolder.createFolder(self.pr_out + "SOM_hormones/")
+        runExternal.SOM_hormone(self.p_model_SOM, self.p_hormone_similarity, pr_out)
+        stophere
+
+
     def signifDescBySOMCluster(self):
 
         # check if SOM is computed

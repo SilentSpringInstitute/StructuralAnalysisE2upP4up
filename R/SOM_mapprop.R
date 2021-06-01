@@ -15,7 +15,7 @@ coolBlueHotRed <- function(n, alpha = 1) {rainbow(n, end=4/6, alpha=alpha)[n:1]}
 
 
 
-applySOM = function(som_model, d_AC50, prop, pr_out){
+applySOM = function(som_model, d_AC50, prop, pr_out, svg_plot = 0){
   
   #write cluster
   dclust = som_model$unit.classif
@@ -49,29 +49,41 @@ applySOM = function(som_model, d_AC50, prop, pr_out){
   linitial[names(ltabinit)] = ltabinit
   
   lprob = lAct / linitial
-  
-  
   write.csv(dclust, paste(pr_out, "SOM_Clusters_", prop, ".csv", sep = ""))
   
-  # count of active
-  svg(paste(pr_out, "SOM_count_", prop, ".svg", sep = ""))
-  plot(som_model, type = "property", property=lAct, palette.name=coolBlueHotRed, main = "", dpi=300, height = 20, width = 20, bg = "transparent")
-  dev.off()
-  
+  # count of active #
+  ###################
   png(paste(pr_out, "SOM_count_", prop, ".png", sep = ""))
   plot(som_model, type = "property", property=lAct, palette.name=coolBlueHotRed, main = "", dpi=300, height = 500, width = 500, bg = "transparent")
   dev.off()
   
-  # count of active calibrate
-  lAct[which(lAct == max(lAct))] = max(table(som_model$unit.classif))# have to calibrate based on the max of the original SOM
-  svg(paste(pr_out, "SOM_count_", prop, "_calibrate.svg", sep = ""))
-  plot(som_model, type = "property", property=lAct, palette.name=coolBlueHotRed, main = "", dpi=300, height = 20, width = 20, bg = "transparent")
-  dev.off()
+  if(svg_plot == 1){
+    svg(paste(pr_out, "SOM_count_", prop, ".svg", sep = ""))
+    plot(som_model, type = "property", property=lAct, palette.name=coolBlueHotRed, main = "", dpi=300, height = 20, width = 20, bg = "transparent")
+    dev.off()
+  }
   
-  # plot with proba
-  svg(paste(pr_out, "SOM_prob_", prop, ".svg", sep = ""))
-  plot(som_model, type = "property", property=lprob, palette.name=coolBlueHotRed, main = "Prob active", dpi=300, height = 20, width = 20, bg = "transparent")
-  dev.off()
+  
+  # count of active calibrate #
+  ##############################
+  lAct[which(lAct == max(lAct))] = max(table(som_model$unit.classif))# have to calibrate based on the max of the original SOM
+  if(svg_plot == 1){
+    svg(paste(pr_out, "SOM_count_", prop, "_calibrate.svg", sep = ""))
+    plot(som_model, type = "property", property=lAct, palette.name=coolBlueHotRed, main = "", dpi=300, height = 20, width = 20, bg = "transparent")
+    dev.off()
+  }
+  
+  # plot with proba #
+  ###################
+  png(paste(pr_out, "SOM_prob_", prop, ".png", sep = ""))
+  plot(som_model, type = "property", property=lprob, palette.name=coolBlueHotRed, main = "Prob active", dpi=300, height = 500, width = 500, bg = "transparent")
+  dev.off()  
+  
+  if(svg_plot == 1){
+    svg(paste(pr_out, "SOM_prob_", prop, ".svg", sep = ""))
+    plot(som_model, type = "property", property=lprob, palette.name=coolBlueHotRed, main = "Prob active", dpi=300, height = 20, width = 20, bg = "transparent")
+    dev.off()  
+  }
   
   write.csv(lprob, paste(pr_out, "SOM_Clusters_prob_", prop, sep = ""))
   
@@ -90,7 +102,6 @@ args <- commandArgs(TRUE)
 p_SOM_model = args[1]
 p_prop = args[2]
 pr_out = args[3]
-
 
 
 #p_SOM_model = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/Analysis_H295R/rdkit-OPERA/SOM/SOM_model.RData"

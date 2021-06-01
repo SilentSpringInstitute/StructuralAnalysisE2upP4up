@@ -154,7 +154,13 @@ def cardPlotSimilarity(p_filin):
     cmd = "./cardPlotFP.R %s"%(p_filin)
     runRCMD(cmd)
 
+def comparisonDesc(p_desc1, p_desc2, pr_out):
+    cmd = "./signiDesc.R %s %s %s"%(p_desc1, p_desc2, pr_out)
+    runRCMD(cmd)
 
+def SOM_hormone(p_model_SOM, p_hormone_similarity, pr_out):
+    cmd = "./SOM_hormoneSimilarity.R %s %s %s"%(p_model_SOM, p_hormone_similarity, pr_out)
+    runRCMD(cmd)
 
 ##############
 # run biotransformer tool
