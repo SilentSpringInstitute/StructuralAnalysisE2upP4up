@@ -25,7 +25,10 @@ class merge_MCcrossWithStereo:
     def main(self):
 
         # MC
-        self.analyzeByDataset("MC", PCA=0, hclust=1)
+        #self.analyzeByDataset("MC", PCA=0, hclust=1)
+
+        # H295R
+        self.analyzeByDataset("H295R", PCA=1, hclust=1)
 
         # E2
         #self.analyzeByDataset("E2", PCA=0, hclust=1)

@@ -144,6 +144,9 @@ class Steroidogenesis_data:
         self.d_CR_hit = toolbox.loadMatrix(p_filout)
 
     def main(self):
+        """
+        Load data from stereogenesis 
+        """
 
         self.loadChemicalsMapping()
         self.loadsinglehitc()

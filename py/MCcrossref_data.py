@@ -499,8 +499,7 @@ class MCcrossref:
         #self.analysisMDescByDataset(dataset="Steroid-up", l_desc=["rdkit", "OPERA"], hclust=1, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
 
         # H295R #
-        self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit", "OPERA"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE, SOM_size=8) #hclust
-        stop
+        #self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit", "OPERA"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE, SOM_size=8) #hclust
 
 
         # analysis of the toxprint #
@@ -520,8 +519,6 @@ class MCcrossref:
         #######################
         #self.c_FP.comparisonToxPrintCount(["Steroid", "E2-up", "P4-up"])
         #self.c_FP.comparisonToxPrintCount(["H295R", "E2-up", "P4-up"])
-
-        stop485
 
 
 

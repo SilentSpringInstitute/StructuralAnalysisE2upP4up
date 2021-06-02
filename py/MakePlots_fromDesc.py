@@ -208,7 +208,6 @@ class MakePlots_fromDesc:
 
         pr_out = pathFolder.createFolder(self.pr_out + "SOM_hormones/")
         runExternal.SOM_hormone(self.p_model_SOM, self.p_hormone_similarity, pr_out)
-        stophere
 
 
     def signifDescBySOMCluster(self):
