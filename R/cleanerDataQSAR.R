@@ -43,7 +43,9 @@ print(paste("Data initial: dim = ", dim(dglobal)[1], dim(dglobal)[2], sep = " ")
 # filter #
 ##########
 
-dglobal = delnohomogeniousdistribution(dglobal, maxquantile)
+if (maxquantile != 0){
+    dglobal = delnohomogeniousdistribution(dglobal, maxquantile)
+}
 print(paste("Data after filtering: dim = ", dim(dglobal)[1], dim(dglobal)[2], sep = " "))
 
 #######################

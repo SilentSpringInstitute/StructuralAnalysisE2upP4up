@@ -33,3 +33,4 @@ Project developed to analysis chemicals that can be classified as a breast carci
 
 # Main updates to report
 - 05-03-21: init project from chemicals clustering - clean up legacy functions 
+- 06-01-21: QSAR modeling E2up and P4up

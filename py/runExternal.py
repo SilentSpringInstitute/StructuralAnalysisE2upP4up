@@ -186,6 +186,12 @@ def SOM_hormone(p_model_SOM, p_hormone_similarity, pr_out):
     cmd = "./SOM_hormoneSimilarity.R %s %s %s"%(p_model_SOM, p_hormone_similarity, pr_out)
     runRCMD(cmd)
 
+
+def comparisonWithHormoneSimilarity(p_dataset1, p_dataset2, p_hormone, pr_out):
+
+    cmd = "./comparisonHormoneSimilarity.R %s %s %s %s"%(p_dataset1, p_dataset2, p_hormone, pr_out)
+    runRCMD(cmd)
+
 ##############
 # run biotransformer tool
 
@@ -206,9 +212,9 @@ def BioTransformer(smi, btType, p_out, nsteps=1):
 ######################
 ### QSAR modeling 
 
-def combineAndPredDesc(p_desc_rdkit, p_desc_opera, pr_out):
+def combineDesc(p_desc_rdkit, p_desc_opera, p_toxPrint, pr_out):
 
-    cmd = "./mergerDescData.R %s %s %s"%(p_desc_rdkit, p_desc_opera, pr_out)
+    cmd = "./mergerDescData.R %s %s %s %s"%(p_desc_rdkit, p_desc_opera, p_toxPrint, pr_out)
     runRCMD(cmd)
 
 
@@ -263,10 +269,10 @@ def runQSARReg(ptrain, ptest, pcluster, prout, nbfold=10):
     runRQSARModeling(cmd_QSAR)
     
 
-#def plotAC50VSProb(p_prob):
+def plotAC50VSProb(p_prob):
 
-#    cmd = "./plotAC50vsProb.R %s"%(p_prob)
-#    runRCMD(cmd)
+    cmd = "./plotAC50vsProb.R %s"%(p_prob)
+    runRCMD(cmd)
 
 def runImportanceDesc(p_desc, nb):
     
@@ -285,6 +291,11 @@ def AD(p_desc_model, p_desc_test, pr_out):
     cmd = "./computeAD.R %s %s %s"%(p_desc_model, p_desc_test, pr_out)
     runRCMD(cmd)
 
+
+def mergeADs(p_train, p_test, p_desc, pr_out):
+
+    cmd = "./mergeADs.R %s %s %s %s"%(p_train, p_test, p_desc, pr_out)
+    runRCMD(cmd)
 
 #def predictDataset(p_desc_test, p_model, ML,  pr_out):
 

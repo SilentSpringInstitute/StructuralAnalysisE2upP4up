@@ -435,16 +435,22 @@ class MCcrossref:
         filout.close()
         runExternal.barplotChemClass(p_count)
 
-    def DescComparisonChemicals(self, l_datasets):
+    def ComparisonChemicalsList(self, l_datasets):
 
         pr_out = pathFolder.createFolder(self.pr_out + "comparisonDesc_" + "-".join(l_datasets) + "/")
 
+        
+        # by descriptors
         if not "c_Desc" in self.__dict__:
             print("Compute Descriptor first")
             return 
         
         runExternal.comparisonDesc(self.c_Desc.d_desc[l_datasets[0]]["rdkit"], self.c_Desc.d_desc[l_datasets[1]]["rdkit"], pr_out + "rdkit")
         runExternal.comparisonDesc(self.c_Desc.d_desc[l_datasets[0]]["OPERA"], self.c_Desc.d_desc[l_datasets[1]]["OPERA"], pr_out + "opera")
+
+        # with the similarity with the hormone
+        runExternal.comparisonWithHormoneSimilarity(self.d_dataset[l_datasets[0]], self.d_dataset[l_datasets[1]], self.c_Desc.p_hormone_similarity, pr_out)
+
 
     def main(self):
 
@@ -471,13 +477,6 @@ class MCcrossref:
         self.c_Desc.compute_allDesc() # here included all of the descriptors for the full set of chemicals
 
 
-        # descriptor comparison between two lists
-        #####
-        #self.DescComparisonChemicals(["E2-up", "H295R"])
-        #self.DescComparisonChemicals(["P4-up", "H295R"])
-        #self.DescComparisonChemicals(["E2-up", "P4-up"])
-
-
         # compute similarity with hormone derivative
         # = "MACCS", "Morgan", "Mol"], l_dist = ["Dice", "Tanimoto"]
         #self.c_Desc.compute_similarity_inter_hormones(self.p_hormones)
@@ -485,6 +484,14 @@ class MCcrossref:
         # put png in a different folder
         #pr_png_by_list = pathFolder.createFolder(self.pr_out + "png_by_list/")
         #self.c_Desc.png_by_list(pr_png_by_list)
+
+
+        # descriptor and hormone comparison between two lists
+        #####
+        #self.ComparisonChemicalsList(["E2-up", "H295R"])
+        #self.ComparisonChemicalsList(["P4-up", "H295R"])
+        #self.ComparisonChemicalsList(["E2-up", "P4-up"])
+        self.ComparisonChemicalsList(["E2-up", "all"])
 
 
         # analyze by daataset and set of descriptors #
@@ -504,8 +511,8 @@ class MCcrossref:
 
         # analysis of the toxprint #
         ############################
-        #self.c_FP = runToxPrint.runToxPrint(self.d_dataset, self.pr_toxprint, self.pr_out)
-        #self.c_FP.loadToxPrint()
+        self.c_FP = runToxPrint.runToxPrint(self.d_dataset, self.pr_toxprint, self.pr_out)
+        self.c_FP.loadToxPrint()
         #self.c_FP.ToxPrintCount()
         #self.c_FP.computeTanimotoMatrix()
 
