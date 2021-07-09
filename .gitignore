@@ -1,0 +1,8 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+**/__pycache__/**
+.vscode/
+R/R.Rproj
+R/Rplots.pdf

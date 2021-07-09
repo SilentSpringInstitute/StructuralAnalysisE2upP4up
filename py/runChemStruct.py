@@ -223,7 +223,7 @@ class runChemStruct:
 
     def compute_similarity_with_hormones(self, p_hormones, FP, metric):
         """
-        Compute similarity score with hormones
+        Compute similarity score with hormones for the all set of chemicals
         """
         pr_out = pathFolder.createFolder(self.pr_out + "similarityHormone/")
         p_filout = "%s/matrix_%s-%s.csv"%(pr_out, FP, metric)
@@ -283,6 +283,8 @@ class runChemStruct:
         for FP in l_FP:
             for metric in l_metrics:
                 p_filout = "%s/matrix_%s-%s"%(pr_out, FP, metric)
+                if path.exists(p_filout):
+                    continue
                 filout = open(p_filout, "w")
                 filout.write("\t" + "\t".join(l_casrn_h) + "\n")
                 for casrn1 in l_casrn_h:

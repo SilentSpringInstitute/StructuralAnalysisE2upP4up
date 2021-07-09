@@ -156,7 +156,7 @@ def dendogramClusterTwoProp(p_dataset, p_stereo, p_desc, pr_out, cor_val, max_q)
     cmd =  "./dendogramTowProp.R %s %s %s %s %s %s"%(p_dataset, p_stereo, p_desc, pr_out, cor_val, max_q)
     runRCMD(cmd)
 
-def projectPropInSOM(p_SOM, p_all, pr_out):
+def ojectPropInSOM(p_SOM, p_all, pr_out):
 
     cmd = "./SOM_mapprop.R %s %s %s"%(p_SOM, p_all, pr_out)
     runRCMD(cmd)
@@ -192,9 +192,14 @@ def comparisonWithHormoneSimilarity(p_dataset1, p_dataset2, p_hormone, pr_out):
     cmd = "./comparisonHormoneSimilarity.R %s %s %s %s"%(p_dataset1, p_dataset2, p_hormone, pr_out)
     runRCMD(cmd)
 
+
+def overlapListHormoneSim(p_upset, p_hormone_similarity, pr_out):
+
+    cmd = "./overlapListHormoneSim.R %s %s %s"%(p_upset, p_hormone_similarity, pr_out)
+    runRCMD(cmd)
+
 ##############
 # run biotransformer tool
-
 
 def BioTransformer(smi, btType, p_out, nsteps=1):
 

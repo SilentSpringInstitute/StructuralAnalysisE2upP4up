@@ -1,6 +1,11 @@
 #!/usr/bin/env Rscript
-require(kohonen)
+library(kohonen)
 library(ggplot2)
+
+
+coolBlueHotRed <- function(n, alpha = 1) {
+  rainbow(n, end=4/6, alpha=alpha)[n:1]
+}
 
 
 
@@ -47,8 +52,13 @@ applySOM = function(som_model, d_prop, hormone, pr_out, svg_plot = 0){
 
 args <- commandArgs(TRUE)
 p_SOM_model = args[1]
-p_homrone_sim = args[2]
+p_hormone_sim = args[2]
 pr_out = args[3]
+
+
+p_SOM_model = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/Analysis_H295R/rdkit-OPERA/SOM/SOM_model.RData"
+p_hormone_sim = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/similarityHormone//matrix_MACCS-Tanimoto.csv"
+pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/Analysis_H295R/rdkit-OPERA/SOM_hormones/"
 
 
 #p_SOM_model = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/Analysis_H295R/rdkit-OPERA/SOM/SOM_model.RData"

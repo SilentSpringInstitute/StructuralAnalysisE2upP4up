@@ -125,6 +125,7 @@ class MCcrossref:
                 self.d_ERantagonist[chem] = deepcopy(self.d_ER[chem])
 
     def overlapBetweenListChem(self, l_list_chem):
+        """Compute overlap between different list and draw Venn diagram"""
 
         pr_out = pathFolder.createFolder(self.pr_out + "OverlapList/")
         pr_results = pathFolder.createFolder(pr_out + "-".join(l_list_chem) + "/")
@@ -196,6 +197,24 @@ class MCcrossref:
 
         if len(l_list_chem) <= 4:
             runExternal.vennPlot(p_upset)
+
+    def overlapBetweenListChemWithHormoneSim(self, l_list_chem):
+        """Overlap with 2 lists max"""
+
+        pr_out = pathFolder.createFolder(self.pr_out + "OverlapList/")
+        pr_results = pathFolder.createFolder(pr_out + "-".join(l_list_chem) + "/")
+
+        # check if file exist to not repete
+        p_upset = pr_results + "upset_matrix"
+        if not path.exists(p_upset):
+            self.overlapBetweenListChem(l_list_chem)
+
+        # comparison hormone similarity overlap
+        runExternal.overlapListHormoneSim(p_upset, self.c_Desc.p_hormone_similarity, pr_results)
+
+
+
+        return 
 
     def mergeAllSets(self):
 
@@ -435,7 +454,7 @@ class MCcrossref:
         filout.close()
         runExternal.barplotChemClass(p_count)
 
-    def ComparisonChemicalsList(self, l_datasets):
+    def ComparisonTwoChemicalLists(self, l_datasets):
 
         pr_out = pathFolder.createFolder(self.pr_out + "comparisonDesc_" + "-".join(l_datasets) + "/")
 
@@ -449,7 +468,8 @@ class MCcrossref:
         runExternal.comparisonDesc(self.c_Desc.d_desc[l_datasets[0]]["OPERA"], self.c_Desc.d_desc[l_datasets[1]]["OPERA"], pr_out + "opera")
 
         # with the similarity with the hormone
-        runExternal.comparisonWithHormoneSimilarity(self.d_dataset[l_datasets[0]], self.d_dataset[l_datasets[1]], self.c_Desc.p_hormone_similarity, pr_out)
+        pr_hormone = pathFolder.createFolder(pr_out + "similarity_hormone/")
+        runExternal.comparisonWithHormoneSimilarity(self.d_dataset[l_datasets[0]], self.d_dataset[l_datasets[1]], self.c_Desc.p_hormone_similarity, pr_hormone)
 
 
     def main(self):
@@ -457,7 +477,7 @@ class MCcrossref:
         # prepare set of chemicals - split by list
         self.prepSets(["ER", "MC", "Steroid", "E2-up", "P4-up", "all", "Steroid-up", "ER-agonist", "genotoxic", "H295R"])
 
-        # compute Venn diagram
+        # compute Venn diagram - overlap between list of chemicals
         ####
         #self.overlapBetweenListChem(["MC", "genotoxic", "Steroid-up", "ER-agonist"])
         #self.overlapBetweenListChem(["MC", "Steroid", "ER"])
@@ -466,11 +486,15 @@ class MCcrossref:
         #self.overlapBetweenListChem(["Steroid", "E2-up", "P4-up"])
         #self.overlapBetweenListChem(["E2-up", "P4-up", "H295R"])
         #self.overlapBetweenListChem(["MC", "genotoxic", "H295R"])
-        
+        #self.overlapBetweenListChem(["E2-up", "P4-up"])
+
+
         # analyse class of chemical by MC
         ####
         #self.ChemClassesByMC()
         
+
+
         # Compute and/or load descriptors by set of chemicals
         ##################
         self.c_Desc = runChemStruct.runChemStruct(self.d_dataset, self.pr_desc, self.pr_out)
@@ -478,20 +502,18 @@ class MCcrossref:
 
 
         # compute similarity with hormone derivative
-        # = "MACCS", "Morgan", "Mol"], l_dist = ["Dice", "Tanimoto"]
-        #self.c_Desc.compute_similarity_inter_hormones(self.p_hormones)
+        # ["MACCS", "Morgan", "Mol"], l_dist = ["Dice", "Tanimoto"]
+        self.c_Desc.compute_similarity_inter_hormones(self.p_hormones)
         self.c_Desc.compute_similarity_with_hormones(self.p_hormones, "MACCS", "Tanimoto")
         # put png in a different folder
         #pr_png_by_list = pathFolder.createFolder(self.pr_out + "png_by_list/")
         #self.c_Desc.png_by_list(pr_png_by_list)
 
+        # overlap with similarity with hormone
+        #######
+        self.overlapBetweenListChemWithHormoneSim(["E2-up", "P4-up", "H295R"])
+        Stophere
 
-        # descriptor and hormone comparison between two lists
-        #####
-        #self.ComparisonChemicalsList(["E2-up", "H295R"])
-        #self.ComparisonChemicalsList(["P4-up", "H295R"])
-        #self.ComparisonChemicalsList(["E2-up", "P4-up"])
-        self.ComparisonChemicalsList(["E2-up", "all"])
 
 
         # analyze by daataset and set of descriptors #
@@ -506,7 +528,16 @@ class MCcrossref:
         #self.analysisMDescByDataset(dataset="Steroid-up", l_desc=["rdkit", "OPERA"], hclust=1, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE) #hclust
 
         # H295R #
-        #self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit", "OPERA"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE, SOM_size=8) #hclust
+        ######
+        self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit", "OPERA"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE, SOM_size=8) #hclust
+        stophere509
+
+
+        # Comparison between two list of chemicals descriptor
+        #####
+        #self.ComparisonTwoChemicalLists(["E2-up", "H295R"])   ===> need to add SOM here
+        #self.ComparisonTwoChemicalLists(["P4-up", "H295R"])
+        #self.ComparisonTwoChemicalLists(["E2-up", "P4-up"])
 
 
         # analysis of the toxprint #

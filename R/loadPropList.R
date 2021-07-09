@@ -4,7 +4,7 @@ loadProp = function(p_prop){
   
   # load prop
   d_in = read.csv(p_prop, sep = "\t", row.names = 1)
-  drops = c("Group", "Aff", "Chemical.name", "SMILES")
+  drops = c("Group", "Aff", "SMILES")
   d_prop = d_in[ , !(names(d_in) %in% drops)]
   
   # for E2up

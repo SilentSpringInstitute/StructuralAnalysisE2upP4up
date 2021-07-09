@@ -4,13 +4,20 @@ Project developed to analysis chemicals that can be classified as a breast carci
 # Dependancy
 ## Coding language 
 - Python3.9
-- Python library => CompDesc, bitarray, RDKIT
+    - RDKIT (2020) in environement conda rdkit-env
+    - CompDesc ($pip install -i https://test.pypi.org/simple/ CompDesc)
+    - scipy ($pip install scipy)
+    - molvs ($pip install molvs)
+    - bitarray ($pip install bitarray)
+    - openpyxl ($pip install openpyxl)
 - R 4.0
-- RDKIT (2020) in environement conda rdkit-env
+    - Toolbox from github (https://github.com/ABorrel/Toolbox_packageR)
+
 
 ## Prediction - QSPR models 
 - genotoxicity: TEST (https://www.epa.gov/chemical-research/toxicity-estimation-software-tool-test#install)
-- OPERA ER-AR prediction
+- OPERA2.7 ER-AR prediction
+
 
 # To do list
 ## Priority 1
@@ -25,6 +32,9 @@ Project developed to analysis chemicals that can be classified as a breast carci
 - change CR value by the file - H295R_AllChemsTested_ANOVA_directionality_filtered_output_2018-08-09.xlsx
 - ~~change hormone order OHPREG - PROG - OHPREG - DOC - CORTISOL - 11DC .. from kaumas 2016~~
 - AFC with E2 and p4 - take a look on complete matrix
+- Need to change CR value in stereogensis with hagren2019
+- test Ghost approach for undersampling
+- add DNN for the classification prediction
 
 ## Priority 2
 - link to the dropbox SP with the data input
