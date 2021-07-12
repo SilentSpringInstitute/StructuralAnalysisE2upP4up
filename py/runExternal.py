@@ -156,7 +156,7 @@ def dendogramClusterTwoProp(p_dataset, p_stereo, p_desc, pr_out, cor_val, max_q)
     cmd =  "./dendogramTowProp.R %s %s %s %s %s %s"%(p_dataset, p_stereo, p_desc, pr_out, cor_val, max_q)
     runRCMD(cmd)
 
-def ojectPropInSOM(p_SOM, p_all, pr_out):
+def projectPropInSOM(p_SOM, p_all, pr_out):
 
     cmd = "./SOM_mapprop.R %s %s %s"%(p_SOM, p_all, pr_out)
     runRCMD(cmd)

@@ -111,9 +111,9 @@ p_prop = args[2]
 pr_out = args[3]
 
 
-p_SOM_model = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/Analysis_H295R/rdkit-OPERA/SOM/SOM_model.RData"
-p_prop = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/setOfChemicals/H295R.csv"
-pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/Analysis_H295R/rdkit-OPERA/SOM/"
+#p_SOM_model = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/Analysis_H295R/rdkit-OPERA/SOM/SOM_model.RData"
+#p_prop = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/setOfChemicals/H295R.csv"
+#pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/Analysis_H295R/rdkit-OPERA/SOM/"
 
 
 # load prop

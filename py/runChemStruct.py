@@ -28,7 +28,9 @@ class runChemStruct:
         p_desc_rdkit = self.c_dataset.computeStructuralDesc(self.pr_desc)
 
         # compute PNG
-        self.c_dataset.computePNG(self.pr_desc)
+        d_rdkit = toolbox.loadMatrix(p_desc_rdkit)
+        l_chem = list(d_rdkit.keys())
+        self.c_dataset.computePNG(l_chem, self.pr_desc)
 
         # compute OPERA
         p_desc_opera = self.c_dataset.computeOPERADesc(self.pr_desc)

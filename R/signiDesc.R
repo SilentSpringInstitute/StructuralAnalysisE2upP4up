@@ -42,6 +42,7 @@ for(desc in l_desc){
   
   v_desc1 = d_desc1[,desc]
   v_desc2 = d_desc2[,desc]
+  
 
   isparametric = conditionTtest(v_desc1, v_desc2)
   if(isparametric == 1){
@@ -50,16 +51,18 @@ for(desc in l_desc){
     pval = comparisonTest (v_desc1, v_desc2, "no-parametric")
   }
   if (is.na(pval) == TRUE){
-    d_out = rbind(d_out, c(desc, "NA", "-", "NA"))
+    d_out = rbind(d_out, c(desc, "NA", "-", "NA", "NA", "NA"))
   }else{
+    M_desc1 = mean(d_desc1[,desc])
+    M_desc2 = mean(d_desc2[,desc])
     signif = signifPvalue(pval)
-    d_out = rbind(d_out, c(desc, round(pval, 4), signif, isparametric))
+    d_out = rbind(d_out, c(desc, round(pval, 4), signif, isparametric, M_desc1, M_desc2))
   }
 
 }
 
 
-colnames(d_out) = c("Desc", "Pval", "significatif", "isparametric")
+colnames(d_out) = c("Desc", "Pval", "significatif", "isparametric", "M1", "M2")
 d_out = as.data.frame(d_out)
 d_out$Pval = as.double(d_out$Pval)
 d_out = d_out[order(d_out$Pval), ]

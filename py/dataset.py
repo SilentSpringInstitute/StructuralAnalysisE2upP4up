@@ -237,7 +237,7 @@ class dataset:
         fopera.close()
         return p_filout
 
-    def computePNG(self, pr_desc):
+    def computePNG(self, l_CHEM, pr_desc):
 
         if not "pr_desc" in self.__dict__:
             self.pr_desc = pr_desc
@@ -245,7 +245,6 @@ class dataset:
         pr_png = pathFolder.createFolder(self.pr_desc + "PNG/")
 
         # compute descriptor
-        l_CHEM = list(self.d_dataset.keys())
         shuffle(l_CHEM)
         for CHEM in l_CHEM:
             CASRN = self.d_dataset[CHEM]["CASRN"]
@@ -445,7 +444,8 @@ class dataset:
         filout.close()
 
     def computeDescProductBiotransformed(self):
-        
+        """Not used"""
+
         if not "d_biotransformed_products" in self.__dict__:
             print("Compute biotransformation first and cleanning function")
             return 

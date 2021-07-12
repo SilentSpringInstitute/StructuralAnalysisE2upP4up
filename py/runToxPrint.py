@@ -51,9 +51,9 @@ class runToxPrint:
             return
 
         d_Tanimoto = {}
-        l_casrn = list(self.d_ToxPrint.keys())
+        l_casrn = list(self.d_toxprint.keys())
 
-        l_toxprints = list(self.d_ToxPrint[l_casrn[0]].keys())
+        l_toxprints = list(self.d_toxprint[l_casrn[0]].keys())
         if "INPUT" in l_toxprints:
             l_toxprints.remove("INPUT")
         if "DTXSID" in l_toxprints:
@@ -67,12 +67,12 @@ class runToxPrint:
         imax = len(l_casrn)
         while i < imax:
             d_Tanimoto[l_casrn[i]] = {}
-            c_FP_i = FPToolbox.FingerPrint(self.d_ToxPrint[l_casrn[i]])
+            c_FP_i = FPToolbox.FingerPrint(self.d_toxprint[l_casrn[i]])
             c_FP_i.prepFP()
 
             j = i
             while j < imax:
-                c_FP_j = FPToolbox.FingerPrint(self.d_ToxPrint[l_casrn[j]])
+                c_FP_j = FPToolbox.FingerPrint(self.d_toxprint[l_casrn[j]])
                 c_FP_j.prepFP()
 
                 # compute score
@@ -118,8 +118,6 @@ class runToxPrint:
 
         # compute all of the count
         d_out = {}
-
-        
         l_toxprints = list(self.d_toxprint[list(self.d_toxprint.keys())[0]].keys())
         l_toxprints.remove('INPUT')
         l_toxprints.remove('DTXSID')
@@ -182,4 +180,23 @@ class runToxPrint:
 
         runExternal.plotX2(p_filout)
 
+
+    def writeToxPrintMatrix(self, l_casrn, p_filout):
+
+        filout = open(p_filout, "w")
+        
+        # define list of toxprint
+        l_toxprints = list(self.d_toxprint[list(self.d_toxprint.keys())[0]].keys())
+        l_toxprints.remove('INPUT')
+        l_toxprints.remove('DTXSID')
+        l_toxprints.remove('PREFERRED_NAME')
+
+        filout.write("CASRN\t" + "\t".join(l_toxprints) + "\n")
+
+        for casrn in l_casrn:
+            try:filout.write("%s\t%s\n"%(casrn, "\t".join([str(self.d_toxprint[casrn][col]) for col in l_toxprints])))
+            except: pass
+        filout.close()
+
+        return p_filout
 

@@ -56,9 +56,9 @@ p_clusters = args[2]
 pr_out = args[3]
 
 
-#p_prop = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/setOfChemicals/H295R.csv"
-# p_clusters = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/Analysis_H295R/rdkit-OPERA/SOM/SOM_Clusters"
-#pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/Analysis_H295R/rdkit-OPERA/SOM/"
+#p_prop = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/setOfChemicals/H295R.csv"
+#p_clusters = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/Analysis_H295R/rdkit-OPERA/SOM/SOM_Clusters"
+#pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/Analysis_H295R/rdkit-OPERA/SOM/"
 
 
 #p_prop = "./../../results/setOfChemicals/H295R.csv"
@@ -83,12 +83,13 @@ d_out = NULL
 for(cluster in l_clusters){
   l_chem = d_clusters$names[which(d_clusters$cluster == cluster)]
   d_prop_temp = d_prop[l_chem,]
+  d_prop_temp = d_prop_temp[,-which(colnames(d_prop_temp) == "Chemical.name")]
   d_out = rbind(d_out, enrich_by_prop(d_prop_temp))
 }
 
 
-
 rownames(d_out) = l_clusters
+d_out = d_out[order(l_clusters),]
 write.csv(d_out, paste(pr_out, "prob_by_clusters.csv", sep = ""))
 
 # keep only E2up abd p4 up
