@@ -1,6 +1,7 @@
 #!/usr/bin/env Rscript
 library(ggplot2)
 library(factoextra)
+library(Toolbox)
 
 
 generatePCAcoords = function(din){
@@ -122,9 +123,9 @@ p_desc_test = args[2]
 pr_out = args[3]
 
 
-#p_desc_model = "C:\\Users\\Aborrel\\research\\ILS\\HERG\\results\\QSAR\\1\\train.csv"
-#p_desc_test = "C:\\Users\\Aborrel\\research\\ILS\\HERG\\results\\QSAR\\1\\test.csv"
-#pr_out = "C:\\Users\\Aborrel\\research\\ILS\\HERG\\results\\QSAR\\AD\\1\\"
+#p_desc_model = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/QSAR_E2_H295R_undersampling/rdkit-OPERA-toxprint_0.9-0/classQSAR/6/train.csv"
+#p_desc_test = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/QSAR_E2_H295R_undersampling/rdkit-OPERA-toxprint_0.9-0/classQSAR/6/test.csv"
+#pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/QSAR_E2_H295R_undersampling/rdkit-OPERA-toxprint_0.9-0/classQSAR/AD/6/"
 
 
 ddesc1 = read.csv(p_desc_model, sep = ",", row.names = 1)
@@ -152,6 +153,16 @@ if("Aff" %in% colnames(ddesc2))
   ddesc2 = ddesc2[, -which(colnames(ddesc2) == "Aff")]
 }
 
+
+# clean the data - remove null variance
+ddesc1 = delSDnull(ddesc1)
+ddesc2 = delSDnull(ddesc2)
+
+l_col = intersect(colnames(ddesc1), colnames(ddesc2))
+ddesc1 = ddesc1[,l_col]
+ddesc2 = ddesc2[,l_col]
+
+# compute PCA
 res.pca <- prcomp(ddesc1, scale = TRUE)
 var_cap = generatePCAcoords(ddesc1)[[2]]
 

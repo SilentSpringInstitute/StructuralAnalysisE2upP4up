@@ -564,7 +564,6 @@ class MCcrossref:
         self.ComparisonTwoChemicalLists(["E2-up", "H295R"])
         self.ComparisonTwoChemicalLists(["P4-up", "H295R"])
         self.ComparisonTwoChemicalLists(["E2-up", "P4-up"])
-        stophere
 
         # analysis of the toxprint #
         ############################

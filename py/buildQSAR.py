@@ -41,7 +41,7 @@ class buildQSAR:
                         if not chem in list(c_stereo.d_single_hit.keys()) or c_stereo.d_single_hit[chem]["ESTRADIOL"] == "0" :
                             d_dataset[chem] = "NA"
                     if self.active_dataset == "P4-up":
-                        if c_stereo.d_single_hit[chem]["PROG"] == "0":
+                        if not chem in list(c_stereo.d_single_hit.keys()) or c_stereo.d_single_hit[chem]["PROG"] == "0":
                             d_dataset[chem] = "NA"
         
         filout = open(p_filout, "w")

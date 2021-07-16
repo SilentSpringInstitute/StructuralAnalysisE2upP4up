@@ -6,7 +6,7 @@ P_RSCRIPTS = "../R/"
 PR_BIOTRANSFORMER = "C:/Users/Aborrel/research/Silent_Spring/PFAS/BioTransformerJar/biotransformerjar"
 
 R_BIN = "C:\\Program Files\\R\\R-4.0.2\\bin\\Rscript.exe"
-P_RQSAR_linux = "/mnt/c/Users/aborr/research/development/QSAR-QSPR/"
+P_RQSAR_linux = "/mnt/c/Users/AlexandreBorrel/research/development/QSAR-QSPR"
 P_RQSAR_window = "c:/Users/aborr/research/development/QSAR-QSPR/"
 ######
 # Main functions

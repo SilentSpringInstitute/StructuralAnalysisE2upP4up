@@ -340,7 +340,7 @@ class QSAR:
             d_prob[pr_run] = {}
 
             # CV
-            p_CV = self.pr_out + pr_run + "/RFclass/PerfRFClassCV10.txt"
+            p_CV = "%s%s/RFclass/PerfRFClassCV%s.txt"%(self.pr_out, pr_run, self.n_foldCV)
             d_CV = toolbox.loadMatrix(p_CV, sep = "\t")
             d_prob[pr_run]["CV"] = d_CV
 
@@ -428,8 +428,8 @@ class QSAR:
         pr_out = pathFolder.createFolder(pr_involvedDesc + ML + "/")
 
         p_desc_importance = pr_out + "Av_importance"
-        if path.exists(p_desc_importance):
-            return
+        #if path.exists(p_desc_importance):
+        #    return
 
         l_pr_run = listdir(self.pr_out)
         for run in l_pr_run:
@@ -440,7 +440,6 @@ class QSAR:
                 d_importance[run] = {}
 
                 p_desc_involved = self.pr_out + run + "/" + str(ML) + "class/ImportanceDesc"
-                print(p_desc_involved)
                 d_desc_involved = toolbox.loadMatrix(p_desc_involved , sep="\t")
                 d_importance[run] = d_desc_involved
 
@@ -452,11 +451,10 @@ class QSAR:
         l_desc = list(d_importance["1"].keys())
         
         for desc in l_desc:
-            for run in l_pr_run:
-                if search("Merge", run) or search("AD", run) or search("Cleaned", run) or search("desc_global.csv", run) or search("desc", run) or search("csv", run) or search("models", run) or search("mergeDNN", run):
-                    continue
-                try: f_desc_importance.write(desc + "\t" + str(run) + "\t" + str(d_importance[run][desc]["x"]) + "\n")
-                except: f_desc_importance.write(desc + "\t" + str(run) + "\t0.0\n")
+            for run in d_importance.keys():
+                try: w = desc + "\t" + str(run) + "\t" + str(d_importance[run][desc]["x"]) + "\n"
+                except: w = desc + "\t" + str(run) + "\t0.0\n"
+                f_desc_importance.write(w)
         f_desc_importance.close()
         
         runExternal.runImportanceDesc(p_desc_importance, nbdesc)

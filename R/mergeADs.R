@@ -57,7 +57,10 @@ d_desc_train = d_desc[rownames(d_train_AD),]
 histZscore(d_train_AD, paste(pr_out, "train_Zscore.png", sep = ""))
 compteSummary(d_train_AD, paste(pr_out, "sum_train_Zscore.csv", sep = ""))
 
+# remove null variance here
+d_desc_train = delSDnull(d_desc_train)
 
+# run PCA
 res.pca <- prcomp(d_desc_train, scale = TRUE)
 var_cap = generatePCAcoords(d_desc_train)[[2]]
 
