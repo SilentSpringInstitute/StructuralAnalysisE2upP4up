@@ -12,7 +12,7 @@ import comparisonChemicalLists
 import toolbox
 import runExternal
 import runToxPrint
-
+import ToxCast
 
 
 class MCcrossref:
@@ -134,7 +134,7 @@ class MCcrossref:
         # check if file exist to not repete
         p_upset = pr_results + "upset_matrix"
         if path.exists(p_upset):
-            return 
+            return p_upset
 
         d_d_chem = {}
         l_CASRN = []
@@ -198,6 +198,8 @@ class MCcrossref:
 
         if len(l_list_chem) <= 4:
             runExternal.vennPlot(p_upset)
+        
+        return p_upset
 
     def overlapBetweenListChemWithHormoneSim(self, l_list_chem):
         """Overlap with 2 lists max"""
@@ -233,7 +235,6 @@ class MCcrossref:
             try:copyfile("%sPNG/%s.png"%(self.pr_desc, chem), "%s%s.png"%(pr_overlap, chem))
             except: pass
         filout.close()
-
 
     def mergeAllSets(self):
 
@@ -496,6 +497,43 @@ class MCcrossref:
         pr_hormone = pathFolder.createFolder(pr_out + "similarity_hormone/")
         runExternal.comparisonWithHormoneSimilarity(self.d_dataset[l_datasets[0]], self.d_dataset[l_datasets[1]], self.c_Desc.p_hormone_similarity, pr_hormone)
 
+    def crossToxCastAssays(self, l_genes = ["CYP19A1"]):
+        pr_results = pathFolder.createFolder(self.pr_out + "overlapToxCast/")
+        
+        c_ToxCast = ToxCast.ToxCast(l_genes, pr_results)
+        p_assays = c_ToxCast.loadAssaysMatrix()
+
+        # compte overlap E2 - P4 up
+        p_overlap = self.overlapBetweenListChem(["E2-up", "P4-up"])
+        
+        # overlap
+        runExternal.overlapAssaysListChem(p_assays, p_overlap, pr_results)
+
+        p_upset = pr_results + "upset.csv"
+
+        # extract structure from overlap
+        pr_overlap = pathFolder.createFolder(pr_results + "overlapChem/")
+        d_upset = toolbox.loadMatrix(p_upset, sep = ",")
+        l_list_chem = list(d_upset[list(d_upset.keys())[0]].keys())
+
+        p_filout = pr_overlap + "overlap_chem.csv"
+        filout = open(p_filout, "w")
+        filout.write("CASRN\tChemical.name\n")
+
+        for chem in d_upset.keys():
+            flag = 0
+            for list_chem in l_list_chem:
+                if d_upset[chem][list_chem] == "0":
+                    flag = 1
+            if flag == 1:
+                continue
+            filout.write("%s\t%s\n"%(chem, self.d_all[chem]["name"]))
+            # copy paste png chemicals
+            try:copyfile("%sPNG/%s.png"%(self.pr_desc, chem), "%s%s.png"%(pr_overlap, chem))
+            except: pass
+        filout.close()
+
+
 
     def main(self):
 
@@ -528,16 +566,16 @@ class MCcrossref:
         # compute similarity with hormone derivative
         ########################
         # ["MACCS", "Morgan", "Mol"], l_dist = ["Dice", "Tanimoto"]
-        self.c_Desc.compute_similarity_inter_hormones(self.p_hormones)
-        self.c_Desc.compute_similarity_with_hormones(self.p_hormones, "MACCS", "Tanimoto")
+        #self.c_Desc.compute_similarity_inter_hormones(self.p_hormones)
+        #self.c_Desc.compute_similarity_with_hormones(self.p_hormones, "MACCS", "Tanimoto")
         # put png in a different folder
         #pr_png_by_list = pathFolder.createFolder(self.pr_out + "png_by_list/")
         #self.c_Desc.png_by_list(pr_png_by_list)
 
         # load Toxprint by list
         ##########################
-        self.c_FP = runToxPrint.runToxPrint(self.d_dataset, self.pr_toxprint, self.pr_out)
-        self.c_FP.loadToxPrint()
+        #self.c_FP = runToxPrint.runToxPrint(self.d_dataset, self.pr_toxprint, self.pr_out)
+        #self.c_FP.loadToxPrint()
 
         # overlap with similarity with hormone
         #######
@@ -561,9 +599,9 @@ class MCcrossref:
 
         # Comparison between two list of chemicals descriptor
         #####
-        self.ComparisonTwoChemicalLists(["E2-up", "H295R"])
-        self.ComparisonTwoChemicalLists(["P4-up", "H295R"])
-        self.ComparisonTwoChemicalLists(["E2-up", "P4-up"])
+        #self.ComparisonTwoChemicalLists(["E2-up", "H295R"])
+        #self.ComparisonTwoChemicalLists(["P4-up", "H295R"])
+        #self.ComparisonTwoChemicalLists(["E2-up", "P4-up"])
 
         # analysis of the toxprint #
         ############################
@@ -582,41 +620,9 @@ class MCcrossref:
         #self.c_FP.comparisonToxPrintCount(["H295R", "E2-up", "P4-up"])
 
 
-## not used anymore but can be reintegrate 
-#######
+        # cross with ToxCast assays #
+        #############################
 
-## need to reintegrate chemlinst in the sources as do with toxprint ##
-#cChem.analysisChemList(p_chemList)
+        self.crossToxCastAssays(l_genes = ["CYP19A1"])
 
 
-def analysisMultiSets(p_desc1D2D):
-
-    # draw hclust circular and PCA
-    runExternal.multiSetsAnalysis(p_desc1D2D)
-
-def unionListChem(l_p_set, name_setchem, PR_RESULTS):
-    pr_union = pathFolder.createFolder(PR_RESULTS + "union_sets/")
-    l_name_set = []
-    d_out = {}
-    for p_set in l_p_set:
-        name_set = p_set.split("/")[-1][0:-4]
-        l_name_set.append(name_set)
-        l_chemset = toolbox.loadMatrixToList(p_set, sep = ",")
-        for chemset in l_chemset:
-            print(chemset)
-            CASRN = chemset["CASRN"]
-            SMILES = chemset["SMILES"]
-            if not CASRN in list(d_out.keys()):
-                d_out[CASRN] = {}
-                d_out[CASRN]["SMILES"] = SMILES
-                d_out[CASRN]["list"] = []
-            d_out[CASRN]["list"].append(name_set)
-
-    p_filout = pr_union + name_setchem + ".csv"
-    filout = open(p_filout, "w")
-    filout.write("CASRN,SMILES,list\n")
-    for chem in d_out.keys():
-        filout.write("%s,%s,%s\n"%(chem, d_out[chem]["SMILES"], "--".join(d_out[chem]["list"])))
-    filout.close()
-
-    return p_filout

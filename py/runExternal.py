@@ -198,6 +198,12 @@ def overlapListHormoneSim(p_upset, p_hormone_similarity, pr_out):
     cmd = "./overlapListHormoneSim.R %s %s %s"%(p_upset, p_hormone_similarity, pr_out)
     runRCMD(cmd)
 
+
+def overlapAssaysListChem(p_assays, p_upset, pr_out):
+    cmd = "./overlapListAndAssays.R %s %s %s"%(p_assays, p_upset, pr_out)
+    runRCMD(cmd)
+
+
 ##############
 # run biotransformer tool
 
