@@ -15,14 +15,14 @@ p_chemList = args[2]
 pr_out = args[3]
 
 
-p_assays = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/overlapToxCast/CYP19A1.csv"
-p_chemList = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/OverlapList/E2-up-P4-up/upset_matrix"
-pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/overlapToxCast/"
+#p_assays = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/overlapToxCast/CYP19A1.csv"
+#p_chemList = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/OverlapList/E2-up-P4-up/upset_matrix"
+#pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/overlapToxCast/"
 
 
 # load Assays
 d_assays = read.csv(p_assays, sep = "\t", row.names = 1)
-l_assays = colnames(d_assays)[seq(1,dim(d_assays)[2],2)]
+l_assays = colnames(d_assays)[seq(2,dim(d_assays)[2],2)]
 
 # load chemList
 d_chemList = read.csv(p_chemList, sep = "\t", row.names = 1)
@@ -74,10 +74,24 @@ dev.off()
 
 # remove NVS assays
 d_onlyTox21 = d_out[,-c(3, 4)]
-
 png(paste(pr_out, "onlyTox21_venn.png", sep = ""), res = 300, 1000, 1000)
 p = plot(euler(d_onlyTox21), quantities = TRUE)
 print(p)
 dev.off()
+write.csv(d_onlyTox21, paste(pr_out, "upset_Tox21overlap.csv", sep = ""))
 
-write.csv(d_onlyTox21, paste(pr_out, "upset.csv", sep = ""))
+
+# remove Tox21 assays
+d_onlyNVS = d_out[,-c(4, 5)]
+png(paste(pr_out, "onlyNVS_venn.png", sep = ""), res = 300, 1000, 1000)
+p = plot(euler(d_onlyNVS), quantities = TRUE)
+print(p)
+dev.off()
+
+d_onlyNVS = cbind("chemical.name" = d_assays[rownames(d_onlyNVS), 1], d_onlyNVS)
+write.csv(d_onlyNVS, paste(pr_out, "upset_NVSoverlap.csv", sep = ""))
+
+
+# write d_out
+d_out = cbind("chemical.name" = d_assays[l_chem_all, 1], d_out)
+write.csv(d_out, paste(pr_out, "upset_all.csv", sep = ""))
