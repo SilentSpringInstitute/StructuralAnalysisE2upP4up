@@ -2,17 +2,18 @@
 require(kohonen)
 library(ggplot2)
 source("loadPropList.R")
-
+library(RColorBrewer)
+library(viridis)
 #################
 # Color reverse #
 #################
 
-colors <- function(n, alpha = 1) {
-  rev(heat.colors(n, alpha))
-}
 
 coolBlueHotRed <- function(n, alpha = 1) {rainbow(n, end=4/6, alpha=alpha)[n:1]}
 
+colBrBG <- function(n){brewer.pal(n,"Blues")}
+
+colViridis <- function(n){viridis(n)}
 
 
 applySOM = function(som_model, d_prop, prop, pr_out, svg_plot = 0){
@@ -60,12 +61,12 @@ applySOM = function(som_model, d_prop, prop, pr_out, svg_plot = 0){
   # count of active #
   ###################
   png(paste(pr_out, "SOM_count_", prop, ".png", sep = ""))
-  plot(som_model, type = "property", property=lAct, palette.name=coolBlueHotRed, main = "", dpi=300, height = 500, width = 500, bg = "transparent")
+  plot(som_model, type = "property", property=lAct, palette.name=colViridis, main = "", dpi=300, height = 500, width = 500, bg = "transparent")
   dev.off()
   
   if(svg_plot == 1){
     svg(paste(pr_out, "SOM_count_", prop, ".svg", sep = ""))
-    plot(som_model, type = "property", property=lAct, palette.name=coolBlueHotRed, main = "", dpi=300, height = 20, width = 20, bg = "transparent")
+    plot(som_model, type = "property", property=lAct, palette.name=colViridis, main = "", dpi=300, height = 20, width = 20, bg = "transparent")
     dev.off()
   }
   
@@ -75,19 +76,19 @@ applySOM = function(som_model, d_prop, prop, pr_out, svg_plot = 0){
   lAct[which(lAct == max(lAct))] = max(table(som_model$unit.classif))# have to calibrate based on the max of the original SOM
   if(svg_plot == 1){
     svg(paste(pr_out, "SOM_count_", prop, "_calibrate.svg", sep = ""))
-    plot(som_model, type = "property", property=lAct, palette.name=coolBlueHotRed, main = "", dpi=300, height = 20, width = 20, bg = "transparent")
+    plot(som_model, type = "property", property=lAct, palette.name=colViridis, main = "", dpi=300, height = 20, width = 20, bg = "transparent")
     dev.off()
   }
   
   # plot with proba #
   ###################
   png(paste(pr_out, "SOM_prob_", prop, ".png", sep = ""))
-  plot(som_model, type = "property", property=lprob, palette.name=coolBlueHotRed, main = "Prob active", dpi=300, height = 500, width = 500, bg = "transparent")
+  plot(som_model, type = "property", property=lprob, palette.name=colViridis, main = "Prob active", dpi=300, height = 500, width = 500, bg = "transparent")
   dev.off()  
   
   if(svg_plot == 1){
     svg(paste(pr_out, "SOM_prob_", prop, ".svg", sep = ""))
-    plot(som_model, type = "property", property=lprob, palette.name=coolBlueHotRed, main = "Prob active", dpi=300, height = 20, width = 20, bg = "transparent")
+    plot(som_model, type = "property", property=lprob, palette.name=colViridis, main = "Prob active", dpi=300, height = 20, width = 20, bg = "transparent")
     dev.off()  
   }
   
@@ -111,9 +112,9 @@ p_prop = args[2]
 pr_out = args[3]
 
 
-#p_SOM_model = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/Analysis_H295R/rdkit-OPERA/SOM/SOM_model.RData"
-#p_prop = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/setOfChemicals/H295R.csv"
-#pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/Analysis_H295R/rdkit-OPERA/SOM/"
+#p_SOM_model = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/Analysis_H295R/rdkit-OPERA/SOM/SOM_model.RData"
+#p_prop = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up//results/setOfChemicals/H295R.csv"
+#pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/Analysis_H295R/rdkit-OPERA/SOM/"
 
 
 # load prop

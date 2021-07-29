@@ -47,9 +47,9 @@ p_hormone_similarity = args[2]
 pr_out = args[3]
 
 
-#p_upset = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/OverlapList/E2-up-P4-up/upset_matrix"
+#p_upset = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/OverlapList/E2up-P4up/upset_matrix"
 #p_hormone_similarity = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/similarityHormone/matrix_MACCS-Tanimoto.csv"
-#pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/OverlapList/E2-up-P4-up/"
+#pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/OverlapList/E2up-P4up/"
 
 
 d_upset = read.csv(p_upset, sep = "\t", row.names = 1)

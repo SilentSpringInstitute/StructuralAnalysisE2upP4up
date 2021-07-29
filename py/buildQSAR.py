@@ -20,27 +20,60 @@ class buildQSAR:
         # define exit folder
         self.pr_out = pathFolder.createFolder(pr_results + name_QSAR + "/")
 
-    def buildDataset(self, c_stereo = 0):
-
+    def buildDataset(self, c_stereo = 0, borderline=1):
+        """
+        Build the dataset
+        - arg: class setereo to remove single dose on the assays
+        """
         p_filout = self.pr_out + "aff.csv"
+        
+        # redefine E2up and P4up with borderline and not
+        if borderline == 0:
+            self.c_dataset.defineE2P4active(["higher", "medium", "lower"])
+            if self.active_dataset == "E2up":
+                l_casr_noBorderline = list(self.c_dataset.d_E2up_active.keys())
+            else:
+                l_casr_noBorderline = list(self.c_dataset.d_P4up_active.keys())
+            
+            self.c_dataset.defineE2P4active(["higher", "medium", "lower", "borderline"])
+            if self.active_dataset == "E2up":
+                l_casr_Borderline = list(self.c_dataset.d_E2up_active.keys())
+            else:
+                l_casr_Borderline = list(self.c_dataset.d_P4up_active.keys())
+
+            # diff list
+            l_Borderline = list(set(l_casr_Borderline) - set(l_casr_noBorderline))
+
+
+
         # define a class file
         d_dataset = {}
         d_active_set = toolbox.loadMatrix(self.c_dataset.d_dataset[self.active_dataset])
         for chem in d_active_set.keys():
+            if borderline == 1:
+                if chem in l_Borderline:
+                    continue
             d_dataset[chem] = "1"
         
         ## inactive set
         d_inactive = toolbox.loadMatrix(self.c_dataset.d_dataset[self.inactive_dataset])
         for chem in d_inactive.keys():
             if not chem in list(d_dataset.keys()):
+                
+                # check for borderline to remove them - there are included in the dataset folder
+                if borderline == 0:
+                    if chem in l_Borderline:
+                        continue
+
+                # check for single dose remove
                 if c_stereo == 0:
                     d_dataset[chem] = "NA"
                 else:
-                    #remove single dose
-                    if self.active_dataset == "E2-up":
+                    #remove single dose in the inactive set
+                    if self.active_dataset == "E2up":
                         if not chem in list(c_stereo.d_single_hit.keys()) or c_stereo.d_single_hit[chem]["ESTRADIOL"] == "0" :
                             d_dataset[chem] = "NA"
-                    if self.active_dataset == "P4-up":
+                    if self.active_dataset == "P4up":
                         if not chem in list(c_stereo.d_single_hit.keys()) or c_stereo.d_single_hit[chem]["PROG"] == "0":
                             d_dataset[chem] = "NA"
         

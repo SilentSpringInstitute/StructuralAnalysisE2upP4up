@@ -100,7 +100,7 @@ AFC = function (d, path_file){
 args <- commandArgs(TRUE)
 p_count = args[1]
 
-#p_count = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/ToxPrintComparisonCount/MC-all/count.csv"
+p_count = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/ToxPrintComparisonCount/H295R-E2-up-P4-up/count.csv"
 
 housetasks <- read.delim(p_count, row.names = 1)
 

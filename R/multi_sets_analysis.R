@@ -110,8 +110,8 @@ maxquantile = as.double(args[3])
 
 #valcor = 0.90
 #maxquantile = 90
-#pdesc = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/carcinogen_breast_012721-H295_E2-up-H295_P4-up-Judson2015_ER_agonist-Judson2015_ER_antagonist/desc1D2D.csv"
-#prout = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/carcinogen_breast_012721-H295_E2-up-H295_P4-up-Judson2015_ER_agonist-Judson2015_ER_antagonist/"
+#pdesc = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/carcinogen_breast_012721-H295_E2up-H295_P4up-Judson2015_ER_agonist-Judson2015_ER_antagonist/desc1D2D.csv"
+#prout = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/carcinogen_breast_012721-H295_E2up-H295_P4up-Judson2015_ER_agonist-Judson2015_ER_antagonist/"
 
 
 dglobal = openDataVexcluded(pdesc, valcor, prout, c(1,2, 577))

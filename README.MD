@@ -21,7 +21,7 @@ Project developed to analysis chemicals that can be classified as a breast carci
 
 # To do list
 ## Priority 1
-- make clustering using toxifor on BCC and P4up/E2up chemicals
+- ~~make clustering using toxifor on BCC and P4up/E2up chemicals~~
 - cluster using chemicals type classification 
 - cluster using the toxiprint
 - reproduce clustering with the 10 hormone tested in kaumas
@@ -35,11 +35,13 @@ Project developed to analysis chemicals that can be classified as a breast carci
 - Need to change CR value in stereogensis with hagren2019
 - test Ghost approach for undersampling
 - add DNN for the classification prediction
+- remove borderline chemicals
+- project on the SOM different color 
 
 ## Priority 2
-- link to the dropbox SP with the data input
 - check metric for the toxprint
 - use a fingerprint based on the structural FP
+- Add combination of ToxPrint to improve building unit
 
 # Main updates to report
 - 05-03-21: init project from chemicals clustering - clean up legacy functions 

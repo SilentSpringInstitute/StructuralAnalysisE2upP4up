@@ -47,10 +47,10 @@ p_dataset2 = args[2]
 p_hormone_similarity = args[3]
 pr_out = args[4]
 
-#p_dataset1 = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/setOfChemicals/E2-up.csv"
-#p_dataset2 = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/setOfChemicals/P4-up.csv"
+#p_dataset1 = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/setOfChemicals/E2up.csv"
+#p_dataset2 = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/setOfChemicals/P4up.csv"
 #p_hormone_similarity = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/similarityHormone/matrix_MACCS-Tanimoto.csv"
-#pr_out = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/comparisonDesc_E2-up-P4-up/"
+#pr_out = "c://Users/aborr/research/Silent_Spring/breast_carcinogen/results/comparisonDesc_E2up-P4up/"
 
 
 d_dataset1 = read.csv(p_dataset1, sep = "\t", row.names = 1)

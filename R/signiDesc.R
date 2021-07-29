@@ -12,9 +12,9 @@ p_desc2 = args[2]
 pr_out = args[3]
 
 
-#p_desc1 = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/desc_by_list/E2-up/desc_1D2D.csv"
+#p_desc1 = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/desc_by_list/E2up/desc_1D2D.csv"
 #p_desc2 = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/desc_by_list/H295R/desc_1D2D.csv"
-#pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/comparisonDesc_E2-up-H295R/rdkit"
+#pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/breast_carcinogen/results/comparisonDesc_E2up-H295R/rdkit"
 
 
 d_desc1 = read.csv(p_desc1, sep = "\t", row.names = 1)

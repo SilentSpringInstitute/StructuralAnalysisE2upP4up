@@ -1,11 +1,14 @@
 #!/usr/bin/env Rscript
 library(kohonen)
 library(ggplot2)
+library(RColorBrewer)
+library(viridis)
 
+coolBlueHotRed <- function(n, alpha = 1) {rainbow(n, end=4/6, alpha=alpha)[n:1]}
 
-coolBlueHotRed <- function(n, alpha = 1) {
-  rainbow(n, end=4/6, alpha=alpha)[n:1]
-}
+colBrBG <- function(n){brewer.pal(n,"Spectral")[n:1]}
+
+colViridis <- function(n){viridis(n)}
 
 
 
@@ -27,15 +30,16 @@ applySOM = function(som_model, d_prop, hormone, pr_out, svg_plot = 0){
   
   names(d_sim_clust) = seq(1, xdim*ydim)
   
+
   # plot with proba #
   ###################
   png(paste(pr_out, "_SOM_sim.png", sep = ""))
-  plot(som_model, type = "property", property=d_sim_clust, palette.name=coolBlueHotRed, main = paste("Similarity", hormone), dpi=300, height = 500, width = 500, bg = "transparent")
+  plot(som_model, type = "property", property=d_sim_clust, palette.name=colBrBG, main = paste("Similarity", hormone), dpi=300, height = 500, width = 500, bg = "transparent")
   dev.off()  
   
   if(svg_plot == 1){
     svg(paste(pr_out, "_SOM_sim.png", sep = ""))
-    plot(som_model, type = "property", property=d_sim_clust, palette.name=coolBlueHotRed, main = paste("Similarity", hormone), dpi=300, height = 500, width = 500, bg = "transparent")
+    plot(som_model, type = "property", property=d_sim_clust, palette.name=colBrBG, main = paste("Similarity", hormone), dpi=300, height = 500, width = 500, bg = "transparent")
     dev.off()  
   }
   

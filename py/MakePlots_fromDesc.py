@@ -183,7 +183,7 @@ class MakePlots_fromDesc:
 
             # extract png by cluster
             pr_clusters_png = pathFolder.createFolder(pr_out + "png_by_cluster/")
-            d_cluster = toolbox.loadMatrix(p_cluster)
+            d_cluster = toolbox.loadMatrix(p_cluster,sep=",")
 
             for casrn in d_cluster.keys():
                 cluster = d_cluster[casrn]["cluster"]

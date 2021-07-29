@@ -148,11 +148,11 @@ class MCcrossref:
                 for chem in self.d_MCgenotox[list_chem].keys():
                     d_d_chem[list_chem].append(chem)
                     l_CASRN.append(chem)
-            elif list_chem == "E2-up":
+            elif list_chem == "E2up":
                 for chem in self.d_E2up_active.keys():
                     d_d_chem[list_chem].append(chem)
                     l_CASRN.append(chem)
-            elif list_chem == "P4-up":
+            elif list_chem == "P4up":
                 for chem in self.d_P4up_active.keys():
                     d_d_chem[list_chem].append(chem)
                     l_CASRN.append(chem)
@@ -160,7 +160,7 @@ class MCcrossref:
                 for chem in self.d_steroid_active.keys():
                     d_d_chem[list_chem].append(chem)
                     l_CASRN.append(chem)
-            elif list_chem == "ER-agonist":
+            elif list_chem == "ERagonist":
                 for chem in self.d_ERagonist.keys():
                     d_d_chem[list_chem].append(chem)
                     l_CASRN.append(chem)
@@ -358,6 +358,10 @@ class MCcrossref:
         self.d_all = d_all
 
     def formatSetofChem(self, l_chemsets):
+        """
+        ER add in the format list but not only agonist
+        """
+
         pr_dataset = pathFolder.createFolder(self.pr_out + "setOfChemicals/")
 
         d_out = {}
@@ -377,17 +381,17 @@ class MCcrossref:
                 l_casrn = list(self.d_steroid_active.keys())
             elif chemset == "Steroid":
                 l_casrn = list(self.d_steroid.keys())
-            elif chemset == "ER-agonist":
+            elif chemset == "ERagonist":
                 l_casrn = list(self.d_ERagonist.keys())
             elif chemset == "ER":
                 l_casrn = list(self.d_ER.keys())
             elif chemset == "E2":
                 l_casrn = list(self.d_E2up.keys())
-            elif chemset == "E2-up":
+            elif chemset == "E2up":
                 l_casrn = list(self.d_E2up_active.keys())
             elif chemset == "P4":
                 l_casrn = list(self.d_P4up.keys())
-            elif chemset == "P4-up":
+            elif chemset == "P4up":
                 l_casrn = list(self.d_P4up_active.keys())
             elif chemset == "H295R":
                 l_casrn = list(self.d_H295R.keys())
@@ -484,15 +488,16 @@ class MCcrossref:
             print("Compute Descriptor first")
             return 
         
-        # with molecular descriptors
+        # with molecular descriptors - quantitative with 
         runExternal.comparisonDesc(self.c_Desc.d_desc[l_datasets[0]]["rdkit"], self.c_Desc.d_desc[l_datasets[1]]["rdkit"], pr_out + "rdkit")
         runExternal.comparisonDesc(self.c_Desc.d_desc[l_datasets[0]]["OPERA"], self.c_Desc.d_desc[l_datasets[1]]["OPERA"], pr_out + "opera")
 
-        # toxprint as descriptor
+        # toxprint as descriptor - comparison qualitative proportion
         p_toxprint1 = self.c_FP.writeToxPrintMatrix(list(toolbox.loadMatrix(self.d_dataset[l_datasets[0]]).keys()), pr_out + l_datasets[0] + "_toxprint.csv")
         p_toxprint2 = self.c_FP.writeToxPrintMatrix(list(toolbox.loadMatrix(self.d_dataset[l_datasets[1]]).keys()), pr_out + l_datasets[1] + "_toxprint.csv")
-        runExternal.comparisonDesc(p_toxprint1, p_toxprint2, pr_out + "toxprint")
+        runExternal.comparisonToxPrint(p_toxprint1, p_toxprint2, pr_out + "toxprint")
 
+        stophere
         # with the similarity with the hormone
         pr_hormone = pathFolder.createFolder(pr_out + "similarity_hormone/")
         runExternal.comparisonWithHormoneSimilarity(self.d_dataset[l_datasets[0]], self.d_dataset[l_datasets[1]], self.c_Desc.p_hormone_similarity, pr_hormone)
@@ -504,7 +509,7 @@ class MCcrossref:
         p_assays = c_ToxCast.loadAssaysMatrix()
 
         # compte overlap E2 - P4 up
-        p_overlap = self.overlapBetweenListChem(["E2-up", "P4-up"])
+        p_overlap = self.overlapBetweenListChem(["E2up", "P4up"])
         
         # overlap
         runExternal.overlapAssaysListChem(p_assays, p_overlap, pr_results)
@@ -538,7 +543,7 @@ class MCcrossref:
     def main(self):
 
         # prepare set of chemicals - split by list
-        self.prepSets(["ER", "MC", "Steroid", "E2-up", "P4-up", "all", "Steroid-up", "ER-agonist", "genotoxic", "H295R"])
+        self.prepSets(["ER", "MC", "Steroid", "E2up", "P4up", "all", "Steroid-up", "ERagonist", "genotoxic", "H295R"])
 
         # compute Venn diagram - overlap between list of chemicals
         ####
@@ -546,10 +551,10 @@ class MCcrossref:
         #self.overlapBetweenListChem(["MC", "Steroid", "ER"])
         #self.overlapBetweenListChem(["MC", "Steroid", "ER-agonist", "genotoxic"])
         #self.overlapBetweenListChem(["MC", "Steroid-up", "ER-agonist", "genotoxic"])
-        #self.overlapBetweenListChem(["Steroid", "E2-up", "P4-up"])
-        #self.overlapBetweenListChem(["E2-up", "P4-up", "H295R"])
+        #self.overlapBetweenListChem(["Steroid", "E2up", "P4up"])
+        #self.overlapBetweenListChem(["E2up", "P4up", "H295R"])
         #self.overlapBetweenListChem(["MC", "genotoxic", "H295R"])
-        #self.overlapBetweenListChem(["E2-up", "P4-up"])
+        #self.overlapBetweenListChem(["E2up", "P4up"])
 
 
         # analyse class of chemical by MC
@@ -567,19 +572,19 @@ class MCcrossref:
         ########################
         # ["MACCS", "Morgan", "Mol"], l_dist = ["Dice", "Tanimoto"]
         #self.c_Desc.compute_similarity_inter_hormones(self.p_hormones)
-        #self.c_Desc.compute_similarity_with_hormones(self.p_hormones, "MACCS", "Tanimoto")
+        self.c_Desc.compute_similarity_with_hormones(self.p_hormones, "MACCS", "Tanimoto")
         # put png in a different folder
         #pr_png_by_list = pathFolder.createFolder(self.pr_out + "png_by_list/")
         #self.c_Desc.png_by_list(pr_png_by_list)
 
         # load Toxprint by list
         ##########################
-        #self.c_FP = runToxPrint.runToxPrint(self.d_dataset, self.pr_toxprint, self.pr_out)
-        #self.c_FP.loadToxPrint()
+        self.c_FP = runToxPrint.runToxPrint(self.d_dataset, self.pr_toxprint, self.pr_out)
+        self.c_FP.loadToxPrint()
 
         # overlap with similarity with hormone
         #######
-        #self.overlapBetweenListChemWithHormoneSim(["E2-up", "P4-up", "H295R"])
+        #self.overlapBetweenListChemWithHormoneSim(["E2up", "P4up", "H295R"])
 
         # analyze by daataset and set of descriptors #
         ##############################################
@@ -599,9 +604,9 @@ class MCcrossref:
 
         # Comparison between two list of chemicals descriptor
         #####
-        #self.ComparisonTwoChemicalLists(["E2-up", "H295R"])
-        #self.ComparisonTwoChemicalLists(["P4-up", "H295R"])
-        #self.ComparisonTwoChemicalLists(["E2-up", "P4-up"])
+        self.ComparisonTwoChemicalLists(["E2up", "H295R"])
+        self.ComparisonTwoChemicalLists(["P4up", "H295R"])
+        #self.ComparisonTwoChemicalLists(["E2up", "P4up"])
 
         # analysis of the toxprint #
         ############################
@@ -616,13 +621,13 @@ class MCcrossref:
 
         # Comparison ToxPrint #
         #######################
-        #self.c_FP.comparisonToxPrintCount(["Steroid", "E2-up", "P4-up"])
-        #self.c_FP.comparisonToxPrintCount(["H295R", "E2-up", "P4-up"])
+        #self.c_FP.comparisonToxPrintCount(["Steroid", "E2up", "P4up"])
+        #self.c_FP.comparisonToxPrintCount(["H295R", "E2up", "P4up"])
 
 
         # cross with ToxCast assays #
         #############################
 
-        self.crossToxCastAssays(l_genes = ["CYP19A1"])
+        #self.crossToxCastAssays(l_genes = ["CYP19A1"])
 
 

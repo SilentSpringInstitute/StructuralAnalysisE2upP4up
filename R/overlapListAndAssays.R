@@ -16,7 +16,7 @@ pr_out = args[3]
 
 
 #p_assays = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/overlapToxCast/CYP19A1.csv"
-#p_chemList = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/OverlapList/E2-up-P4-up/upset_matrix"
+#p_chemList = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/OverlapList/E2up-P4up/upset_matrix"
 #pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/overlapToxCast/"
 
 
