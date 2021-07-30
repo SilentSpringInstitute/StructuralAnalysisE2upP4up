@@ -14,9 +14,9 @@ p_toxprint2 = args[2]
 pr_out = args[3]
 
 
-#p_toxprint1 = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/comparisonDesc_E2up-H295R/E2up_toxprint.csv"
-#p_toxprint2 = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/comparisonDesc_E2up-H295R/H295R_toxprint.csv"
-#pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/comparisonDesc_E2up-H295R/toxprint"
+p_toxprint1 = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDesc_E2up-H295R/E2up_toxprint.csv"
+p_toxprint2 = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDesc_E2up-H295R/H295R_toxprint.csv"
+pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDesc_E2up-H295R/toxprint"
 
 d_toxprint1 = read.csv(p_toxprint1, sep = "\t", row.names = 1)
 
@@ -72,3 +72,15 @@ d_out = as.data.frame(d_out)
 d_out$Pval = as.double(d_out$Pval)
 d_out = d_out[order(d_out$Pval), ]
 write.csv(d_out, paste(pr_out, "_signif.csv"))
+
+
+#### combination of toxprint
+######
+
+l_toxprints_remove = d_out[which(d_out$`Estimate prob1` <= 0.1 & d_out$`Estimate prob2` <= 0.1),1]
+
+l_toxprint_tocombine = within(l_toxprints, rm= l_toxprints_remove)
+
+
+
+

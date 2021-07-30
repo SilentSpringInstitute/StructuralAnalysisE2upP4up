@@ -4,7 +4,7 @@ import pathFolder
 import toolbox
 import runExternal
 
-from os import path
+from os import path, sep
 from shutil import copyfile
 
 # selected physico chemical descriptor from OPERa
@@ -234,7 +234,7 @@ class runChemStruct:
             self.p_hormone_similarity = p_filout
             return 
 
-        d_hormones = toolbox.loadMatrix(p_hormones)
+        d_hormones = toolbox.loadMatrix(p_hormones, sep=",")
         l_casrn_h = list(d_hormones.keys())
 
         d_chemicals_all = toolbox.loadMatrix(self.d_dataset["all"])
@@ -278,7 +278,7 @@ class runChemStruct:
         l_FP = ["MACCS", "Morgan", "Mol"]
         l_metrics = ["Dice", "Tanimoto"]
 
-        d_hormones = toolbox.loadMatrix(p_hormones)
+        d_hormones = toolbox.loadMatrix(p_hormones, sep = ",")
         l_casrn_h = list(d_hormones.keys())
 
         d_out = {}

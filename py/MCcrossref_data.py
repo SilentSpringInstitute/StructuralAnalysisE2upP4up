@@ -497,6 +497,7 @@ class MCcrossref:
         p_toxprint2 = self.c_FP.writeToxPrintMatrix(list(toolbox.loadMatrix(self.d_dataset[l_datasets[1]]).keys()), pr_out + l_datasets[1] + "_toxprint.csv")
         runExternal.comparisonToxPrint(p_toxprint1, p_toxprint2, pr_out + "toxprint")
 
+
         stophere
         # with the similarity with the hormone
         pr_hormone = pathFolder.createFolder(pr_out + "similarity_hormone/")
@@ -571,7 +572,8 @@ class MCcrossref:
         # compute similarity with hormone derivative
         ########################
         # ["MACCS", "Morgan", "Mol"], l_dist = ["Dice", "Tanimoto"]
-        #self.c_Desc.compute_similarity_inter_hormones(self.p_hormones)
+       
+        self.c_Desc.compute_similarity_inter_hormones(self.p_hormones)
         self.c_Desc.compute_similarity_with_hormones(self.p_hormones, "MACCS", "Tanimoto")
         # put png in a different folder
         #pr_png_by_list = pathFolder.createFolder(self.pr_out + "png_by_list/")
