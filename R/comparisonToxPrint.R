@@ -14,9 +14,9 @@ p_toxprint2 = args[2]
 pr_out = args[3]
 
 
-p_toxprint1 = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDesc_E2up-H295R/E2up_toxprint.csv"
-p_toxprint2 = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDesc_E2up-H295R/H295R_toxprint.csv"
-pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDesc_E2up-H295R/toxprint"
+#p_toxprint1 = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDesc_E2up-H295R/E2up_toxprint.csv"
+#p_toxprint2 = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDesc_E2up-H295R/H295R_toxprint.csv"
+#pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDesc_E2up-H295R/toxprint"
 
 d_toxprint1 = read.csv(p_toxprint1, sep = "\t", row.names = 1)
 
@@ -71,16 +71,56 @@ colnames(d_out) = c("Toxprint", "Pval", "significatif", paste("N", strsplit(base
 d_out = as.data.frame(d_out)
 d_out$Pval = as.double(d_out$Pval)
 d_out = d_out[order(d_out$Pval), ]
-write.csv(d_out, paste(pr_out, "_signif.csv"))
+write.csv(d_out, paste(pr_out, "_signif.csv", sep = ""))
 
 
 #### combination of toxprint
 ######
 
-l_toxprints_remove = d_out[which(d_out$`Estimate prob1` <= 0.1 & d_out$`Estimate prob2` <= 0.1),1]
+# remove toxprint with a expected prob < 0.1
+l_toxprint_tocombine = d_out[which(d_out$`Estimate prob1` >= 0.1 & d_out$`Estimate prob1` != "NA" & d_out$`Estimate prob2` >= 0.1 & d_out$`Estimate prob2` != "NA"),1]
 
-l_toxprint_tocombine = within(l_toxprints, rm= l_toxprints_remove)
+# do combination oftoxprint
+####
+
+d_combine = NULL
+l_combine = NULL
+i = 1
+imax = length(l_toxprint_tocombine)
+while(i <= imax){
+  j = i + 1
+  while(j <= imax){
+    toxprint_combine = paste(l_toxprint_tocombine[i], "__", l_toxprint_tocombine[j])
+    l_combine = append(l_combine, toxprint_combine)
+    
+    # apply test
+    v_toxprint1 = length(which(d_toxprint1[,l_toxprint_tocombine[i]] >=1 && d_toxprint1[,l_toxprint_tocombine[j]] >=1))
+    v_toxprint2 = length(which(d_toxprint2[,l_toxprint_tocombine[i]] >=1 && d_toxprint2[,l_toxprint_tocombine[j]] >=1))
+    
+    n_toxprint1 = sum(v_toxprint1)
+    n_toxprint2 = sum(v_toxprint2)
+    
+    # compute pval on a Zscore
+    res <- prop.test(x = c(n_toxprint1, n_toxprint2), n = c(n_d_toxprint1, n_d_toxprint2))
+    
+    # Printing the results
+    pval = res$p.val 
+    if (is.na(pval) == TRUE){
+      d_combine = rbind(d_combine, c(toxprint_combine, "NA", "-", n_toxprint1, n_toxprint2, "NA", "NA"))
+      
+    }else{
+      signif = signifPvalue(pval)
+      d_combine = rbind(d_combine, c(toxprint_combine, round(pval, 4), signif, n_toxprint1, n_toxprint2, round(res$estimate[1], 2), round(res$estimate[2], 2)))
+    }
+    j = j + 1
+  }
+  i = i + 1
+}
 
 
-
+colnames(d_out) = c("Toxprint_combine", "Pval", "significatif", paste("N", strsplit(basename(p_toxprint1), "_")[[1]][1], sep = " "), paste("N", strsplit(basename(p_toxprint2), "_")[[1]][1], sep = " "), "Estimate prob1", "Estimate prob2")
+d_out = as.data.frame(d_out)
+d_out$Pval = as.double(d_out$Pval)
+d_out = d_out[order(d_out$Pval), ]
+write.csv(d_out, paste(pr_out, "combined_signif.csv", sep = ""))
 

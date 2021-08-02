@@ -497,8 +497,6 @@ class MCcrossref:
         p_toxprint2 = self.c_FP.writeToxPrintMatrix(list(toolbox.loadMatrix(self.d_dataset[l_datasets[1]]).keys()), pr_out + l_datasets[1] + "_toxprint.csv")
         runExternal.comparisonToxPrint(p_toxprint1, p_toxprint2, pr_out + "toxprint")
 
-
-        stophere
         # with the similarity with the hormone
         pr_hormone = pathFolder.createFolder(pr_out + "similarity_hormone/")
         runExternal.comparisonWithHormoneSimilarity(self.d_dataset[l_datasets[0]], self.d_dataset[l_datasets[1]], self.c_Desc.p_hormone_similarity, pr_hormone)

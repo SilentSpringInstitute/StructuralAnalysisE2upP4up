@@ -7,7 +7,7 @@ from re import search
 from numpy import mean, std
 from copy import deepcopy
 from shutil import copyfile
-from random import shuffle
+from random import shuffle, uniform
 
 
 class QSAR:
@@ -19,9 +19,13 @@ class QSAR:
         self.pr_out = pr_out
         self.repetition = nb_repetition
         self.n_foldCV = n_foldCV
-        self.rate_active = rate_active
         self.rate_splitTrainTest = rate_splitTrainTest
 
+        #Add variable sampling 
+        if type(rate_active) == list:
+            self.rate_active = uniform(rate_active[0], rate_active[1])
+        else:
+            self.rate_active = rate_active
 
     def runQSARClassUnderSamplingAllSet(self, force_run = 0):
 
@@ -30,9 +34,8 @@ class QSAR:
         l_run = list(range(1, self.repetition + 1))
         shuffle(l_run)
 
-        for i in l_run:###### need to be change
+        for i in l_run:
             pr_run = self.pr_out + str(i) + "/"
-            #rmtree(pr_run)############################################################################### to remove
             pathFolder.createFolder(pr_run)
 
             # prepare dataset => split train / test
@@ -60,8 +63,8 @@ class QSAR:
 
         for i in range(1, self.repetition + 1):
             pr_run = self.pr_out + str(i) + "/"
-            #rmtree(pr_run)############################################################################### to remove
             pathFolder.createFolder(pr_run)
+            self.writeSumFile(pr_run)
 
             # prepare dataset => split train / test
             self.prepTrainSetforUnderSampling(pr_run, 0)
@@ -134,7 +137,7 @@ class QSAR:
 
     def prepTrainSetforUnderSampling(self, pr_run, splitRatio=""):
 
-
+        
         # Case where only the train set is created
         if splitRatio == 0: 
             # define train and test set
@@ -491,3 +494,12 @@ class QSAR:
         
         return pr_out
         
+    def writeSumFile(self, pr_out):
+        """Function use to wirte summary for the model"""
+        
+        # write summary of the QSAR modeling
+        p_fsum = pr_out + "QSAR.sum"
+        fsum = open(p_fsum, "w")
+        fsum.write("Descriptor file prepared: %s\nDescriptor file origine: %s\nClass file prepared: %s\nClass file original: %s\nfolder out: %s\nRepetition: %s\nFold cross_validation: %s\nActive rate: %s\nSplit train-test set: %s\n"%(self.p_desc, self.p_desc_orign, self.p_AC50, self.p_AC50_orign, pr_out, self.repetition, self.n_foldCV, self.rate_active, self.rate_splitTrainTest))
+        fsum.close()
+
