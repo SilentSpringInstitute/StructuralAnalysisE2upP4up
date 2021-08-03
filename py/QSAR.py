@@ -58,7 +58,6 @@ class QSAR:
         shuffle(l_run)
         
         for i in l_run:
-
             # redefine rate undersampling
             pr_run = self.pr_out + str(i) + "/"
             pathFolder.createFolder(pr_run)
@@ -560,7 +559,25 @@ class QSAR:
         fsum.close()
 
     def computeAD(self, pr_out):
-        """Compute applicability model"""
-        # check applicability model
+        """Compute applicability model with two ways, PCA with descriptors and similarit on MACCS tanimoto
+        - folder with QSAR models
+        """
+        
         pr_AD = pathFolder.createFolder(pr_out + "AD/")
-        runExternal.AD(self.p_train, self.p_test, pr_AD)
+
+        # AD based on PCA descriptors
+        pr_AD_desc = pathFolder.createFolder(pr_AD + "descPCA_based/")
+        runExternal.AD(self.p_train, self.p_test, pr_AD_desc)
+
+        # AD based on similarity score
+        pr_AD_sim = pathFolder.createFolder(pr_AD + "chem_similarity/")
+        
+        # compute similarity matrix in the root folder.
+        p_sim_matrix = self.pr_out + "sim_matrox"
+        
+        d_origin = toolbox.loadMatrixToList(self.p_desc_orign, sep = ",")
+        d_train = toolbox.loadMatrixToList(self.p_train, sep = ",")
+        d_test = toolbox.loadMatrixToList(self.p_test, sep = ",")
+        print(d_origin)
+
+        ssss

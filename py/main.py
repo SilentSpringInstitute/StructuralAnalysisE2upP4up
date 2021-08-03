@@ -158,4 +158,5 @@ c_QSAR_P4up = buildQSAR.buildQSAR(name_QSAR, "P4up", "H295R", c_MCcrossref, PR_R
 c_QSAR_P4up.buildDataset(c_Stereo, borderline=0)
 c_QSAR_P4up.buildDescSet(["rdkit", "OPERA", "toxprint"])
 c_QSAR_P4up.prepDesc()
+c_QSAR_P4up.computeSimMatrix()# similarity matrix for the AD
 c_QSAR_P4up.runQSARs([0.10, 0.9])

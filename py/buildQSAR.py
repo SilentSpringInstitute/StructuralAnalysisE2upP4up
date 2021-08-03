@@ -5,6 +5,7 @@ import pathFolder
 import QSAR
 import toolbox
 import runExternal
+import CompDesc
 
 class buildQSAR:
 
@@ -136,3 +137,52 @@ class buildQSAR:
         pr_out = pathFolder.createFolder(self.pr_desc_QSAR + "classQSAR/")
         self.c_QSAR = QSAR.QSAR(self.p_desc_cleaned, self.p_desc, self.p_AC50_cleaned, self.p_aff, pr_out, 10, 10, rate_undersampling, 0.15)
         self.c_QSAR.runQSARClassUnderSamplingTrain()
+
+    def computeSimMatrix(self):
+
+        print(self.c_dataset.d_dataset[self.active_dataset])
+        d_active = toolbox.loadMatrix(self.c_dataset.d_dataset[self.active_dataset])
+        d_inactive = toolbox.loadMatrix(self.c_dataset.d_dataset[self.active_dataset])
+        d_smiles = {}
+        for chem_act in d_active.keys():
+            d_smiles[chem_act] = d_active[chem_act]["SMILES"]
+        for chem_inact in d_inactive.keys():
+            d_smiles[chem_inact] = d_inactive[chem_inact]["SMILES"]
+        
+        i=0
+        l_casrn = list(d_smiles.keys())
+        l_casrn = l_casrn
+        imax = len(l_casrn)
+        d_sim = {}
+        while i < imax:
+            smi1 = d_smiles[l_casrn[i]]
+            d_sim[l_casrn[i]] = {}
+            c_smi1 = CompDesc.CompDesc(smi1, "")
+            c_smi1.prepChem()
+            c_smi1.computeFP("MACCS")
+
+            j = i + 1
+            while j < imax:
+                smi2 = d_smiles[l_casrn[j]]
+                c_smi2 = CompDesc.CompDesc(smi2, "")
+                c_smi2.prepChem()
+                c_smi2.computeFP("MACCS")
+                score = c_smi1.computeSimilarityFP(c_smi2, "MACCS", "Tanimoto")
+                d_sim[l_casrn[i]][l_casrn[j]] = str(score)
+                j=j+1
+
+            i = i + 1
+        
+        p_filout = self.pr_out + "mat_sim_MACCS_Tanimoto.csv"
+        filout = open(p_filout, "w")
+        filout.write("\t".join(l_casrn) + "\n")
+        for casrn in l_casrn:
+            filout.write(casrn)
+            for casrn2 in l_casrn:
+                if casrn == casrn2:
+                    filout.write("\t1")
+                else:
+                    try:filout.write("\t%s"%(d_sim[casrn][casrn2]))
+                    except: filout.write("\t%s"%(d_sim[casrn2][casrn]))
+            filout.write("\n")
+        filout.close()

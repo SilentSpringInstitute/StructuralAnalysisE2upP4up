@@ -37,6 +37,8 @@ Project developed to analysis chemicals that can be classified as a breast carci
 - add DNN for the classification prediction
 - remove borderline chemicals
 - project on the SOM different color 
+- make a undersampling variable
+
 
 ## Priority 2
 - check metric for the toxprint
@@ -46,3 +48,4 @@ Project developed to analysis chemicals that can be classified as a breast carci
 # Main updates to report
 - 05-03-21: init project from chemicals clustering - clean up legacy functions 
 - 06-01-21: QSAR modeling E2up and P4up
+- Update QSAR modeling
