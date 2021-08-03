@@ -22,10 +22,7 @@ class QSAR:
         self.rate_splitTrainTest = rate_splitTrainTest
 
         #Add variable sampling 
-        if type(rate_active) == list:
-            self.rate_active = uniform(rate_active[0], rate_active[1])
-        else:
-            self.rate_active = rate_active
+        self.rate_active = rate_active
 
     def runQSARClassUnderSamplingAllSet(self, force_run = 0):
 
@@ -57,15 +54,15 @@ class QSAR:
         # define train and test set here
         self.prepSplitTrainTestSet()
 
-        # check applicability model
-        pr_AD = pathFolder.createFolder(self.pr_out + "AD/")
-        runExternal.AD(self.p_trainGlobal, self.p_test, pr_AD)
+        l_run = list(range(1, self.repetition + 1))
+        shuffle(l_run)
+        
+        for i in l_run:
 
-        for i in range(1, self.repetition + 1):
+            # redefine rate undersampling
             pr_run = self.pr_out + str(i) + "/"
             pathFolder.createFolder(pr_run)
-            self.writeSumFile(pr_run)
-
+            
             # prepare dataset => split train / test
             self.prepTrainSetforUnderSampling(pr_run, 0)
 
@@ -137,7 +134,12 @@ class QSAR:
 
     def prepTrainSetforUnderSampling(self, pr_run, splitRatio=""):
 
-        
+        #Add variable sampling 
+        if type(self.rate_active) == list:
+            self.sampling_rate = uniform(self.rate_active[0], self.rate_active[1])
+        else:
+            self.sampling_rate = self.rate_active
+
         # Case where only the train set is created
         if splitRatio == 0: 
             # define train and test set
@@ -145,10 +147,9 @@ class QSAR:
 
             if path.exists(p_train):
                 self.p_train = p_train
-
             else:
                 # prep descriptor with classes without ratio of active
-                runExternal.prepDataQSAR(self.p_trainGlobal, self.p_AC50, self.rate_active, pr_run)
+                runExternal.prepDataQSAR(self.p_trainGlobal, self.p_AC50, self.sampling_rate, pr_run)
                 # to apply similar formating and create train.csv
                 runExternal.SplitTrainTest(pr_run + "desc_Class.csv", pr_run, 0)
                 
@@ -167,7 +168,7 @@ class QSAR:
 
             # prep descriptor with classes
             if not path.exists(pr_run + "desc_Class.csv"):
-                runExternal.prepDataQSAR(self.p_desc, self.p_AC50, self.rate_active, pr_run)
+                runExternal.prepDataQSAR(self.p_desc, self.p_AC50, self.sampling_rate, pr_run)
 
             runExternal.SplitTrainTest(pr_run + "desc_Class.csv", pr_run, self.rate_splitTrainTest)
             self.p_train = p_train
@@ -184,10 +185,14 @@ class QSAR:
             if path.exists(p_perfCV) and path.exists(p_perfTrain) and path.exists(p_perfTest):
                 return 
             else:
+                self.computeAD(pr_run)
                 runExternal.runRQSAR(self.p_train, self.p_test, self.n_foldCV, pr_run)
+                self.writeSumFile()    
         else:
+            self.computeAD(pr_run)
             runExternal.runRQSAR(self.p_train, self.p_test, self.n_foldCV, pr_run)
-                 
+            self.writeSumFile()
+
     def mergeQSARs(self):
 
         pr_QSAR_average = pathFolder.createFolder(self.pr_out + "Merge_results/")
@@ -198,8 +203,8 @@ class QSAR:
         self.mergeResults(pr_QSAR_average)
         self.mergeProbaRF(self.p_AC50_orign, pr_QSAR_proba)
         self.mergeInvolvedDesc("RF", 10, pr_QSAR_desc_involved)
+        self.mergeInvolvedDesc("LDA", 10, pr_QSAR_desc_involved)
         self.mergeAD(pr_AD)
-        return 
 
     def mergeResults(self, pr_av):
 
@@ -274,55 +279,57 @@ class QSAR:
             filout.write("\n")
         filout.close()
 
-    def mergeAD(self, pr_out):
+    def mergeAD(self, pr_AD_merged):
 
-        pr_AD_all = self.pr_out + "AD/"
-        l_pr_run = listdir(pr_AD_all)
+        l_pr_run = listdir(self.pr_out)
 
         d_Zscore_train = {}
         d_Zscore_test = {}
         for pr_run in l_pr_run:
-            try:run = int(pr_run)
+            try: int(pr_run)
             except:continue
-            p_Zscore_train = pr_AD_all + pr_run + "/AD_Train_zscore.csv"
-            p_Zscore_test = pr_AD_all + pr_run + "/AD_Test_zscore.csv"
+            p_Zscore_train = self.pr_out + pr_run + "/AD/AD_Train_zscore.csv"
+            p_Zscore_test = self.pr_out + pr_run + "/AD/AD_Test_zscore.csv"
             
             if not path.exists(p_Zscore_train) and not path.exists(p_Zscore_test):
-                p_Zscore_train = pr_AD_all + "AD_Train_zscore.csv"
-                p_Zscore_test = pr_AD_all + "AD_Test_zscore.csv"
+                print("Check - AD:", p_Zscore_train)
+                print("Check - AD:", p_Zscore_test)
+                continue
                 
             d_train = toolbox.loadMatrix(p_Zscore_train, sep = ",")
             d_test = toolbox.loadMatrix(p_Zscore_test, sep = ",")
 
             for chem_train in d_train.keys():
                 if not chem_train in list(d_Zscore_train.keys()):
-                    d_Zscore_train[chem_train] = d_train[chem_train]["Zscore"]
+                    d_Zscore_train[chem_train] = []    
+                d_Zscore_train[chem_train].append(float(d_train[chem_train]["Zscore"]))
 
             for chem_test in d_test.keys():
                 if not chem_test in list(d_Zscore_test.keys()):
-                    d_Zscore_test[chem_test] = d_test[chem_test]["Zscore"]
+                    d_Zscore_test[chem_test] = []
+                d_Zscore_test[chem_test].append(float(d_test[chem_test]["Zscore"]))
         
         if d_Zscore_test == {}:
+            print("No AD found")
             return 
 
         # write zscore
-        p_train = pr_out + "Zscores_train.csv"
+        p_train = pr_AD_merged + "Zscores_train.csv"
         ftrain = open(p_train, "w")
         ftrain.write("CASRN\tZscore\n")
         for chem in d_Zscore_train.keys():
-            ftrain.write("%s\t%s\n"%(chem, d_Zscore_train[chem]))
+            ftrain.write("%s\t%s\n"%(chem, mean(d_Zscore_train[chem])))
         ftrain.close()
 
-        p_test = pr_out + "Zscores_test.csv"
+        p_test = pr_AD_merged + "Zscores_test.csv"
         ftest = open(p_test, "w")
         ftest.write("CASRN\tZscore\n")
         for chem in d_Zscore_test.keys():
-            ftest.write("%s\t%s\n"%(chem, d_Zscore_test[chem]))
+            ftest.write("%s\t%s\n"%(chem, mean(d_Zscore_test[chem])))
         ftest.close()
 
-
         # draw histogram for AD and add summary and PCA
-        runExternal.mergeADs(p_train, p_test, self.p_desc, pr_AD_all)
+        runExternal.mergeADs(p_train, p_test, self.p_desc, pr_AD_merged)
 
     def mergeProbaRF(self, p_AC50, pr_prob):
         # need to change R scripts for 
@@ -333,11 +340,37 @@ class QSAR:
         d_prob = {}
         l_dataset = ["CV", "train", "test"]
 
+        # check if RF folder exist
         l_pr_run = listdir(self.pr_out)
+        i = 0
+        imax = len(l_pr_run)
+        while i < imax: 
+            try: int(l_pr_run[i])
+            except: 
+                del l_pr_run[i]
+                imax = imax - 1
+                continue
+
+            # check if RF is computed
+            if not path.exists("%s%s/RFclass/"%(self.pr_out, l_pr_run[i])):
+                del l_pr_run[i]
+                imax = imax - 1
+                continue
+            i = i + 1
+
+        if len(l_pr_run) == 0:
+            print("No RF computed")
+            return 
+
+
+        # load AC50
         d_AC50 = toolbox.loadMatrix(p_AC50)
 
         for pr_run in l_pr_run:
-            if search("Merge", pr_run) or search("AD", pr_run) or search("Cleaned", pr_run) or search("desc_global.csv", pr_run) or search(".csv", pr_run) or search("merge", pr_run) :
+
+            # check if RF is computed
+            if not path.exists("%s%s/RFclass/"%(self.pr_out, pr_run)):
+                print("Error run: %s"%(pr_run))
                 continue
 
             d_prob[pr_run] = {}
@@ -364,8 +397,6 @@ class QSAR:
         d_av["test"] = {}
 
         for run in l_pr_run:
-            if search("Merge", run) or search("AD", run) or search("Cleaned", run) or search("desc", run) or search("csv", run) or search("merge", run):
-                continue
 
             # CV
             for chem in d_prob[run]["CV"].keys():
@@ -434,6 +465,29 @@ class QSAR:
         #if path.exists(p_desc_importance):
         #    return
 
+        # check if file exist
+        l_pr_run = listdir(self.pr_out)
+        i = 0
+        imax = len(l_pr_run)
+        while i < imax: 
+            try: int(l_pr_run[i])
+            except: 
+                del l_pr_run[i]
+                imax = imax - 1
+                continue
+
+            # check if model is computed
+            if not path.exists("%s%s/%sclass/"%(self.pr_out, l_pr_run[i], ML)):
+                del l_pr_run[i]
+                imax = imax - 1
+                continue
+            i = i + 1
+
+        if len(l_pr_run) == 0:
+            print("No %s computed"%(ML))
+            return 
+
+
         l_pr_run = listdir(self.pr_out)
         for run in l_pr_run:
             if search("Merge", run) or search("AD", run) or search("Cleaned", run) or search("desc", run) or search("csv", run) or search("models", run) or search("mergeDNN", run):
@@ -496,10 +550,17 @@ class QSAR:
         
     def writeSumFile(self, pr_out):
         """Function use to wirte summary for the model"""
-        
+        if not "sampling_rate" in self.__dict__ and type(self.sampling_rate) == float:
+            self.sampling_rate = self.rate_active
+
         # write summary of the QSAR modeling
         p_fsum = pr_out + "QSAR.sum"
         fsum = open(p_fsum, "w")
-        fsum.write("Descriptor file prepared: %s\nDescriptor file origine: %s\nClass file prepared: %s\nClass file original: %s\nfolder out: %s\nRepetition: %s\nFold cross_validation: %s\nActive rate: %s\nSplit train-test set: %s\n"%(self.p_desc, self.p_desc_orign, self.p_AC50, self.p_AC50_orign, pr_out, self.repetition, self.n_foldCV, self.rate_active, self.rate_splitTrainTest))
+        fsum.write("Descriptor file prepared: %s\nDescriptor file origine: %s\nClass file prepared: %s\nClass file original: %s\nfolder out: %s\nRepetition: %s\nFold cross_validation: %s\nActive rate: %s\nSplit train-test set: %s\n"%(self.p_desc, self.p_desc_orign, self.p_AC50, self.p_AC50_orign, pr_out, self.repetition, self.n_foldCV, self.sampling_rate, self.rate_splitTrainTest))
         fsum.close()
 
+    def computeAD(self, pr_out):
+        """Compute applicability model"""
+        # check applicability model
+        pr_AD = pathFolder.createFolder(pr_out + "AD/")
+        runExternal.AD(self.p_train, self.p_test, pr_AD)
