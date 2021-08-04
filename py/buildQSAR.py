@@ -135,14 +135,18 @@ class buildQSAR:
     def runQSARs(self, rate_undersampling=0):
 
         pr_out = pathFolder.createFolder(self.pr_desc_QSAR + "classQSAR/")
-        self.c_QSAR = QSAR.QSAR(self.p_desc_cleaned, self.p_desc, self.p_AC50_cleaned, self.p_aff, pr_out, 10, 10, rate_undersampling, 0.15)
+        self.c_QSAR = QSAR.QSAR(self.p_desc_cleaned, self.p_desc, self.p_AC50_cleaned, self.p_aff, self.p_sim, pr_out, 10, 10, rate_undersampling, 0.15)
         self.c_QSAR.runQSARClassUnderSamplingTrain()
 
     def computeSimMatrix(self):
 
-        print(self.c_dataset.d_dataset[self.active_dataset])
+        p_filout = self.pr_out + "mat_sim_MACCS_Tanimoto.csv"
+        if path.exists(p_filout):
+            self.p_sim = p_filout
+            return
+        
         d_active = toolbox.loadMatrix(self.c_dataset.d_dataset[self.active_dataset])
-        d_inactive = toolbox.loadMatrix(self.c_dataset.d_dataset[self.active_dataset])
+        d_inactive = toolbox.loadMatrix(self.c_dataset.d_dataset[self.inactive_dataset])
         d_smiles = {}
         for chem_act in d_active.keys():
             d_smiles[chem_act] = d_active[chem_act]["SMILES"]
@@ -153,6 +157,7 @@ class buildQSAR:
         l_casrn = list(d_smiles.keys())
         l_casrn = l_casrn
         imax = len(l_casrn)
+        
         d_sim = {}
         while i < imax:
             smi1 = d_smiles[l_casrn[i]]
@@ -173,7 +178,7 @@ class buildQSAR:
 
             i = i + 1
         
-        p_filout = self.pr_out + "mat_sim_MACCS_Tanimoto.csv"
+        
         filout = open(p_filout, "w")
         filout.write("\t".join(l_casrn) + "\n")
         for casrn in l_casrn:
@@ -186,3 +191,4 @@ class buildQSAR:
                     except: filout.write("\t%s"%(d_sim[casrn2][casrn]))
             filout.write("\n")
         filout.close()
+        self.p_sim = p_filout

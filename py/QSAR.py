@@ -11,11 +11,12 @@ from random import shuffle, uniform
 
 
 class QSAR:
-    def __init__(self, p_desc_clean, p_desc_origin, p_AC50, p_AC50_origin, pr_out, nb_repetition, n_foldCV, rate_active, rate_splitTrainTest):
+    def __init__(self, p_desc_clean, p_desc_origin, p_AC50, p_AC50_origin, p_sim_matrix, pr_out, nb_repetition, n_foldCV, rate_active, rate_splitTrainTest):
         self.p_desc = p_desc_clean
         self.p_desc_orign = p_desc_origin
         self.p_AC50 = p_AC50
         self.p_AC50_orign = p_AC50_origin
+        self.p_sim_matrix = p_sim_matrix
         self.pr_out = pr_out
         self.repetition = nb_repetition
         self.n_foldCV = n_foldCV
@@ -571,13 +572,24 @@ class QSAR:
 
         # AD based on similarity score
         pr_AD_sim = pathFolder.createFolder(pr_AD + "chem_similarity/")
+        print(pr_AD_sim)
         
         # compute similarity matrix in the root folder.
-        p_sim_matrix = self.pr_out + "sim_matrox"
-        
-        d_origin = toolbox.loadMatrixToList(self.p_desc_orign, sep = ",")
-        d_train = toolbox.loadMatrixToList(self.p_train, sep = ",")
-        d_test = toolbox.loadMatrixToList(self.p_test, sep = ",")
-        print(d_origin)
+        d_train = toolbox.loadMatrix(self.p_train, sep = ",")
+        d_test = toolbox.loadMatrix(self.p_test, sep = ",")
 
-        ssss
+        # create matrix with flag active vs inactive and test vs train
+        p_matrix_chem = pr_AD_sim + "chem.csv"
+        f_matrix_chem = open(p_matrix_chem, "w")
+        f_matrix_chem.write("CASRN\tAff\tset\n")
+        for chem in d_train.keys():
+            f_matrix_chem.write("%s\t%s\t%s\n"%(chem, d_train[chem]["Aff"], "train"))
+        
+        for chem in d_test.keys():
+            f_matrix_chem.write("%s\t%s\t%s\n"%(chem, d_test[chem]["Aff"], "test"))
+        
+        f_matrix_chem.close()
+
+        runExternal.computeADBasedOnSimilarityMatrix(self.p_sim_matrix, p_matrix_chem, pr_AD_sim)        
+
+        stophere
