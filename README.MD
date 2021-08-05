@@ -10,6 +10,10 @@ Project developed to analysis chemicals that can be classified as a breast carci
     - molvs ($pip install molvs)
     - bitarray ($pip install bitarray)
     - openpyxl ($pip install openpyxl)
+    - tensorflow ($pip install tensorflow) use keras from tensorflow package
+    - sklearn ($pip install sklearn)
+
+
 - R 4.0
     - Toolbox from github (https://github.com/ABorrel/Toolbox_packageR)
 

@@ -1,6 +1,7 @@
 import pathFolder
 import runExternal
 import toolbox
+import DNN
 
 from os import path, listdir, rename, remove
 from re import search
@@ -25,7 +26,10 @@ class QSAR:
         #Add variable sampling 
         self.rate_active = rate_active
 
-    def runQSARClassUnderSamplingAllSet(self, force_run = 0):
+        # environement
+        self.force_run = 0
+
+    def runQSARClassUnderSamplingAllSet(self):
 
         # check applicability model
         pr_AD = pathFolder.createFolder(self.pr_out + "AD/")
@@ -45,7 +49,7 @@ class QSAR:
                 runExternal.AD(self.p_train, self.p_test, pr_AD_run)
 
             # build QSAR
-            self.buildQSAR(pr_run, force_run=force_run)
+            self.buildQSARs(pr_run)
 
         # merge results
         self.mergeQSARs()
@@ -58,16 +62,16 @@ class QSAR:
         l_run = list(range(1, self.repetition + 1))
         shuffle(l_run)
         
-        for i in l_run:
+        for run in l_run:
             # redefine rate undersampling
-            pr_run = self.pr_out + str(i) + "/"
+            pr_run = self.pr_out + str(run) + "/"
             pathFolder.createFolder(pr_run)
             
             # prepare dataset => split train / test
             self.prepTrainSetforUnderSampling(pr_run, 0)
 
             # build QSAR
-            self.buildQSAR(pr_run)
+            self.buildQSARs(pr_run)
 
         # merge results
         self.mergeQSARs()
@@ -174,24 +178,43 @@ class QSAR:
             self.p_train = p_train
             self.p_test = p_test
     
-    def buildQSAR(self, pr_run, force_run = 0):
+    def buildQSARs(self, pr_run):
+        """Build QSAR models
+        arg: - path folder results
+             (- check self.force_run to rebuild the modeling)
+        return: None
+            write output in the folder 
+        """
 
         # do not run if performance file already exist
         p_perfTrain = pr_run + "perfTrain.csv"
         p_perfCV = pr_run + "perfCV.csv"
         p_perfTest = pr_run + "perfTest.csv"
 
-        if force_run == 0:
+        if self.force_run == 0:
             if path.exists(p_perfCV) and path.exists(p_perfTrain) and path.exists(p_perfTest):
                 return 
-            else:
-                self.computeAD(pr_run)
-                runExternal.runRQSAR(self.p_train, self.p_test, self.n_foldCV, pr_run)
-                self.writeSumFile()    
         else:
-            self.computeAD(pr_run)
-            runExternal.runRQSAR(self.p_train, self.p_test, self.n_foldCV, pr_run)
-            self.writeSumFile()
+            # clear folder to save only train and the test sets
+            pathFolder.cleanFolder(pr_run, [self.p_train, self.p_test])
+        
+        # run AD
+        self.computeAD(pr_run)
+                
+        # classic machine learning with R
+        runExternal.runRQSAR(self.p_train, self.p_test, self.n_foldCV, pr_run)
+                
+        # DNN with keras / tensorflow
+        # self, p_train, p_test, p_aff, pr_out, n_foldCV, typeModel
+        c_DNN = DNN.DNN(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "classification", pr_run)
+        c_DNN.loadSet()
+        c_DNN.GridOptimizeDNN("AUC")
+        c_DNN.evaluateModel()
+        c_DNN.CrossValidation()
+        c_DNN.combineResults()
+
+        # summarize the run
+        self.writeSumFile(pr_run)    
 
     def mergeQSARs(self):
 
@@ -241,8 +264,29 @@ class QSAR:
             except:
                 continue
 
-            l_ML = list(M_CV.keys())
             
+
+            # check if DNN here
+            p_dnn = self.pr_out + pr_run + "DNN/combined_perf.csv"
+            if path.exist(p_dnn):
+                d_DNN = toolbox.loadMatrix(p_dnn)
+                M_CV["DNN"] = {}
+                M_train["DNN"] = {}
+                M_test["DNN"] = {}
+                for criteria in l_criteria:
+                    M_CV["DNN"][criteria] = 0.0
+                    M_train["DNN"][criteria] = 0.0
+                    M_test["DNN"][criteria] = 0.0
+                
+                M_CV["DNN"]["Acc"] =  d_DNN["CV-DNN"]["Acc"]
+                M_CV["DNN"]["MCC"] =  d_DNN["CV-DNN"]["MCC"]
+                M_train["DNN"]["Acc"] =  d_DNN["Train-DNN"]["Acc"]
+                M_train["DNN"]["MCC"] =  d_DNN["Train-DNN"]["MCC"]
+                M_test["DNN"]["Acc"] =  d_DNN["Test-DNN"]["Acc"]
+                M_test["DNN"]["MCC"] =  d_DNN["Test-DNN"]["MCC"]
+
+            l_ML = list(M_CV.keys())
+
             #build results
             if not l_ML[0] in list(d_result["CV"].keys()):
                 for ML in l_ML:
@@ -288,8 +332,8 @@ class QSAR:
         for pr_run in l_pr_run:
             try: int(pr_run)
             except:continue
-            p_Zscore_train = self.pr_out + pr_run + "/AD/AD_Train_zscore.csv"
-            p_Zscore_test = self.pr_out + pr_run + "/AD/AD_Test_zscore.csv"
+            p_Zscore_train = self.pr_out + pr_run + "/AD/descPCA_based/AD_Train_zscore.csv"
+            p_Zscore_test = self.pr_out + pr_run + "/AD/descPCA_based/AD_Test_zscore.csv"
             
             if not path.exists(p_Zscore_train) and not path.exists(p_Zscore_test):
                 print("Check - AD:", p_Zscore_train)
@@ -591,5 +635,3 @@ class QSAR:
         f_matrix_chem.close()
 
         runExternal.computeADBasedOnSimilarityMatrix(self.p_sim_matrix, p_matrix_chem, pr_AD_sim)        
-
-        stophere

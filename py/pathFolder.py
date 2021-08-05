@@ -4,15 +4,18 @@ from shutil import rmtree
 
 
 
-def cleanFolder(prin):
+def cleanFolder(prin, l_p_save=[]):
 
     lfiles = listdir(prin)
     if len(lfiles) != 0:
         for filin in lfiles:
             # problem with folder
-            try: remove(prin + filin)
-            except: rmtree(prin + filin)
-
+            p_remove = prin + filin
+            if p_remove in l_p_save:
+                continue
+            else:
+                try: remove(p_remove)
+                except: rmtree(p_remove)
     return prin
 
 

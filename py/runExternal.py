@@ -210,7 +210,7 @@ def comparisonToxPrint(p_toxprint1, p_toxprint2, pr_out):
 
 def computeADBasedOnSimilarityMatrix(p_sim_matrix, p_matrix_chem, pr_AD_sim):
     cmd = "./ADSimilarityBased.R %s %s %s"%(p_sim_matrix, p_matrix_chem, pr_AD_sim)
-    runRQSAR(cmd)
+    runRQSARModeling(cmd)
 
 ##############
 # run biotransformer tool
