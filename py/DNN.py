@@ -27,7 +27,7 @@ class DNN:
         self.p_aff = p_aff
         self.n_foldCV = n_foldCV
         self.verbose = 0
-        self.test=1
+        self.test=0
 
         # create folder
         pr_out = pathFolder.createFolder(pr_out + "DNN/")
@@ -365,15 +365,22 @@ class DNN:
             roc_auc = metrics.roc_auc_score(y_real, y_pred)
             f1b = metrics.fbeta_score(y_real, y_pred, beta=0.5)
 
+            # specificity & sensitivity 
+            tn, fp, fn, tp = metrics.confusion_matrix(y_real, y_pred).ravel()
+            specificity = float(tn) / (tn+fp)
+            sensitivity = float(tp) / (tp+fn)
+
             print("======= PERF ======")
             print("Acc: ", acc)
             print("b-Acc: ", bacc)
+            print("Sp: ", specificity)
+            print("Se: ", sensitivity)
             print("MCC: ", mcc)
             print("Recall: ", recall)
             print("AUC: ", roc_auc)
             print("fb1: ", f1b)
 
-            return {"Acc": acc, "b-Acc": bacc, "MCC": mcc, "Recall": recall, "AUC": roc_auc, "f1b": f1b}
+            return {"Acc": acc, "b-Acc": bacc, "MCC": mcc, "Recall": recall, "AUC": roc_auc, "Se": sensitivity, "Sp": specificity, "f1b": f1b}
         
         else:
             MAE = metrics.mean_absolute_error(y_real, y_pred)

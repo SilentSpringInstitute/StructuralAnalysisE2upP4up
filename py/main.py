@@ -102,13 +102,16 @@ c_MCcrossref.main()
 # sampling variable #
 #####################
 #MAX_QUANTILE = 0
-#name_QSAR = "QSAR_E2_H295R_variable-sampling_singledosecheck_noborderline"
-#c_QSAR_E2up = buildQSAR.buildQSAR(name_QSAR, "E2up", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
-#c_QSAR_E2up.buildDataset(c_Stereo, borderline=0)
-#c_QSAR_E2up.buildDescSet(["rdkit", "OPERA", "toxprint"])
-#c_QSAR_E2up.prepDesc()
-#c_QSAR_E2up.runQSARs([0.10, 0.9])
+MAX_QUANTILE = 0
+name_QSAR = "QSAR_E2_H295R_variable-sampling_singledosecheck_noborderline"
+c_QSAR_E2up = buildQSAR.buildQSAR(name_QSAR, "E2up", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
+c_QSAR_E2up.buildDataset(c_Stereo, borderline=0)
+c_QSAR_E2up.buildDescSet(["rdkit", "OPERA", "toxprint"])
+c_QSAR_E2up.prepDesc()
+c_QSAR_E2up.computeSimMatrix()# similarity matrix for the AD
+c_QSAR_E2up.runQSARs([0.10, 0.9])
 
+here
 
 ## P4up ##
 ##########

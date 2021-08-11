@@ -11,7 +11,7 @@ import toolbox
 
 
 class MakePlots_fromDesc:
-    def __init__(self, p_dataset, pr_out, pr_desc,  p_desc="", p_hormone_similarity = "", p_FP="", p_opera_all="", cor_val="", max_quantile=""):
+    def __init__(self, p_dataset, pr_out, pr_desc, p_desc="", p_hormone_similarity = "", p_FP="", p_opera_all="", cor_val="", max_quantile=""):
         self.p_desc = p_desc
         self.p_dataset = p_dataset
         self.p_hormone_similarity = p_hormone_similarity
@@ -48,8 +48,6 @@ class MakePlots_fromDesc:
             pr_cluster = pathFolder.createFolder(pr_clusters_png + cluster + "/")
             copyfile("%sPNG/%s.png"%(self.pr_desc, casrn), "%s%s.png"%(pr_cluster, casrn))
 
-
-
     def hclusterFromFPByProp(self):
 
         pr_out = pathFolder.createFolder(self.pr_out + "hclustDendo/")
@@ -58,7 +56,6 @@ class MakePlots_fromDesc:
         p_dendo = pr_out + "dendo_cluster_name.png"
         if not path.exists(p_dendo):
             runExternal.dendogramFPProp(self.p_dataset, self.p_FP, pr_out)
-
 
     def prepDesc(self):
         pr_out = pathFolder.createFolder(self.pr_out + "Cleaned_Data/")
@@ -208,7 +205,6 @@ class MakePlots_fromDesc:
 
         pr_out = pathFolder.createFolder(self.pr_out + "SOM_hormones/")
         runExternal.SOM_hormone(self.p_model_SOM, self.p_hormone_similarity, pr_out)
-
 
     def signifDescBySOMCluster(self):
 

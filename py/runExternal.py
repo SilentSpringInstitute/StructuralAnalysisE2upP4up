@@ -203,6 +203,9 @@ def overlapAssaysListChem(p_assays, p_upset, pr_out):
     cmd = "./overlapListAndAssays.R %s %s %s"%(p_assays, p_upset, pr_out)
     runRCMD(cmd)
 
+def corHormSimClassActive(p_filout, dataset):
+    cmd = "./corHormSimClassActive.R %s %s"%(p_filout, dataset)
+    runRCMD(cmd)
 
 def comparisonToxPrint(p_toxprint1, p_toxprint2, pr_out):
     cmd = "./comparisonToxPrint.R %s %s %s"%(p_toxprint1, p_toxprint2, pr_out)

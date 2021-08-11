@@ -12,9 +12,6 @@ library(eulerr)
 args <- commandArgs(TRUE)
 pgene = args[1]
 
-#pgene = "../../results/PFAS/Upset/upset_gene"
-#pgene = "c:/Users/aborr/research/Silent_Spring/breast_carcinogen/results/OverlapList/MC-Steroid-ER/upset_matrix"
-
 dgene = read.csv(pgene, sep = "\t", header = TRUE)
 rownames(dgene) = dgene[,1]
 dgene = dgene[,-1]

@@ -18,6 +18,12 @@ class buildQSAR:
         self.inactive_dataset = inactive_set
         self.c_dataset = c_dataset
 
+        # set for QSAR
+        self.nb_repetition = 5
+        self.nb_sample = 10
+        self.n_foldCV = 10
+        self.rate_splitTrainTest=0.20
+
         # define exit folder
         self.pr_out = pathFolder.createFolder(pr_results + name_QSAR + "/")
 
@@ -135,7 +141,7 @@ class buildQSAR:
     def runQSARs(self, rate_undersampling=0):
 
         pr_out = pathFolder.createFolder(self.pr_desc_QSAR + "classQSAR/")
-        self.c_QSAR = QSAR.QSAR(self.p_desc_cleaned, self.p_desc, self.p_AC50_cleaned, self.p_aff, self.p_sim, pr_out, 10, 10, rate_undersampling, 0.15)
+        self.c_QSAR = QSAR.QSAR(self.p_desc_cleaned, self.p_desc, self.p_AC50_cleaned, self.p_aff, self.p_sim, pr_out, nb_repetition=self.nb_repetition, nb_sample=self.nb_sample, n_foldCV= self.n_foldCV, rate_active=rate_undersampling, rate_splitTrainTest=0.15)
         self.c_QSAR.runQSARClassUnderSamplingTrain()
 
     def computeSimMatrix(self):

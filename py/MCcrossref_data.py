@@ -236,6 +236,43 @@ class MCcrossref:
             except: pass
         filout.close()
 
+    def overlapListChemE2upP4up(self):
+        pr_out = pathFolder.createFolder(self.pr_out + "OverlapList/")
+        pr_results = pathFolder.createFolder(pr_out + "E2_P4/")
+
+        d_chem = {}
+        for chem in self.d_E2up_active.keys():
+            if not chem in list(d_chem.keys()):
+                d_chem[chem] = {"E2up_lower": 0, "E2up_medium": 0, "E2up_higher": 0, "P4up_lower": 0, "P4up_medium": 0, "P4up_higher":0}
+            if self.d_E2up_active[chem]["Efficacy/potency"] == "medium":
+                d_chem[chem]["E2up_medium"] = 1
+            elif self.d_E2up_active[chem]["Efficacy/potency"] == "higher":
+                d_chem[chem]["E2up_higher"] = 1
+            elif self.d_E2up_active[chem]["Efficacy/potency"] == "lower":
+                 d_chem[chem]["E2up_lower"] = 1
+        
+        for chem in self.d_P4up_active.keys():
+            if not chem in list(d_chem.keys()):
+                d_chem[chem] = {"E2up_lower": 0, "E2up_medium": 0, "E2up_higher": 0, "P4up_lower": 0, "P4up_medium": 0, "P4up_higher":0}
+            if self.d_P4up_active[chem]["Efficacy/potency"] == "medium":
+                d_chem[chem]["P4up_medium"] = 1
+            elif self.d_P4up_active[chem]["Efficacy/potency"] == "higher":
+                d_chem[chem]["P4up_higher"] = 1
+            elif self.d_P4up_active[chem]["Efficacy/potency"] == "lower":
+                d_chem[chem]["P4up_lower"] = 1
+
+        p_filout = pr_results + "upset_plot"
+        filout = open(p_filout, "w")
+        filout.write("CARSN\tE2up_lower\tE2up_medium\tE2up_higher\tP4up_lower\tP4up_medium\tP4up_higher\n")
+        for chem in d_chem.keys():
+            filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(chem, d_chem[chem]["E2up_lower"],d_chem[chem]["E2up_medium"],d_chem[chem]["E2up_higher"], d_chem[chem]["P4up_lower"], d_chem[chem]["P4up_medium"], d_chem[chem]["P4up_higher"]))
+        filout.close()
+
+        runExternal.upsetPlot(p_filout)
+
+        # comparison hormone similarity overlap
+        runExternal.overlapListHormoneSim(p_filout, self.c_Desc.p_hormone_similarity, pr_results)
+
     def mergeAllSets(self):
 
         d_all = {}
@@ -537,7 +574,34 @@ class MCcrossref:
             except: pass
         filout.close()
 
+    def corHormoneSimilarityClassActive(self, dataset):
+        """
+        only available for E2up and P4up
+        """
+        pr_out = pathFolder.createFolder(self.pr_out + "corrSimHormActiveClass/")
 
+        if dataset == "E2up":
+            p_subfilout = pr_out + "E2up_cor"
+            d_chem = self.d_E2up_active
+        elif dataset == "P4up":
+            p_subfilout = pr_out + "P4up_cor"
+            d_chem = self.d_P4up_active
+        else:
+            return
+
+        d_sim = toolbox.loadMatrix(self.c_Desc.p_hormone_similarity)
+        l_horm = ["521-18-6", "53-41-8", "68-96-2", "57-85-2", "57-83-0", "63-05-8", "53-43-0", "58-18-4", "50-28-2", "57-91-0", "53-16-7", "474-86-2", "50-27-1", "57-63-6", "57-88-5", "145-13-1", "387-79-1", "50-23-7","50-22-6","152-58-9","64-85-7"]
+        for horm in l_horm:
+            p_filout = p_subfilout + "_" + horm 
+            filout = open(p_filout, "w")
+            filout.write("CASRN\tSimilarity\tEfficacy/potency\n")
+            for chem in d_chem.keys():
+                if not chem in list(d_sim.keys()):
+                    continue
+                filout.write("%s\t%s\t%s\n"%(chem, d_sim[chem][horm], d_chem[chem]["Efficacy/potency"]))
+            filout.close()
+
+            runExternal.corHormSimClassActive(p_filout,dataset)
 
     def main(self):
 
@@ -545,7 +609,7 @@ class MCcrossref:
         self.prepSets(["ER", "MC", "Steroid", "E2up", "P4up", "all", "Steroid-up", "ERagonist", "genotoxic", "H295R"])
 
         # compute Venn diagram - overlap between list of chemicals
-        ####
+        ######
         #self.overlapBetweenListChem(["MC", "genotoxic", "Steroid-up", "ER-agonist"])
         #self.overlapBetweenListChem(["MC", "Steroid", "ER"])
         #self.overlapBetweenListChem(["MC", "Steroid", "ER-agonist", "genotoxic"])
@@ -569,13 +633,25 @@ class MCcrossref:
 
         # compute similarity with hormone derivative
         ########################
-        # ["MACCS", "Morgan", "Mol"], l_dist = ["Dice", "Tanimoto"]
-       
-        self.c_Desc.compute_similarity_inter_hormones(self.p_hormones)
+        # FP types: "MACCS", "Morgan", "Mol"
+        # Dist types: "Dice", "Tanimoto"
+        #self.c_Desc.compute_similarity_inter_hormones(self.p_hormones)
         self.c_Desc.compute_similarity_with_hormones(self.p_hormones, "MACCS", "Tanimoto")
+        
+        # correlation similarity with eff/pot class for E2-P4 up
+        ###############################
+        #self.corHormoneSimilarityClassActive("E2up")
+        #self.corHormoneSimilarityClassActive("P4up")
+        
+        # overlap E2up - P4up with class Efficacy/Efficiency
+        ######
+        #self.overlapListChemE2upP4up()
+
         # put png in a different folder
+        #############################
         #pr_png_by_list = pathFolder.createFolder(self.pr_out + "png_by_list/")
         #self.c_Desc.png_by_list(pr_png_by_list)
+
 
         # load Toxprint by list
         ##########################

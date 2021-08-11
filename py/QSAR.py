@@ -12,14 +12,15 @@ from random import shuffle, uniform
 
 
 class QSAR:
-    def __init__(self, p_desc_clean, p_desc_origin, p_AC50, p_AC50_origin, p_sim_matrix, pr_out, nb_repetition, n_foldCV, rate_active, rate_splitTrainTest):
+    def __init__(self, p_desc_clean, p_desc_origin, p_AC50, p_AC50_origin, p_sim_matrix, pr_out, nb_repetition = 1, nb_sample = 0, n_foldCV = 10, rate_active = 0.30, rate_splitTrainTest = 0.15):
         self.p_desc = p_desc_clean
         self.p_desc_orign = p_desc_origin
         self.p_AC50 = p_AC50
         self.p_AC50_orign = p_AC50_origin
         self.p_sim_matrix = p_sim_matrix
         self.pr_out = pr_out
-        self.repetition = nb_repetition
+        self.nb_sample = nb_sample
+        self.nb_repetition = nb_repetition
         self.n_foldCV = n_foldCV
         self.rate_splitTrainTest = rate_splitTrainTest
 
@@ -31,53 +32,67 @@ class QSAR:
 
     def runQSARClassUnderSamplingAllSet(self):
 
-        # check applicability model
-        pr_AD = pathFolder.createFolder(self.pr_out + "AD/")
-        l_run = list(range(1, self.repetition + 1))
-        shuffle(l_run)
-
-        for i in l_run:
-            pr_run = self.pr_out + str(i) + "/"
-            pathFolder.createFolder(pr_run)
-
-            # prepare dataset => split train / test
-            self.prepTrainSetforUnderSampling(pr_run)
-
-            # check AD
-            pr_AD_run = pathFolder.createFolder(pr_AD + str(i) + "/")
-            if len(listdir(pr_AD_run)) < 6:
-                runExternal.AD(self.p_train, self.p_test, pr_AD_run)
-
-            # build QSAR
-            self.buildQSARs(pr_run)
-
-        # merge results
-        self.mergeQSARs()
-
-    def runQSARClassUnderSamplingTrain(self):
-
-        # define train and test set here
-        self.prepSplitTrainTestSet()
-
-        l_run = list(range(1, self.repetition + 1))
+        l_run = list(range(1, self.nb_repetition + 1))
         shuffle(l_run)
         
         for run in l_run:
-            # redefine rate undersampling
-            pr_run = self.pr_out + str(run) + "/"
-            pathFolder.createFolder(pr_run)
+            pr_run = pathFolder.createFolder(self.pr_out + str(run) + "/")
+            self.pr_run = pr_run
+        
+            # check applicability model
+            pr_AD = pathFolder.createFolder(self.pr_run + "AD/")
+            l_sample = list(range(1, self.nb_sample + 1))
+            shuffle(l_sample)
+
+            for i in l_sample:
+                pr_run = self.pr_run + str(i) + "/"
+                pathFolder.createFolder(pr_run)
+
+                # prepare dataset => split train / test
+                self.prepTrainSetforUnderSampling(pr_run)
+
+                # check AD
+                pr_AD_run = pathFolder.createFolder(pr_AD + str(i) + "/")
+                if len(listdir(pr_AD_run)) < 6:
+                    runExternal.AD(self.p_train, self.p_test, pr_AD_run)
+
+                # build QSAR
+                self.buildQSARs(pr_run)
+
+            # merge results
+            self.mergeQSARs()
+
+    def runQSARClassUnderSamplingTrain(self):
+
+        l_run = list(range(1, self.nb_repetition + 1))
+        shuffle(l_run)
+        
+        for run in l_run:
+            pr_run = pathFolder.createFolder(self.pr_out + str(run) + "/")
+            self.pr_run = pr_run
+
+            # define train and test set here
+            self.prepSplitTrainTestSet()
+
+            l_sample = list(range(1, self.nb_sample + 1))
+            shuffle(l_sample)
             
-            # prepare dataset => split train / test
-            self.prepTrainSetforUnderSampling(pr_run, 0)
+            for sample in l_sample:
+                # redefine rate undersampling
+                pr_sample = self.pr_run + str(sample) + "/"
+                pathFolder.createFolder(pr_sample)
+                
+                # prepare dataset => split train / test
+                self.prepTrainSetforUnderSampling(pr_sample, 0)
 
-            # build QSAR
-            self.buildQSARs(pr_run)
+                # build QSAR
+                self.buildQSARs(pr_sample)
 
-        # merge results
-        self.mergeQSARs()
+            # merge results
+            self.mergeQSARs()
 
     def runQSARReg(self, corcoef, maxQuantile):
-        l_run = list(range(1, self.repetition + 1))
+        l_run = list(range(1, self.nb_repetition + 1))
         shuffle(l_run)
 
         for i in l_run:
@@ -119,9 +134,10 @@ class QSAR:
 
     def prepSplitTrainTestSet(self):
 
+
         # define train and test set
-        p_train = self.pr_out + "trainGlobal.csv"
-        p_test = self.pr_out + "test.csv"
+        p_train = self.pr_run + "trainGlobal.csv"
+        p_test = self.pr_run + "test.csv"
 
         if path.exists(p_train) and path.exists(p_test):
             self.p_trainGlobal = p_train
@@ -129,10 +145,10 @@ class QSAR:
             return 
 
         # prep descriptor with classes without ratio of active => define train global
-        runExternal.prepDataQSAR(self.p_desc, self.p_AC50, 0, self.pr_out)
-        runExternal.SplitTrainTest(self.pr_out + "desc_Class.csv", self.pr_out, self.rate_splitTrainTest)
+        runExternal.prepDataQSAR(self.p_desc, self.p_AC50, 0, self.pr_run)
+        runExternal.SplitTrainTest(self.pr_run + "desc_Class.csv", self.pr_run, self.rate_splitTrainTest)
         # rename train in global train
-        rename(self.pr_out + "train.csv", self.pr_out + "trainGlobal.csv")
+        rename(self.pr_run + "train.csv", self.pr_run + "trainGlobal.csv")
         self.p_trainGlobal = p_train
         self.p_test = p_test
 
@@ -218,10 +234,10 @@ class QSAR:
 
     def mergeQSARs(self):
 
-        pr_QSAR_average = pathFolder.createFolder(self.pr_out + "Merge_results/")
-        pr_QSAR_proba = pathFolder.createFolder(self.pr_out + "Merge_probRF/")# proba of prediction merged
-        pr_QSAR_desc_involved = pathFolder.createFolder(self.pr_out + "Merge_involvedDesc/")
-        pr_AD =  pathFolder.createFolder(self.pr_out + "Merge_AD/")
+        pr_QSAR_average = pathFolder.createFolder(self.pr_run + "Merge_results/")
+        pr_QSAR_proba = self.pr_run + "Merge_probRF/"# proba of prediction merged
+        pr_QSAR_desc_involved = self.pr_run + "Merge_involvedDesc/"
+        pr_AD =  pathFolder.createFolder(self.pr_run + "Merge_AD/")
 
         self.mergeResults(pr_QSAR_average)
         self.mergeProbaRF(self.p_AC50_orign, pr_QSAR_proba)
@@ -230,11 +246,13 @@ class QSAR:
         self.mergeAD(pr_AD)
 
     def mergeResults(self, pr_av):
+        """
+        Merge results from several ML
+        args: - folder for results
+        return: None put results in the folder
+        """
 
         p_filout = pr_av + "average_perf.csv"
-        if path.exists(p_filout):
-            return 
-        
         l_criteria = ["Acc", "Sp", "Se", "MCC"]
         l_dataset = ["CV", "train", "test"]
         
@@ -248,14 +266,14 @@ class QSAR:
         for criteria in l_criteria:
             d_perf[criteria] = []
 
-        l_pr_run = listdir(self.pr_out)
+        l_pr_run = listdir(self.pr_run)
         for pr_run in l_pr_run:
             if search("Merge", pr_run) or search("AD", pr_run):
                 continue
 
-            p_perfCV = self.pr_out + pr_run + "/perfCV.csv"
-            p_perfTrain = self.pr_out + pr_run + "/perfTrain.csv"
-            p_perfTest = self.pr_out + pr_run + "/perfTest.csv"
+            p_perfCV = self.pr_run + pr_run + "/perfCV.csv"
+            p_perfTrain = self.pr_run + pr_run + "/perfTrain.csv"
+            p_perfTest = self.pr_run + pr_run + "/perfTest.csv"
 
             try:
                 M_CV = toolbox.loadMatrix(p_perfCV, sep=",")
@@ -264,11 +282,10 @@ class QSAR:
             except:
                 continue
 
-            
-
             # check if DNN here
-            p_dnn = self.pr_out + pr_run + "DNN/combined_perf.csv"
-            if path.exist(p_dnn):
+            p_dnn = self.pr_run + pr_run + "/DNN/combined_perf.csv"
+            if path.exists(p_dnn):
+                print(p_dnn)
                 d_DNN = toolbox.loadMatrix(p_dnn)
                 M_CV["DNN"] = {}
                 M_train["DNN"] = {}
@@ -280,10 +297,16 @@ class QSAR:
                 
                 M_CV["DNN"]["Acc"] =  d_DNN["CV-DNN"]["Acc"]
                 M_CV["DNN"]["MCC"] =  d_DNN["CV-DNN"]["MCC"]
+                M_CV["DNN"]["Sp"] =  d_DNN["CV-DNN"]["Sp"]
+                M_CV["DNN"]["Se"] =  d_DNN["CV-DNN"]["Se"]
                 M_train["DNN"]["Acc"] =  d_DNN["Train-DNN"]["Acc"]
                 M_train["DNN"]["MCC"] =  d_DNN["Train-DNN"]["MCC"]
+                M_train["DNN"]["Se"] =  d_DNN["Train-DNN"]["Se"]
+                M_train["DNN"]["Sp"] =  d_DNN["Train-DNN"]["Sp"]
                 M_test["DNN"]["Acc"] =  d_DNN["Test-DNN"]["Acc"]
                 M_test["DNN"]["MCC"] =  d_DNN["Test-DNN"]["MCC"]
+                M_test["DNN"]["Sp"] =  d_DNN["Test-DNN"]["Sp"]
+                M_test["DNN"]["Se"] =  d_DNN["Test-DNN"]["Se"]
 
             l_ML = list(M_CV.keys())
 
@@ -325,15 +348,15 @@ class QSAR:
 
     def mergeAD(self, pr_AD_merged):
 
-        l_pr_run = listdir(self.pr_out)
+        l_pr_run = listdir(self.pr_run)
 
         d_Zscore_train = {}
         d_Zscore_test = {}
         for pr_run in l_pr_run:
             try: int(pr_run)
             except:continue
-            p_Zscore_train = self.pr_out + pr_run + "/AD/descPCA_based/AD_Train_zscore.csv"
-            p_Zscore_test = self.pr_out + pr_run + "/AD/descPCA_based/AD_Test_zscore.csv"
+            p_Zscore_train = self.pr_run + pr_run + "/AD/descPCA_based/AD_Train_zscore.csv"
+            p_Zscore_test = self.pr_run + pr_run + "/AD/descPCA_based/AD_Test_zscore.csv"
             
             if not path.exists(p_Zscore_train) and not path.exists(p_Zscore_test):
                 print("Check - AD:", p_Zscore_train)
@@ -378,14 +401,14 @@ class QSAR:
     def mergeProbaRF(self, p_AC50, pr_prob):
         # need to change R scripts for 
 
-        if len(listdir(pr_prob)) > 10:
+        if path.exists(pr_prob) and len(listdir(pr_prob)) > 10:
             return 
 
         d_prob = {}
         l_dataset = ["CV", "train", "test"]
 
         # check if RF folder exist
-        l_pr_run = listdir(self.pr_out)
+        l_pr_run = listdir(self.pr_run)
         i = 0
         imax = len(l_pr_run)
         while i < imax: 
@@ -396,7 +419,7 @@ class QSAR:
                 continue
 
             # check if RF is computed
-            if not path.exists("%s%s/RFclass/"%(self.pr_out, l_pr_run[i])):
+            if not path.exists("%s%s/RFclass/"%(self.pr_run, l_pr_run[i])):
                 del l_pr_run[i]
                 imax = imax - 1
                 continue
@@ -413,24 +436,24 @@ class QSAR:
         for pr_run in l_pr_run:
 
             # check if RF is computed
-            if not path.exists("%s%s/RFclass/"%(self.pr_out, pr_run)):
+            if not path.exists("%s%s/RFclass/"%(self.pr_run, pr_run)):
                 print("Error run: %s"%(pr_run))
                 continue
 
             d_prob[pr_run] = {}
 
             # CV
-            p_CV = "%s%s/RFclass/PerfRFClassCV%s.txt"%(self.pr_out, pr_run, self.n_foldCV)
+            p_CV = "%s%s/RFclass/PerfRFClassCV%s.txt"%(self.pr_run, pr_run, self.n_foldCV)
             d_CV = toolbox.loadMatrix(p_CV, sep = "\t")
             d_prob[pr_run]["CV"] = d_CV
 
             # train
-            p_train = self.pr_out + pr_run + "/RFclass/classTrain.csv"
+            p_train = self.pr_run + pr_run + "/RFclass/classTrain.csv"
             d_train = toolbox.loadMatrix(p_train, sep = ",")
             d_prob[pr_run]["train"] = d_train
 
             # test
-            p_test = self.pr_out + pr_run + "/RFclass/classTest.csv"
+            p_test = self.pr_run + pr_run + "/RFclass/classTest.csv"
             d_test = toolbox.loadMatrix(p_test, sep = ",")
             d_prob[pr_run]["test"] = d_test
 
@@ -472,6 +495,8 @@ class QSAR:
 
             
         # train
+        if not path.exists(pr_prob):
+            pr_prob = pathFolder.createFolder(pr_prob)
         p_prob_train = pr_prob + "Prob_train"
         f_prob_train = open(p_prob_train, "w")
         f_prob_train.write("ID\tMpred\tSDpred\tReal\n")
@@ -503,14 +528,13 @@ class QSAR:
 
 
         d_importance = {}
-        pr_out = pathFolder.createFolder(pr_involvedDesc + ML + "/")
-
+        pr_out = pr_involvedDesc + ML + "/"
         p_desc_importance = pr_out + "Av_importance"
-        #if path.exists(p_desc_importance):
-        #    return
+        if path.exists(p_desc_importance):
+            return
 
         # check if file exist
-        l_pr_run = listdir(self.pr_out)
+        l_pr_run = listdir(self.pr_run)
         i = 0
         imax = len(l_pr_run)
         while i < imax: 
@@ -521,7 +545,7 @@ class QSAR:
                 continue
 
             # check if model is computed
-            if not path.exists("%s%s/%sclass/"%(self.pr_out, l_pr_run[i], ML)):
+            if not path.exists("%s%s/%sclass/"%(self.pr_run, l_pr_run[i], ML)):
                 del l_pr_run[i]
                 imax = imax - 1
                 continue
@@ -532,7 +556,7 @@ class QSAR:
             return 
 
 
-        l_pr_run = listdir(self.pr_out)
+        l_pr_run = listdir(self.pr_run)
         for run in l_pr_run:
             if search("Merge", run) or search("AD", run) or search("Cleaned", run) or search("desc", run) or search("csv", run) or search("models", run) or search("mergeDNN", run):
                 continue
@@ -540,12 +564,14 @@ class QSAR:
             if not run in list(d_importance.keys()):
                 d_importance[run] = {}
 
-                p_desc_involved = self.pr_out + run + "/" + str(ML) + "class/ImportanceDesc"
+                p_desc_involved = self.pr_run + run + "/" + str(ML) + "class/ImportanceDesc"
                 d_desc_involved = toolbox.loadMatrix(p_desc_involved , sep="\t")
                 d_importance[run] = d_desc_involved
 
 
         # global importance 
+        if not path.exists(pr_out):
+            pathFolder.createFolder(pr_out)
         f_desc_importance = open(p_desc_importance, "w")
         f_desc_importance.write("Desc\tRun\tval\n")
 
@@ -564,7 +590,7 @@ class QSAR:
 
         pr_out = pathFolder.createFolder(pr_results)
 
-        l_pr_run = listdir(self.pr_out)
+        l_pr_run = listdir(self.pr_run)
         l_model = listdir(pr_out)
         if len(l_model) > 2:
             return pr_out
@@ -574,16 +600,16 @@ class QSAR:
                 continue
 
             if search("SVM", ML):
-                p_model = "%s%s/SVMclass_%s/model.RData"%(self.pr_out, pr_run, ML.split("-")[-1])
+                p_model = "%s%s/SVMclass_%s/model.RData"%(self.pr_run, pr_run, ML.split("-")[-1])
             elif search("DNN", ML):
-                l_DNNfile = listdir("%s%s/DNNclass/"%(self.pr_out, pr_run))
+                l_DNNfile = listdir("%s%s/DNNclass/"%(self.pr_run, pr_run))
                 p_model = "out"
                 for DNNfile in l_DNNfile:
                     if search(".h5", DNNfile):
-                        p_model = "%s%s/DNNclass/%s"%(self.pr_out, pr_run, DNNfile)
+                        p_model = "%s%s/DNNclass/%s"%(self.pr_run, pr_run, DNNfile)
                         break
             else:
-                p_model = "%s%s/%sclass/model.RData"%(self.pr_out, pr_run, ML)
+                p_model = "%s%s/%sclass/model.RData"%(self.pr_run, pr_run, ML)
             if path.exists(p_model) and not path.exists(pr_out + pr_run + ".RData"):
                 if p_model[-5:] == "RData":
                     copyfile(p_model, pr_out + pr_run + ".RData")
@@ -600,7 +626,7 @@ class QSAR:
         # write summary of the QSAR modeling
         p_fsum = pr_out + "QSAR.sum"
         fsum = open(p_fsum, "w")
-        fsum.write("Descriptor file prepared: %s\nDescriptor file origine: %s\nClass file prepared: %s\nClass file original: %s\nfolder out: %s\nRepetition: %s\nFold cross_validation: %s\nActive rate: %s\nSplit train-test set: %s\n"%(self.p_desc, self.p_desc_orign, self.p_AC50, self.p_AC50_orign, pr_out, self.repetition, self.n_foldCV, self.sampling_rate, self.rate_splitTrainTest))
+        fsum.write("Descriptor file prepared: %s\nDescriptor file origine: %s\nClass file prepared: %s\nClass file original: %s\nfolder out: %s\nRepetition: %s\nNb sample: %s\nFold cross_validation: %s\nActive rate: %s\nSplit train-test set: %s\n"%(self.p_desc, self.p_desc_orign, self.p_AC50, self.p_AC50_orign, pr_out, self.nb_repetition, self.nb_sample, self.n_foldCV, self.sampling_rate, self.rate_splitTrainTest))
         fsum.close()
 
     def computeAD(self, pr_out):
