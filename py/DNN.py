@@ -28,6 +28,7 @@ class DNN:
         self.n_foldCV = n_foldCV
         self.verbose = 0
         self.test=0
+        self.force_run = 0
 
         # create folder
         pr_out = pathFolder.createFolder(pr_out + "DNN/")
@@ -55,8 +56,6 @@ class DNN:
             self.l_dense_layer = [3]
             self.l_dense_candidate = [4,3,2,1]
             self.l_activation = ["relu"]
-
-
 
     def loadSet(self):
 
@@ -252,6 +251,9 @@ class DNN:
             return 
 
         p_filout = self.pr_out + "combined_perf.csv"
+        if path.exists(p_filout) and self.force_run == 0:
+            return
+            
         filout = open(p_filout, "w")
         l_perf = ["CV", "Train", "Test"]
         l_criteria = list(self.d_perf["CV"].keys())

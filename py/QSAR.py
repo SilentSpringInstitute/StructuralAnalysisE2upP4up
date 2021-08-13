@@ -60,7 +60,7 @@ class QSAR:
                 self.buildQSARs(pr_run)
 
             # merge results
-            self.mergeQSARs()
+            self.mergeModelSampled()
 
     def runQSARClassUnderSamplingTrain(self):
 
@@ -89,7 +89,10 @@ class QSAR:
                 self.buildQSARs(pr_sample)
 
             # merge results
-            self.mergeQSARs()
+            self.mergeModelSampled()
+        
+        # combine repetition 
+        self.combineRepetitionSampling()
 
     def runQSARReg(self, corcoef, maxQuantile):
         l_run = list(range(1, self.nb_repetition + 1))
@@ -232,20 +235,20 @@ class QSAR:
         # summarize the run
         self.writeSumFile(pr_run)    
 
-    def mergeQSARs(self):
+    def mergeModelSampled(self):
 
         pr_QSAR_average = pathFolder.createFolder(self.pr_run + "Merge_results/")
         pr_QSAR_proba = self.pr_run + "Merge_probRF/"# proba of prediction merged
         pr_QSAR_desc_involved = self.pr_run + "Merge_involvedDesc/"
         pr_AD =  pathFolder.createFolder(self.pr_run + "Merge_AD/")
 
-        self.mergeResults(pr_QSAR_average)
-        self.mergeProbaRF(self.p_AC50_orign, pr_QSAR_proba)
-        self.mergeInvolvedDesc("RF", 10, pr_QSAR_desc_involved)
-        self.mergeInvolvedDesc("LDA", 10, pr_QSAR_desc_involved)
-        self.mergeAD(pr_AD)
+        self.mergeSamplingResults(pr_QSAR_average)
+        self.mergeSamplingProbaRF(self.p_AC50_orign, pr_QSAR_proba)
+        self.mergeSamplingInvolvedDesc("RF", 10, pr_QSAR_desc_involved)
+        self.mergeSamplingInvolvedDesc("LDA", 10, pr_QSAR_desc_involved)
+        self.mergeSamplingAD(pr_AD)
 
-    def mergeResults(self, pr_av):
+    def mergeSamplingResults(self, pr_av):
         """
         Merge results from several ML
         args: - folder for results
@@ -253,6 +256,8 @@ class QSAR:
         """
 
         p_filout = pr_av + "average_perf.csv"
+        if path.exists(p_filout) and self.force_run == 0:
+            return 
         l_criteria = ["Acc", "Sp", "Se", "MCC"]
         l_dataset = ["CV", "train", "test"]
         
@@ -285,7 +290,6 @@ class QSAR:
             # check if DNN here
             p_dnn = self.pr_run + pr_run + "/DNN/combined_perf.csv"
             if path.exists(p_dnn):
-                print(p_dnn)
                 d_DNN = toolbox.loadMatrix(p_dnn)
                 M_CV["DNN"] = {}
                 M_train["DNN"] = {}
@@ -346,7 +350,12 @@ class QSAR:
             filout.write("\n")
         filout.close()
 
-    def mergeAD(self, pr_AD_merged):
+    def mergeSamplingAD(self, pr_AD_merged):
+
+        # use a short cut
+        l_AD_files = listdir(pr_AD_merged) 
+        if len(l_AD_files) > 5 and self.force_run == 0:
+            return
 
         l_pr_run = listdir(self.pr_run)
 
@@ -398,7 +407,7 @@ class QSAR:
         # draw histogram for AD and add summary and PCA
         runExternal.mergeADs(p_train, p_test, self.p_desc, pr_AD_merged)
 
-    def mergeProbaRF(self, p_AC50, pr_prob):
+    def mergeSamplingProbaRF(self, p_AC50, pr_prob):
         # need to change R scripts for 
 
         if path.exists(pr_prob) and len(listdir(pr_prob)) > 10:
@@ -524,7 +533,7 @@ class QSAR:
         f_prob_test.close()
         runExternal.plotAC50VSProb(p_prob_test)
 
-    def mergeInvolvedDesc(self, ML, nbdesc, pr_involvedDesc):
+    def mergeSamplingInvolvedDesc(self, ML, nbdesc, pr_involvedDesc):
 
 
         d_importance = {}
@@ -661,3 +670,48 @@ class QSAR:
         f_matrix_chem.close()
 
         runExternal.computeADBasedOnSimilarityMatrix(self.p_sim_matrix, p_matrix_chem, pr_AD_sim)        
+
+    def combineRepetitionSampling(self):
+
+        pr_out = pathFolder.createFolder(self.pr_out + "mergeRep/")
+        p_filout = pr_out + "mergeRep.csv"
+
+        l_rep  = listdir(self.pr_out)
+        d_out = {}
+        for rep in l_rep:
+            try: int(rep)
+            except:continue
+            p_results = "%s/%s/Merge_results/average_perf.csv"%(pr_out, rep)
+            if path.exists(p_results):
+                f_results = open(p_results, "r")
+                l_results = f_results.readlines()
+            else:
+                continue
+
+            d_out[rep] = {}
+            i = 0
+            imax = len(l_results)
+            while i < imax:
+                line_results = l_results[i]
+                if line_results == "CV" or line_results == "train" or line_results == "test":
+                    dataset = line_results
+                    d_out[rep][dataset] = {}
+                    l_criteria = l_results[i + 1].split("\t")[1:]
+                    i = i + 2
+                else:
+                    l_val = line_results.split("\t")
+                    ML = l_val[0]
+                    d_out[rep][dataset][ML] = {}
+                    j = 0
+                    jmax = len(l_criteria)
+                    while j < jmax:
+                        d_out[rep][dataset][ML][l_criteria[i]] = l_val[j + 1]
+                        j = j + 1
+                i = i + 1
+            
+        print(d_out)
+
+
+
+
+        return 
