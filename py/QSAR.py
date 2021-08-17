@@ -67,6 +67,9 @@ class QSAR:
         l_run = list(range(1, self.nb_repetition + 1))
         shuffle(l_run)
         
+
+        # reduce number of run
+        l_run = [1]
         for run in l_run:
             pr_run = pathFolder.createFolder(self.pr_out + str(run) + "/")
             self.pr_run = pr_run
@@ -259,8 +262,9 @@ class QSAR:
         c_RF.loadSet()
         c_RF.run_RF()
         c_RF.evaluateModel()
-        c_RF.CrossValidation()
-        c_RF.combineResults("RFpy")
+        #c_RF.CrossValidation()
+        #c_RF.combineResults("RFpy")
+        stophere
 
         # summarize the run
         #self.writeSumFile(pr_run)    

@@ -12,7 +12,7 @@ from copy import deepcopy
 import numpy as np
 
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
-from sklearn.model_selection import RandomizedSearchCV
+from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
 
 from imblearn.ensemble import BalancedRandomForestClassifier
 
@@ -30,7 +30,10 @@ class RandomForest:
         self.typeModel = "classification"
 
         # create folder -> root of QSAR results
-        self.pr_out = pr_out        
+        if self.ghost == 1:
+            self.pr_out = pathFolder.createFolder(pr_out + "RFGhostpy/")
+        else:
+            self.pr_out = pathFolder.createFolder(pr_out + "RFpy/")   
 
         # optimization
         self.n_estimators = 500
@@ -77,36 +80,28 @@ class RandomForest:
 
     def run_RF(self, **kwargs):
         # RF
-        # Number of trees in random forest
-        n_estimators = [int(x) for x in np.linspace(start = 200, stop = 2000, num = 10)]
-        # Number of features to consider at every split
-        max_features = ['auto', 'sqrt']
-        # Maximum number of levels in tree
-        max_depth = [int(x) for x in np.linspace(10, 110, num = 11)]
-        max_depth.append(None)
-        # Minimum number of samples required to split a node
-        min_samples_split = [2, 5, 10]
-        # Minimum number of samples required at each leaf node
-        min_samples_leaf = [1, 2, 4]
-        # Method of selecting samples for training each tree
-        bootstrap = [True, False]
-        # Create the random grid
+        n_estimators = [10, 50, 100, 300, 500, 800, 1200]
+        max_depth = [5, 8, 15, 25, 30]
+        min_samples_split = [2, 5, 10, 15, 100]
+        min_samples_leaf = [1, 2, 5, 10] 
+
         random_grid = {'n_estimators': n_estimators,
-               'max_features': max_features,
                'max_depth': max_depth,
                'min_samples_split': min_samples_split,
-               'min_samples_leaf': min_samples_leaf,
-               'bootstrap': bootstrap}
+               'min_samples_leaf': min_samples_leaf}
+
         rf = RandomForestClassifier(n_jobs=4)
-        rf_random = RandomizedSearchCV(estimator = rf, param_distributions = random_grid, n_iter = 100, cv = 3, verbose=2, random_state=42, n_jobs = 4)
+        rf_random = RandomizedSearchCV(estimator = rf, param_distributions = random_grid, n_iter = 100, cv = 10, verbose=2, random_state=42, n_jobs = 4)
+        #rf_random = RandomForestClassifier(random_state = 1, max_depth = 15,  n_estimators = 500, min_samples_split = 2, min_samples_leaf = 1)
         # Fit the random search model
+        print(self.aff_train)
         rf_random.fit(self.dataset_train, self.aff_train)
         best_random = rf_random.best_estimator_
+        
         self.model = best_random
 
-        #cls = RandomForestClassifier(n_estimators=self.n_estimators,max_depth=self.max_depth,min_samples_leaf=self.min_samples_leaf,n_jobs=self.n_jobs,oob_score=True, **kwargs)
-        #cls.fit(self.dataset_train, self.aff_train)
-        #self.model = cls
+        y_pred = rf_random.predict_proba(self.dataset_train)
+        self.performance(self.aff_train, y_pred)
 
         # save model
         joblib.dump(best_random, self.pr_out + "RF.joblib")
@@ -171,7 +166,10 @@ class RandomForest:
             
         if self.typeModel == "classification":
             # change prob -> value
-            y_pred = [1. if pred[0] > th_prob else 0. for pred in y_pred]
+            y_pred = [1. if pred[1] > th_prob else 0. for pred in y_pred]
+
+            print(y_pred)
+            print(y_real)
             
             acc = metrics.accuracy_score(y_real, y_pred)
             bacc = metrics.balanced_accuracy_score(y_real, y_pred)
