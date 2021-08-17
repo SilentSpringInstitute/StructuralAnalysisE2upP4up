@@ -138,11 +138,14 @@ class buildQSAR:
         self.p_desc_cleaned = p_desc_cleaned
         self.p_AC50_cleaned = p_AC50_cleaned
 
-    def runQSARs(self, rate_undersampling=0):
+    def runQSARs(self, rate_undersampling=0.0):
 
         pr_out = pathFolder.createFolder(self.pr_desc_QSAR + "classQSAR/")
         self.c_QSAR = QSAR.QSAR(self.p_desc_cleaned, self.p_desc, self.p_AC50_cleaned, self.p_aff, self.p_sim, pr_out, nb_repetition=self.nb_repetition, nb_sample=self.nb_sample, n_foldCV= self.n_foldCV, rate_active=rate_undersampling, rate_splitTrainTest=0.15)
-        self.c_QSAR.runQSARClassUnderSamplingTrain()
+        if rate_undersampling == 0.0:
+            self.c_QSAR.runQSARClassNoSampling()
+        else:
+            self.c_QSAR.runQSARClassUnderSamplingTrain()
 
     def computeSimMatrix(self):
 

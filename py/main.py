@@ -54,54 +54,49 @@ c_MCcrossref.main()
 ## DEVELOP QSAR FOR E2up AND P4up ##
 ####################################
 
+### FOR TEST
+MAX_QUANTILE = 0
+name_QSAR = "FORTEST"
+c_QSAR_E2up = buildQSAR.buildQSAR(name_QSAR, "E2up", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
+c_QSAR_E2up.buildDataset(c_Stereo, borderline=0)
+c_QSAR_E2up.buildDescSet(["rdkit", "OPERA", "toxprint"])
+c_QSAR_E2up.prepDesc()
+c_QSAR_E2up.computeSimMatrix()# similarity matrix for the AD
+c_QSAR_E2up.runQSARs()# no sampling add
+stophere
+
 ## E2up ##
 ##########
 
-# no undersampling ~ 10% of active chemicals 
-#MAX_QUANTILE = 0 # do not take in consideration max quantile percentage
-#name_QSAR = "QSAR_E2_H295R"
-#c_QSAR_E2up = buildQSAR.buildQSAR(name_QSAR, "E2up", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
-#c_QSAR_E2up.buildDataset()
-#c_QSAR_E2up.buildDescSet(["rdkit", "OPERA", "toxprint"])
-#c_QSAR_E2up.prepDesc()
-#c_QSAR_E2up.runQSARs()
-
-# with undersampling with 30% of active 
-#MAX_QUANTILE = 0
-#name_QSAR = "QSAR_E2_H295R_undersampling"
-#c_QSAR_E2up = buildQSAR.buildQSAR(name_QSAR, "E2up", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
-#c_QSAR_E2up.buildDataset()
-#c_QSAR_E2up.buildDescSet(["rdkit", "OPERA", "toxprint"])
-#c_QSAR_E2up.prepDesc()
-#c_QSAR_E2up.runQSARs(0.30)
+# no undersampling 
+##############
+MAX_QUANTILE = 0
+name_QSAR = "QSAR_E2_H295R_nosampling_nosingledosecheck_noborderline"
+c_QSAR_E2up = buildQSAR.buildQSAR(name_QSAR, "E2up", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
+c_QSAR_E2up.buildDataset(c_Stereo, borderline=0)
+c_QSAR_E2up.buildDescSet(["rdkit", "OPERA", "toxprint"])
+c_QSAR_E2up.prepDesc()
+c_QSAR_E2up.computeSimMatrix()# similarity matrix for the AD
+c_QSAR_E2up.runQSARs()# no sampling add
 
 
-# add function to remove from the negative set single dose positive #
-#####################################################################
-#H295R set
-#MAX_QUANTILE = 0
-#name_QSAR = "QSAR_E2_H295R_sampling_singledosecheck"
-#c_QSAR_E2up = buildQSAR.buildQSAR(name_QSAR, "E2up", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
-#c_QSAR_E2up.buildDataset(c_Stereo)
-#c_QSAR_E2up.buildDescSet(["rdkit", "OPERA", "toxprint"])
-#c_QSAR_E2up.prepDesc()
-#c_QSAR_E2up.runQSARs(0.30)
+# no sampling but ghost treashold optimization 
+########################################
+MAX_QUANTILE = 0
+name_QSAR = "QSAR_E2_H295R_ghost_nosingledosecheck_noborderline"
+c_QSAR_E2up = buildQSAR.buildQSAR(name_QSAR, "E2up", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
+c_QSAR_E2up.buildDataset(c_Stereo, borderline=0)
+c_QSAR_E2up.buildDescSet(["rdkit", "OPERA", "toxprint"])
+c_QSAR_E2up.prepDesc()
+c_QSAR_E2up.computeSimMatrix()# similarity matrix for the AD
+c_QSAR_E2up.runQSARs()# no sampling add
 
 
-# remove borderline #
-#####################
-#MAX_QUANTILE = 0
-#name_QSAR = "QSAR_E2_H295R_sampling_singledosecheck_noborderline"
-#c_QSAR_E2up = buildQSAR.buildQSAR(name_QSAR, "E2up", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
-#c_QSAR_E2up.buildDataset(c_Stereo, borderline=0)
-#c_QSAR_E2up.buildDescSet(["rdkit", "OPERA", "toxprint"])
-#c_QSAR_E2up.prepDesc()
-#c_QSAR_E2up.runQSARs(0.30)
 
+stophere
 
-# sampling variable #
-#####################
-#MAX_QUANTILE = 0
+# under sampling variable #
+###########################
 MAX_QUANTILE = 0
 name_QSAR = "QSAR_E2_H295R_variable-sampling_singledosecheck_noborderline"
 c_QSAR_E2up = buildQSAR.buildQSAR(name_QSAR, "E2up", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
@@ -111,7 +106,6 @@ c_QSAR_E2up.prepDesc()
 c_QSAR_E2up.computeSimMatrix()# similarity matrix for the AD
 c_QSAR_E2up.runQSARs([0.10, 0.9])
 
-here
 
 ## P4up ##
 ##########
