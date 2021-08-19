@@ -1,7 +1,10 @@
 import pathFolder
 import toolbox
+import ghost
+
 
 from numpy import loadtxt, arange
+from re import search
 from sklearn import metrics
 from sklearn.model_selection import StratifiedKFold, KFold
 from sklearn.preprocessing import StandardScaler
@@ -11,6 +14,7 @@ from os import path, listdir
 from copy import deepcopy
 import numpy as np
 
+
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
 
@@ -18,31 +22,39 @@ from imblearn.ensemble import BalancedRandomForestClassifier
 
 class RandomForest:
 
-    def __init__(self, p_train, p_test, p_aff, n_foldCV, ghost, pr_out):
+    def __init__(self, p_train, p_test, p_aff, n_foldCV, type_ML, ghost, pr_out):
         self.p_train = p_train
         self.p_test = p_test
         self.p_aff = p_aff
         self.ghost = ghost
+        self.l_ghost_threshold = np.round(np.arange(0.05,0.55,0.05),2)
         self.n_foldCV = n_foldCV
         self.verbose = 0
         self.test = 0
         self.force_run = 0
         self.typeModel = "classification"
+        self.type_ML = type_ML
+        self.pr_out = pr_out
 
-        # create folder -> root of QSAR results
-        if self.ghost == 1:
-            self.pr_out = pathFolder.createFolder(pr_out + "RFGhostpy/")
-        else:
-            self.pr_out = pathFolder.createFolder(pr_out + "RFpy/")   
+        self.d_model = {}
+        # grid optimization - use a test criteria to reduce the grid size for testing
+        self.test = 1
+        self.force_run = 0
 
-        # optimization
-        self.n_estimators = 500
-        self.max_depth = 15
-        self.min_samples_leaf = 2
         self.n_jobs = 4
-    
-        #n_estimators=500,max_depth=15,min_samples_leaf=2,n_jobs=4,oob_score=True, **kwargs)
-
+        self.random_state = 42
+        if self.test == 0:
+            self.n_estimators =  [10, 50, 100, 300, 500, 800, 1200]
+            self.max_depth = [5, 8, 15, 25, 30]
+            self.min_samples_leaf = [1, 2, 5, 10] 
+            self.min_samples_split = [2, 5, 10, 15, 100]
+            self.n_iter = 100
+        else:
+            self.n_estimators =  [10]
+            self.max_depth = [5]
+            self.min_samples_leaf = [10] 
+            self.min_samples_split = [2]
+            self.n_iter = 20
 
     def loadSet(self):
     
@@ -53,10 +65,9 @@ class RandomForest:
         self.dataset_train = loadtxt(self.p_train, delimiter=",",usecols=arange(1, n_cols-1), skiprows=1)
         self.dataset_train = sc.fit_transform(self.dataset_train)
         self.aff_train = loadtxt(self.p_train, delimiter=",",usecols=arange(n_cols-1, n_cols), skiprows=1)
+        self.id_train = loadtxt(self.p_train, dtype=str,  delimiter=",",usecols=arange(0, 1), skiprows=1)
         self.nb_desc_input = n_cols - 2
 
-        d_train = toolbox.loadMatrix(self.p_train, sep = ",")
-        self.l_train = list(d_train.keys())
 
         # descriptor test set 
         with open(self.p_test) as f:
@@ -65,112 +76,83 @@ class RandomForest:
         self.dataset_test = loadtxt(self.p_test, delimiter=",",usecols=arange(1, n_cols-1), skiprows=1)
         self.dataset_test = sc.fit_transform(self.dataset_test)
         self.aff_test = loadtxt(self.p_test, delimiter=",",usecols=arange(n_cols-1, n_cols), skiprows=1)
+        self.id_test = loadtxt(self.p_test, dtype=str, delimiter=",",usecols=arange(0, 1), skiprows=1)
 
-        d_test = toolbox.loadMatrix(self.p_test, sep = ",")
-        self.l_test = list(d_test.keys())
-    
+    def run_RF(self, CV = 0, **kwargs):
 
-    def run_balancedRF(fps_train, fps_test, labels_train, labels_test, **kwargs):
-        # build the classification model:
-        cls = BalancedRandomForestClassifier(n_estimators=500,max_depth=15,min_samples_leaf=2,n_jobs=4, **kwargs)
-        cls.fit(fps_train, labels_train)
-        probs = cls.predict_proba(fps_test)[:,1]
-        return cls, probs 
-    
-
-    def run_RF(self, **kwargs):
-        # RF
-        n_estimators = [10, 50, 100, 300, 500, 800, 1200]
-        max_depth = [5, 8, 15, 25, 30]
-        min_samples_split = [2, 5, 10, 15, 100]
-        min_samples_leaf = [1, 2, 5, 10] 
-
-        random_grid = {'n_estimators': n_estimators,
-               'max_depth': max_depth,
-               'min_samples_split': min_samples_split,
-               'min_samples_leaf': min_samples_leaf}
-
-        rf = RandomForestClassifier(n_jobs=4)
-        rf_random = RandomizedSearchCV(estimator = rf, param_distributions = random_grid, n_iter = 100, cv = 10, verbose=2, random_state=42, n_jobs = 4)
-        #rf_random = RandomForestClassifier(random_state = 1, max_depth = 15,  n_estimators = 500, min_samples_split = 2, min_samples_leaf = 1)
-        # Fit the random search model
-        print(self.aff_train)
-        rf_random.fit(self.dataset_train, self.aff_train)
-        best_random = rf_random.best_estimator_
-        
-        self.model = best_random
-
-        y_pred = rf_random.predict_proba(self.dataset_train)
-        self.performance(self.aff_train, y_pred)
-
-        # save model
-        joblib.dump(best_random, self.pr_out + "RF.joblib")
-        self.p_model = self.pr_out + "RF.joblib"
-        
-
-    def evaluateModel(self, th_prob = 0.5):
-    
-        if not "d_perf" in self.__dict__:
-            self.d_perf = {}
-
-        if self.typeModel == "classification":
-            # trainning set
-            y_train_pred = self.apply_model(self.p_train)
-            self.d_perf["Train"] = self.performance(self.aff_train, y_train_pred, th_prob)
-            
-            # test set
-            y_pred = self.apply_model(self.p_test)
-            self.d_perf["Test"] = self.performance(self.aff_test, y_pred, th_prob)
-
-
-    def apply_model(self, p_test, p_model="", name_out = "test_pred"): 
-        
-        # descriptor test set 
-        with open(p_test) as f:
-            #determining number of columns from the first line of text
-            n_cols = len(f.readline().split(","))
-        dataset_test = loadtxt(p_test, delimiter=",",usecols=arange(1, n_cols-1), skiprows=1)
-        dataset_test = sc.fit_transform(dataset_test)
-        
-        # remove last col
-        d_test = toolbox.loadMatrix(p_test, sep = ",")
-
-        # descriptor test set 
-        if p_model != "":
-            self.model = joblib.load(p_model)
+        # add ghost here
+        if self.ghost == 1:
+            type_RF = self.type_ML + "_ghost"
         else:
-            if not "model" in self.__dict__:
-                print("ERROR: No model loaded")
-                return 
+            type_RF = self.type_ML
 
-        y_pred = self.model.predict_proba(dataset_test)
+        self.pr_results = pathFolder.createFolder(self.pr_out + type_RF + "/")
 
+        if CV == 1:
+            pr_out = self.pr_results + "CV_"
+        else:
+            pr_out = self.pr_results
+
+        # short cut with the model already computed and save
+        p_model = pr_out + "model.joblib"
+        
+        # do not check if CV model exist
+        if path.exists(p_model) and self.force_run == 0 and CV == 0:
+            self.d_model[type_RF] = joblib.load(p_model)
+
+        else:
+            random_grid = {'n_estimators': self.n_estimators,
+                'max_depth': self.max_depth,
+                'min_samples_split': self.min_samples_split,
+                'min_samples_leaf': self.min_samples_leaf}
+
+            if self.type_ML == "RF_balanced":
+                rf = BalancedRandomForestClassifier(n_jobs=self.n_jobs)
+            else:
+                rf = RandomForestClassifier(n_jobs=self.n_jobs)
+
+            rf_random = RandomizedSearchCV(estimator = rf, param_distributions = random_grid, n_iter = self.n_iter, cv = self.n_foldCV, verbose=2, random_state=self.random_state, n_jobs = self.n_jobs)
+            rf_random.fit(self.dataset_train, self.aff_train)
+            best_random = rf_random.best_estimator_
+            
+            # save the model
+            joblib.dump(best_random, p_model)
+
+            # do not save CV on the save as RF
+            if CV == 0:
+                self.d_model[type_RF] = joblib.load(p_model)
+
+            else:
+                self.d_model["CV_" + type_RF] = joblib.load(p_model)
+
+    def apply_model(self, a_set, id_set, type_RF, name_out = "", w=0): 
+       
+        y_pred = self.d_model[type_RF].predict_proba(a_set)
 
         # compute quality performance
-        p_filout = self.pr_out + name_out
-        filout = open(p_filout, "w")
-        filout.write("\"\",\"ID\",\"Pred\"\n")
-        i = 0
-        l_chem = list(d_test.keys())
-        imax = len(l_chem)
-        
-        while i < imax:
+        if w == 1:
+            p_filout = self.pr_results + name_out
+            filout = open(p_filout, "w")
             filout.write("\"\",\"ID\",\"Pred\"\n")
-            filout.write("\"%s\",\"%s\",\"%s\"\n"%(l_chem[i], l_chem[i], y_pred[i]))
-            i = i + 1
-        filout.close()
-        
+            i = 0
+            l_chem = list(id_set)
+            imax = len(l_chem)
+            
+            while i < imax:
+                filout.write("\"%s\",\"%s\",\"%s\"\n"%(l_chem[i], l_chem[i], y_pred[i][1]))
+                i = i + 1
+            filout.close()
+            
         return y_pred
     
     def performance(self, y_real, y_pred, th_prob = 0.5, p_filout = ""):
             
         if self.typeModel == "classification":
+            
+
             # change prob -> value
             y_pred = [1. if pred[1] > th_prob else 0. for pred in y_pred]
 
-            print(y_pred)
-            print(y_real)
-            
             acc = metrics.accuracy_score(y_real, y_pred)
             bacc = metrics.balanced_accuracy_score(y_real, y_pred)
             mcc = metrics.matthews_corrcoef(y_real, y_pred)
@@ -233,15 +215,33 @@ class RandomForest:
 
             return {"MAE": MAE, "R2": R2, "EVS": EVS, "MSE": MSE, "MAXERR": MAXERR, "MSE_log": MSE_log , "MDAE": MDAE, "MTD": MTD, "MPD":MPD , "MGD":MGD}
 
+    def ghostFindTreshold(self, y_real, y_pred):
+
+        # change the treshold
+        if self.ghost == 1:
+            threshold1 = ghost.optimize_threshold_from_predictions(y_real, y_pred, self.l_ghost_threshold, ThOpt_metrics = 'Kappa')
+        self.ghost_treshold = threshold1
+
     def evaluateOnTest(self, th_prob=0.5):
     
         y_pred = self.model.predict_proba(self.dataset_test)
         if self.typeModel == "classification":
-            return self.performance(self.aff_test, y_pred, th_prob)
+            return self.performance(self.aff_test, y_pred, self.threshold_ghost)
         else:
-            return self.performance(self.aff_test, y_pred, th_prob)
+            return self.performance(self.aff_test, y_pred, self.threshold_ghost)
 
-    def CrossValidation(self, type_RF = "RF"):
+    def CrossValidation(self):
+        """
+        Realize a cross validation in N folds
+        args: - type of RF (balanced/umbalanced) 
+        """
+        
+        if self.ghost == 1:
+            type_RF = self.type_ML + "_ghost"
+        else:
+            type_RF = self.type_ML
+        self.pr_results = pathFolder.createFolder(self.pr_out + type_RF + "/")
+
         seed = 7
         d_CV = {}
         if self.typeModel == "classification":
@@ -249,22 +249,35 @@ class RandomForest:
         else:
             kfold = KFold(n_splits=self.n_foldCV, shuffle=True, random_state=seed)
         # load parameters
-        l_files = listdir(self.pr_out)
         
         d_train = deepcopy(self.dataset_train)
         Y_train = deepcopy(self.aff_train)
+        id_train = deepcopy(self.id_train)
 
+        
         for train, test in kfold.split(d_train, Y_train):
+            
+            # update the class
             self.dataset_train = d_train[train]
             self.aff_train = Y_train[train]
+            self.id_train = id_train[train]
 
             self.dataset_test = d_train[test]
             self.aff_test = Y_train[test]
+            self.id_test = id_train[test]
 
-            # create model
-            if type_RF == "RF":
-                self.run_RF()
-            d_pref_test = self.evaluateOnTest()
+            # optimize model
+            self.run_RF(CV=1)
+
+            # apply prediction on the test
+            y_pred = self.apply_model(self.dataset_test, self.id_test, "CV_" + type_RF)
+            if self.ghost == 1:
+                y_pred_train = self.apply_model(self.dataset_train, self.id_train, "CV_" + type_RF)
+                self.threshold_ghost = ghost.optimize_threshold_from_predictions(self.aff_train, y_pred_train, self.l_ghost_threshold, ThOpt_metrics = 'Kappa') 
+            else:
+                self.threshold_ghost = 0.5
+
+            d_pref_test = self.performance(self.aff_test, y_pred, self.threshold_ghost)
             
             for perf_criteria in d_pref_test.keys():
                 if not perf_criteria in list(d_CV.keys()):
@@ -273,7 +286,7 @@ class RandomForest:
 
         l_criteria = list(d_CV.keys())
         l_val = ["%.2f"%(np.mean(d_CV[criteria])) for criteria in l_criteria]
-        filout = open(self.pr_out + "CV_%s.perf"%(self.n_foldCV), "w")
+        filout = open(self.pr_results + "CV_%s.perf"%(self.n_foldCV), "w")
         filout.write("%s\n%s"%("\t".join(l_criteria), "\t".join(l_val)))
 
         # populate d_pref
@@ -287,16 +300,50 @@ class RandomForest:
             self.d_perf["CV"][l_criteria[i]] = float(l_val[i])
             i  = i + 1   
 
+    def TrainTestPrediction(self):
+        
+        # load dataset
+        self.loadSet()
 
-    def combineResults(self, name_combine):
+        # optimize model
+        self.run_RF(CV = 0)
+        
+        if not "d_perf" in self.__dict__:
+            self.d_perf = {}
+
+        if self.typeModel == "classification":
+            # trainning set
+            # add ghost here
+            if self.ghost == 1:
+                type_RF = self.type_ML + "_ghost"
+            else:
+                type_RF = self.type_ML
+            y_train_pred = self.apply_model(self.dataset_train, self.id_train, type_RF, "train_pred.csv", w=1)
+            if self.ghost == 1:
+                threshold_ghost = ghost.optimize_threshold_from_predictions(self.aff_train, y_train_pred, self.l_ghost_threshold, ThOpt_metrics = 'Kappa') 
+            else:
+                threshold_ghost = 0.5
+
+            self.ghost_treshold = threshold_ghost
+            self.d_perf["Train"] = self.performance(self.aff_train, y_train_pred, self.ghost_treshold)
+            
+            # test set
+            y_pred = self.apply_model(self.dataset_test, self.id_test, type_RF, "test_pred.csv", w=1)
+            self.d_perf["Test"] = self.performance(self.aff_test, y_pred, self.ghost_treshold)
+           
+    def combineResults(self):
+       
         if not "d_perf" in self.__dict__:
             print("No data to write")
             return 
 
-        p_filout = self.pr_out + "combined_perf.csv"
-        if path.exists(p_filout) and self.force_run == 0:
-            return
-            
+        if self.ghost == 1:
+            type_RF = self.type_ML + "_ghost"
+        else:
+            type_RF = self.type_ML
+        
+        p_filout = self.pr_results + "combined_perf.csv"
+
         filout = open(p_filout, "w")
         l_perf = ["CV", "Train", "Test"]
         l_criteria = list(self.d_perf["CV"].keys())
@@ -304,5 +351,25 @@ class RandomForest:
         filout.write("\t%s\n"%("\t".join(l_criteria)))
         
         for perf in l_perf:
-            filout.write("%s-%s\t%s\n"%(perf, name_combine, "\t".join(["%.2f"%(self.d_perf[perf][criteria]) for criteria in l_criteria])))
+            filout.write("%s-%s\t%s\n"%(perf, type_RF, "\t".join(["%.2f"%(self.d_perf[perf][criteria]) for criteria in l_criteria])))
         filout.close() 
+    
+    def run_main(self):
+
+        if self.ghost == 1:
+            type_RF = self.type_ML + "_ghost"
+        else:
+            type_RF = self.type_ML
+
+        p_combined_results = self.pr_out + type_RF + "/" + "combined_perf.csv"
+        if path.exists(p_combined_results) and self.force_run == 0:
+            return  
+
+        self.TrainTestPrediction()
+        self.CrossValidation()
+        self.combineResults()
+
+
+
+
+

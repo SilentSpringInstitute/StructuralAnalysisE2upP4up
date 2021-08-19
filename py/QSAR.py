@@ -31,6 +31,7 @@ class QSAR:
         # environement
         self.force_run = 0
 
+
     def runQSARClassUnderSamplingAllSet(self):
 
         l_run = list(range(1, self.nb_repetition + 1))
@@ -226,25 +227,22 @@ class QSAR:
         return: None
             write output in the folder 
         """
-
-        # do not run if performance file already exist
-        p_perfTrain = pr_run + "perfTrain.csv"
-        p_perfCV = pr_run + "perfCV.csv"
-        p_perfTest = pr_run + "perfTest.csv"
-
-        if self.force_run == 0:
-            if path.exists(p_perfCV) and path.exists(p_perfTrain) and path.exists(p_perfTest):
-                return 
-        else:
-            # clear folder to save only train and the test sets
+        # flush the result folder in case of forcing
+        if self.force_run == 1:
             pathFolder.cleanFolder(pr_run, [self.p_train, self.p_test])
         
         # run AD
         #self.computeAD(pr_run)
                 
         # classic machine learning with R
-        #runExternal.runRQSAR(self.p_train, self.p_test, self.n_foldCV, pr_run)
-                
+        p_perfTrain = pr_run + "perfTrain.csv"
+        p_perfCV = pr_run + "perfCV.csv"
+        p_perfTest = pr_run + "perfTest.csv"
+
+        if not path.exists(p_perfCV) or not path.exists(p_perfTrain) or not path.exists(p_perfTest):
+            runExternal.runRQSAR(self.p_train, self.p_test, self.n_foldCV, pr_run)
+        
+
         # DNN with keras / tensorflow
         # self, p_train, p_test, p_aff, pr_out, n_foldCV, typeModel
         #c_DNN = DNN.DNN(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "classification", pr_run)
@@ -258,16 +256,23 @@ class QSAR:
         # define a class specific to this approch for testing
         # need to be integrated in the DNN class and make new class for RF and 
         
-        c_RF = RandomForest.RandomForest(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, 0, pr_run)
-        c_RF.loadSet()
-        c_RF.run_RF()
-        c_RF.evaluateModel()
-        #c_RF.CrossValidation()
-        #c_RF.combineResults("RFpy")
-        stophere
+        # classic RF
+        c_RF = RandomForest.RandomForest(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "RF_py", 0, pr_run)
+        c_RF.run_main()
+        
+        # with ghost
+        c_RF = RandomForest.RandomForest(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "RF_py", 1, pr_run)
+        c_RF.run_main()
+
+        # balanced RF
+        c_RFb = RandomForest.RandomForest(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "RF_balanced", 0, pr_run)
+        c_RFb.run_main()
+
+        c_RFb = RandomForest.RandomForest(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "RF_balanced", 1, pr_run)
+        c_RFb.run_main()
 
         # summarize the run
-        #self.writeSumFile(pr_run)    
+        self.writeSumFile(pr_run)    
 
     def mergeModelSampled(self):
 
@@ -664,7 +669,7 @@ class QSAR:
     def writeSumFile(self, pr_out):
         """Function use to wirte summary for the model"""
 
-        if not "sampling_rate" in self.__dict__ and type(self.sampling_rate) == float:
+        if not "sampling_rate" in self.__dict__ and type(self.rate_active) == float:
             self.sampling_rate = self.rate_active
 
         # write summary of the QSAR modeling
@@ -774,52 +779,48 @@ class QSAR:
         l_rep  = listdir(self.pr_out)
         d_out = {}
         l_datasets = ["CV", "train", "test"] 
+        l_criteria = []
+
         for rep in l_rep:
             try: int(rep)
             except:continue
+            
+            # format rep
+            d_out[rep] = {}
+            for dataset in l_datasets :d_out[rep][dataset] = {}
+
             p_cv = "%s%s/perfCV.csv"%(self.pr_out, rep)
             p_train = "%s%s/perfTrain.csv"%(self.pr_out, rep)
             p_test = "%s%s/perfTrain.csv"%(self.pr_out, rep)
             if path.exists(p_cv) and path.exists(p_train) and path.exists(p_test):
-                f_CV = open(p_cv, "r")
-                l_CV = f_CV.readlines()
-                f_CV.close()
-                f_train = open(p_train, "r")
-                l_train = f_train.readlines()
-                f_train.close()
-                f_test = open(p_test, "r")
-                l_test = f_test.readlines()
-                f_test.close()
-            else:
-                continue
+                d_out[rep]["CV"] = toolbox.loadMatrix(p_cv, sep = ",")
+                d_out[rep]["train"] = toolbox.loadMatrix(p_train, sep = ",")
+                d_out[rep]["test"] = toolbox.loadMatrix(p_test, sep = ",")
 
-        ####################################################################
-        ################## to finish
+                for criteria in d_out[rep]["train"][list(d_out[rep]["train"].keys())[0]]:
+                    if not criteria in l_criteria and criteria != "ID":
+                        l_criteria.append(criteria)
 
-            d_out[rep] = {}
-            i = 0
-            imax = len(l_results)
-            while i < imax:
-                line_results = l_results[i].strip()
-                if line_results == "":
-                    i = i + 1
-                    continue
-                if line_results in l_datasets:
-                    dataset = line_results
-                    d_out[rep][dataset] = {}
-                    l_criteria = l_results[i + 1].strip().split("\t")
-                    i = i + 2
-                else:
-                    l_val = line_results.strip().split("\t")
-                    ML = l_val[0]
-                    d_out[rep][dataset][ML] = {}
-                    j = 0
-                    jmax = len(l_criteria)
+            l_folders = listdir(self.pr_out + rep)
+            for folder in l_folders:
+                p_combined = "%s%s/%s/combined_perf.csv"%(self.pr_out, rep, folder)
+                if path.exists(p_combined):
+                    d_temp = toolbox.loadMatrix(p_combined)
+                    for k in d_temp.keys():
+                        ML = k.split("-")[1]
+                        dataset = k.split("-")[0]
+                        if dataset != "CV":
+                            dataset = dataset.lower()
+                        d_out[rep][dataset][ML] = {}
+                        d_out[rep][dataset][ML] = d_temp[k]
 
-                    while j < jmax:
-                        d_out[rep][dataset][ML][l_criteria[j]] = l_val[j + 1]
-                        j = j + 1
-                    i = i + 1
+                        # add criteria parameter 
+                        for criteria in d_out[rep][dataset][ML].keys():
+                            if not criteria in l_criteria and criteria != "ID":
+                                l_criteria.append(criteria)
+
+
+
 
 
         filout = open(p_filout, "w")
@@ -828,8 +829,13 @@ class QSAR:
             filout.write("\tCV\t%s\tTrain\t%s\tTest\t%s\n"%("\t".join(["" for criteria in l_criteria]), "\t".join(["" for criteria in l_criteria]), "\t".join(["" for criteria in l_criteria])))
             filout.write("ML\t%s\t\t%s\t\t%s\n"%("\t".join(l_criteria),"\t".join(l_criteria),"\t".join(l_criteria)))
             for ML in d_out[run]["CV"].keys():
+                for criteria in l_criteria: 
+                    if not criteria in list(d_out[run]["CV"][ML].keys()): d_out[run]["CV"][ML][criteria] = "NA" 
+                    else: d_out[run]["CV"][ML][criteria] = "%.2f"%(float(d_out[run]["CV"][ML][criteria]))
+                    if not criteria in list(d_out[run]["train"][ML].keys()): d_out[run]["train"][ML][criteria] = "NA"
+                    else: d_out[run]["train"][ML][criteria] = "%.2f"%(float(d_out[run]["train"][ML][criteria]))
+                    if not criteria in list(d_out[run]["test"][ML].keys()): d_out[run]["test"][ML][criteria] = "NA"
+                    else: d_out[run]["test"][ML][criteria] = "%.2f"%(float(d_out[run]["test"][ML][criteria]))
                 filout.write("%s\t%s\t\t%s\t\t%s\n"%(ML, "\t".join(["%s"%(d_out[run]["CV"][ML][criteria]) for criteria in l_criteria]), "\t".join(["%s"%(d_out[run]["train"][ML][criteria]) for criteria in l_criteria]), "\t".join(["%s"%(d_out[run]["test"][ML][criteria]) for criteria in l_criteria]),))   
             filout.write("\n")
         filout.close()
-
-        return 
