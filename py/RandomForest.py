@@ -148,7 +148,6 @@ class RandomForest:
     def performance(self, y_real, y_pred, th_prob = 0.5, p_filout = ""):
             
         if self.typeModel == "classification":
-            
 
             # change prob -> value
             y_pred = [1. if pred[1] > th_prob else 0. for pred in y_pred]
@@ -215,13 +214,6 @@ class RandomForest:
 
             return {"MAE": MAE, "R2": R2, "EVS": EVS, "MSE": MSE, "MAXERR": MAXERR, "MSE_log": MSE_log , "MDAE": MDAE, "MTD": MTD, "MPD":MPD , "MGD":MGD}
 
-    def ghostFindTreshold(self, y_real, y_pred):
-
-        # change the treshold
-        if self.ghost == 1:
-            threshold1 = ghost.optimize_threshold_from_predictions(y_real, y_pred, self.l_ghost_threshold, ThOpt_metrics = 'Kappa')
-        self.ghost_treshold = threshold1
-
     def evaluateOnTest(self, th_prob=0.5):
     
         y_pred = self.model.predict_proba(self.dataset_test)
@@ -273,7 +265,8 @@ class RandomForest:
             y_pred = self.apply_model(self.dataset_test, self.id_test, "CV_" + type_RF)
             if self.ghost == 1:
                 y_pred_train = self.apply_model(self.dataset_train, self.id_train, "CV_" + type_RF)
-                self.threshold_ghost = ghost.optimize_threshold_from_predictions(self.aff_train, y_pred_train, self.l_ghost_threshold, ThOpt_metrics = 'Kappa') 
+                y_pred_train_ghost = [pred[1] for pred in y_pred_train]
+                self.threshold_ghost = ghost.optimize_threshold_from_predictions(self.aff_train, y_pred_train_ghost, self.l_ghost_threshold, ThOpt_metrics = 'Kappa') 
             else:
                 self.threshold_ghost = 0.5
 
@@ -320,7 +313,8 @@ class RandomForest:
                 type_RF = self.type_ML
             y_train_pred = self.apply_model(self.dataset_train, self.id_train, type_RF, "train_pred.csv", w=1)
             if self.ghost == 1:
-                threshold_ghost = ghost.optimize_threshold_from_predictions(self.aff_train, y_train_pred, self.l_ghost_threshold, ThOpt_metrics = 'Kappa') 
+                y_train_pred_ghost = [pred[1] for pred in y_train_pred]                
+                threshold_ghost = ghost.optimize_threshold_from_predictions(self.aff_train, y_train_pred_ghost, self.l_ghost_threshold, ThOpt_metrics = 'Kappa') 
             else:
                 threshold_ghost = 0.5
 
