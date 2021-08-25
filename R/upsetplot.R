@@ -27,6 +27,5 @@ dev.off()
 
 png(paste(pgene, "_venn.png", sep = ""), res = 300, 1000, 1000)
 p = plot(euler(dgene), quantities = TRUE)
-print(p)
 dev.off()
 

@@ -22,7 +22,7 @@ class buildQSAR:
         self.nb_repetition = 5
         self.nb_sample = 10
         self.n_foldCV = 10
-        self.rate_splitTrainTest=0.20
+        self.rate_splitTrainTest = 0.20
 
         # define exit folder
         self.pr_out = pathFolder.createFolder(pr_results + name_QSAR + "/")
@@ -30,10 +30,15 @@ class buildQSAR:
     def buildDataset(self, c_stereo = 0, borderline=1):
         """
         Build the dataset
-        - arg: class setereo to remove single dose on the assays
+        arg: -class setereo to remove single dose on the assays
+        - borderline option to remove chemicals with borderline activity
+
         """
         p_filout = self.pr_out + "aff.csv"
-        
+        p_sum = self.pr_out + "aff.sum"
+
+        f_sum = open(p_sum, "w")
+        nb_borderline = 0
         # redefine E2up and P4up with borderline and not
         if borderline == 0:
             self.c_dataset.defineE2P4active(["higher", "medium", "lower"])
@@ -50,7 +55,10 @@ class buildQSAR:
 
             # diff list
             l_Borderline = list(set(l_casr_Borderline) - set(l_casr_noBorderline))
-
+            nb_borderline = len(l_Borderline)
+        
+        # write in sum
+        f_sum.write("Nb borderline activity: %s\n"%(nb_borderline))
 
 
         # define a class file
@@ -62,6 +70,7 @@ class buildQSAR:
                     continue
             d_dataset[chem] = "1"
         
+        count_single_dose = 0
         ## inactive set
         d_inactive = toolbox.loadMatrix(self.c_dataset.d_dataset[self.inactive_dataset])
         for chem in d_inactive.keys():
@@ -80,10 +89,18 @@ class buildQSAR:
                     if self.active_dataset == "E2up":
                         if not chem in list(c_stereo.d_single_hit.keys()) or c_stereo.d_single_hit[chem]["ESTRADIOL"] == "0" :
                             d_dataset[chem] = "NA"
+                        else:
+                            count_single_dose = count_single_dose + 1
                     if self.active_dataset == "P4up":
                         if not chem in list(c_stereo.d_single_hit.keys()) or c_stereo.d_single_hit[chem]["PROG"] == "0":
                             d_dataset[chem] = "NA"
+                        else:
+                            count_single_dose = count_single_dose + 1
         
+        # write in summary
+        f_sum.write("Single dose active remove: %s\n"%(count_single_dose))
+        f_sum.close()
+
         filout = open(p_filout, "w")
         filout.write("CASRN\tAff\n")
         l_casrn = list(d_dataset.keys())

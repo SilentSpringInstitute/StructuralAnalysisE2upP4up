@@ -70,7 +70,6 @@ class QSAR:
         
 
         # reduce number of run
-        l_run = [1]
         for run in l_run:
             pr_run = pathFolder.createFolder(self.pr_out + str(run) + "/")
             self.pr_run = pr_run
@@ -232,7 +231,7 @@ class QSAR:
             pathFolder.cleanFolder(pr_run, [self.p_train, self.p_test])
         
         # run AD
-        #self.computeAD(pr_run)
+        self.computeAD(pr_run)
                 
         # classic machine learning with R
         p_perfTrain = pr_run + "perfTrain.csv"
@@ -245,12 +244,12 @@ class QSAR:
 
         # DNN with keras / tensorflow
         # self, p_train, p_test, p_aff, pr_out, n_foldCV, typeModel
-        #c_DNN = DNN.DNN(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "classification", pr_run)
-        #c_DNN.loadSet()
-        #c_DNN.GridOptimizeDNN("AUC")
-        #c_DNN.evaluateModel()
-        #c_DNN.CrossValidation()
-        #c_DNN.combineResults()
+        c_DNN = DNN.DNN(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "classification", pr_run)
+        c_DNN.loadSet()
+        c_DNN.GridOptimizeDNN("AUC")
+        c_DNN.evaluateModel()
+        c_DNN.CrossValidation()
+        c_DNN.combineResults()
 
         # use the ghost approach for RF and DNN
         # define a class specific to this approch for testing
@@ -791,7 +790,7 @@ class QSAR:
 
             p_cv = "%s%s/perfCV.csv"%(self.pr_out, rep)
             p_train = "%s%s/perfTrain.csv"%(self.pr_out, rep)
-            p_test = "%s%s/perfTrain.csv"%(self.pr_out, rep)
+            p_test = "%s%s/perfTest.csv"%(self.pr_out, rep)
             if path.exists(p_cv) and path.exists(p_train) and path.exists(p_test):
                 d_out[rep]["CV"] = toolbox.loadMatrix(p_cv, sep = ",")
                 d_out[rep]["train"] = toolbox.loadMatrix(p_train, sep = ",")

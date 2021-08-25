@@ -38,7 +38,7 @@ class RandomForest:
 
         self.d_model = {}
         # grid optimization - use a test criteria to reduce the grid size for testing
-        self.test = 1
+        self.test = 0
         self.force_run = 0
 
         self.n_jobs = 4

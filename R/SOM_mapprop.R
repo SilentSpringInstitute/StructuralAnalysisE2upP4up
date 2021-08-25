@@ -4,6 +4,7 @@ library(ggplot2)
 source("loadPropList.R")
 library(RColorBrewer)
 library(viridis)
+library(Toolbox)
 #################
 # Color reverse #
 #################
@@ -34,8 +35,14 @@ applySOM = function(som_model, d_prop, prop, pr_out, svg_plot = 0){
     d_AC50 = as.vector(d_prop[,prop])
     names(d_AC50) = rownames(d_prop)
     d_AC50 = na.omit(d_AC50)
-    d_AC50 = d_AC50[-which(d_AC50 == "NEG")]
-    d_AC50 = d_AC50[-which(d_AC50 == "NT")]
+    del_nt = as.vector(which(d_AC50 == "NT"))
+    if(is.integer0(del_nt) == FALSE){
+      d_AC50 = d_AC50[-del_nt]  
+    }
+    del_neg = as.vector(which(d_AC50 == "NEG"))
+    if(is.integer0(del_neg) == FALSE){
+      d_AC50 = d_AC50[-del_neg]  
+    }
     dclust = dclust[names(d_AC50)]# take only active chemical
     dclust = cbind(names(dclust), dclust)
     ltable = table(dclust[,2])
@@ -45,7 +52,6 @@ applySOM = function(som_model, d_prop, prop, pr_out, svg_plot = 0){
     return() # to not run because no classification
   }
   
-  print(d_AC50)
   
   ltabinit = table(som_model$unit.classif)
   linitial = rep(0, xdim*ydim)
@@ -112,9 +118,9 @@ p_prop = args[2]
 pr_out = args[3]
 
 
-#p_SOM_model = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/Analysis_H295R/rdkit-OPERA/SOM/SOM_model.RData"
-#p_prop = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up//results/setOfChemicals/H295R.csv"
-#pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/Analysis_H295R/rdkit-OPERA/SOM/"
+p_SOM_model = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/Analysis_H295R/rdkit-OPERA/SOM/SOM_model.RData"
+p_prop = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up//results/setOfChemicals/H295R.csv"
+pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/Analysis_H295R/rdkit-OPERA/SOM/"
 
 
 # load prop
@@ -131,3 +137,16 @@ for(prop in l_props){
   rownames(d_apply) = rownames(d_prop)
   applySOM(som_model, d_apply, prop, pr_out)
 }
+
+# take the overlap e2up and p4up
+E2up_P4up = rep("NT", dim(d_prop)[1])
+
+E2up_P4up[which(d_prop$E2up == "POS" & d_prop$P4up == "POS")] = "POS" 
+E2up_P4up[which(d_prop$E2up == "NEG" & d_prop$P4up == "NEG")] = "NEG" 
+d_apply = cbind(d_prop$Chemical.name, E2up_P4up)
+rownames(d_apply) = rownames(d_prop)
+colnames(d_apply) = c("Chemical.name", "E2up_P4up")
+d_apply = as.data.frame(d_apply)
+applySOM(som_model, d_apply, "E2up_P4up", pr_out)
+
+

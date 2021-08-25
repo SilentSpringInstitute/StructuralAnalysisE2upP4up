@@ -1,7 +1,112 @@
 #!/usr/bin/env Rscript
 library(Toolbox)
+library(igraph)
+library(ggraph)
 
 
+drawHist = function(d_toxprint, max_pval, min_prob, p_out){
+  
+  # reduce d_toxprint
+  d_toxprint = d_toxprint[which(d_toxprint[, "Pval"] < max_pval  | d_toxprint[, "Estimate prob1"] > min_prob | d_toxprint[, "Estimate prob2"] > min_prob),]
+  
+  d_plot = NULL
+  for(id in rownames(d_toxprint)){
+    if(d_toxprint[id, "Pval"] < max_pval  || d_toxprint[id, "Estimate prob1"] > min_prob || d_toxprint[id, "Estimate prob2"] > min_prob){
+      d_plot = rbind(d_plot, c(id, d_toxprint[id, c(1, 2)], "",  d_toxprint[id, c(4, 6)], colnames(d_toxprint)[4]))
+      d_plot = rbind(d_plot, c(id, d_toxprint[id, c(1, 2, 3, 5, 7)], colnames(d_toxprint)[5]))
+    }
+  }
+  colnames(d_plot) = c("ID", "ToxPrint", "Pval", "Significative", "nb", "prob", "set")
+  d_plot = as.data.frame(d_plot)
+  d_plot$ToxPrint = as.character(d_plot$ToxPrint)
+  d_plot$set = as.character(d_plot$set)
+  d_plot$nb = as.double(as.character(d_plot$nb))
+  d_plot$prob = as.double(as.character(d_plot$prob))
+  d_plot$Pval = as.double(as.character(d_plot$Pval))
+  
+    
+  ggplot(data = d_plot, aes(x=reorder(ToxPrint, -Pval), y=prob, fill=set)) +
+    geom_bar(stat="identity", position=position_dodge())+
+    geom_text(aes(label=Significative), vjust=1.6, color="black", position = position_dodge(0.6), size=3.5)+
+    scale_fill_brewer(palette="Paired")+
+    coord_flip() + 
+    labs(y="Prob", x="Toxprint")
+  
+  if(dim(d_plot)[1] > 100){
+    ggsave(p_out,  width = 10, height = 15, dpi = 300)
+  }else{
+    ggsave(p_out,  width = 10, height = 10, dpi = 300)  
+  }
+}
+
+
+
+
+drawNet = function(d_alltoxprint, d_signif, cutoff_signif, p_out){
+  
+  # reduce with significative toxprint
+  l_toxprints_signif = d_signif$Toxprint[which(d_signif$Pval < cutoff_signif & d_signif$`Estimate prob1` > d_signif$`Estimate prob2`)]
+  d_alltoxprint = d_alltoxprint[, l_toxprints_signif]
+  
+  # define the node
+  d_node = NULL
+  l_toxprints = NULL
+  i = 1
+  for(toxprint in colnames(d_alltoxprint)){
+    nb_chem = sum(d_alltoxprint[,toxprint])
+    if(nb_chem > 1){
+      id = paste("s", i, sep="")
+      d_node = rbind(d_node, c(id, toxprint, nb_chem))
+      l_toxprints = append(l_toxprints, toxprint)
+      i = i + 1 
+    }
+  }
+  
+  colnames(d_node) = c("id", "Toxprint", "size")
+  d_node = as.data.frame(d_node)
+  d_node$size = as.double(as.character(d_node$size))
+  names(l_toxprints) = d_node$id
+  
+  
+  
+  # define the edge
+  d_edge = NULL
+  i = 1
+  imax = length(l_toxprints)
+  while(i <= imax){
+    j = i + 1
+    while(j < imax){
+      weight = length(which(d_alltoxprint[, l_toxprints[i]] == 1 & d_alltoxprint[, l_toxprints[j]] == 1))
+      if(weight > 1){
+        d_edge = rbind(d_edge, c(names(l_toxprints[i]), names(l_toxprints[j]), "mention" ,weight))
+      }
+      j = j + 1
+    }
+    i = i + 1
+  }
+  
+  colnames(d_edge) = c("from", "to", "type", "weight")
+  d_edge = as.data.frame(d_edge)
+  d_edge$weight = as.numeric(as.character(d_edge$weight))
+  
+  net <- graph_from_data_frame(d=d_edge, vertices=d_node, directed=T)
+  
+  
+ ggraph(net, layout = 'linear') + 
+    geom_edge_arc(aes(color = weight, alpha=weight), width = 0.7) +
+    scale_edge_alpha(name = "")+
+    scale_edge_color_gradientn(name = "Edge",colors = c("cyan", "blue"), values = rescale(c(10,20,42))) +
+    geom_node_point(aes(size = size, color = size)) +
+    scale_color_gradientn(name = "", colors = c("cyan", "darkblue"), values = rescale(c(10,35,60))) +
+    scale_size_continuous(name = "Node")+ 
+    geom_node_text(aes(label = d_node$Toxprint), hjust=1, vjust=1, angle=45, nudge_y = -0.2,  color="black") +
+    theme_void()+
+    ylim(-4.5, NA)+xlim(-4.5, NA)
+   
+ ggsave(p_out,  width = 16, height = 10, dpi = 300)
+ 
+ 
+}
 
 
 ################
@@ -14,9 +119,9 @@ p_toxprint2 = args[2]
 pr_out = args[3]
 
 
-#p_toxprint1 = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDesc_E2up-H295R/E2up_toxprint.csv"
-#p_toxprint2 = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDesc_E2up-H295R/H295R_toxprint.csv"
-#pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDesc_E2up-H295R/toxprint"
+p_toxprint1 = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDesc_E2up-H295R/E2up_toxprint.csv"
+p_toxprint2 = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDesc_E2up-H295R/H295R_toxprint.csv"
+pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDesc_E2up-H295R/toxprint"
 
 d_toxprint1 = read.csv(p_toxprint1, sep = "\t", row.names = 1)
 
@@ -57,31 +162,55 @@ for(toxprint in l_toxprints){
   
   # Printing the results
   pval = res$p.val 
-  if (is.na(pval) == TRUE){
-    d_out = rbind(d_out, c(toxprint, "NA", "-", n_toxprint1, n_toxprint2, "NA", "NA"))
-  
-  }else{
+  if (is.na(pval) == FALSE){
     signif = signifPvalue(pval)
     d_out = rbind(d_out, c(toxprint, round(pval, 4), signif, n_toxprint1, n_toxprint2, round(res$estimate[1], 2), round(res$estimate[2], 2)))
   }
 }
 
 
-colnames(d_out) = c("Toxprint", "Pval", "significatif", paste("N", strsplit(basename(p_toxprint1), "_")[[1]][1], sep = " "), paste("N", strsplit(basename(p_toxprint2), "_")[[1]][1], sep = " "), "Estimate prob1", "Estimate prob2")
+colnames(d_out) = c("Toxprint", "Pval", "significatif", strsplit(basename(p_toxprint1), "_")[[1]][1], strsplit(basename(p_toxprint2), "_")[[1]][1], "Estimate prob1", "Estimate prob2")
 d_out = as.data.frame(d_out)
 d_out$Pval = as.double(d_out$Pval)
 d_out = d_out[order(d_out$Pval), ]
 write.csv(d_out, paste(pr_out, "_signif.csv", sep = ""))
 
+# make plot 
+# only  > ** significant and more than 20% of the set
+drawHist(d_out, 0.01, 0.2, paste(pr_out, "toxprint_signif.png", sep = ""))
+
+###
+# make network with cutoff of significativity
+drawNet (d_toxprint1, d_out, 0.01, paste(pr_out, "network_001.png", sep = ""))
+drawNet (d_toxprint1, d_out, 0.001, paste(pr_out, "network_0001.png", sep = ""))
+
+
+### compute the average number of Toxprint by chemicals
+d_sum1 = apply(d_toxprint1, 1, "sum")
+d_sum2 = apply(d_toxprint2, 1, "sum")
+
+Av1 = mean(d_sum1)
+sd1 = sd(d_sum1)
+
+Av2 = mean(d_sum2)
+sd2 = sd(d_sum2)
+
+d_tox_signif = d_toxprint1[,d_out[which(d_out$Pval < 0.01),"Toxprint"]]
+d_sum_signif = apply(d_tox_signif, 1, "sum")
+Av_signif = mean(d_sum_signif)
+
+d_sum_out = c(Av1, sd1, Av2, sd2, Av_signif) 
+names(d_sum_out) = c("Avg nb toxprint 1", "SD nb toxprint 1", "Avg nb toxprint 2", "SD nb toxprint 2", "Avg signif Toxprint")
+write.table(d_sum_out, paste(pr_out, "countToxprint.sum", sep =""))
 
 #### combination of toxprint
 ######
 
 # remove toxprint with a expected prob < 0.1
-l_toxprint_tocombine = d_out[which(d_out$`Estimate prob1` >= 0.1 & d_out$`Estimate prob1` != "NA" & d_out$`Estimate prob2` >= 0.1 & d_out$`Estimate prob2` != "NA"),1]
+l_toxprint_tocombine = d_out[which(d_out$`Estimate prob1` != "NA" & d_out$`Estimate prob2` != "NA"),1]
 
-# do combination oftoxprint
-####
+# do combination of toxprint
+########
 
 d_combine = NULL
 l_combine = NULL
@@ -90,12 +219,12 @@ imax = length(l_toxprint_tocombine)
 while(i <= imax){
   j = i + 1
   while(j <= imax){
-    toxprint_combine = paste(l_toxprint_tocombine[i], "__", l_toxprint_tocombine[j])
+    toxprint_combine = paste(l_toxprint_tocombine[i], l_toxprint_tocombine[j], sep = "+")
     l_combine = append(l_combine, toxprint_combine)
     
     # apply test
-    v_toxprint1 = length(which(d_toxprint1[,l_toxprint_tocombine[i]] >=1 && d_toxprint1[,l_toxprint_tocombine[j]] >=1))
-    v_toxprint2 = length(which(d_toxprint2[,l_toxprint_tocombine[i]] >=1 && d_toxprint2[,l_toxprint_tocombine[j]] >=1))
+    v_toxprint1 = length(which(d_toxprint1[,l_toxprint_tocombine[i]] >=1 & d_toxprint1[,l_toxprint_tocombine[j]] >=1))
+    v_toxprint2 = length(which(d_toxprint2[,l_toxprint_tocombine[i]] >=1 & d_toxprint2[,l_toxprint_tocombine[j]] >=1))
     
     n_toxprint1 = sum(v_toxprint1)
     n_toxprint2 = sum(v_toxprint2)
@@ -103,12 +232,9 @@ while(i <= imax){
     # compute pval on a Zscore
     res <- prop.test(x = c(n_toxprint1, n_toxprint2), n = c(n_d_toxprint1, n_d_toxprint2))
     
-    # Printing the results
+    # only take when pval is not NA => count > 1
     pval = res$p.val 
-    if (is.na(pval) == TRUE){
-      d_combine = rbind(d_combine, c(toxprint_combine, "NA", "-", n_toxprint1, n_toxprint2, "NA", "NA"))
-      
-    }else{
+    if (is.na(pval) == FALSE){
       signif = signifPvalue(pval)
       d_combine = rbind(d_combine, c(toxprint_combine, round(pval, 4), signif, n_toxprint1, n_toxprint2, round(res$estimate[1], 2), round(res$estimate[2], 2)))
     }
@@ -118,9 +244,12 @@ while(i <= imax){
 }
 
 
-colnames(d_out) = c("Toxprint_combine", "Pval", "significatif", paste("N", strsplit(basename(p_toxprint1), "_")[[1]][1], sep = " "), paste("N", strsplit(basename(p_toxprint2), "_")[[1]][1], sep = " "), "Estimate prob1", "Estimate prob2")
-d_out = as.data.frame(d_out)
-d_out$Pval = as.double(d_out$Pval)
-d_out = d_out[order(d_out$Pval), ]
-write.csv(d_out, paste(pr_out, "combined_signif.csv", sep = ""))
+colnames(d_combine) = c("Toxprint", "Pval", "significatif", strsplit(basename(p_toxprint1), "_")[[1]][1], strsplit(basename(p_toxprint2), "_")[[1]][1], "Estimate prob1", "Estimate prob2")
+d_combine = as.data.frame(d_combine)
+d_combine$Pval = as.double(d_combine$Pval)
+d_combine = d_combine[order(d_combine$Pval), ]
+write.csv(d_combine, paste(pr_out, "combined_signif.csv", sep = ""))
+
+
+drawHist(d_combine, 0.01, 0.20, paste(pr_out, "combinetoxprint_signif.png", sep = ""))
 
