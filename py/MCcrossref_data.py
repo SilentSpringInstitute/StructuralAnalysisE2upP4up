@@ -556,7 +556,7 @@ class MCcrossref:
 
     def ComparisonTwoChemicalLists(self, l_datasets):
 
-        pr_out = pathFolder.createFolder(self.pr_out + "comparisonDesc_" + "-".join(l_datasets) + "/")
+        pr_out = pathFolder.createFolder(self.pr_out + "comparisonDescToxprint_" + "-".join(l_datasets) + "/")
 
         
         # by descriptors
@@ -565,13 +565,16 @@ class MCcrossref:
             return 
         
         # with molecular descriptors - quantitative with 
-        runExternal.comparisonDesc(self.c_Desc.d_desc[l_datasets[0]]["rdkit"], self.c_Desc.d_desc[l_datasets[1]]["rdkit"], pr_out + "rdkit")
-        runExternal.comparisonDesc(self.c_Desc.d_desc[l_datasets[0]]["OPERA"], self.c_Desc.d_desc[l_datasets[1]]["OPERA"], pr_out + "opera")
+        pr_rdkit = pathFolder.createFolder(pr_out + "rdkit/")
+        pr_opera = pathFolder.createFolder(pr_out + "opera/")
+        runExternal.comparisonDesc(self.c_Desc.d_desc[l_datasets[0]]["rdkit"], self.c_Desc.d_desc[l_datasets[1]]["rdkit"], pr_rdkit)
+        runExternal.comparisonDesc(self.c_Desc.d_desc[l_datasets[0]]["OPERA"], self.c_Desc.d_desc[l_datasets[1]]["OPERA"], pr_opera)
 
         # toxprint as descriptor - comparison qualitative proportion
+        pr_toxprint = pathFolder.createFolder(pr_out + "Toxprint/")
         p_toxprint1 = self.c_FP.writeToxPrintMatrix(list(toolbox.loadMatrix(self.d_dataset[l_datasets[0]]).keys()), pr_out + l_datasets[0] + "_toxprint.csv")
         p_toxprint2 = self.c_FP.writeToxPrintMatrix(list(toolbox.loadMatrix(self.d_dataset[l_datasets[1]]).keys()), pr_out + l_datasets[1] + "_toxprint.csv")
-        runExternal.comparisonToxPrint(p_toxprint1, p_toxprint2, pr_out + "toxprint")
+        runExternal.comparisonToxPrint(p_toxprint1, p_toxprint2, pr_toxprint)
 
         # with the similarity with the hormone
         pr_hormone = pathFolder.createFolder(pr_out + "similarity_hormone/")
@@ -718,8 +721,10 @@ class MCcrossref:
 
         # Comparison between two list of chemicals descriptor
         #####
-        #self.ComparisonTwoChemicalLists(["E2up", "H295R"])
-        #self.ComparisonTwoChemicalLists(["P4up", "H295R"])
+        self.ComparisonTwoChemicalLists(["E2up", "H295R"])
+        self.ComparisonTwoChemicalLists(["P4up", "H295R"])
+        STOPHERE
+        
         #self.ComparisonTwoChemicalLists(["E2up", "P4up"])
 
         # analysis of the toxprint #

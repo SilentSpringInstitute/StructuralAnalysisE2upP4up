@@ -2,19 +2,17 @@
 library(Toolbox)
 library(igraph)
 library(ggraph)
-
+library(scales)
 
 drawHist = function(d_toxprint, max_pval, min_prob, p_out){
   
   # reduce d_toxprint
-  d_toxprint = d_toxprint[which(d_toxprint[, "Pval"] < max_pval  | d_toxprint[, "Estimate prob1"] > min_prob | d_toxprint[, "Estimate prob2"] > min_prob),]
+  d_toxprint = d_toxprint[which(d_toxprint[, "Pval"] < max_pval  | d_toxprint[, 6] > min_prob | d_toxprint[, 7] > min_prob),]
   
   d_plot = NULL
   for(id in rownames(d_toxprint)){
-    if(d_toxprint[id, "Pval"] < max_pval  || d_toxprint[id, "Estimate prob1"] > min_prob || d_toxprint[id, "Estimate prob2"] > min_prob){
-      d_plot = rbind(d_plot, c(id, d_toxprint[id, c(1, 2)], "",  d_toxprint[id, c(4, 6)], colnames(d_toxprint)[4]))
-      d_plot = rbind(d_plot, c(id, d_toxprint[id, c(1, 2, 3, 5, 7)], colnames(d_toxprint)[5]))
-    }
+    d_plot = rbind(d_plot, c(id, d_toxprint[id, c(1, 2)], "",  d_toxprint[id, c(4, 6)], colnames(d_toxprint)[4]))
+    d_plot = rbind(d_plot, c(id, d_toxprint[id, c(1, 2, 3, 5, 7)], colnames(d_toxprint)[5]))
   }
   colnames(d_plot) = c("ID", "ToxPrint", "Pval", "Significative", "nb", "prob", "set")
   d_plot = as.data.frame(d_plot)
@@ -24,11 +22,19 @@ drawHist = function(d_toxprint, max_pval, min_prob, p_out){
   d_plot$prob = as.double(as.character(d_plot$prob))
   d_plot$Pval = as.double(as.character(d_plot$Pval))
   
-    
+  if (colnames(d_toxprint)[4] == "E2up"){
+    rev = TRUE
+    v_col = c( "#1f78b4", "#a6cee3")
+  }else{
+    rev = FALSE
+    v_col = c("#a6cee3", "#1f78b4")
+  }
+  
+  
   ggplot(data = d_plot, aes(x=reorder(ToxPrint, -Pval), y=prob, fill=set)) +
-    geom_bar(stat="identity", position=position_dodge())+
+    geom_bar(stat="identity", position=position_dodge2(reverse = rev))+
     geom_text(aes(label=Significative), vjust=1.6, color="black", position = position_dodge(0.6), size=3.5)+
-    scale_fill_brewer(palette="Paired")+
+    scale_fill_manual(values=v_col)+
     coord_flip() + 
     labs(y="Prob", x="Toxprint")
   
@@ -45,7 +51,7 @@ drawHist = function(d_toxprint, max_pval, min_prob, p_out){
 drawNet = function(d_alltoxprint, d_signif, cutoff_signif, p_out){
   
   # reduce with significative toxprint
-  l_toxprints_signif = d_signif$Toxprint[which(d_signif$Pval < cutoff_signif & d_signif$`Estimate prob1` > d_signif$`Estimate prob2`)]
+  l_toxprints_signif = d_signif$Toxprint[which(d_signif$Pval < cutoff_signif & d_signif[,6] > d_signif[,7])]
   d_alltoxprint = d_alltoxprint[, l_toxprints_signif]
   
   # define the node
@@ -94,11 +100,11 @@ drawNet = function(d_alltoxprint, d_signif, cutoff_signif, p_out){
   
  ggraph(net, layout = 'linear') + 
     geom_edge_arc(aes(color = weight, alpha=weight), width = 0.7) +
-    scale_edge_alpha(name = "")+
-    scale_edge_color_gradientn(name = "Edge",colors = c("cyan", "blue"), values = rescale(c(10,20,42))) +
+    scale_edge_alpha(name = "Count chem. sharing")+
+    scale_edge_color_gradientn(name = "Count chem. sharing",colors = c("cyan", "blue"), values = rescale(c(10,20,42))) +
     geom_node_point(aes(size = size, color = size)) +
-    scale_color_gradientn(name = "", colors = c("cyan", "darkblue"), values = rescale(c(10,35,60))) +
-    scale_size_continuous(name = "Node")+ 
+    scale_color_gradientn(name = "Node (chem. count)", colors = c("cyan", "darkblue"), values = rescale(c(10,35,60))) +
+    scale_size_continuous(name = "Node (chem. count)")+ 
     geom_node_text(aes(label = d_node$Toxprint), hjust=1, vjust=1, angle=45, nudge_y = -0.2,  color="black") +
     theme_void()+
     ylim(-4.5, NA)+xlim(-4.5, NA)
@@ -119,9 +125,9 @@ p_toxprint2 = args[2]
 pr_out = args[3]
 
 
-p_toxprint1 = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDesc_E2up-H295R/E2up_toxprint.csv"
-p_toxprint2 = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDesc_E2up-H295R/H295R_toxprint.csv"
-pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDesc_E2up-H295R/toxprint"
+#p_toxprint1 = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDescToxprint_E2up-H295R/E2up_toxprint.csv"
+#p_toxprint2 = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDescToxprint_E2up-H295R/H295R_toxprint.csv"
+#pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/comparisonDescToxprint_E2up-H295R/Toxprint/"
 
 d_toxprint1 = read.csv(p_toxprint1, sep = "\t", row.names = 1)
 
@@ -169,11 +175,11 @@ for(toxprint in l_toxprints){
 }
 
 
-colnames(d_out) = c("Toxprint", "Pval", "significatif", strsplit(basename(p_toxprint1), "_")[[1]][1], strsplit(basename(p_toxprint2), "_")[[1]][1], "Estimate prob1", "Estimate prob2")
+colnames(d_out) = c("Toxprint", "Pval", "significatif", strsplit(basename(p_toxprint1), "_")[[1]][1], strsplit(basename(p_toxprint2), "_")[[1]][1], paste(strsplit(basename(p_toxprint1), "_")[[1]][1], " prob", sep = ""), paste(strsplit(basename(p_toxprint2), "_")[[1]][1], " prob", sep = ""))
 d_out = as.data.frame(d_out)
 d_out$Pval = as.double(d_out$Pval)
 d_out = d_out[order(d_out$Pval), ]
-write.csv(d_out, paste(pr_out, "_signif.csv", sep = ""))
+write.csv(d_out, paste(pr_out, "signif.csv", sep = ""))
 
 # make plot 
 # only  > ** significant and more than 20% of the set
@@ -207,7 +213,7 @@ write.table(d_sum_out, paste(pr_out, "countToxprint.sum", sep =""))
 ######
 
 # remove toxprint with a expected prob < 0.1
-l_toxprint_tocombine = d_out[which(d_out$`Estimate prob1` != "NA" & d_out$`Estimate prob2` != "NA"),1]
+l_toxprint_tocombine = d_out[which(d_out[,6] != "NA" & d_out[,7] != "NA"),1]
 
 # do combination of toxprint
 ########
@@ -244,12 +250,12 @@ while(i <= imax){
 }
 
 
-colnames(d_combine) = c("Toxprint", "Pval", "significatif", strsplit(basename(p_toxprint1), "_")[[1]][1], strsplit(basename(p_toxprint2), "_")[[1]][1], "Estimate prob1", "Estimate prob2")
+colnames(d_combine) = c("Toxprint", "Pval", "significatif", strsplit(basename(p_toxprint1), "_")[[1]][1], strsplit(basename(p_toxprint2), "_")[[1]][1], paste(strsplit(basename(p_toxprint1), "_")[[1]][1], " prob", sep = ""), paste(strsplit(basename(p_toxprint2), "_")[[1]][1], " prob", sep = ""))
 d_combine = as.data.frame(d_combine)
 d_combine$Pval = as.double(d_combine$Pval)
 d_combine = d_combine[order(d_combine$Pval), ]
 write.csv(d_combine, paste(pr_out, "combined_signif.csv", sep = ""))
 
 
-drawHist(d_combine, 0.01, 0.20, paste(pr_out, "combinetoxprint_signif.png", sep = ""))
+drawHist(d_combine, 0.01, 0.20, paste(pr_out, "combine_signif.png", sep = ""))
 
