@@ -192,12 +192,10 @@ def comparisonWithHormoneSimilarity(p_dataset1, p_dataset2, p_hormone, pr_out):
     cmd = "./comparisonHormoneSimilarity.R %s %s %s %s"%(p_dataset1, p_dataset2, p_hormone, pr_out)
     runRCMD(cmd)
 
-
 def overlapListHormoneSim(p_upset, p_hormone_similarity, pr_out):
 
     cmd = "./overlapListHormoneSim.R %s %s %s"%(p_upset, p_hormone_similarity, pr_out)
     runRCMD(cmd)
-
 
 def overlapAssaysListChem(p_assays, p_upset, pr_out):
     cmd = "./overlapListAndAssays.R %s %s %s"%(p_assays, p_upset, pr_out)
@@ -214,6 +212,10 @@ def comparisonToxPrint(p_toxprint1, p_toxprint2, pr_out):
 def computeADBasedOnSimilarityMatrix(p_sim_matrix, p_matrix_chem, pr_AD_sim):
     cmd = "./ADSimilarityBased.R %s %s %s"%(p_sim_matrix, p_matrix_chem, pr_AD_sim)
     runRQSARModeling(cmd)
+
+def drawRadialPlotAC50(p_filin, pr_out):
+    cmd = "./radialPlotAC50.R %s %s"%(p_filin, pr_out)
+    runRCMD(cmd)
 
 ##############
 # run biotransformer tool

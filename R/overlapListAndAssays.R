@@ -35,9 +35,9 @@ for(chem in l_chem_all){
   l_rows = NULL
   
   # for E2 and P4 
-  if(chem %in% rownames(d_chemList)){
-    l_rows = append(l_rows, d_chemList[chem, "E2.up"])
-    l_rows = append(l_rows, d_chemList[chem, "P4.up"])
+  if(chem %in% rownames(d_chemList) == TRUE){
+    l_rows = append(l_rows, d_chemList[chem, "E2up"])
+    l_rows = append(l_rows, d_chemList[chem, "P4up"])
   }else{
     l_rows = append(l_rows, 0)
     l_rows = append(l_rows, 0)

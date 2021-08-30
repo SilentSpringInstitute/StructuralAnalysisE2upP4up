@@ -17,10 +17,11 @@ import ToxCast
 
 class MCcrossref:
 
-    def __init__(self, p_crossref, p_exposure, p_hormones, COR_VAL, MAX_QUANTILE, pr_ToxPrints, pr_out):
+    def __init__(self, p_crossref, p_exposure, p_hormones, COR_VAL, MAX_QUANTILE, pr_ToxPrints, pr_root):
 
         self.pr_toxprint = pr_ToxPrints
-        self.pr_out = pr_out
+        self.pr_out = pr_root + "results/"
+        self.pr_data = pr_root + "data/"
         self.p_crossref = p_crossref
         self.p_exposure = p_exposure
         self.p_hormones = p_hormones
@@ -28,7 +29,7 @@ class MCcrossref:
         self.COR_VAL = COR_VAL
         self.MAX_QUANTILE = MAX_QUANTILE
 
-        self.pr_desc = pathFolder.createFolder(pr_out + "DESC/")
+        self.pr_desc = pathFolder.createFolder(self.pr_out + "DESC/")
     
     def loadCrossRefExcel(self, rm_radiation=1):
 
@@ -156,8 +157,8 @@ class MCcrossref:
 
         # check if file exist to not repete
         p_upset = pr_results + "upset_matrix"
-        if path.exists(p_upset):
-            return p_upset
+        #if path.exists(p_upset):
+        #    return p_upset
 
         d_d_chem = {}
         l_CASRN = []
@@ -222,6 +223,30 @@ class MCcrossref:
         if len(l_list_chem) <= 4:
             runExternal.vennPlot(p_upset)
         
+        d_upset = toolbox.loadMatrix(p_upset)
+
+        # save overlap
+        pr_overlap = pathFolder.createFolder(pr_results + "overlapChem/")
+        d_upset = toolbox.loadMatrix(p_upset, sep = "\t")
+        l_list_chem = list(d_upset[list(d_upset.keys())[0]].keys())
+
+        p_filout = pr_overlap + "overlap_chem.csv"
+        filout = open(p_filout, "w")
+        filout.write("CASRN\tChemical.name\n")
+
+        for chem in d_upset.keys():
+            flag = 0
+            for list_chem in l_list_chem:
+                if d_upset[chem][list_chem] == "0":
+                    flag = 1
+            if flag == 1:
+                continue
+            filout.write("%s\t%s\n"%(chem, self.d_all[chem]["name"]))
+            # copy paste png chemicals
+            try:copyfile("%sPNG/%s.png"%(self.pr_desc, chem), "%s%s.png"%(pr_overlap, chem))
+            except: pass
+        filout.close()
+
         return p_upset
 
     def overlapBetweenListChemWithHormoneSim(self, l_list_chem):
@@ -583,8 +608,11 @@ class MCcrossref:
     def crossToxCastAssays(self, l_genes = ["CYP19A1"]):
         pr_results = pathFolder.createFolder(self.pr_out + "overlapToxCast/")
         
-        c_ToxCast = ToxCast.ToxCast(l_genes, pr_results)
-        p_assays = c_ToxCast.loadAssaysMatrix()
+        p_assays = pr_results + "".join(l_genes) + ".csv"
+        if not path.exists(p_assays):
+            c_ToxCast = ToxCast.ToxCast(l_genes, pr_results)
+            p_assays = c_ToxCast.loadAssaysMatrix()
+        
 
         # compte overlap E2 - P4 up
         p_overlap = self.overlapBetweenListChem(["E2up", "P4up"])
@@ -592,7 +620,7 @@ class MCcrossref:
         # overlap
         runExternal.overlapAssaysListChem(p_assays, p_overlap, pr_results)
 
-        p_upset = pr_results + "upset.csv"
+        p_upset = pr_results + "upset_all.csv"
 
         # extract structure from overlap
         pr_overlap = pathFolder.createFolder(pr_results + "overlapChem/")
@@ -606,15 +634,55 @@ class MCcrossref:
         for chem in d_upset.keys():
             flag = 0
             for list_chem in l_list_chem:
-                if d_upset[chem][list_chem] == "0":
+                if d_upset[chem][list_chem] == "1":
                     flag = 1
-            if flag == 1:
+            if flag != 1:
                 continue
-            filout.write("%s\t%s\n"%(chem, self.d_all[chem]["name"]))
+            try:filout.write("%s\t%s\n"%(chem, self.d_all[chem]["name"]))
+            except: pass
             # copy paste png chemicals
             try:copyfile("%sPNG/%s.png"%(self.pr_desc, chem), "%s%s.png"%(pr_overlap, chem))
             except: pass
         filout.close()
+
+    def AC50ByList(self, aenm, l_list, l_class_active = []):
+
+        pr_out = pathFolder.createFolder(self.pr_out + "Assays_" + aenm + "-".join(l_list) + '/')
+        
+        # load ac50
+        p_ac50 = self.pr_data + aenm + "/ac50.csv"
+        if path.exists(p_ac50):
+            d_ac50 = toolbox.loadMatrix(p_ac50)
+        else:
+            return
+        
+        d_out = {}
+        for dtxsid in d_ac50:
+            casrn = d_ac50[dtxsid]["casn"]
+            ac50 = d_ac50[dtxsid]["ac50"]
+            name = d_ac50[dtxsid]["name"]
+            QC = d_ac50[dtxsid]["new_hitc"]
+            if ac50 != "" and casrn in list(self.d_all.keys()) and QC == "1":
+                if not casrn in list(d_out.keys()):
+                    d_out[casrn] = {}
+                    d_out[casrn]["ac50"] = ac50
+                    d_out[casrn]["name"] = name
+
+                for list_chem in l_list:
+                    if self.d_all[casrn][list_chem] == 1 or self.d_all[casrn][list_chem] in l_class_active:
+                        d_out[casrn][list_chem] = 1
+                    else:
+                        d_out[casrn][list_chem] = 0
+
+        p_filout = pr_out + "ac50_list.csv"
+        filout = open(p_filout, "w")
+        filout.write("CASRN\tname\tAC50\t" + "\t".join(l_list) + "\n")
+        for casrn in d_out.keys():
+            filout.write("%s\t%s\t%s\t%s\n"%(casrn, d_out[casrn]["name"], d_out[casrn]["ac50"], "\t".join([str(d_out[casrn][inlist]) for inlist in l_list])))
+        filout.close()
+
+        # draw radial plot with AC50
+        runExternal.drawRadialPlotAC50(p_filout, pr_out)
 
     def corHormoneSimilarityClassActive(self, dataset):
         """
@@ -659,8 +727,7 @@ class MCcrossref:
         #self.overlapBetweenListChem(["E2up", "P4up", "H295R"])
         #self.overlapBetweenListChem(["MC", "genotoxic", "H295R"])
         #self.overlapBetweenListChem(["E2up", "P4up"])
-
-
+        self.overlapBetweenListChem(["MC", "E2up", "P4up"])
         # analyse class of chemical by MC
         ####
         #self.ChemClassesByMC()
@@ -676,7 +743,7 @@ class MCcrossref:
         # FP types: "MACCS", "Morgan", "Mol"
         # Dist types: "Dice", "Tanimoto"
         #self.c_Desc.compute_similarity_inter_hormones(self.p_hormones)
-        self.c_Desc.compute_similarity_with_hormones(self.p_hormones, "MACCS", "Tanimoto")
+        #self.c_Desc.compute_similarity_with_hormones(self.p_hormones, "MACCS", "Tanimoto")
         
         # correlation similarity with eff/pot class for E2-P4 up
         ###############################
@@ -696,8 +763,8 @@ class MCcrossref:
 
         # load Toxprint by list
         ##########################
-        self.c_FP = runToxPrint.runToxPrint(self.d_dataset, self.pr_toxprint, self.pr_out)
-        self.c_FP.loadToxPrint()
+        #self.c_FP = runToxPrint.runToxPrint(self.d_dataset, self.pr_toxprint, self.pr_out)
+        #self.c_FP.loadToxPrint()
 
         # overlap with similarity with hormone
         #######
@@ -716,14 +783,13 @@ class MCcrossref:
 
         # H295R #
         ######
-        self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit", "OPERA"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE, SOM_size=8) #hclust
+        #self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit", "OPERA"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE, SOM_size=8) #hclust
 
 
         # Comparison between two list of chemicals descriptor
         #####
-        self.ComparisonTwoChemicalLists(["E2up", "H295R"])
-        self.ComparisonTwoChemicalLists(["P4up", "H295R"])
-        STOPHERE
+        #self.ComparisonTwoChemicalLists(["E2up", "H295R"])
+        #self.ComparisonTwoChemicalLists(["P4up", "H295R"])
         
         #self.ComparisonTwoChemicalLists(["E2up", "P4up"])
 
@@ -748,5 +814,6 @@ class MCcrossref:
         #############################
 
         #self.crossToxCastAssays(l_genes = ["CYP19A1"])
-
+        #self.AC50ByList("TOX21_Aromatase_Inhibition", ["E2up", "P4up"], ["higher", "medium", "lower"])
+        #self.AC50ByList("NVS_ADME_hCYP19A1", ["E2up", "P4up"], ["higher", "medium", "lower"])
 

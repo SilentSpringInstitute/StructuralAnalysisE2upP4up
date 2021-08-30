@@ -37,7 +37,7 @@ c_Stereo.main()
 
 # LOAD AND RUN MC crossref ANALYSIS #
 #####################################
-c_MCcrossref = MCcrossref_data.MCcrossref(p_crossRef, p_exposure, p_hormones, COR_VAL, MAX_QUANTILE, PR_ROOT + "comptox/", PR_RESULTS)
+c_MCcrossref = MCcrossref_data.MCcrossref(p_crossRef, p_exposure, p_hormones, COR_VAL, MAX_QUANTILE, PR_ROOT + "comptox/", PR_ROOT)
 c_MCcrossref.main()
 
 # overlap with ToxCast - aromatase assays
