@@ -210,7 +210,7 @@ class MCcrossref:
         l_CASRN = list(set(l_CASRN))
         for CASRN in l_CASRN:
             l_w = []
-            for list_chem in d_d_chem:
+            for list_chem in d_d_chem.keys():
                 if CASRN in d_d_chem[list_chem]:
                     l_w.append("1")
                 else:
@@ -726,8 +726,11 @@ class MCcrossref:
         #self.overlapBetweenListChem(["Steroid", "E2up", "P4up"])
         #self.overlapBetweenListChem(["E2up", "P4up", "H295R"])
         #self.overlapBetweenListChem(["MC", "genotoxic", "H295R"])
-        #self.overlapBetweenListChem(["E2up", "P4up"])
+        self.overlapBetweenListChem(["E2up", "P4up"])
         self.overlapBetweenListChem(["MC", "E2up", "P4up"])
+        self.overlapBetweenListChem(["MC", "E2up", "P4up", "H295R"])
+
+        
         # analyse class of chemical by MC
         ####
         #self.ChemClassesByMC()
@@ -743,7 +746,7 @@ class MCcrossref:
         # FP types: "MACCS", "Morgan", "Mol"
         # Dist types: "Dice", "Tanimoto"
         #self.c_Desc.compute_similarity_inter_hormones(self.p_hormones)
-        #self.c_Desc.compute_similarity_with_hormones(self.p_hormones, "MACCS", "Tanimoto")
+        self.c_Desc.compute_similarity_with_hormones(self.p_hormones, "MACCS", "Tanimoto")
         
         # correlation similarity with eff/pot class for E2-P4 up
         ###############################
@@ -752,7 +755,7 @@ class MCcrossref:
         
         # overlap E2up - P4up with class Efficacy/Efficiency
         ######
-        #self.overlapListChemE2upP4up()
+        self.overlapListChemE2upP4up()
 
 
         # put png in a different folder
@@ -783,8 +786,8 @@ class MCcrossref:
 
         # H295R #
         ######
-        #self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit", "OPERA"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE, SOM_size=8) #hclust
-
+        self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit", "OPERA"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE, SOM_size=8) #hclust
+        here
 
         # Comparison between two list of chemicals descriptor
         #####

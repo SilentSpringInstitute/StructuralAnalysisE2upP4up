@@ -9,12 +9,14 @@ loadProp = function(p_prop){
   
   # for E2up
   d_prop$E2up[which(is.na(d_prop$E2up))] = "NT"
-  d_prop$E2up[which(d_prop$E2up == "ns effect")] = "NEG"
+  d_prop$E2up[which(d_prop$E2up == "nan")] = "NT"
+  d_prop$E2up[which(d_prop$E2up == "ns effect" | d_prop$E2up == "borderline")] = "NEG"
   d_prop$E2up[which(d_prop$E2up != "NEG" & d_prop$E2up != "NT")] = "POS"
   
   #for P4up
   d_prop$P4up[which(is.na(d_prop$P4up))] = "NT"
-  d_prop$P4up[which(d_prop$P4up == "ns effect")] = "NEG"
+  d_prop$P4up[which(d_prop$P4up == "nan")] = "NT"
+  d_prop$P4up[which(d_prop$P4up == "ns effect" | d_prop$P4up == "borderline")] = "NEG"
   d_prop$P4up[which(d_prop$P4up != "NEG" & d_prop$P4up != "NT")] = "POS"
   
   #for ER
