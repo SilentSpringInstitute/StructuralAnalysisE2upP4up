@@ -667,6 +667,7 @@ class MCcrossref:
                     d_out[casrn] = {}
                     d_out[casrn]["ac50"] = ac50
                     d_out[casrn]["name"] = name
+                    d_out[casrn]["dtxsid"] = dtxsid
 
                 for list_chem in l_list:
                     if self.d_all[casrn][list_chem] == 1 or self.d_all[casrn][list_chem] in l_class_active:
@@ -674,11 +675,28 @@ class MCcrossref:
                     else:
                         d_out[casrn][list_chem] = 0
 
+        # add in it the AC50 from the h295R
+        pr_assays = self.pr_data + "H295R_assays/"
+        l_p_assays = listdir(pr_assays)
+        l_assays = []
+        for p_assay in l_p_assays:
+            d_assays = toolbox.loadMatrix(pr_assays + p_assay)
+            assay = p_assay[:-4]
+            l_assays.append(assay)
+            for k_casn in d_out.keys():
+                dtxsid = d_out[k_casn]["dtxsid"]
+                
+                if dtxsid in list(d_assays.keys()) and d_assays[dtxsid]["new_hitc"] == "1":
+                    d_out[k_casn][assay] =  d_assays[dtxsid]["ac50"]
+                else:
+                    d_out[k_casn][assay] =  "NA"
+
+
         p_filout = pr_out + "ac50_list.csv"
         filout = open(p_filout, "w")
-        filout.write("CASRN\tname\tAC50\t" + "\t".join(l_list) + "\n")
+        filout.write("CASRN\tname\tAC50\t" + "\t".join(l_list) +"\t" + "\t".join(l_assays) + "\n")
         for casrn in d_out.keys():
-            filout.write("%s\t%s\t%s\t%s\n"%(casrn, d_out[casrn]["name"], d_out[casrn]["ac50"], "\t".join([str(d_out[casrn][inlist]) for inlist in l_list])))
+            filout.write("%s\t%s\t%s\t%s\t%s\n"%(casrn, d_out[casrn]["name"], d_out[casrn]["ac50"], "\t".join([str(d_out[casrn][inlist]) for inlist in l_list]), "\t".join([str(d_out[casrn][assay]) for assay in l_assays])))
         filout.close()
 
         # draw radial plot with AC50
@@ -726,9 +744,9 @@ class MCcrossref:
         #self.overlapBetweenListChem(["Steroid", "E2up", "P4up"])
         #self.overlapBetweenListChem(["E2up", "P4up", "H295R"])
         #self.overlapBetweenListChem(["MC", "genotoxic", "H295R"])
-        self.overlapBetweenListChem(["E2up", "P4up"])
-        self.overlapBetweenListChem(["MC", "E2up", "P4up"])
-        self.overlapBetweenListChem(["MC", "E2up", "P4up", "H295R"])
+        #self.overlapBetweenListChem(["E2up", "P4up"])
+        #self.overlapBetweenListChem(["MC", "E2up", "P4up"])
+        #self.overlapBetweenListChem(["MC", "E2up", "P4up", "H295R"])
 
         
         # analyse class of chemical by MC
@@ -746,7 +764,7 @@ class MCcrossref:
         # FP types: "MACCS", "Morgan", "Mol"
         # Dist types: "Dice", "Tanimoto"
         #self.c_Desc.compute_similarity_inter_hormones(self.p_hormones)
-        self.c_Desc.compute_similarity_with_hormones(self.p_hormones, "MACCS", "Tanimoto")
+        #self.c_Desc.compute_similarity_with_hormones(self.p_hormones, "MACCS", "Tanimoto")
         
         # correlation similarity with eff/pot class for E2-P4 up
         ###############################
@@ -755,7 +773,7 @@ class MCcrossref:
         
         # overlap E2up - P4up with class Efficacy/Efficiency
         ######
-        self.overlapListChemE2upP4up()
+        #self.overlapListChemE2upP4up()
 
 
         # put png in a different folder
@@ -786,8 +804,8 @@ class MCcrossref:
 
         # H295R #
         ######
-        self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit", "OPERA"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE, SOM_size=8) #hclust
-        here
+        #self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit", "OPERA"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE, SOM_size=8) #hclust
+
 
         # Comparison between two list of chemicals descriptor
         #####
@@ -817,6 +835,7 @@ class MCcrossref:
         #############################
 
         #self.crossToxCastAssays(l_genes = ["CYP19A1"])
-        #self.AC50ByList("TOX21_Aromatase_Inhibition", ["E2up", "P4up"], ["higher", "medium", "lower"])
+        self.AC50ByList("TOX21_Aromatase_Inhibition", ["E2up", "P4up"], ["higher", "medium", "lower"])
         #self.AC50ByList("NVS_ADME_hCYP19A1", ["E2up", "P4up"], ["higher", "medium", "lower"])
+
 

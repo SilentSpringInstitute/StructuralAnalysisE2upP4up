@@ -235,24 +235,15 @@ args = commandArgs(TRUE)
 p_AC50 = args[1]
 pr_out = args[2]
 
-#p_AC50 = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/Assays_TOX21_Aromatase_InhibitionE2up-P4up/ac50_list.csv"
-#pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/Assays_TOX21_Aromatase_InhibitionE2up-P4up/"
+p_AC50 = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/Assays_TOX21_Aromatase_InhibitionE2up-P4up/ac50_list.csv"
+pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/Assays_TOX21_Aromatase_InhibitionE2up-P4up/"
 
 
 d_AC50 = read.csv(p_AC50, header = TRUE, sep = "\t")
 rownames(d_AC50) = d_AC50[,1]
 
 d_AC50 = d_AC50[order(d_AC50$AC50),]
-
-
-# do plot by E2up
-d_plot_name = log10(d_AC50[,c(3)])
-d_plot_name = d_AC50[,c(3)]
-names(d_plot_name) = d_AC50$name
-
-d_plot_casrn = log10(d_AC50[,c(3)])
-d_plot_casrn = d_AC50[,c(3)]
-names(d_plot_casrn) = d_AC50$CASRN
+d_AC50[is.na(d_AC50)] <- 0
 
 
 l_chem_list = c("E2up", "P4up", "overlap")
@@ -261,25 +252,34 @@ for(chem_list in l_chem_list){
  
   print(chem_list)
   if (chem_list == "overlap"){
-    d_toplot_casrn = d_plot_casrn[which(rowSums(d_AC50[,c(l_chem_list[1:(length(l_chem_list)-1)])]) == (length(l_chem_list) -1))]
-    d_toplot_name = d_plot_name[which(rowSums(d_AC50[,c(l_chem_list[1:(length(l_chem_list)-1)])]) == (length(l_chem_list) -1))]
+    d_toplot = d_AC50[which(rowSums(d_AC50[,c(l_chem_list[1:(length(l_chem_list)-1)])]) == (length(l_chem_list) -1)),]
   }else{
-    d_toplot_casrn = d_plot_casrn[which(d_AC50[,c(chem_list)] == 1 & rowSums(d_AC50[,c(l_chem_list[1:(length(l_chem_list)-1)])]) != (length(l_chem_list)-1))]
-    d_toplot_name = d_plot_name[which(d_AC50[,c(chem_list)] == 1 & rowSums(d_AC50[,c(l_chem_list[1:(length(l_chem_list)-1)])]) != (length(l_chem_list)-1))]
+    d_toplot = d_AC50[which(d_AC50[,c(chem_list)] == 1 & rowSums(d_AC50[,c(l_chem_list[1:(length(l_chem_list)-1)])]) != (length(l_chem_list)-1)),]
   }
   
   # plot with CASRN
   svg(paste (pr_out, chem_list, "_casrn_radar.svg", sep = ""), 30, 30)
   par(mar=c(0,0,0,0))
-  radial.plot(d_toplot_casrn, labels=names(d_toplot_casrn), rp.type="p",main="", line.col="black", mar=c(25,25,25,25), cex.lab = 0.5,)# radial.lim=c(0,3))
+  radial.plot(d_toplot$AC50, labels=d_toplot$CASRN, rp.type="p",main="", line.col="black", mar=c(25,25,25,25), cex.lab = 0.5, radial.lim=c(0,100))
+  par(new=TRUE)
+  radial.plot(d_toplot$CEETOX_H295R_ESTRADIOL_dn, labels="", rp.type="p",main="", line.col="red", mar=c(25,25,25,25), radial.lim=c(0,100))
+  par(new=TRUE)
+  radial.plot(d_toplot$CEETOX_H295R_ESTRADIOL_up, labels="", rp.type="p",main="", line.col="blue", mar=c(25,25,25,25), radial.lim=c(0,100))
+  par(new=TRUE)
+  radial.plot(d_toplot$CEETOX_H295R_PROG_dn, labels="", rp.type="p",main="", line.col="red", mar=c(25,25,25,25), radial.lim=c(0,100))
+  par(new=TRUE)
+  radial.plot(d_toplot$CEETOX_H295R_PROG_up, labels="", rp.type="p",main="", line.col="blue", mar=c(25,25,25,25), radial.lim=c(0,100))
+  
   dev.off()
   
   # plot with name
-  svg(paste (pr_out, chem_list, "_name_radar.svg", sep = ""), 30, 30)
-  par(mar=c(0,0,0,0))
-  radial.plot(d_toplot_name, labels=names(d_toplot_name), rp.type="p",main="", line.col="black", mar=c(25,25,25,25), cex.lab = 0.5,)# radial.lim=c(0,3))
-  dev.off()
+  #svg(paste (pr_out, chem_list, "_name_radar.svg", sep = ""), 30, 30)
+  #par(mar=c(0,0,0,0))
+  #radial.plot(d_toplot_name, labels=names(d_toplot_name), rp.type="p",main="", line.col="black", mar=c(25,25,25,25), cex.lab = 0.5)#, radial.lim=c(0,3))
+  #par(new=TRUE)
+  #radial.plot(d_AC50[names(d_toplot_name), c("CEETOX_H295R_ESTRADIOL_up")], labels = "", rp.type="p", radial.lim=c(0, 300), mar=c(25,25,25,25), line.col = "red", lwd = 10)
+  #dev.off()
   
   # write the AC50 by chemicals
-  write.csv(d_toplot_name, paste(pr_out, chem_list, "_AC50.csv", sep = ""))
+  #write.csv(d_toplot_name, paste(pr_out, chem_list, "_AC50.csv", sep = ""))
 }
