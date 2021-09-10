@@ -42,8 +42,20 @@ class MCcrossref:
                 if search("radiation", str(self.d_MC[l_chem[i]]["chemical_use SEE CPDAT-EXPOCAST SPREADSHEET"]).lower()):
                     del self.d_MC[l_chem[i]]
                 i = i + 1
+
+        # load E2up need to load 2 sheet to have SMILES        
+        # 1- load AC50 from bethsaida EHP
         self.d_E2up = toolbox.loadExcelSheet(self.p_crossref, name_sheet='E2-up', k_head = "CASRN")
         self.d_P4up = toolbox.loadExcelSheet(self.p_crossref, name_sheet='P4-up', k_head = "CASRN")
+
+        # 2- load AC50
+        d_E2up_temp = toolbox.loadExcelSheet(self.p_crossref, name_sheet='H295R_E2up', k_head = "CASN_Protect")
+        d_P4up_temp = toolbox.loadExcelSheet(self.p_crossref, name_sheet='H295R_P4up', k_head = "CASN_Protect")
+        
+        toolbox.combineDict(self.d_E2up, d_E2up_temp)
+        toolbox.combineDict(self.d_P4up, d_P4up_temp)
+
+        # for ER and h295 stereo only take the sheet with the right name
         self.d_ER = toolbox.loadExcelSheet(self.p_crossref, name_sheet='Judson ER active', k_head = "CASRN")
         self.d_H295R = toolbox.loadExcelSheet(self.p_crossref, name_sheet='H295R_steroid_synth', k_head = "CASRN")
 
@@ -646,10 +658,13 @@ class MCcrossref:
         filout.close()
 
     def AC50ByList(self, aenm, l_list, l_class_active = []):
+        """
+        Make radial plot with AC50 for selected assays and E2up - P4up AC50 or AC10
+        """
 
         pr_out = pathFolder.createFolder(self.pr_out + "Assays_" + aenm + "-".join(l_list) + '/')
         
-        # load ac50
+        # load ac50 for the selected aenm
         p_ac50 = self.pr_data + aenm + "/ac50.csv"
         if path.exists(p_ac50):
             d_ac50 = toolbox.loadMatrix(p_ac50)
@@ -657,49 +672,70 @@ class MCcrossref:
             return
         
         d_out = {}
-        for dtxsid in d_ac50:
+        for dtxsid in d_ac50.keys():
             casrn = d_ac50[dtxsid]["casn"]
             ac50 = d_ac50[dtxsid]["ac50"]
             name = d_ac50[dtxsid]["name"]
             QC = d_ac50[dtxsid]["new_hitc"]
             if ac50 != "" and casrn in list(self.d_all.keys()) and QC == "1":
-                if not casrn in list(d_out.keys()):
+                #flag_in = 0
+                #for list_chem in l_list:
+                #    if self.d_all[casrn][list_chem] == 1 or self.d_all[casrn][list_chem] in l_class_active:
+                #        flag_in = 1
+                #        break
+                
+                #if flag_in == 1:
                     d_out[casrn] = {}
                     d_out[casrn]["ac50"] = ac50
                     d_out[casrn]["name"] = name
                     d_out[casrn]["dtxsid"] = dtxsid
+                    for list_chem in l_list:
+                        if self.d_all[casrn][list_chem] == 1 or self.d_all[casrn][list_chem] in l_class_active:
+                            d_out[casrn][list_chem] = 1
+                        else:
+                            d_out[casrn][list_chem] = 0
+                #d_out[casrn] = {}
 
-                for list_chem in l_list:
-                    if self.d_all[casrn][list_chem] == 1 or self.d_all[casrn][list_chem] in l_class_active:
-                        d_out[casrn][list_chem] = 1
-                    else:
-                        d_out[casrn][list_chem] = 0
 
-        # add in it the AC50 from the h295R
+        # add in it the variation of the hormone level from the h295R
         pr_assays = self.pr_data + "H295R_assays/"
         l_p_assays = listdir(pr_assays)
-        l_assays = []
+        l_horm_delta = []
         for p_assay in l_p_assays:
             d_assays = toolbox.loadMatrix(pr_assays + p_assay)
-            assay = p_assay[:-4]
-            l_assays.append(assay)
+            horm_delta = p_assay[:-4]
+            l_horm_delta.append(horm_delta)
             for k_casn in d_out.keys():
                 dtxsid = d_out[k_casn]["dtxsid"]
                 
                 if dtxsid in list(d_assays.keys()) and d_assays[dtxsid]["new_hitc"] == "1":
-                    d_out[k_casn][assay] =  d_assays[dtxsid]["ac50"]
+                    d_out[k_casn][horm_delta] =  d_assays[dtxsid]["ac50"]
                 else:
-                    d_out[k_casn][assay] =  "NA"
+                    d_out[k_casn][horm_delta] =  "NA"
 
+
+        # add AC50 + AC10 for E2up and P4up
+
+        l_kac = ["AC50_E2up", "AC10_E2up", "AC50_P4up", "AC10_P4up"]
+        for k_casn in d_out.keys():
+            try:d_out[k_casn]["AC50_E2up"] = self.d_E2up[k_casn]["AC50 (µM)"]
+            except: d_out[k_casn]["AC50_E2up"] = "NA"
+            try:d_out[k_casn]["AC10_E2up"] = self.d_E2up[k_casn]["AC10 (µM)"]
+            except: d_out[k_casn]["AC10_E2up"] = "NA"
+            try:d_out[k_casn]["AC50_P4up"] = self.d_P4up[k_casn]["AC50 (µM)"]
+            except: d_out[k_casn]["AC50_P4up"] = "NA"
+            try:d_out[k_casn]["AC10_P4up"] = self.d_P4up[k_casn]["AC10 (µM)"]
+            except: d_out[k_casn]["AC10_P4up"] = "NA"
 
         p_filout = pr_out + "ac50_list.csv"
         filout = open(p_filout, "w")
-        filout.write("CASRN\tname\tAC50\t" + "\t".join(l_list) +"\t" + "\t".join(l_assays) + "\n")
+        filout.write("CASRN\tname\tAC50\t" + "\t".join(l_list) +"\t" + "\t".join(l_horm_delta) + "\t" + "\t".join(l_kac) + "\n")
         for casrn in d_out.keys():
-            filout.write("%s\t%s\t%s\t%s\t%s\n"%(casrn, d_out[casrn]["name"], d_out[casrn]["ac50"], "\t".join([str(d_out[casrn][inlist]) for inlist in l_list]), "\t".join([str(d_out[casrn][assay]) for assay in l_assays])))
+            filout.write("%s\t%s\t%s\t%s\t%s\t%s\n"%(casrn, d_out[casrn]["name"], d_out[casrn]["ac50"], "\t".join([str(d_out[casrn][inlist]) for inlist in l_list]), "\t".join([str(d_out[casrn][delta_horm]) for delta_horm in l_horm_delta]), "\t".join(["0" if search("not active",str(d_out[casrn][kac])) else str(d_out[casrn][kac]) for kac in l_kac])))
         filout.close()
 
         # draw radial plot with AC50
+        stophere
         runExternal.drawRadialPlotAC50(p_filout, pr_out)
 
     def corHormoneSimilarityClassActive(self, dataset):

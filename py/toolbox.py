@@ -15,9 +15,11 @@ def loadExcelSheet(p_excel, name_sheet, k_head):
     nb_col = data_size[1]
     l_col = data_frame.columns
 
+
     i = 0
     while i < nb_row:
-        rowname = data_frame.iloc[i][k_head]
+        rowname = str(data_frame.iloc[i][k_head])
+        rowname = rowname.replace("'", "")
         if not rowname in list(d_out.keys()):
             d_out[rowname] = {}
         j = 0
@@ -32,7 +34,6 @@ def loadExcelSheet(p_excel, name_sheet, k_head):
         i = i + 1
     
     return d_out
-
 
 def loadMatrixToList(pmatrixIn, sep = "\t"):
 
@@ -77,8 +78,6 @@ def loadMatrixToList(pmatrixIn, sep = "\t"):
         i += 1
 
     return l_out
-
-
 
 def loadMatrix(pmatrixIn, sep = "\t"):
 
@@ -127,7 +126,6 @@ def loadMatrix(pmatrixIn, sep = "\t"):
 
     return dout
 
-
 def formatLine(linein):
 
     linein = linein.replace("\n", "")
@@ -151,8 +149,6 @@ def formatLine(linein):
 
     linenew = linenew.replace('\"', "")
     return linenew
-
-
 
 def writeMatrix(ddesc, pdescAct, sep = "\t"):
 
@@ -180,7 +176,6 @@ def writeMatrix(ddesc, pdescAct, sep = "\t"):
         filout.write(sep.join(lval) + "\n")
     filout.close()
 
-
 def formatLineDataset(linein):
 
     linein = linein.replace("\n", "")
@@ -204,10 +199,24 @@ def formatLineDataset(linein):
     linenew = linenew.replace('\"', "")
     return linenew
 
-
-
-
 def colNameDict(dict_in):
 
     k1 = list(dict_in.keys())[0]
     return list(dict_in[k1].keys())
+
+def combineDict(d_main, d_toadd):
+
+    # define list of k that need to be added in the main dictionnary
+    l_kadd = []
+    for k in d_main.keys():
+        if k in list(d_toadd.keys()):
+            for k_toadd in d_toadd[k].keys():
+                if not k_toadd in list(d_main[k].keys()) and k_toadd not in l_kadd:
+                    l_kadd.append(k_toadd)
+
+    for kadd in l_kadd:
+        for k in d_main.keys():
+            try:
+                d_main[k][kadd] = d_toadd[k][kadd]
+            except:
+                d_main[k][kadd] = "NA"

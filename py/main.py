@@ -15,7 +15,7 @@ PR_DATA = PR_ROOT + "data/"
 # Define dataset #
 ##################
 # cross ref excel including all dataset to process
-p_crossRef = PR_DATA + "Updated_MC_list_crossref_other_lists_020221.xlsx" # need to update 
+p_listChem = PR_DATA + "cross_lists_for_analysis_090921.xlsx" # excel created with ehp sup and Jenny list 
 # exposure by chemicals
 p_exposure = PR_DATA + "BCRelExposureSources_P65_051221.csv"
 # list of hormone in SMILES that can be considered for the 
@@ -37,7 +37,7 @@ c_Stereo.main()
 
 # LOAD AND RUN MC crossref ANALYSIS #
 #####################################
-c_MCcrossref = MCcrossref_data.MCcrossref(p_crossRef, p_exposure, p_hormones, COR_VAL, MAX_QUANTILE, PR_ROOT + "comptox/", PR_ROOT)
+c_MCcrossref = MCcrossref_data.MCcrossref(p_listChem, p_exposure, p_hormones, COR_VAL, MAX_QUANTILE, PR_ROOT + "comptox/", PR_ROOT)
 c_MCcrossref.main()
 
 # overlap with ToxCast - aromatase assays

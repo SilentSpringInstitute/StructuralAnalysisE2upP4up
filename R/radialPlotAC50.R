@@ -225,6 +225,61 @@ radial.plot = function (lengths, radial.pos = NULL, labels = NA, label.pos = NUL
 }
 
 
+plotRadial = function(d_toplot, p_png){
+  
+  ### AC50
+  ##########
+  
+  # plot with CASRN
+  svg(paste(p_png, "_AC50E2P4_casrn.svg", sep = ""), 30, 30)
+  par(mar=c(0,0,0,0))
+  radial.plot(d_toplot$AC50, labels=d_toplot$CASRN, rp.type="p",main="", line.col="black", mar=c(25,25,25,25), cex.lab = 0.5, radial.lim=c(0,3))
+  par(new=TRUE)
+  radial.plot(d_toplot$AC50_E2up , labels="", rp.type="p",main="", line.col="red", mar=c(25,25,25,25), radial.lim=c(0,3))
+  par(new=TRUE)
+  radial.plot(d_toplot$AC50_P4up , labels="", rp.type="p",main="", line.col="blue", mar=c(25,25,25,25), radial.lim=c(0,3))
+  dev.off()
+  
+  # plot with name
+  svg(paste(p_png, "_AC50E2P4_name.svg", sep = ""), 30, 30)
+  par(mar=c(0,0,0,0))
+  radial.plot(d_toplot$AC50, labels=d_toplot$name, rp.type="p",main="", line.col="black", mar=c(25,25,25,25), cex.lab = 0.5, radial.lim=c(0,3))
+  par(new=TRUE)
+  radial.plot(d_toplot$AC50_E2up, labels="", rp.type="p",main="", line.col="red", mar=c(25,25,25,25), radial.lim=c(0,3))
+  par(new=TRUE)
+  radial.plot(d_toplot$AC50_P4up, labels="", rp.type="p",main="", line.col="blue", mar=c(25,25,25,25), radial.lim=c(0,3))
+  dev.off()
+  
+  
+ 
+  
+  ### AC10
+  ###########
+  
+  # plot with CASRN
+  svg(paste(p_png, "_AC102P4_casrn.svg", sep = ""), 30, 30)
+  par(mar=c(0,0,0,0))
+  radial.plot(d_toplot$AC50, labels=d_toplot$CASRN, rp.type="p",main="", line.col="black", mar=c(25,25,25,25), cex.lab = 0.5, radial.lim=c(0,3))
+  par(new=TRUE)
+  radial.plot(d_toplot$AC10_E2up , labels="", rp.type="p",main="", line.col="red", mar=c(25,25,25,25), radial.lim=c(0,3))
+  par(new=TRUE)
+  radial.plot(d_toplot$AC10_P4up , labels="", rp.type="p",main="", line.col="blue", mar=c(25,25,25,25), radial.lim=c(0,3))
+  dev.off()
+  
+  # plot with name
+  svg(paste(p_png, "_AC102P4_name.svg", sep = ""), 30, 30)
+  par(mar=c(0,0,0,0))
+  radial.plot(d_toplot$AC50, labels=d_toplot$name, rp.type="p",main="", line.col="black", mar=c(25,25,25,25), cex.lab = 0.5, radial.lim=c(0,3))
+  par(new=TRUE)
+  radial.plot(d_toplot$AC10_E2up, labels="", rp.type="p",main="", line.col="red", mar=c(25,25,25,25), radial.lim=c(0,3))
+  par(new=TRUE)
+  radial.plot(d_toplot$AC10_P4up, labels="", rp.type="p",main="", line.col="blue", mar=c(25,25,25,25), radial.lim=c(0,3))
+  dev.off()
+  
+  
+  write.csv(d_toplot, paste(p_png, ".csv", sep = ""))
+   
+}
 
 
 ###########
@@ -243,7 +298,47 @@ d_AC50 = read.csv(p_AC50, header = TRUE, sep = "\t")
 rownames(d_AC50) = d_AC50[,1]
 
 d_AC50 = d_AC50[order(d_AC50$AC50),]
-d_AC50[is.na(d_AC50)] <- 0
+d_AC50[is.na(d_AC50)] <- "NA"
+
+# put 0 also not active and nan
+d_AC50[d_AC50 == "nan"] = "NA"
+d_AC50[d_AC50 == "-"] = "NA"
+
+# format element
+d_AC50$AC50 = log10(as.double(as.character(d_AC50$AC50)))
+d_AC50$AC50_E2up = log10(as.double(as.character(d_AC50$AC50_E2up)))
+d_AC50$AC50_P4up = log10(as.double(as.character(d_AC50$AC50_P4up)))
+d_AC50$AC10_E2up = log10(as.double(as.character(d_AC50$AC10_E2up)))
+d_AC50$AC10_P4up = log10(as.double(as.character(d_AC50$AC10_P4up)))
+
+
+# plot correlation AC50
+p = ggplot(d_AC50, aes(AC50, AC50_E2up))+
+  geom_point(size=1.5, col="black", shape=19) + 
+  theme(axis.text.y = element_text(size = 25, hjust = 0.5, vjust =0.1), axis.text.x = element_text(size = 25, hjust = 0.5, vjust =0.1), axis.title.y = element_text(size = 25, hjust = 0.5, vjust =0.1), axis.title.x =  element_text(size = 25, hjust = 0.5, vjust =0.1))+
+  #labs(x = expression(paste("pMIC ", italic("P. aeruginosa"), sep = "")), y =expression( paste("pMIC ", italic("S. aureus"), sep = ""))) + 
+  #xlim (c(0, 10)) +
+  #geom_segment(aes(x = 3, y = 3, xend = 9, yend = 9)) + 
+  #ylim (c(0, 10)) +
+  annotate("text", x=0.5, y=8.5, label= paste("r=", round(cor(na.omit(cbind(d_AC50$AC50, d_AC50$AC50_E2up)))[2,1],2), sep = ""), size = 8)
+#print(p)
+ggsave(paste(pr_out, "cor_withE2upAC50.png",sep=""), width = 6,height = 6, dpi = 300)
+
+
+# plot correlation AC50
+p = ggplot(d_AC50, aes(AC50, AC50_P4up))+
+  geom_point(size=1.5, col="black", shape=19) + 
+  theme(axis.text.y = element_text(size = 25, hjust = 0.5, vjust =0.1), axis.text.x = element_text(size = 25, hjust = 0.5, vjust =0.1), axis.title.y = element_text(size = 25, hjust = 0.5, vjust =0.1), axis.title.x =  element_text(size = 25, hjust = 0.5, vjust =0.1))+
+  #labs(x = expression(paste("pMIC ", italic("P. aeruginosa"), sep = "")), y =expression( paste("pMIC ", italic("S. aureus"), sep = ""))) + 
+  #xlim (c(0, 10)) +
+  #geom_segment(aes(x = 3, y = 3, xend = 9, yend = 9)) + 
+  #ylim (c(0, 10)) +
+  annotate("text", x=0.5, y=8.5, label= paste("r=", round(cor(na.omit(cbind(d_AC50$AC50, d_AC50$AC50_P4up)))[2,1],2), sep = ""), size = 8)
+#print(p)
+ggsave(paste(pr_out, "cor_withP4upAC50.png",sep=""), width = 6,height = 6, dpi = 300)
+
+
+
 
 
 l_chem_list = c("E2up", "P4up", "overlap")
@@ -257,29 +352,6 @@ for(chem_list in l_chem_list){
     d_toplot = d_AC50[which(d_AC50[,c(chem_list)] == 1 & rowSums(d_AC50[,c(l_chem_list[1:(length(l_chem_list)-1)])]) != (length(l_chem_list)-1)),]
   }
   
-  # plot with CASRN
-  svg(paste (pr_out, chem_list, "_casrn_radar.svg", sep = ""), 30, 30)
-  par(mar=c(0,0,0,0))
-  radial.plot(d_toplot$AC50, labels=d_toplot$CASRN, rp.type="p",main="", line.col="black", mar=c(25,25,25,25), cex.lab = 0.5, radial.lim=c(0,100))
-  par(new=TRUE)
-  radial.plot(d_toplot$CEETOX_H295R_ESTRADIOL_dn, labels="", rp.type="p",main="", line.col="red", mar=c(25,25,25,25), radial.lim=c(0,100))
-  par(new=TRUE)
-  radial.plot(d_toplot$CEETOX_H295R_ESTRADIOL_up, labels="", rp.type="p",main="", line.col="blue", mar=c(25,25,25,25), radial.lim=c(0,100))
-  par(new=TRUE)
-  radial.plot(d_toplot$CEETOX_H295R_PROG_dn, labels="", rp.type="p",main="", line.col="red", mar=c(25,25,25,25), radial.lim=c(0,100))
-  par(new=TRUE)
-  radial.plot(d_toplot$CEETOX_H295R_PROG_up, labels="", rp.type="p",main="", line.col="blue", mar=c(25,25,25,25), radial.lim=c(0,100))
+  plotRadial(d_toplot, paste(pr_out, chem_list, sep = ""))
   
-  dev.off()
-  
-  # plot with name
-  #svg(paste (pr_out, chem_list, "_name_radar.svg", sep = ""), 30, 30)
-  #par(mar=c(0,0,0,0))
-  #radial.plot(d_toplot_name, labels=names(d_toplot_name), rp.type="p",main="", line.col="black", mar=c(25,25,25,25), cex.lab = 0.5)#, radial.lim=c(0,3))
-  #par(new=TRUE)
-  #radial.plot(d_AC50[names(d_toplot_name), c("CEETOX_H295R_ESTRADIOL_up")], labels = "", rp.type="p", radial.lim=c(0, 300), mar=c(25,25,25,25), line.col = "red", lwd = 10)
-  #dev.off()
-  
-  # write the AC50 by chemicals
-  #write.csv(d_toplot_name, paste(pr_out, chem_list, "_AC50.csv", sep = ""))
 }
