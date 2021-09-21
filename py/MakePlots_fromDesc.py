@@ -189,14 +189,14 @@ class MakePlots_fromDesc:
 
         self.p_model_SOM = p_model
 
-    def SOMMapProp(self):
+    def SOMMapProp(self, p_dataset):
 
         if not "p_model_SOM" in self.__dict__:
             print("Generate SOM first")
             return 
 
         pr_out = pathFolder.createFolder(self.pr_out + "SOM/")
-        runExternal.projectPropInSOM(self.p_model_SOM, self.p_dataset, pr_out)
+        runExternal.projectPropInSOM(self.p_model_SOM, p_dataset, pr_out)
 
     def SOMHormoneSimilarity(self):
         if not "p_model_SOM" in self.__dict__:

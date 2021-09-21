@@ -217,6 +217,10 @@ def drawRadialPlotAC50(p_filin, pr_out):
     cmd = "./radialPlotAC50.R %s %s"%(p_filin, pr_out)
     runRCMD(cmd)
 
+def corHormResponse(p_filin):
+    cmd = "./corHormResponse.R %s"%(p_filin)
+    runRCMD(cmd)
+
 ##############
 # run biotransformer tool
 

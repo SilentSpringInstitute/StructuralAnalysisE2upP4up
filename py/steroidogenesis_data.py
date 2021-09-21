@@ -143,6 +143,24 @@ class Steroidogenesis_data:
         runExternal.barplotHormones(p_filout)
         self.d_CR_hit = toolbox.loadMatrix(p_filout)
 
+
+    def corHormoneEndpoint(self):
+
+        pr_out = pathFolder.createFolder(self.pr_results + "CorHorm/")
+        p_filout = pr_out + "horm_resp.csv"
+        filout = open(p_filout, "w")
+        filout.write("CASRN\t%s\n"%("\t".join(self.l_hormones)))
+
+
+        # plot correlation for 2 hormones
+        for chem in self.d_CR_hit.keys():
+            filout.write("%s\t%s\n"%(chem, "\t".join([self.d_CR_hit[chem][h] for h in self.l_hormones])))
+        filout.close()     
+
+        # plot correlation
+        runExternal.corHormResponse(p_filout, pr_out)
+
+
     def main(self):
         """
         Load data from stereogenesis 
@@ -152,4 +170,6 @@ class Steroidogenesis_data:
         self.loadsinglehitc()
         self.summaryHitc()
         self.loadChemicalCR()
+
+        #self.corHormoneEndpoint()
 

@@ -546,9 +546,15 @@ class MCcrossref:
             c_MakePlot.hclusterByProp()
 
         if SOM == 1:
-            c_MakePlot.SOMClustering(nb_cluster=0)
+            # check if model already exist
+            pr_SOM = pathFolder.createFolder(pr_out + "SOM/")
+            p_model = pr_SOM + "SOM_model.RData"
+            if not path.exists(p_model):
+                c_MakePlot.SOMClustering(nb_cluster=0)
+            
             c_MakePlot.SOMClustering(nb_cluster=SOM_size)
-            c_MakePlot.SOMMapProp() # maybe need to be developed to extract by cluster the percentage of MC for example or other prop
+            c_MakePlot.SOMMapProp(self.d_dataset[dataset]) # maybe need to be developed to extract by cluster the percentage of MC for example or other prop
+            
             c_MakePlot.SOMHormoneSimilarity()
 
     def analysisToxPrintByDataset(self, dataset, hclust=0):
@@ -840,7 +846,7 @@ class MCcrossref:
 
         # H295R #
         ######
-        #self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit", "OPERA"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE, SOM_size=8) #hclust
+        self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit", "OPERA"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE, SOM_size=8) #hclust
 
 
         # Comparison between two list of chemicals descriptor
