@@ -10,7 +10,7 @@ import toolbox
 
 
 
-class MakePlots_fromDesc:
+class MakePlotsListChem:
     def __init__(self, p_dataset, pr_out, pr_desc, p_desc="", p_hormone_similarity = "", p_FP="", p_opera_all="", cor_val="", max_quantile=""):
         self.p_desc = p_desc
         self.p_dataset = p_dataset
@@ -234,3 +234,25 @@ class MakePlots_fromDesc:
 
             try:copyfile(pr_png + CASRN + ".png", pr_cluster + CASRN + ".png")
             except: pass
+
+    def boardExposure(self, d_board_exposure, pr_out):
+        """
+        Barplot for board exposure
+        """
+
+        d_count = {}
+        
+        for chem in d_board_exposure.keys():
+            for exp in d_board_exposure[chem]:
+                if not exp in list(d_count.keys()):
+                    d_count[exp] = 0
+                d_count[exp] = d_count[exp] + 1
+        
+        p_filout = pr_out + "board_exposure"
+        filout = open(p_filout, "w")
+        filout.write("Board exposure\tCount\n")
+        for board_exp in d_count.keys():
+            filout.write("%s\t%s\n"%(board_exp, d_count[board_exp]))
+        filout.close()
+
+        runExternal.barplotExposure(p_filout)

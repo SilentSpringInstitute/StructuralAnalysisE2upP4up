@@ -221,6 +221,10 @@ def corHormResponse(p_filin):
     cmd = "./corHormResponse.R %s"%(p_filin)
     runRCMD(cmd)
 
+def barplotExposure(p_filin):
+    cmd = "./barplotExposure.R %s"%(p_filin)
+    runRCMD(cmd)
+
 ##############
 # run biotransformer tool
 

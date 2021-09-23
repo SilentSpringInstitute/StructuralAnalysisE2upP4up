@@ -6,13 +6,14 @@ import math
 
 import pathFolder
 import dataset
-import MakePlots_fromDesc
+import MakePlotsListChem
 import runChemStruct
 import comparisonChemicalLists
 import toolbox
 import runExternal
 import runToxPrint
 import ToxCast
+import CPDat
 
 
 class MCcrossref:
@@ -540,7 +541,7 @@ class MCcrossref:
         p_desc = self.c_Desc.buildDescSet(dataset, l_desc, pr_out)
 
         #load the analysis class
-        c_MakePlot = MakePlots_fromDesc.MakePlots_fromDesc(p_dataset=self.d_dataset[dataset], p_desc=p_desc, pr_desc=self.pr_desc, p_hormone_similarity = self.c_Desc.p_hormone_similarity, pr_out=pr_out, p_opera_all = self.c_Desc.d_desc[dataset]["all OPERA pred"], cor_val=cor_val, max_quantile=max_q)
+        c_MakePlot = MakePlotsListChem.MakePlotsListChem(p_dataset=self.d_dataset[dataset], p_desc=p_desc, pr_desc=self.pr_desc, p_hormone_similarity = self.c_Desc.p_hormone_similarity, pr_out=pr_out, p_opera_all = self.c_Desc.d_desc[dataset]["all OPERA pred"], cor_val=cor_val, max_quantile=max_q)
         
         if hclust == 1:
             c_MakePlot.hclusterByProp()
@@ -575,6 +576,9 @@ class MCcrossref:
             c_MakePlot.hclusterFromFPByProp()
 
     def ChemClassesByMC(self):
+        """
+        Do barplot of exposure for MC where the function is included in the table
+        """
 
         pr_out = pathFolder.createFolder(self.pr_out + "ChemClassInMC/")
 
@@ -773,6 +777,41 @@ class MCcrossref:
 
             runExternal.corHormSimClassActive(p_filout,dataset)
 
+    def ChemClassifByCPDAT(self, dataset, SOM = 0):
+
+        # load cpdat class
+        if not "c_cpdat" in self.__dict__:
+            self.c_cpdat = CPDat.CPDat()
+            self.c_cpdat.loadMapping()
+
+        
+        pr_out = pathFolder.createFolder("%sClassCPDAT_%s/"%(self.pr_out, dataset))
+        
+        d_dataset = toolbox.loadMatrix(self.d_dataset[dataset])
+        l_casrn = list(d_dataset.keys())
+
+        self.c_cpdat.listCasToFunct(l_casrn, pr_out + "CPDAT_bychem.csv")
+        d_board_exposure = self.c_cpdat.extractBoardExposure()
+
+        # load the class that make plot
+        c_MakePlot = MakePlotsListChem.MakePlotsListChem(p_dataset=self.d_dataset[dataset], pr_desc=self.pr_desc, pr_out = pr_out)
+        c_MakePlot.boardExposure(d_board_exposure, pr_out)
+
+
+        if SOM == 1:
+            # check if model already exist
+            pr_SOM = pathFolder.createFolder(pr_out + "SOM/")
+            p_model = pr_SOM + "SOM_model.RData"
+            if not path.exists(p_model):
+                c_MakePlot.SOMClustering(nb_cluster=0)
+            
+            c_MakePlot.SOMClustering(nb_cluster=SOM_size)
+            c_MakePlot.SOMMapProp(self.d_dataset[dataset]) # maybe need to be developed to extract by cluster the percentage of MC for example or other prop
+            
+            c_MakePlot.SOMHormoneSimilarity()
+
+        return
+
     def main(self):
 
         # prepare set of chemicals - split by list
@@ -846,6 +885,8 @@ class MCcrossref:
 
         # H295R #
         ######
+        self.ChemClassifByCPDAT(dataset="E2up")
+        sss
         self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit", "OPERA"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE, SOM_size=8) #hclust
 
 
