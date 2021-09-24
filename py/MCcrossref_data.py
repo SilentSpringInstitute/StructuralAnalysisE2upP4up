@@ -750,17 +750,20 @@ class MCcrossref:
 
     def corHormoneSimilarityClassActive(self, dataset):
         """
-        only available for E2up and P4up
+        Input a dataset and compute the avg similarity score
+        Note: need to add list of chemical in the function
         """
         pr_out = pathFolder.createFolder(self.pr_out + "corrSimHormActiveClass/")
-
+        p_subfilout = "%s%s_cor"%(pr_out, dataset)
+        
         if dataset == "E2up":
-            p_subfilout = pr_out + "E2up_cor"
             d_chem = self.d_E2up_active
         elif dataset == "P4up":
-            p_subfilout = pr_out + "P4up_cor"
             d_chem = self.d_P4up_active
+        elif dataset == "H295R":
+            d_chem = self.d_H295R
         else:
+            print("ADD if needed")
             return
 
         d_sim = toolbox.loadMatrix(self.c_Desc.p_hormone_similarity)
@@ -768,11 +771,18 @@ class MCcrossref:
         for horm in l_horm:
             p_filout = p_subfilout + "_" + horm 
             filout = open(p_filout, "w")
-            filout.write("CASRN\tSimilarity\tEfficacy/potency\n")
+            if dataset == "E2up" or dataset == "P4up":
+                filout.write("CASRN\tSimilarity\tEfficacy/potency\n")
+            else:
+                filout.write("CASRN\tSimilarity\n")
+
             for chem in d_chem.keys():
                 if not chem in list(d_sim.keys()):
                     continue
-                filout.write("%s\t%s\t%s\n"%(chem, d_sim[chem][horm], d_chem[chem]["Efficacy/potency"]))
+                if dataset == "E2up" or dataset == "P4up":
+                    filout.write("%s\t%s\t%s\n"%(chem, d_sim[chem][horm], d_chem[chem]["Efficacy/potency"]))
+                else:
+                    filout.write("%s\t%s\n"%(chem, d_sim[chem][horm]))
             filout.close()
 
             runExternal.corHormSimClassActive(p_filout,dataset)
@@ -845,13 +855,14 @@ class MCcrossref:
         # FP types: "MACCS", "Morgan", "Mol"
         # Dist types: "Dice", "Tanimoto"
         #self.c_Desc.compute_similarity_inter_hormones(self.p_hormones)
-        #self.c_Desc.compute_similarity_with_hormones(self.p_hormones, "MACCS", "Tanimoto")
+        self.c_Desc.compute_similarity_with_hormones(self.p_hormones, "MACCS", "Tanimoto")
         
         # correlation similarity with eff/pot class for E2-P4 up
         ###############################
         #self.corHormoneSimilarityClassActive("E2up")
         #self.corHormoneSimilarityClassActive("P4up")
-        
+        self.corHormoneSimilarityClassActive("H295R")
+
         # overlap E2up - P4up with class Efficacy/Efficiency
         ######
         #self.overlapListChemE2upP4up()

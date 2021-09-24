@@ -28,8 +28,6 @@ class comparisonChemicalLists:
         
         l_toxprint = list(set(l_toxprint))
 
-
-
         for toxprint in l_toxprint:
             f_forX2.write("%s"%(toxprint))
             for p_list in self.l_p_list:
