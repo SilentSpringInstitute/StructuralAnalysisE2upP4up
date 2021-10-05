@@ -73,8 +73,8 @@ args <- commandArgs(TRUE)
 p_cor = args[1]
 dataset = args[2]
 
-#p_cor = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/corrSimHormActiveClass/H295R_cor_50-28-2"
-#dataset = "H295R"
+#p_cor = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/corrSimHormActiveClass/E2up_cor_50-28-2"
+#dataset = "E2up"
 
 d_cor = read.csv(p_cor, sep = "\t")
 
@@ -96,8 +96,11 @@ if("Efficacy.potency" %in% colnames(w_data)){
       sd = sd(Similarity, na.rm = TRUE)
     )
   
-  write.csv(sum_data, paste(p_cor, "_sum.csv", sep = ""))
+  # Add all chemicals
+  All = c("All", dim(w_data)[1], mean(w_data$Similarity), sd(w_data$Similarity))
+  sum_data = rbind(sum_data, All)
   
+  write.csv(sum_data, paste(p_cor, "_sum.csv", sep = ""))
   
   ### add significant on boxplot
   # Visualize: Specify the comparisons you want

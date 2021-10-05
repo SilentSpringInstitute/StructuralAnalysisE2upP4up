@@ -753,7 +753,8 @@ class MCcrossref:
         Input a dataset and compute the avg similarity score
         Note: need to add list of chemical in the function
         """
-        pr_out = pathFolder.createFolder(self.pr_out + "corrSimHormActiveClass/")
+        pr_out = pathFolder.createFolder(self.pr_out + "corrSimHormActiveClass/" + dataset + "/")
+        
         p_subfilout = "%s%s_cor"%(pr_out, dataset)
         
         if dataset == "E2up":
@@ -801,7 +802,8 @@ class MCcrossref:
         l_casrn = list(d_dataset.keys())
 
         self.c_cpdat.listCasToFunct(l_casrn, pr_out + "CPDAT_bychem.csv")
-        d_board_exposure = self.c_cpdat.extractBoardExposure()
+        d_board_exposure = self.c_cpdat.extractBoardExposure(pr_out + "board_exposure.csv")
+        ssss
 
         # load the class that make plot
         c_MakePlot = MakePlotsListChem.MakePlotsListChem(p_dataset=self.d_dataset[dataset], pr_desc=self.pr_desc, pr_out = pr_out)
@@ -861,7 +863,8 @@ class MCcrossref:
         ###############################
         #self.corHormoneSimilarityClassActive("E2up")
         #self.corHormoneSimilarityClassActive("P4up")
-        self.corHormoneSimilarityClassActive("H295R")
+        #self.corHormoneSimilarityClassActive("H295R")
+
 
         # overlap E2up - P4up with class Efficacy/Efficiency
         ######
@@ -876,8 +879,8 @@ class MCcrossref:
 
         # load Toxprint by list
         ##########################
-        #self.c_FP = runToxPrint.runToxPrint(self.d_dataset, self.pr_toxprint, self.pr_out)
-        #self.c_FP.loadToxPrint()
+        self.c_FP = runToxPrint.runToxPrint(self.d_dataset, self.pr_toxprint, self.pr_out)
+        self.c_FP.loadToxPrint()
 
         # overlap with similarity with hormone
         #######
@@ -896,40 +899,41 @@ class MCcrossref:
 
         # H295R #
         ######
-        self.ChemClassifByCPDAT(dataset="E2up")
-        sss
-        self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit", "OPERA"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE, SOM_size=8) #hclust
+        #self.ChemClassifByCPDAT(dataset="E2up")
+        #self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit", "OPERA"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE, SOM_size=8) #hclust
 
 
         # Comparison between two list of chemicals descriptor
         #####
         #self.ComparisonTwoChemicalLists(["E2up", "H295R"])
         #self.ComparisonTwoChemicalLists(["P4up", "H295R"])
-        
         #self.ComparisonTwoChemicalLists(["E2up", "P4up"])
 
-        # analysis of the toxprint #
-        ############################
+        
 
-        #self.c_FP.ToxPrintCount()
-        #self.c_FP.computeTanimotoMatrix()
+        ###### < can be remove
+            # analysis of the toxprint -- not used anymore included in comparison #
+            #######################################################################
 
-        # MC # 
-        ######
-        #self.analysisToxPrintByDataset(dataset="MC", hclust=1) #hclust
+            #self.c_FP.ToxPrintCount()
+            #self.c_FP.computeTanimotoMatrix()
 
+            # MC # 
+            ######
+            #self.analysisToxPrintByDataset(dataset="MC", hclust=1) #hclust
 
-        # Comparison ToxPrint #
-        #######################
-        #self.c_FP.comparisonToxPrintCount(["Steroid", "E2up", "P4up"])
-        #self.c_FP.comparisonToxPrintCount(["H295R", "E2up", "P4up"])
+            # Comparison ToxPrint -- not used anymore #
+            ###########################################
+            #self.c_FP.comparisonToxPrintCount(["Steroid", "E2up", "P4up"])
+            #self.c_FP.comparisonToxPrintCount(["H295R", "E2up", "P4up"])
 
+        ##### >
 
         # cross with ToxCast assays #
         #############################
 
         #self.crossToxCastAssays(l_genes = ["CYP19A1"])
-        self.AC50ByList("TOX21_Aromatase_Inhibition", ["E2up", "P4up"], ["higher", "medium", "lower"])
+        #self.AC50ByList("TOX21_Aromatase_Inhibition", ["E2up", "P4up"], ["higher", "medium", "lower"])
         #self.AC50ByList("NVS_ADME_hCYP19A1", ["E2up", "P4up"], ["higher", "medium", "lower"])
 
 

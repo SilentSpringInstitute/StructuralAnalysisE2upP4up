@@ -43,6 +43,7 @@ class RandomForest:
 
         self.n_jobs = 4
         self.random_state = 42
+        # use to limit optimization
         if self.test == 0:
             self.n_estimators =  [10, 50, 100, 300, 500, 800, 1200]
             self.max_depth = [5, 8, 15, 25, 30]
@@ -228,6 +229,9 @@ class RandomForest:
         args: - type of RF (balanced/umbalanced) 
         """
         
+        # load dataset
+        self.loadSet()
+
         if self.ghost == 1:
             type_RF = self.type_ML + "_ghost"
         else:

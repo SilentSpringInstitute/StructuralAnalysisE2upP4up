@@ -3,6 +3,7 @@ import pathFolder
 import runExternal
 import toolbox
 import DNN
+import SVM
 
 from os import path, listdir, rename, remove
 from re import search
@@ -30,7 +31,6 @@ class QSAR:
 
         # environement
         self.force_run = 0
-
 
     def runQSARClassUnderSamplingAllSet(self):
 
@@ -67,7 +67,6 @@ class QSAR:
     def runQSARClassNoSampling(self):
         l_run = list(range(1, self.nb_repetition + 1))
         shuffle(l_run)
-        
 
         # reduce number of run
         for run in l_run:
@@ -234,13 +233,15 @@ class QSAR:
         self.computeAD(pr_run)
                 
         # classic machine learning with R
+        # only used for NN singleton and CART
+        ############################
         p_perfTrain = pr_run + "perfTrain.csv"
         p_perfCV = pr_run + "perfCV.csv"
         p_perfTest = pr_run + "perfTest.csv"
 
         if not path.exists(p_perfCV) or not path.exists(p_perfTrain) or not path.exists(p_perfTest):
             runExternal.runRQSAR(self.p_train, self.p_test, self.n_foldCV, pr_run)
-        
+
 
         # DNN with keras / tensorflow
         # self, p_train, p_test, p_aff, pr_out, n_foldCV, typeModel
@@ -255,7 +256,22 @@ class QSAR:
         # define a class specific to this approch for testing
         # need to be integrated in the DNN class and make new class for RF and 
         
+        # run SVM from python script
+        ## kernel to test ['linear', 'poly', 'rbf', 'sigmoid']
+        c_SVM = SVM.SVM(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "linear", pr_run) 
+        c_SVM.run_main()
+
+        c_SVM = SVM.SVM(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "poly", pr_run) 
+        c_SVM.run_main()
+
+        c_SVM = SVM.SVM(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "rbf", pr_run) 
+        c_SVM.run_main()
+
+        c_SVM = SVM.SVM(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "sigmoid", pr_run) 
+        c_SVM.run_main()
+       
         # classic RF
+        ##############
         c_RF = RandomForest.RandomForest(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "RF_py", 0, pr_run)
         c_RF.run_main()
         

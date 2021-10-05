@@ -27,6 +27,7 @@ p<-ggplot(data=d_toxprint, aes(x=reorder(Toxprint, -count), y=count )) +
   geom_bar(stat="identity")+
   coord_flip()+
   xlab("ToxPrint")+
+  ylab("Probability")+
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 # Barplot horizontal

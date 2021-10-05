@@ -36,7 +36,7 @@ drawHist = function(d_toxprint, max_pval, min_prob, p_out){
     geom_text(aes(label=Significative), vjust=1.6, color="black", position = position_dodge(0.6), size=3.5)+
     scale_fill_manual(values=v_col)+
     coord_flip() + 
-    labs(y="Prob", x="Toxprint")
+    labs(y="% of chemicals with at least one ToxPrint", x="ToxPrints")
   
   if(dim(d_plot)[1] > 100){
     ggsave(p_out,  width = 10, height = 15, dpi = 300)

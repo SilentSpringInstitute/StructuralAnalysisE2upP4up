@@ -40,6 +40,7 @@ c_Stereo.main()
 c_MCcrossref = MCcrossref_data.MCcrossref(p_listChem, p_exposure, p_hormones, COR_VAL, MAX_QUANTILE, PR_ROOT + "comptox/", PR_ROOT)
 c_MCcrossref.main()
 
+
 # overlap with ToxCast - aromatase assays
 ##########################################
 
@@ -59,15 +60,15 @@ c_MCcrossref.main()
 
 # no undersampling 
 ##############
-#MAX_QUANTILE = 0
-#name_QSAR = "QSAR_E2_H295R_nosampling_nosingledosecheck_noborderline"
-#c_QSAR_E2up = buildQSAR.buildQSAR(name_QSAR, "E2up", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
-#c_QSAR_E2up.buildDataset(c_Stereo, borderline=0)
-#c_QSAR_E2up.buildDescSet(["rdkit", "OPERA", "toxprint"])
-#c_QSAR_E2up.prepDesc()
-#c_QSAR_E2up.computeSimMatrix()# similarity matrix for the AD
-#c_QSAR_E2up.runQSARs()# no sampling add
-
+MAX_QUANTILE = 0
+name_QSAR = "QSAR_E2_H295R_nosampling_nosingledosecheck_noborderline"
+c_QSAR_E2up = buildQSAR.buildQSAR(name_QSAR, "E2up", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
+c_QSAR_E2up.buildDataset(c_Stereo, borderline=0)
+c_QSAR_E2up.buildDescSet(["rdkit", "OPERA", "toxprint"])
+c_QSAR_E2up.prepDesc()
+c_QSAR_E2up.computeSimMatrix()# similarity matrix for the AD
+c_QSAR_E2up.runQSARs()# no sampling add
+stophere
 
 # undersampling with variable active rate
 #####################
