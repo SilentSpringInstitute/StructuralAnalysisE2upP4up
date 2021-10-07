@@ -12,6 +12,8 @@ library(eulerr)
 args <- commandArgs(TRUE)
 pgene = args[1]
 
+pgene = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/OverlapList/MC-E2up-P4up-H295R/upset_matrix"
+
 dgene = read.csv(pgene, sep = "\t", header = TRUE)
 rownames(dgene) = dgene[,1]
 dgene = dgene[,-1]
@@ -29,3 +31,6 @@ png(paste(pgene, "_venn.png", sep = ""), res = 300, 1000, 1000)
 plot(euler(dgene), quantities = TRUE)
 dev.off()
 
+svg(paste(pgene, "_venn.svg", sep = ""), 6, 6)
+plot(euler(dgene), quantities = TRUE)
+dev.off()

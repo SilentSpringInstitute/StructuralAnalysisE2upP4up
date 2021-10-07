@@ -5,6 +5,7 @@ import steroidogenesis_data
 import merge_MCcrossWithStereo
 import pathFolder
 import buildQSAR
+import applyQSAR
 
 # Define folders #
 ##################
@@ -95,7 +96,8 @@ c_QSAR_P4up.buildDescSet(["rdkit", "OPERA", "toxprint"])
 c_QSAR_P4up.prepDesc()
 c_QSAR_P4up.computeSimMatrix()# similarity matrix for the AD
 c_QSAR_P4up.runQSARs()# no sampling add
-
+# best model selected manually
+n_P4best_run = 1
 
 # undersampling with variable active rate
 #######################
@@ -107,5 +109,19 @@ c_QSAR_P4up.runQSARs()# no sampling add
 #c_QSAR_P4up.prepDesc()
 #c_QSAR_P4up.computeSimMatrix()# similarity matrix for the AD
 #c_QSAR_P4up.runQSARs([0.10, 0.9])
+
+
+
+# predict MC with E2 - P4 QSAR models
+###################
+name_output = "MC_pred"
+c_QSAR_P4up = buildQSAR.buildQSAR(name_QSAR, "MC", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
+c_QSAR_P4up.buildDataset(c_Stereo, borderline=0)
+c_QSAR_P4up.buildDescSet(["rdkit", "OPERA", "toxprint"])
+c_QSAR_P4up.prepDesc()
+c_QSAR_P4up.computeSimMatrix()# similarity matrix for the AD
+c_QSAR_P4up.runQSARs()# no sampling add
+# best model selected manually
+n_P4best_run = 1
 
 

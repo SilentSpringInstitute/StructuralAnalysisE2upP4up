@@ -225,6 +225,10 @@ def barplotExposure(p_filin):
     cmd = "./barplotExposure.R %s"%(p_filin)
     runRCMD(cmd)
 
+def applyQSARModel(p_desc, p_model, pr_model, pr_out):
+    cmd = "./predictfromModel.R %s %s %s %s"%(p_desc, p_model, pr_model, pr_out)
+    runRQSARModeling(cmd)
+
 ##############
 # run biotransformer tool
 
