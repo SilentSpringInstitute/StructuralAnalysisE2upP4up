@@ -60,15 +60,14 @@ c_MCcrossref.main()
 
 # no undersampling 
 ##############
-MAX_QUANTILE = 0
-name_QSAR = "QSAR_E2_H295R_nosampling_nosingledosecheck_noborderline"
-c_QSAR_E2up = buildQSAR.buildQSAR(name_QSAR, "E2up", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
-c_QSAR_E2up.buildDataset(c_Stereo, borderline=0)
-c_QSAR_E2up.buildDescSet(["rdkit", "OPERA", "toxprint"])
-c_QSAR_E2up.prepDesc()
-c_QSAR_E2up.computeSimMatrix()# similarity matrix for the AD
-c_QSAR_E2up.runQSARs()# no sampling add
-stophere
+#MAX_QUANTILE = 0
+#name_QSAR = "QSAR_E2_H295R_nosampling_nosingledosecheck_noborderline"
+#c_QSAR_E2up = buildQSAR.buildQSAR(name_QSAR, "E2up", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
+#c_QSAR_E2up.buildDataset(c_Stereo, borderline=0)
+#c_QSAR_E2up.buildDescSet(["rdkit", "OPERA", "toxprint"])
+#c_QSAR_E2up.prepDesc()
+#c_QSAR_E2up.computeSimMatrix()# similarity matrix for the AD
+#c_QSAR_E2up.runQSARs()# no sampling add
 
 # undersampling with variable active rate
 #####################
@@ -100,13 +99,13 @@ c_QSAR_P4up.runQSARs()# no sampling add
 
 # undersampling with variable active rate
 #######################
-MAX_QUANTILE = 0
-name_QSAR = "QSAR_P4_H295R_variable-sampling_singledosecheck_noborderline"
-c_QSAR_P4up = buildQSAR.buildQSAR(name_QSAR, "P4up", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
-c_QSAR_P4up.buildDataset(c_Stereo, borderline=0)
-c_QSAR_P4up.buildDescSet(["rdkit", "OPERA", "toxprint"])
-c_QSAR_P4up.prepDesc()
-c_QSAR_P4up.computeSimMatrix()# similarity matrix for the AD
-c_QSAR_P4up.runQSARs([0.10, 0.9])
+#MAX_QUANTILE = 0
+#name_QSAR = "QSAR_P4_H295R_variable-sampling_singledosecheck_noborderline"
+#c_QSAR_P4up = buildQSAR.buildQSAR(name_QSAR, "P4up", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
+#c_QSAR_P4up.buildDataset(c_Stereo, borderline=0)
+#c_QSAR_P4up.buildDescSet(["rdkit", "OPERA", "toxprint"])
+#c_QSAR_P4up.prepDesc()
+#c_QSAR_P4up.computeSimMatrix()# similarity matrix for the AD
+#c_QSAR_P4up.runQSARs([0.10, 0.9])
 
 

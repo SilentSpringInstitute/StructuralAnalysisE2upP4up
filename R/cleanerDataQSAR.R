@@ -68,8 +68,13 @@ colnames(daffinity)[2] = "Aff"
 if(act == 1){
     daffinity = na.omit(daffinity)
 }
+
+print(paste("AC50: dim = ", dim(daffinity)[1], dim(daffinity)[2], sep = " "))
+
 # control same chemicals
 linter = intersect(rownames(dglobal), rownames(daffinity))
+
+print(paste("inter AC50 -- dataset: ", length(linter)))
 
 dclean = dglobal[linter,]
 daffinity = daffinity[linter,]
@@ -85,3 +90,9 @@ if (act == 1){
 }
 write.csv(daffinity, paffout, col.names = TRUE, row.names = TRUE)
 write.csv(dclean, pdesout, col.names = TRUE, row.names = TRUE)
+
+
+
+print("==== OUTPUT cleaner ====")
+print(paste("Data cleaned: dim = ", dim(dclean)[1], dim(dclean)[2], sep = " "))
+print(paste("AC50: dim = ", dim(daffinity)[1], dim(daffinity)[2], sep = " "))
