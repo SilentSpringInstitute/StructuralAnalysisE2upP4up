@@ -1,5 +1,6 @@
 from sklearn import metrics
 from numpy import loadtxt, arange
+import pandas
 from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
 
@@ -8,7 +9,9 @@ def performance(y_real, y_pred, typeModel, th_prob = 0.5, p_filout = ""):
     if typeModel == "classification":
 
         # change prob -> value
-        y_pred = [1. if pred[1] > th_prob else 0. for pred in y_pred]
+        # case of 2 values predicted
+        try:y_pred = [1. if pred[1] > th_prob else 0. for pred in y_pred]
+        except:y_pred = [1. if pred[0] > th_prob else 0. for pred in y_pred]
 
         acc = metrics.accuracy_score(y_real, y_pred)
         bacc = metrics.balanced_accuracy_score(y_real, y_pred)
@@ -72,11 +75,9 @@ def performance(y_real, y_pred, typeModel, th_prob = 0.5, p_filout = ""):
 
         return {"MAE": MAE, "R2": R2, "EVS": EVS, "MSE": MSE, "MAXERR": MAXERR, "MSE_log": MSE_log , "MDAE": MDAE, "MTD": MTD, "MPD":MPD , "MGD":MGD}
 
-
-
-def loadSet(p_set, variableToPredict = 0):
+def loadSet(p_set, l_col_to_order = [], variableToPredict = 0):
     """
-    Data in input 
+    Data in input open first with panda and next convert to numpy format to exit
         - sep = ,
         - aff in last col
         - rownames in the first col
@@ -87,6 +88,7 @@ def loadSet(p_set, variableToPredict = 0):
     with open(p_set) as f:
         #determining number of columns from the first line of text
         n_cols = len(f.readline().split(","))
+        f.close()
     
     if variableToPredict == 1:
         d_out["dataset"] = loadtxt(p_set, delimiter=",",usecols=arange(1, n_cols-1), skiprows=1)
@@ -100,5 +102,15 @@ def loadSet(p_set, variableToPredict = 0):
         d_out["nb_desc_input"] = n_cols - 1 # remove only the rownames
 
     d_out["id"] = loadtxt(p_set, dtype=str,  delimiter=",",usecols=arange(0, 1), skiprows=1)
+
+    # test with panda openning
+    d_out["dataset"] = pandas.read_csv(p_set)
+    d_out["dataset"] = d_out["dataset"].drop(columns = ["ID", "Aff"])
+    d_out["dataset"] = d_out["dataset"].to_numpy()
+    #d_out["dataset"] = d_out["dataset"][1:, :]
+
+    print(d_out["dataset"])
+    sss
+
 
     return d_out

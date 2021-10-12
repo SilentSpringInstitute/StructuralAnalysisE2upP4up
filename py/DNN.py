@@ -19,9 +19,10 @@ from os import listdir, remove, path
 from re import search
 from copy import deepcopy
 
+import ML_toolbox
 
 class DNN:
-    def __init__(self, p_train, p_test, p_aff, n_foldCV, typeModel, pr_out):
+    def __init__(self, p_train, p_test, p_aff, n_foldCV, typeModel, ghost, pr_root):
         self.p_train = p_train
         self.p_test = p_test
         self.p_aff = p_aff
@@ -29,10 +30,19 @@ class DNN:
         self.verbose = 0
         self.test=0
         self.force_run = 0
+        # ghost approach to optimize the prob threshold
+        self.ghost = ghost
 
         # create folder
-        pr_out = pathFolder.createFolder(pr_out + "DNN/")
-        self.pr_out = pr_out        
+        if self.ghost == 1:
+            type_opt = "_ghost"
+        else:
+            type_opt = ""
+
+        pr_out = pathFolder.createFolder(pr_root + "DNN" + type_opt + "/")
+        self.pr_out = pr_out
+
+        self.pr_root = pr_root        
 
         # optimization
         self.typeModel = typeModel
@@ -42,6 +52,8 @@ class DNN:
         else:
             self.kernel_initializer = "normal"
             self.loss = "mean_squared_error"
+
+        
         self.optimizer = "adam"
         self.l_epochs = [50, 100, 120]
         self.l_batch_size = [32, 64, 128]
@@ -58,31 +70,26 @@ class DNN:
             self.l_activation = ["relu"]
 
     def loadSet(self):
-
+        
         # descriptor train set 
-        with open(self.p_train) as f:
-            #determining number of columns from the first line of text
-            n_cols = len(f.readline().split(","))
-        self.dataset_train = loadtxt(self.p_train, delimiter=",",usecols=arange(1, n_cols-1), skiprows=1)
-        self.dataset_train = sc.fit_transform(self.dataset_train)
-        self.aff_train = loadtxt(self.p_train, delimiter=",",usecols=arange(n_cols-1, n_cols), skiprows=1)
-        self.nb_desc_input = n_cols - 2
-
-        d_train = toolbox.loadMatrix(self.p_train, sep = ",")
-        self.l_train = list(d_train.keys())
+        d_train  = ML_toolbox.loadSet(self.p_train, variableToPredict = 1)
+        self.dataset_train = d_train["dataset"]
+        self.aff_train = d_train["aff"]
+        self.id_train = d_train["id"]
+        self.nb_desc_input = d_train["nb_desc_input"]
 
         # descriptor test set 
-        with open(self.p_test) as f:
-            #determining number of columns from the first line of text
-            n_cols = len(f.readline().split(","))
-        self.dataset_test = loadtxt(self.p_test, delimiter=",",usecols=arange(1, n_cols-1), skiprows=1)
-        self.dataset_test = sc.fit_transform(self.dataset_test)
-        self.aff_test = loadtxt(self.p_test, delimiter=",",usecols=arange(n_cols-1, n_cols), skiprows=1)
+        d_test = ML_toolbox.loadSet(self.p_test, variableToPredict = 1)
+        self.dataset_test = d_test["dataset"]
+        self.aff_test = d_test["aff"]
+        self.id_test = d_test["id"]
+        self.nb_desc_test = d_test["nb_desc_input"]
 
-        d_test = toolbox.loadMatrix(self.p_test, sep = ",")
-        self.l_test = list(d_test.keys())
+        # control the number of desc are the same
+        if self.nb_desc_input != self.nb_desc_test:
+            print("===CHECK SIZE TRAIN AND TEST===")
+            STOPHERE # crash script
 
-    #l_batch_size = [32,64,128]
     def GridOptimizeDNN(self, criteria_best_perf):
 
         # check if model is in the 
@@ -158,29 +165,14 @@ class DNN:
 
         # evaluate the keras model
         self.model.evaluate(self.dataset_train, self.aff_train)
-        
-        
-        
-        if self.typeModel == "classification":
-            # transform for classification
-            y_pred = self.model.predict(self.dataset_train)
-            y_pred = [1. if pred[0] > 0.5 else 0. for pred in y_pred]
+        y_pred = self.model.predict(self.dataset_train)
             
-            return self.performance(self.aff_train, y_pred)
+        return ML_toolbox.performance(self.aff_train, y_pred, self.typeModel)
         
-        else:
-            y_pred = self.model.predict(self.dataset_train)
-            return self.performance(self.aff_train, y_pred)
-
     def evaluateOnTest(self):
 
         y_pred = self.model.predict(self.dataset_test)
-        if self.typeModel == "classification":
-            y_pred = [1. if pred[0] > 0.5 else 0. for pred in y_pred]
-            
-            return self.performance(self.aff_test, y_pred)
-        else:
-            return self.performance(self.aff_test, y_pred)
+        return ML_toolbox.performance(self.aff_train, y_pred, self.typeModel)
     
     def evaluateModel(self):
 
@@ -193,57 +185,13 @@ class DNN:
         if not "d_perf" in self.__dict__:
             self.d_perf = {}
 
-        if self.typeModel == "classification":
-            # trainning set
-            y_train_pred = model.predict(self.dataset_train)
-            y_train_pred = [1. if pred[0] > 0.5 else 0. for pred in y_train_pred]
+        # trainning set
+        y_train_pred = model.predict(self.dataset_train)    
+        self.d_perf["Train"] = ML_toolbox.performance(self.aff_train, y_train_pred, self.typeModel, p_filout=self.pr_out + "train_pred.csv")
             
-            self.d_perf["Train"] = self.performance(self.aff_train, y_train_pred)
-            
-            # test set
-            y_pred = model.predict(self.dataset_test)
-            y_pred = [1. if pred[0] > 0.5 else 0. for pred in y_pred]
-            
-            self.d_perf["Test"] = self.performance(self.aff_test, y_pred)
-
-
-        else:
-            # trainning
-            y_train_pred = model.predict(self.dataset_train)
-            y_train_pred = [pred[0] for pred in y_train_pred]
-
-            self.d_perf["Train"] = self.performance(self.aff_train, y_train_pred)        
-
-
-            # make the correlation plot
-            filout = open(self.pr_out + "train_pred.csv", "w")
-            filout.write("\tReal\tPred\n")
-            i = 0
-            imax = len(self.l_train)
-            
-            while i < imax:
-                filout.write("%s\t%s\t%s\n"%(self.l_train[i], self.aff_train[i], y_train_pred[i]))
-                i = i + 1
-            filout.close()
-
-            runExternal.plotPerfCor(self.pr_out + "train_pred.csv")
-
-            # test set
-            y_pred = model.predict(self.dataset_test)
-            y_pred = [pred[0] for pred in y_pred]
-            
-            self.d_perf["Test"] = self.performance(self.aff_test, y_pred)
-
-            filout = open(self.pr_out + "test_pred.csv", "w")
-            filout.write("\tReal\tPred\n")
-            i = 0
-            imax = len(self.l_test)
-            while i < imax:
-                filout.write("%s\t%s\t%s\n"%(self.l_test[i], self.aff_test[i], y_pred[i]))
-                i = i + 1
-            filout.close()
-
-            runExternal.plotPerfCor(self.pr_out + "test_pred.csv")
+        # test set
+        y_pred = model.predict(self.dataset_test)
+        self.d_perf["Test"] = ML_toolbox.performance(self.aff_test, y_pred, self.typeModel, p_filout=self.pr_out + "test_pred.csv")
 
     def combineResults(self):
         if not "d_perf" in self.__dict__:
@@ -357,71 +305,21 @@ class DNN:
         
         return y_pred
 
-    def performance(self, y_real, y_pred, p_filout = ""):
+
+    # create a main in the DNN
+    def run_main(self):
         
-        if self.typeModel == "classification":
-            acc = metrics.accuracy_score(y_real, y_pred)
-            bacc = metrics.balanced_accuracy_score(y_real, y_pred)
-            mcc = metrics.matthews_corrcoef(y_real, y_pred)
-            recall = metrics.recall_score(y_real, y_pred)
-            roc_auc = metrics.roc_auc_score(y_real, y_pred)
-            f1b = metrics.fbeta_score(y_real, y_pred, beta=0.5)
+        ## to shortcurt
+        #p_combined_results = self.pr_out + "combined_perf.csv"
+        #if path.exists(p_combined_results) and self.force_run == 0:
+        #    return  
 
-            # specificity & sensitivity 
-            tn, fp, fn, tp = metrics.confusion_matrix(y_real, y_pred).ravel()
-            specificity = float(tn) / (tn+fp)
-            sensitivity = float(tp) / (tp+fn)
-
-            print("======= PERF ======")
-            print("Acc: ", acc)
-            print("b-Acc: ", bacc)
-            print("Sp: ", specificity)
-            print("Se: ", sensitivity)
-            print("MCC: ", mcc)
-            print("Recall: ", recall)
-            print("AUC: ", roc_auc)
-            print("fb1: ", f1b)
-
-            return {"Acc": acc, "b-Acc": bacc, "MCC": mcc, "Recall": recall, "AUC": roc_auc, "Se": sensitivity, "Sp": specificity, "f1b": f1b}
-        
-        else:
-            MAE = metrics.mean_absolute_error(y_real, y_pred)
-            R2 = metrics.r2_score(y_real, y_pred)
-            EVS = metrics.explained_variance_score(y_real, y_pred)
-            MSE = metrics.mean_squared_error(y_real, y_pred)
-            MAXERR = metrics.max_error(y_real, y_pred)
-            try:MSE_log = metrics.mean_squared_log_error(y_real, y_pred)
-            except: MSE_log = 0.0
-            MDAE = metrics.median_absolute_error(y_real, y_pred)
-            MTD = metrics.mean_tweedie_deviance(y_real, y_pred)
-            try:
-                MPD = metrics.mean_poisson_deviance(y_real, y_pred)
-                MGD = metrics.mean_gamma_deviance(y_real, y_pred)
-            except:
-                MPD = 0.0
-                MGD = 0.0
-
-            print("======= TRAIN ======")
-            print("MAE: ", MAE)
-            print("R2: ", R2)
-            print("Explain Variance score: ", EVS)
-            print("MSE: ", MSE)
-            print("Max error: ", MAXERR)
-            print("MSE log: ", MSE_log)
-            print("Median absolute error: ", MDAE)
-            print("Mean tweedie deviance: ", MTD)
-            print("Mean poisson deviance: ", MPD)
-            print("Mean gamma deviance: ", MGD)
-
-            if p_filout != "":
-                filout = open(p_filout, "w")
-                filout.write("\tMAE\tR2\tExplain Variance score\tMSE\tMax error\tMSE log\tMedian absolute error\tMean tweedie deviance\tMean poisson deviance\tMean gamma deviance\n")
-                filout.write("TEST-DNN\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(MAE, R2, EVS, MSE, MAXERR, MSE_log, MDAE, MTD, MPD, MGD))
-                filout.close()
-
-
-            return {"MAE": MAE, "R2": R2, "EVS": EVS, "MSE": MSE, "MAXERR": MAXERR, "MSE_log": MSE_log , "MDAE": MDAE, "MTD": MTD, "MPD":MPD , "MGD":MGD}
-
+        self.loadSet()
+        self.GridOptimizeDNN("AUC")
+        self.evaluateModel()
+        self.CrossValidation()
+        self.combineResults()
+        stophere
 
 ### not used in the DNN -> relocated in the QSAR class
     def mergeUndersampling(self, pr_rep):
@@ -460,6 +358,7 @@ class DNN:
         for k in d_out.keys():
             filout.write("%s\t%s\n"%(k, "\t".join(["%s\t%s"%(np.average(d_out[k][perf]), np.std(d_out[k][perf]))for perf in l_perf])))
         filout.close()
+
 
 
 

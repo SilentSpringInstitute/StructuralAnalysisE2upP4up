@@ -80,6 +80,9 @@ class QSAR:
             # build QSAR
             self.buildQSARs(pr_run)
 
+            print(pr_run)
+            sssss
+
         # combine repetition 
         self.combineRepetitionNoSampled()
 
@@ -245,12 +248,8 @@ class QSAR:
 
         # DNN with keras / tensorflow
         # self, p_train, p_test, p_aff, pr_out, n_foldCV, typeModel
-        c_DNN = DNN.DNN(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "classification", pr_run)
-        c_DNN.loadSet()
-        c_DNN.GridOptimizeDNN("AUC")
-        c_DNN.evaluateModel()
-        c_DNN.CrossValidation()
-        c_DNN.combineResults()
+        c_DNN = DNN.DNN(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "classification", 0, pr_run)
+        c_DNN.run_main()
 
         # use the ghost approach for RF and DNN
         # define a class specific to this approch for testing
@@ -696,35 +695,37 @@ class QSAR:
     def computeAD(self, pr_out):
         """Compute applicability model with two ways, PCA with descriptors and similarit on MACCS tanimoto
         - folder with QSAR models
+        - create AD with descriptors and similarity matrix
         """
         
         pr_AD = pathFolder.createFolder(pr_out + "AD/")
 
         # AD based on PCA descriptors
         pr_AD_desc = pathFolder.createFolder(pr_AD + "descPCA_based/")
-        runExternal.AD(self.p_train, self.p_test, pr_AD_desc)
+        if not path.exists(pr_AD_desc + "PCA_color.png"): 
+            runExternal.AD(self.p_train, self.p_test, pr_AD_desc)
 
+        
         # AD based on similarity score
         pr_AD_sim = pathFolder.createFolder(pr_AD + "chem_similarity/")
-        print(pr_AD_sim)
-        
-        # compute similarity matrix in the root folder.
-        d_train = toolbox.loadMatrix(self.p_train, sep = ",")
-        d_test = toolbox.loadMatrix(self.p_test, sep = ",")
+        if not path.exists(pr_AD_sim + "CP_similarity_text.png"):
+            # compute similarity matrix in the root folder.
+            d_train = toolbox.loadMatrix(self.p_train, sep = ",")
+            d_test = toolbox.loadMatrix(self.p_test, sep = ",")
 
-        # create matrix with flag active vs inactive and test vs train
-        p_matrix_chem = pr_AD_sim + "chem.csv"
-        f_matrix_chem = open(p_matrix_chem, "w")
-        f_matrix_chem.write("CASRN\tAff\tset\n")
-        for chem in d_train.keys():
-            f_matrix_chem.write("%s\t%s\t%s\n"%(chem, d_train[chem]["Aff"], "train"))
-        
-        for chem in d_test.keys():
-            f_matrix_chem.write("%s\t%s\t%s\n"%(chem, d_test[chem]["Aff"], "test"))
-        
-        f_matrix_chem.close()
+            # create matrix with flag active vs inactive and test vs train
+            p_matrix_chem = pr_AD_sim + "chem.csv"
+            f_matrix_chem = open(p_matrix_chem, "w")
+            f_matrix_chem.write("CASRN\tAff\tset\n")
+            for chem in d_train.keys():
+                f_matrix_chem.write("%s\t%s\t%s\n"%(chem, d_train[chem]["Aff"], "train"))
+            
+            for chem in d_test.keys():
+                f_matrix_chem.write("%s\t%s\t%s\n"%(chem, d_test[chem]["Aff"], "test"))
+            
+            f_matrix_chem.close()
 
-        runExternal.computeADBasedOnSimilarityMatrix(self.p_sim_matrix, p_matrix_chem, pr_AD_sim)        
+            runExternal.computeADBasedOnSimilarityMatrix(self.p_sim_matrix, p_matrix_chem, pr_AD_sim)        
 
     def combineRepetitionSampling(self):
 

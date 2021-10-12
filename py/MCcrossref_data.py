@@ -807,8 +807,9 @@ class MCcrossref:
         # load the class that make plot
         c_MakePlot = MakePlotsListChem.MakePlotsListChem(p_dataset=self.d_dataset[dataset], pr_desc=self.pr_desc, pr_out = pr_out)
         c_MakePlot.boardExposure(d_board_exposure, pr_out)
-        ssss
 
+
+        # to do mapping
         if SOM == 1:
             # check if model already exist
             pr_SOM = pathFolder.createFolder(pr_out + "SOM/")
@@ -898,8 +899,7 @@ class MCcrossref:
 
         # H295R #
         ######
-        self.ChemClassifByCPDAT(dataset="E2up")
-        stop903
+        #self.ChemClassifByCPDAT(dataset="E2up")
         #self.analysisMDescByDataset(dataset="H295R", l_desc=["rdkit", "OPERA"], hclust=0, SOM=1, cor_val=self.COR_VAL, max_q=self.MAX_QUANTILE, SOM_size=8) #hclust
 
 

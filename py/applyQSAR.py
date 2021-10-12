@@ -1,5 +1,6 @@
 from random import shuffle
 from os import path, listdir
+import joblib
 
 import toolbox
 import pathFolder
@@ -98,6 +99,11 @@ class applyQSAR:
 
                     elif model_file == "model.joblib":
 
+                        # load model
+                        loaded_model = joblib.load(self.pr_models + pr_model + "/" + model_file)
+
+                        # apply model
+                        result = loaded_model.score(X_test, Y_test)
                         pass
                         # make a python prediction
 

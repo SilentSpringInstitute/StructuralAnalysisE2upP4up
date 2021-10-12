@@ -35,6 +35,7 @@ class RandomForest:
         self.typeModel = "classification"
         self.type_ML = type_ML
         self.pr_out = pr_out
+        self.threshold_ghost = 0.5
 
         self.d_model = {}
         # grid optimization - use a test criteria to reduce the grid size for testing
@@ -211,11 +212,9 @@ class RandomForest:
                 filout.write("\tMAE\tR2\tExplain Variance score\tMSE\tMax error\tMSE log\tMedian absolute error\tMean tweedie deviance\tMean poisson deviance\tMean gamma deviance\n")
                 filout.write("TEST-DNN\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(MAE, R2, EVS, MSE, MAXERR, MSE_log, MDAE, MTD, MPD, MGD))
                 filout.close()
-
-
             return {"MAE": MAE, "R2": R2, "EVS": EVS, "MSE": MSE, "MAXERR": MAXERR, "MSE_log": MSE_log , "MDAE": MDAE, "MTD": MTD, "MPD":MPD , "MGD":MGD}
 
-    def evaluateOnTest(self, th_prob=0.5):
+    def evaluateOnTest(self):
     
         y_pred = self.model.predict_proba(self.dataset_test)
         if self.typeModel == "classification":
