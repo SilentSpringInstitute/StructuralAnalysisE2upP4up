@@ -838,9 +838,8 @@ class MCcrossref:
         #self.overlapBetweenListChem(["E2up", "P4up", "H295R"])
         #self.overlapBetweenListChem(["MC", "genotoxic", "H295R"])
         #self.overlapBetweenListChem(["E2up", "P4up"])
-        #self.overlapBetweenListChem(["MC", "E2up", "P4up"])
+        #self.overlapBetweenListChem(["MC", "E2up"])
         #self.overlapBetweenListChem(["MC", "E2up", "P4up", "H295R"])
-
         
         # analyse class of chemical by MC
         ####

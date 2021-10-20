@@ -80,9 +80,6 @@ class QSAR:
             # build QSAR
             self.buildQSARs(pr_run)
 
-            print(pr_run)
-            sssss
-
         # combine repetition 
         self.combineRepetitionNoSampled()
 
@@ -251,23 +248,27 @@ class QSAR:
         c_DNN = DNN.DNN(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "classification", 0, pr_run)
         c_DNN.run_main()
 
+        # DNN with a ghost optimization
+        c_DNN = DNN.DNN(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "classification", 1, pr_run)
+        c_DNN.run_main()
+
         # use the ghost approach for RF and DNN
         # define a class specific to this approch for testing
         # need to be integrated in the DNN class and make new class for RF and 
         
         # run SVM from python script
         ## kernel to test ['linear', 'poly', 'rbf', 'sigmoid']
-        c_SVM = SVM.SVM(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "linear", pr_run) 
-        c_SVM.run_main()
+        #c_SVM = SVM.SVM(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "linear", pr_run) 
+        #c_SVM.run_main()
 
-        c_SVM = SVM.SVM(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "poly", pr_run) 
-        c_SVM.run_main()
+        #c_SVM = SVM.SVM(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "poly", pr_run) 
+        #c_SVM.run_main()
 
         c_SVM = SVM.SVM(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "rbf", pr_run) 
         c_SVM.run_main()
 
-        c_SVM = SVM.SVM(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "sigmoid", pr_run) 
-        c_SVM.run_main()
+        #c_SVM = SVM.SVM(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "sigmoid", pr_run) 
+        #c_SVM.run_main()
        
         # classic RF
         ##############
@@ -834,9 +835,6 @@ class QSAR:
                         for criteria in d_out[rep][dataset][ML].keys():
                             if not criteria in l_criteria and criteria != "ID":
                                 l_criteria.append(criteria)
-
-
-
 
 
         filout = open(p_filout, "w")

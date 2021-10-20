@@ -1,6 +1,8 @@
 import toolbox
 import pathFolder
 import runExternal
+import ghost
+import ML_toolbox
 
 from numpy import loadtxt, arange
 from sklearn import metrics
@@ -19,7 +21,7 @@ from os import listdir, remove, path
 from re import search
 from copy import deepcopy
 
-import ML_toolbox
+
 
 class DNN:
     def __init__(self, p_train, p_test, p_aff, n_foldCV, typeModel, ghost, pr_root):
@@ -32,6 +34,7 @@ class DNN:
         self.force_run = 0
         # ghost approach to optimize the prob threshold
         self.ghost = ghost
+        self.l_ghost_threshold = np.round(np.arange(0.05,0.55,0.05),2)
 
         # create folder
         if self.ghost == 1:
@@ -39,7 +42,11 @@ class DNN:
         else:
             type_opt = ""
 
-        pr_out = pathFolder.createFolder(pr_root + "DNN" + type_opt + "/")
+        if self.force_run == 1:
+            pr_out = pathFolder.createFolder(pr_root + "DNN" + type_opt + "/", clean=1)
+        else:
+            pr_out = pathFolder.createFolder(pr_root + "DNN" + type_opt + "/")
+
         self.pr_out = pr_out
 
         self.pr_root = pr_root        
@@ -72,14 +79,15 @@ class DNN:
     def loadSet(self):
         
         # descriptor train set 
-        d_train  = ML_toolbox.loadSet(self.p_train, variableToPredict = 1)
+        d_train  = ML_toolbox.loadSet(self.p_train, variableToPredict = "Aff")
         self.dataset_train = d_train["dataset"]
         self.aff_train = d_train["aff"]
         self.id_train = d_train["id"]
         self.nb_desc_input = d_train["nb_desc_input"]
+        self.l_features_train = d_train["features"]
 
         # descriptor test set 
-        d_test = ML_toolbox.loadSet(self.p_test, variableToPredict = 1)
+        d_test = ML_toolbox.loadSet(self.p_test, self.l_features_train, variableToPredict = "Aff")
         self.dataset_test = d_test["dataset"]
         self.aff_test = d_test["aff"]
         self.id_test = d_test["id"]
@@ -111,8 +119,15 @@ class DNN:
                     nb_layer = nb_layer - 1
                 for epochs in self.l_epochs:
                     for batch_size in self.l_batch_size:
-                        d_pref_train = self.fit_compileModel(epochs, batch_size)
-                        d_pref_test = self.evaluateOnTest()
+                        y_pref_train = self.fit_compileModel(epochs, batch_size)
+                        if self.ghost == 1:
+                            y_train_pred_ghost = [pred[0] for pred in y_pref_train]                
+                            threshold_ghost = ghost.optimize_threshold_from_predictions(self.aff_train, y_train_pred_ghost, self.l_ghost_threshold, ThOpt_metrics = 'Kappa') 
+                        else:
+                            threshold_ghost = 0.5
+                        
+                        d_pref_test = self.evaluateOnTest(threshold_ghost)
+                        d_pref_train = ML_toolbox.performance(self.aff_train, y_pref_train, self.typeModel, th_prob=threshold_ghost)
 
                         filout.write("ACTIVATION: %s; Nb layers: %s; Epochs: %s; Batch size: %s;\n"%(activation, dense_layer, epochs, batch_size))
                         filout.write("TRAINNING SET\n%s\n"%("\n".join(["%s: %.4f"%(criteria, d_pref_train[criteria]) for criteria in d_pref_train.keys()])))
@@ -166,13 +181,14 @@ class DNN:
         # evaluate the keras model
         self.model.evaluate(self.dataset_train, self.aff_train)
         y_pred = self.model.predict(self.dataset_train)
-            
-        return ML_toolbox.performance(self.aff_train, y_pred, self.typeModel)
         
-    def evaluateOnTest(self):
+        return y_pred
+
+
+    def evaluateOnTest(self, threshold_ghost):
 
         y_pred = self.model.predict(self.dataset_test)
-        return ML_toolbox.performance(self.aff_train, y_pred, self.typeModel)
+        return ML_toolbox.performance(self.aff_test, y_pred, self.typeModel, th_prob=threshold_ghost)
     
     def evaluateModel(self):
 
@@ -187,11 +203,25 @@ class DNN:
 
         # trainning set
         y_train_pred = model.predict(self.dataset_train)    
-        self.d_perf["Train"] = ML_toolbox.performance(self.aff_train, y_train_pred, self.typeModel, p_filout=self.pr_out + "train_pred.csv")
+        
+        # add step for ghost
+        if self.ghost == 1:
+            y_train_pred_ghost = [pred[0] for pred in y_train_pred]                
+            threshold_ghost = ghost.optimize_threshold_from_predictions(self.aff_train, y_train_pred_ghost, self.l_ghost_threshold, ThOpt_metrics = 'Kappa') 
+            # save the threshold
+            p_threshold = self.pr_out + "ghost_threshold.txt"
+            filout = open(p_threshold, "w")
+            filout.write("%s"%(threshold_ghost))
+            filout.close()
+
+        else:
+            threshold_ghost = 0.5
+        
+        self.d_perf["Train"] = ML_toolbox.performance(self.aff_train, y_train_pred, self.typeModel, th_prob=threshold_ghost, p_filout=self.pr_out + "train_pred.csv")
             
         # test set
         y_pred = model.predict(self.dataset_test)
-        self.d_perf["Test"] = ML_toolbox.performance(self.aff_test, y_pred, self.typeModel, p_filout=self.pr_out + "test_pred.csv")
+        self.d_perf["Test"] = ML_toolbox.performance(self.aff_test, y_pred, self.typeModel,  th_prob=threshold_ghost, p_filout=self.pr_out + "test_pred.csv")
 
     def combineResults(self):
         if not "d_perf" in self.__dict__:
@@ -199,8 +229,6 @@ class DNN:
             return 
 
         p_filout = self.pr_out + "combined_perf.csv"
-        if path.exists(p_filout) and self.force_run == 0:
-            return
             
         filout = open(p_filout, "w")
         l_perf = ["CV", "Train", "Test"]
@@ -209,7 +237,10 @@ class DNN:
         filout.write("\t%s\n"%("\t".join(l_criteria)))
         
         for perf in l_perf:
-            filout.write("%s-DNN\t%s\n"%(perf, "\t".join(["%.2f"%(self.d_perf[perf][criteria]) for criteria in l_criteria])))
+            if self.ghost == 1:
+                filout.write("%s-DNN_ghost\t%s\n"%(perf, "\t".join(["%.2f"%(self.d_perf[perf][criteria]) for criteria in l_criteria])))
+            else:
+                filout.write("%s-DNN\t%s\n"%(perf, "\t".join(["%.2f"%(self.d_perf[perf][criteria]) for criteria in l_criteria])))
         filout.close()     
 
     def CrossValidation(self):
@@ -248,8 +279,16 @@ class DNN:
                 self.addDense(act, self.l_dense_candidate[-nb_layer_temp])
                 nb_layer_temp = nb_layer_temp - 1
 
-            d_pref_train = self.fit_compileModel(epochs, batch_size)
-            d_pref_test = self.evaluateOnTest()
+            y_train_pred = self.fit_compileModel(epochs, batch_size)
+
+            # opt with ghost
+            if self.ghost == 1:
+                y_train_pred_ghost = [pred[0] for pred in y_train_pred]                
+                threshold_ghost = ghost.optimize_threshold_from_predictions(self.aff_train, y_train_pred_ghost, self.l_ghost_threshold, ThOpt_metrics = 'Kappa') 
+            else:
+                threshold_ghost = 0.5
+
+            d_pref_test = self.evaluateOnTest(threshold_ghost)
             
             for perf_criteria in d_pref_test.keys():
                 if not perf_criteria in list(d_CV.keys()):
@@ -273,6 +312,11 @@ class DNN:
             i  = i + 1          
 
     def predictDNN(self, p_model, p_test, name_out = "test_pred"):
+        
+        """
+        Need to be rewrite or remove
+        """
+
         # descriptor test set 
         with open(p_test) as f:
             #determining number of columns from the first line of text
@@ -305,21 +349,22 @@ class DNN:
         
         return y_pred
 
-
     # create a main in the DNN
     def run_main(self):
         
         ## to shortcurt
-        #p_combined_results = self.pr_out + "combined_perf.csv"
-        #if path.exists(p_combined_results) and self.force_run == 0:
-        #    return  
+        p_combined_results = self.pr_out + "combined_perf.csv"
+        if path.exists(p_combined_results) and self.force_run == 0:
+            return  
 
         self.loadSet()
         self.GridOptimizeDNN("AUC")
         self.evaluateModel()
         self.CrossValidation()
         self.combineResults()
-        stophere
+
+
+
 
 ### not used in the DNN -> relocated in the QSAR class
     def mergeUndersampling(self, pr_rep):

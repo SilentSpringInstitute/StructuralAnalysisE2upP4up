@@ -31,9 +31,18 @@ class SVM:
         self.d_model = {}
         # grid optimization - use a test criteria to reduce the grid size for testing
         self.test = 0
-        self.force_run = 0
 
-        self.n_jobs = 4
+        if self.ghost == 1:
+            type_SVM = self.kernel + "_ghost"
+        else:
+            type_SVM = self.kernel
+
+        if self.force_run == 1:
+            self.pr_results = pathFolder.createFolder(self.pr_out + "SVM-" + type_SVM + "/", clean = 1)
+        else:
+            self.pr_results = pathFolder.createFolder(self.pr_out + "SVM-" + type_SVM + "/")
+
+        self.n_jobs = 5
         self.random_state = 1
         # use to limit optimization
         if self.test == 0:
@@ -50,18 +59,24 @@ class SVM:
 
     def loadSet(self):
     
-        # descriptor train set 
-        d_train  = ML_toolbox.loadSet(self.p_train, variableToPredict = 1)
+        d_train = ML_toolbox.loadSet(self.p_train, variableToPredict="Aff")
         self.dataset_train = d_train["dataset"]
         self.aff_train = d_train["aff"]
         self.id_train = d_train["id"]
         self.nb_desc_input = d_train["nb_desc_input"]
+        self.l_features_train = d_train["features"]
 
         # descriptor test set 
-        d_test = ML_toolbox.loadSet(self.p_test, variableToPredict = 1)
+        d_test = ML_toolbox.loadSet(self.p_test, self.l_features_train, variableToPredict = "Aff")
         self.dataset_test = d_test["dataset"]
         self.aff_test = d_test["aff"]
         self.id_test = d_test["id"]
+        self.nb_desc_test = d_test["nb_desc_input"]
+
+        # control the number of desc are the same
+        if self.nb_desc_input != self.nb_desc_test:
+            print("===CHECK SIZE TRAIN AND TEST===")
+            STOPHERE # crash script
 
     def run_SVM(self, CV = 0, **kwargs):
         """
@@ -73,8 +88,6 @@ class SVM:
             type_SVM = self.kernel + "_ghost"
         else:
             type_SVM = self.kernel
-
-        self.pr_results = pathFolder.createFolder(self.pr_out + "SVM-" + type_SVM + "/")
 
         if CV == 1:
             pr_out = self.pr_results + "CV_"
@@ -138,7 +151,6 @@ class SVM:
             type_SVM = self.kernel + "_ghost"
         else:
             type_SVM = self.kernel
-        self.pr_results = pathFolder.createFolder(self.pr_out + "SVM-" + type_SVM + "/")
 
         d_CV = {}
         if self.typeModel == "classification":
@@ -157,11 +169,12 @@ class SVM:
             # update the class
             self.dataset_train = d_train[train]
             self.aff_train = Y_train[train]
-            self.id_train = id_train[train]
+            self.id_train = list(np.array(id_train)[list(train)])
+            
 
             self.dataset_test = d_train[test]
             self.aff_test = Y_train[test]
-            self.id_test = id_train[test]
+            self.id_test = list(np.array(id_train)[list(test)])
 
             # optimize model
             self.run_SVM(CV=1)
@@ -175,8 +188,7 @@ class SVM:
             #else:
             self.threshold_ghost = 0.5
 
-            print(y_pred)
-            d_pref_test = ML_toolbox.performance(self.aff_test, y_pred, typeModel = "classification")
+            d_pref_test = ML_toolbox.performance(self.aff_test, y_pred, typeModel = "classification", th_prob=self.threshold_ghost)
             
             for perf_criteria in d_pref_test.keys():
                 if not perf_criteria in list(d_CV.keys()):
@@ -262,7 +274,7 @@ class SVM:
             type_SVM = self.kernel
 
         p_combined_results = self.pr_out + "SVM-" + type_SVM + "/" + "combined_perf.csv"
-        if path.exists(p_combined_results) and self.force_run == 0:
+        if path.exists(p_combined_results):
             return  
 
         self.TrainTestPrediction()

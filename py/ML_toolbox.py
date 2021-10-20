@@ -2,6 +2,7 @@ from sklearn import metrics
 from numpy import loadtxt, arange
 import pandas
 from sklearn.preprocessing import StandardScaler
+from tensorflow.python.module.module import valid_identifier
 sc = StandardScaler()
 
 def performance(y_real, y_pred, typeModel, th_prob = 0.5, p_filout = ""):
@@ -75,42 +76,47 @@ def performance(y_real, y_pred, typeModel, th_prob = 0.5, p_filout = ""):
 
         return {"MAE": MAE, "R2": R2, "EVS": EVS, "MSE": MSE, "MAXERR": MAXERR, "MSE_log": MSE_log , "MDAE": MDAE, "MTD": MTD, "MPD":MPD , "MGD":MGD}
 
-def loadSet(p_set, l_col_to_order = [], variableToPredict = 0):
+def loadSet(p_set, l_col_to_order = [], variableToPredict = "Aff", sep = ","):
     """
     Data in input open first with panda and next convert to numpy format to exit
         - sep = ,
-        - aff in last col
-        - rownames in the first col
+        - aff in last col with the name in input
+        - also col selected previously
     """
 
     d_out = {}
-    # descriptor train set 
-    with open(p_set) as f:
-        #determining number of columns from the first line of text
-        n_cols = len(f.readline().split(","))
-        f.close()
-    
-    if variableToPredict == 1:
-        d_out["dataset"] = loadtxt(p_set, delimiter=",",usecols=arange(1, n_cols-1), skiprows=1)
-        d_out["dataset"] = sc.fit_transform(d_out["dataset"])
-        # take last col
-        d_out["aff"] = loadtxt(p_set, delimiter=",",usecols=arange(n_cols-1, n_cols), skiprows=1)
-        d_out["nb_desc_input"] = n_cols - 2 # remove rowname and the aff
-    else:
-        d_out["dataset"] = loadtxt(p_set, delimiter=",",usecols=arange(1, n_cols), skiprows=1)
-        d_out["dataset"] = sc.fit_transform(d_out["dataset"])
-        d_out["nb_desc_input"] = n_cols - 1 # remove only the rownames
 
-    d_out["id"] = loadtxt(p_set, dtype=str,  delimiter=",",usecols=arange(0, 1), skiprows=1)
-
-    # test with panda openning
-    d_out["dataset"] = pandas.read_csv(p_set)
-    d_out["dataset"] = d_out["dataset"].drop(columns = ["ID", "Aff"])
-    d_out["dataset"] = d_out["dataset"].to_numpy()
-    #d_out["dataset"] = d_out["dataset"][1:, :]
-
+    # open data
+    d_out["dataset"] = pandas.read_csv(p_set, sep = sep)
     print(d_out["dataset"])
-    sss
+    
+    # take affinity col
+    if variableToPredict != "":
+        l_aff = d_out["dataset"][variableToPredict]
+        l_aff = l_aff.to_numpy()
+        d_out["aff"] = l_aff
+        d_out["dataset"] = d_out["dataset"].drop(columns = [variableToPredict])
+    
+    # extra ID 
+    if "ID" in list(d_out["dataset"].keys()):
+        l_id =  list(d_out["dataset"]["ID"])
+    elif "CASRN" in list(d_out["dataset"].keys()):
+        l_id =  list(d_out["dataset"]["CASRN"])
+    else:
+        l_id = []
+    d_out["id"] = l_id
+    d_out["dataset"] = d_out["dataset"].iloc[:, 1:]
+    
+    # select specific col
+    if l_col_to_order != []:
+        d_out["dataset"] = d_out["dataset"][l_col_to_order]
 
+    # list of features
+    l_features = list(d_out["dataset"].columns)
+    d_out["features"] = l_features
+    d_out["nb_desc_input"] = len(l_features)
+
+    # format dataset here
+    d_out["dataset"] = d_out["dataset"].to_numpy()
 
     return d_out

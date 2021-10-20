@@ -1,6 +1,7 @@
 import pathFolder
 import toolbox
 import ghost
+import ML_toolbox
 
 
 from numpy import loadtxt, arange
@@ -22,7 +23,7 @@ from imblearn.ensemble import BalancedRandomForestClassifier
 
 class RandomForest:
 
-    def __init__(self, p_train, p_test, p_aff, n_foldCV, type_ML, ghost, pr_out):
+    def __init__(self, p_train, p_test, p_aff, n_foldCV, type_ML, ghost, pr_root):
         self.p_train = p_train
         self.p_test = p_test
         self.p_aff = p_aff
@@ -34,8 +35,20 @@ class RandomForest:
         self.force_run = 0
         self.typeModel = "classification"
         self.type_ML = type_ML
-        self.pr_out = pr_out
-        self.threshold_ghost = 0.5
+        self.pr_root = pr_root
+
+        # define pr_out
+        if self.ghost == 1:
+            type_RF = self.type_ML + "_ghost"
+        else:
+            type_RF = self.type_ML
+        
+        self.type_RF = type_RF
+        if self.force_run == 1:
+            self.pr_out = pathFolder.createFolder(self.pr_root + type_RF + "/", clean = 1)
+        else:
+            self.pr_out = pathFolder.createFolder(self.pr_root + type_RF + "/")
+
 
         self.d_model = {}
         # grid optimization - use a test criteria to reduce the grid size for testing
@@ -60,47 +73,39 @@ class RandomForest:
 
     def loadSet(self):
     
-        # descriptor train set 
-        with open(self.p_train) as f:
-            #determining number of columns from the first line of text
-            n_cols = len(f.readline().split(","))
-        self.dataset_train = loadtxt(self.p_train, delimiter=",",usecols=arange(1, n_cols-1), skiprows=1)
-        self.dataset_train = sc.fit_transform(self.dataset_train)
-        self.aff_train = loadtxt(self.p_train, delimiter=",",usecols=arange(n_cols-1, n_cols), skiprows=1)
-        self.id_train = loadtxt(self.p_train, dtype=str,  delimiter=",",usecols=arange(0, 1), skiprows=1)
-        self.nb_desc_input = n_cols - 2
-
+        
+        d_train = ML_toolbox.loadSet(self.p_train, variableToPredict="Aff")
+        self.dataset_train = d_train["dataset"]
+        self.aff_train = d_train["aff"]
+        self.id_train = d_train["id"]
+        self.nb_desc_input = d_train["nb_desc_input"]
+        self.l_features_train = d_train["features"]
 
         # descriptor test set 
-        with open(self.p_test) as f:
-            #determining number of columns from the first line of text
-            n_cols = len(f.readline().split(","))
-        self.dataset_test = loadtxt(self.p_test, delimiter=",",usecols=arange(1, n_cols-1), skiprows=1)
-        self.dataset_test = sc.fit_transform(self.dataset_test)
-        self.aff_test = loadtxt(self.p_test, delimiter=",",usecols=arange(n_cols-1, n_cols), skiprows=1)
-        self.id_test = loadtxt(self.p_test, dtype=str, delimiter=",",usecols=arange(0, 1), skiprows=1)
+        d_test = ML_toolbox.loadSet(self.p_test, self.l_features_train, variableToPredict = "Aff")
+        self.dataset_test = d_test["dataset"]
+        self.aff_test = d_test["aff"]
+        self.id_test = d_test["id"]
+        self.nb_desc_test = d_test["nb_desc_input"]
+
+        # control the number of desc are the same
+        if self.nb_desc_input != self.nb_desc_test:
+            print("===CHECK SIZE TRAIN AND TEST===")
+            STOPHERE # crash script
 
     def run_RF(self, CV = 0, **kwargs):
 
-        # add ghost here
-        if self.ghost == 1:
-            type_RF = self.type_ML + "_ghost"
-        else:
-            type_RF = self.type_ML
-
-        self.pr_results = pathFolder.createFolder(self.pr_out + type_RF + "/")
-
         if CV == 1:
-            pr_out = self.pr_results + "CV_"
+            pr_out = self.pr_out + "CV_"
         else:
-            pr_out = self.pr_results
+            pr_out = self.pr_out
 
         # short cut with the model already computed and save
         p_model = pr_out + "model.joblib"
         
         # do not check if CV model exist
         if path.exists(p_model) and self.force_run == 0 and CV == 0:
-            self.d_model[type_RF] = joblib.load(p_model)
+            self.d_model[self.type_ML] = joblib.load(p_model)
 
         else:
             random_grid = {'n_estimators': self.n_estimators,
@@ -122,18 +127,18 @@ class RandomForest:
 
             # do not save CV on the save as RF
             if CV == 0:
-                self.d_model[type_RF] = joblib.load(p_model)
+                self.d_model[self.type_ML] = joblib.load(p_model)
 
             else:
-                self.d_model["CV_" + type_RF] = joblib.load(p_model)
+                self.d_model["CV_" + self.type_ML] = joblib.load(p_model)
 
-    def apply_model(self, a_set, id_set, type_RF, name_out = "", w=0): 
+    def apply_model(self, a_set, id_set, name_out = "", w=0): 
        
-        y_pred = self.d_model[type_RF].predict_proba(a_set)
+        y_pred = self.d_model[self.type_ML].predict_proba(a_set)
 
         # compute quality performance
         if w == 1:
-            p_filout = self.pr_results + name_out
+            p_filout = self.pr_out + name_out
             filout = open(p_filout, "w")
             filout.write("\"\",\"ID\",\"Pred\"\n")
             i = 0
@@ -147,80 +152,13 @@ class RandomForest:
             
         return y_pred
     
-    def performance(self, y_real, y_pred, th_prob = 0.5, p_filout = ""):
-            
-        if self.typeModel == "classification":
-
-            # change prob -> value
-            y_pred = [1. if pred[1] > th_prob else 0. for pred in y_pred]
-
-            acc = metrics.accuracy_score(y_real, y_pred)
-            bacc = metrics.balanced_accuracy_score(y_real, y_pred)
-            mcc = metrics.matthews_corrcoef(y_real, y_pred)
-            recall = metrics.recall_score(y_real, y_pred)
-            roc_auc = metrics.roc_auc_score(y_real, y_pred)
-            f1b = metrics.fbeta_score(y_real, y_pred, beta=0.5)
-
-            # specificity & sensitivity 
-            tn, fp, fn, tp = metrics.confusion_matrix(y_real, y_pred).ravel()
-            specificity = float(tn) / (tn+fp)
-            sensitivity = float(tp) / (tp+fn)
-
-            print("======= PERF ======")
-            print("Acc: ", acc)
-            print("b-Acc: ", bacc)
-            print("Sp: ", specificity)
-            print("Se: ", sensitivity)
-            print("MCC: ", mcc)
-            print("Recall: ", recall)
-            print("AUC: ", roc_auc)
-            print("fb1: ", f1b)
-
-            return {"Acc": acc, "b-Acc": bacc, "MCC": mcc, "Recall": recall, "AUC": roc_auc, "Se": sensitivity, "Sp": specificity, "f1b": f1b}
-        
-        else:
-            MAE = metrics.mean_absolute_error(y_real, y_pred)
-            R2 = metrics.r2_score(y_real, y_pred)
-            EVS = metrics.explained_variance_score(y_real, y_pred)
-            MSE = metrics.mean_squared_error(y_real, y_pred)
-            MAXERR = metrics.max_error(y_real, y_pred)
-            try:MSE_log = metrics.mean_squared_log_error(y_real, y_pred)
-            except: MSE_log = 0.0
-            MDAE = metrics.median_absolute_error(y_real, y_pred)
-            MTD = metrics.mean_tweedie_deviance(y_real, y_pred)
-            try:
-                MPD = metrics.mean_poisson_deviance(y_real, y_pred)
-                MGD = metrics.mean_gamma_deviance(y_real, y_pred)
-            except:
-                MPD = 0.0
-                MGD = 0.0
-
-            print("======= TRAIN ======")
-            print("MAE: ", MAE)
-            print("R2: ", R2)
-            print("Explain Variance score: ", EVS)
-            print("MSE: ", MSE)
-            print("Max error: ", MAXERR)
-            print("MSE log: ", MSE_log)
-            print("Median absolute error: ", MDAE)
-            print("Mean tweedie deviance: ", MTD)
-            print("Mean poisson deviance: ", MPD)
-            print("Mean gamma deviance: ", MGD)
-
-            if p_filout != "":
-                filout = open(p_filout, "w")
-                filout.write("\tMAE\tR2\tExplain Variance score\tMSE\tMax error\tMSE log\tMedian absolute error\tMean tweedie deviance\tMean poisson deviance\tMean gamma deviance\n")
-                filout.write("TEST-DNN\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(MAE, R2, EVS, MSE, MAXERR, MSE_log, MDAE, MTD, MPD, MGD))
-                filout.close()
-            return {"MAE": MAE, "R2": R2, "EVS": EVS, "MSE": MSE, "MAXERR": MAXERR, "MSE_log": MSE_log , "MDAE": MDAE, "MTD": MTD, "MPD":MPD , "MGD":MGD}
-
     def evaluateOnTest(self):
     
         y_pred = self.model.predict_proba(self.dataset_test)
         if self.typeModel == "classification":
-            return self.performance(self.aff_test, y_pred, self.threshold_ghost)
+            return ML_toolbox.performance(self.aff_test, y_pred, self.typeModel, self.threshold_ghost)
         else:
-            return self.performance(self.aff_test, y_pred, self.threshold_ghost)
+            return ML_toolbox.performance(self.aff_test, y_pred, self.typeModel, self.threshold_ghost)
 
     def CrossValidation(self):
         """
@@ -230,12 +168,6 @@ class RandomForest:
         
         # load dataset
         self.loadSet()
-
-        if self.ghost == 1:
-            type_RF = self.type_ML + "_ghost"
-        else:
-            type_RF = self.type_ML
-        self.pr_results = pathFolder.createFolder(self.pr_out + type_RF + "/")
 
         seed = 7
         d_CV = {}
@@ -255,25 +187,25 @@ class RandomForest:
             # update the class
             self.dataset_train = d_train[train]
             self.aff_train = Y_train[train]
-            self.id_train = id_train[train]
+            self.id_train = list(np.array(id_train)[list(train)])
 
             self.dataset_test = d_train[test]
             self.aff_test = Y_train[test]
-            self.id_test = id_train[test]
+            self.id_test = list(np.array(id_train)[list(test)])
 
             # optimize model
             self.run_RF(CV=1)
 
             # apply prediction on the test
-            y_pred = self.apply_model(self.dataset_test, self.id_test, "CV_" + type_RF)
+            y_pred = self.apply_model(self.dataset_test, self.id_test, "CV_" + self.type_RF)
             if self.ghost == 1:
-                y_pred_train = self.apply_model(self.dataset_train, self.id_train, "CV_" + type_RF)
+                y_pred_train = self.apply_model(self.dataset_train, self.id_train, "CV_" + self.type_RF)
                 y_pred_train_ghost = [pred[1] for pred in y_pred_train]
                 self.threshold_ghost = ghost.optimize_threshold_from_predictions(self.aff_train, y_pred_train_ghost, self.l_ghost_threshold, ThOpt_metrics = 'Kappa') 
             else:
                 self.threshold_ghost = 0.5
 
-            d_pref_test = self.performance(self.aff_test, y_pred, self.threshold_ghost)
+            d_pref_test = ML_toolbox.performance(self.aff_test, y_pred, self.typeModel, self.threshold_ghost)
             
             for perf_criteria in d_pref_test.keys():
                 if not perf_criteria in list(d_CV.keys()):
@@ -282,7 +214,7 @@ class RandomForest:
 
         l_criteria = list(d_CV.keys())
         l_val = ["%.2f"%(np.mean(d_CV[criteria])) for criteria in l_criteria]
-        filout = open(self.pr_results + "CV_%s.perf"%(self.n_foldCV), "w")
+        filout = open(self.pr_out + "CV_%s.perf"%(self.n_foldCV), "w")
         filout.write("%s\n%s"%("\t".join(l_criteria), "\t".join(l_val)))
 
         # populate d_pref
@@ -310,23 +242,24 @@ class RandomForest:
         if self.typeModel == "classification":
             # trainning set
             # add ghost here
-            if self.ghost == 1:
-                type_RF = self.type_ML + "_ghost"
-            else:
-                type_RF = self.type_ML
-            y_train_pred = self.apply_model(self.dataset_train, self.id_train, type_RF, "train_pred.csv", w=1)
+            y_train_pred = self.apply_model(self.dataset_train, self.id_train, "train_pred.csv", w=1)
             if self.ghost == 1:
                 y_train_pred_ghost = [pred[1] for pred in y_train_pred]                
                 threshold_ghost = ghost.optimize_threshold_from_predictions(self.aff_train, y_train_pred_ghost, self.l_ghost_threshold, ThOpt_metrics = 'Kappa') 
+                # save the threshold
+                p_threshold = self.pr_out + "ghost_threshold.txt"
+                filout = open(p_threshold, "w")
+                filout.write("%s"%(threshold_ghost))
+                filout.close()
             else:
                 threshold_ghost = 0.5
 
             self.ghost_treshold = threshold_ghost
-            self.d_perf["Train"] = self.performance(self.aff_train, y_train_pred, self.ghost_treshold)
+            self.d_perf["Train"] = ML_toolbox.performance(self.aff_train, y_train_pred, self.typeModel, self.ghost_treshold)
             
             # test set
-            y_pred = self.apply_model(self.dataset_test, self.id_test, type_RF, "test_pred.csv", w=1)
-            self.d_perf["Test"] = self.performance(self.aff_test, y_pred, self.ghost_treshold)
+            y_pred = self.apply_model(self.dataset_test, self.id_test, "test_pred.csv", w=1)
+            self.d_perf["Test"] = ML_toolbox.performance(self.aff_test, y_pred, self.typeModel, self.ghost_treshold)
            
     def combineResults(self):
        
@@ -334,12 +267,7 @@ class RandomForest:
             print("No data to write")
             return 
 
-        if self.ghost == 1:
-            type_RF = self.type_ML + "_ghost"
-        else:
-            type_RF = self.type_ML
-        
-        p_filout = self.pr_results + "combined_perf.csv"
+        p_filout = self.pr_out + "combined_perf.csv"
 
         filout = open(p_filout, "w")
         l_perf = ["CV", "Train", "Test"]
@@ -348,17 +276,12 @@ class RandomForest:
         filout.write("\t%s\n"%("\t".join(l_criteria)))
         
         for perf in l_perf:
-            filout.write("%s-%s\t%s\n"%(perf, type_RF, "\t".join(["%.2f"%(self.d_perf[perf][criteria]) for criteria in l_criteria])))
+            filout.write("%s-%s\t%s\n"%(perf, self.type_RF, "\t".join(["%.2f"%(self.d_perf[perf][criteria]) for criteria in l_criteria])))
         filout.close() 
     
     def run_main(self):
 
-        if self.ghost == 1:
-            type_RF = self.type_ML + "_ghost"
-        else:
-            type_RF = self.type_ML
-
-        p_combined_results = self.pr_out + type_RF + "/" + "combined_perf.csv"
+        p_combined_results = self.pr_out + "combined_perf.csv"
         if path.exists(p_combined_results) and self.force_run == 0:
             return  
 

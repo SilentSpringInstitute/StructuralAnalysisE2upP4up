@@ -61,17 +61,16 @@ c_MCcrossref.main()
 
 # no undersampling 
 ##############
-MAX_QUANTILE = 0
-name_QSAR = "QSAR_E2_H295R_nosampling_nosingledosecheck_noborderline"
-c_QSAR_E2up = buildQSAR.buildQSAR(name_QSAR, "E2up", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
-c_QSAR_E2up.buildDataset(c_Stereo, borderline=0)
-c_QSAR_E2up.buildDescSet(["rdkit", "OPERA", "toxprint"])
-c_QSAR_E2up.prepDesc()
-c_QSAR_E2up.computeSimMatrix()# similarity matrix for the AD
-c_QSAR_E2up.runQSARs()# no sampling add
+#MAX_QUANTILE = 0
+#name_QSAR = "QSAR_E2_H295R_nosampling_nosingledosecheck_noborderline"
+#c_QSAR_E2up = buildQSAR.buildQSAR(name_QSAR, "E2up", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
+#c_QSAR_E2up.buildDataset(c_Stereo, borderline=0)
+#c_QSAR_E2up.buildDescSet(["rdkit", "OPERA", "toxprint"])
+#c_QSAR_E2up.prepDesc()
+#c_QSAR_E2up.computeSimMatrix()# similarity matrix for the AD
+#c_QSAR_E2up.runQSARs()# no sampling add
 ## best model selected manually
-n_E2best_run = 3
-sss
+n_E2best_run = 2
 
 
 # undersampling with variable active rate
@@ -100,8 +99,8 @@ sss
 #c_QSAR_P4up.prepDesc()
 #c_QSAR_P4up.computeSimMatrix()# similarity matrix for the AD
 #c_QSAR_P4up.runQSARs()# no sampling add
-# best model selected manually
-n_P4best_run = 1
+### best model selected manually
+n_P4best_run = 3
 
 # undersampling with variable active rate
 #######################
@@ -120,13 +119,14 @@ n_P4best_run = 1
 ###################
 pr_model_E2up = PR_RESULTS + "QSAR_E2_H295R_nosampling_nosingledosecheck_noborderline/rdkit-OPERA-toxprint_0.9-0/classQSAR/" + str(n_E2best_run) + "/"
 pr_model_P4up = PR_RESULTS + "QSAR_E2_H295R_nosampling_nosingledosecheck_noborderline/rdkit-OPERA-toxprint_0.9-0/classQSAR/" + str(n_P4best_run) + "/"
-pr_MC_pred = pathFolder.createFolder(PR_RESULTS + "predMC/")
-pr_MC_pred_E2up_model = pr_MC_pred
+pr_E2MC_pred = pathFolder.createFolder(PR_RESULTS + "predMC_E2/")
 
-c_applyQSAR = applyQSAR.applyQSAR(c_MCcrossref, pr_model_E2up, )
+c_applyQSARE2 = applyQSAR.applyQSAR(c_MCcrossref, pr_model_E2up, pr_E2MC_pred)
+c_applyQSARE2.loadDataFromCrossRef("MC", 1)
+c_applyQSARE2.buildDescSet(["rdkit", "OPERA", "toxprint"])
+c_applyQSARE2.applyAllModel()
 
-
-
+stop129
 
 
 c_QSAR_P4up = buildQSAR.buildQSAR(name_QSAR, "MC", "H295R", c_MCcrossref, PR_RESULTS, COR_VAL, MAX_QUANTILE)
