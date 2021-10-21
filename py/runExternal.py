@@ -229,6 +229,10 @@ def applyQSARModel(p_desc, p_model, pr_model, pr_out):
     cmd = "./predictfromModel.R %s %s %s %s"%(p_desc, p_model, pr_model, pr_out)
     runRQSARModeling(cmd)
 
+def PCA_2sets(p_train, p_test, pr_out):
+    cmd = "./PCA_2set.R %s %s %s"%(p_train, p_test, pr_out)
+    runRCMD(cmd)
+
 ##############
 # run biotransformer tool
 
