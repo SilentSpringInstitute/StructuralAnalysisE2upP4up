@@ -124,9 +124,10 @@ pr_E2MC_pred = pathFolder.createFolder(PR_RESULTS + "predMC_E2/")
 c_applyQSARE2 = applyQSAR.applyQSAR(c_MCcrossref, pr_model_E2up, pr_E2MC_pred)
 c_applyQSARE2.loadDataFromCrossRef("MC", ["E2up", "H295R"], 1)
 c_applyQSARE2.buildDescSet(["rdkit", "OPERA", "toxprint"])
-c_applyQSARE2.applyAllModel()
+c_applyQSARE2.applyQSARModels()
+c_applyQSARE2.computeAD()
 c_applyQSARE2.applyToxPrintSignifcant(PR_RESULTS)
-
+c_applyQSARE2.mergePredToxPrintQSAR()
 stop129
 
 

@@ -9,7 +9,7 @@ import toolbox
 import pathFolder
 import runExternal
 import ML_toolbox
-
+import CompDesc
 
 class applyQSAR:
     def __init__(self, c_dataset, pr_QSAR, pr_out):
@@ -93,7 +93,7 @@ class applyQSAR:
         if path.exists(self.pr_out + "desc_global.csv"):
             self.p_desc = self.pr_out + "desc_global.csv"        
 
-    def applyAllModel(self):
+    def applyQSARModels(self):
 
         l_pr_models = listdir(self.pr_models)
 
@@ -103,9 +103,6 @@ class applyQSAR:
         self.d_train = ML_toolbox.loadSet(p_train)
         self.d_test = ML_toolbox.loadSet(p_test)
         d_topred = ML_toolbox.loadSet(self.p_desc, self.d_train["features"], "", "\t")
-
-        #PCA for applicability model
-        runExternal.PCA_2sets(p_train, self.p_desc, self.pr_out)
 
         d_pred = {}
         for pr_model in l_pr_models:
@@ -202,6 +199,99 @@ class applyQSAR:
                     l_i.remove(i) 
         filout.close()
 
+        self.p_pred_QSAR = p_filout
+
+
+    def computeAD(self):
+
+        # need to compute before the prediction
+        if not "p_pred_QSAR" in self.__dict__:
+            print("Compute first the QSAR prediction")
+            return 
+        
+        d_pred_all = toolbox.loadMatrix(self.p_pred_QSAR)
+        pr_AD = pathFolder.createFolder(self.pr_out + "AD/")
+
+        #PCA for applicability model #
+        ##############################
+        pr_PCA = pathFolder.createFolder(pr_AD + "PCA_desc/")
+        # load train set to select
+        p_train = self.pr_models + "trainGlobal.csv"
+        runExternal.PCA_2sets(p_train, self.p_desc, pr_PCA)
+
+        # AD based on similarity score #
+        ################################
+        pr_AD_sim = pathFolder.createFolder(pr_AD + "chem_similarity/")
+        if not path.exists(pr_AD_sim + "CP_similarity_text.png"):
+            # compute similarity matrix in the root folder.
+            # create matrix with flag active vs inactive and test vs train
+            p_matrix_chem = pr_AD_sim + "chem.csv"
+            f_matrix_chem = open(p_matrix_chem, "w")
+            f_matrix_chem.write("CASRN\tAff\tset\n")
+            
+            # set to test
+            d_SMILES = {}
+            for chem in d_pred_all.keys():
+                if chem in list(self.d_set_train_act.keys()) or chem in list(self.d_set_train_inact.keys()):
+                    continue
+                d_SMILES[chem] = self.d_set_test[chem]["SMILES"]
+                f_matrix_chem.write("%s\t%s\t%s\n"%(chem, "1", "test"))
+            
+            # train active
+            for casrn_train in self.d_set_train_act.keys():
+                d_SMILES[casrn_train] = self.d_set_train_act[casrn_train]["SMILES"]
+                f_matrix_chem.write("%s\t%s\t%s\n"%(casrn_train, "1", "train"))
+            
+            # train inactive
+            for casrn_train in self.d_set_train_inact.keys():
+                d_SMILES[casrn_train] = self.d_set_train_inact[casrn_train]["SMILES"]
+                f_matrix_chem.write("%s\t%s\t%s\n"%(casrn_train, "0", "train"))
+            f_matrix_chem.close()
+
+            # define p_sim_matrix
+            p_matrix_sim = pr_AD_sim + "matrix_sim.csv"
+            
+            if not path.exists(p_matrix_sim):
+                d_sim = {}
+                l_casrn = list(d_SMILES.keys())
+                i = 0
+                imax = len(l_casrn)
+                while i < imax:
+                    smi1 = d_SMILES[l_casrn[i]]
+                    d_sim[l_casrn[i]] = {}
+                    c_smi1 = CompDesc.CompDesc(smi1, "")
+                    c_smi1.prepChem()
+                    c_smi1.computeFP("MACCS")
+
+                    j = i + 1
+                    while j < imax:
+                        smi2 = d_SMILES[l_casrn[j]]
+                        c_smi2 = CompDesc.CompDesc(smi2, "")
+                        c_smi2.prepChem()
+                        c_smi2.computeFP("MACCS")
+                        score = c_smi1.computeSimilarityFP(c_smi2, "MACCS", "Tanimoto")
+                        d_sim[l_casrn[i]][l_casrn[j]] = str(score)
+                        j=j+1
+
+                    i = i + 1
+            
+                # matrix of similarity
+                filout = open(p_matrix_sim, "w")
+                filout.write("\t".join(l_casrn) + "\n")
+                for casrn in l_casrn:
+                    filout.write(casrn)
+                    for casrn2 in l_casrn:
+                        if casrn == casrn2:
+                            filout.write("\t1")
+                        else:
+                            try:filout.write("\t%s"%(d_sim[casrn][casrn2]))
+                            except: filout.write("\t%s"%(d_sim[casrn2][casrn]))
+                    filout.write("\n")
+                filout.close()
+
+            runExternal.computeADBasedOnSimilarityMatrix(p_matrix_sim, p_matrix_chem, pr_AD_sim)  
+
+
     def applyToxPrintSignifcant(self, pr_results):
 
         # define folder with the list of significant toxprint
@@ -258,7 +348,6 @@ class applyQSAR:
         l_sum = list(set(l_sum))
         l_sum.sort(reverse=T)
 
-        print(l_sum)
 
         p_filout = self.pr_out + "ToxPrints.csv"
         filout = open(p_filout, "w")
@@ -277,3 +366,25 @@ class applyQSAR:
                     filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(casrn, self.d_set_test[casrn]["Chemical name"], d_count[casrn]["***"], d_count[casrn]["**"], d_count[casrn]["*"], d_count[casrn]["-"], d_count[casrn]["In train"], d_count[casrn]["In test"], class_train_act, class_train_inact))
             i = i + 1
         filout.close()
+
+        self.p_model_toxprint = p_filout
+
+    
+    def mergePredToxPrintQSAR(self):
+
+        d_QSAR_pred = toolbox.loadMatrix(self.p_pred_QSAR)
+        d_toxprint_pred = toolbox.loadMatrix(self.p_model_toxprint)
+
+        p_filout = self.pr_out + "ToxPrint_QSAR.csv"
+        filout = open(p_filout, "w")
+        filout.write("CASRN\tChemical name\tnb Toxprint (***)\tnb Toxprint (**)\tnb Toxprint (*)\tPred RF\tPred RF balanced\tAvg. RF\tAD distance to first neighbord\n")
+
+        for casrn in d_toxprint_pred.keys():
+            if d_toxprint_pred[casrn]["In train"] == "1" or d_toxprint_pred[casrn]["In test"] == "1":
+                continue
+            filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(casrn, d_toxprint_pred[casrn]["Chemical name"], d_toxprint_pred[casrn]["***"], d_toxprint_pred[casrn]["**"], d_toxprint_pred[casrn]["*"], d_QSAR_pred[casrn]["RF_py_ghost"], d_QSAR_pred[casrn]["RF_balanced_ghost"], d_QSAR_pred[casrn]["Avg RF"]))
+        filout.close()
+
+
+
+        return
