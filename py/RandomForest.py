@@ -4,7 +4,7 @@ import ghost
 import ML_toolbox
 
 
-from numpy import loadtxt, arange
+from numpy import loadtxt, arange, array
 from re import search
 from sklearn import metrics
 from sklearn.model_selection import StratifiedKFold, KFold
@@ -14,7 +14,11 @@ import joblib
 from os import path, listdir
 from copy import deepcopy
 import numpy as np
+import pandas as pd
 
+import shap
+from matplotlib import pyplot as plt
+from matplotlib import rcParams
 
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
@@ -122,6 +126,15 @@ class RandomForest:
             rf_random.fit(self.dataset_train, self.aff_train)
             best_random = rf_random.best_estimator_
             
+            # save descriptor importance
+            if CV == 0:
+                sorted_idx = rf_random.best_estimator_.feature_importances_.argsort()
+                rcParams.update({'figure.autolayout': True})
+                plt.figure(figsize=(6,8))
+                plt.barh(array(self.l_features_train)[sorted_idx][-10:], rf_random.best_estimator_.feature_importances_[sorted_idx][-10:], color=(0.2, 0.4, 0.6, 0.6))
+                plt.xlabel("Random Forest Feature Importance")
+                plt.savefig(pr_out + "importance_RF.png", dpi=300)
+
             # save the model
             joblib.dump(best_random, p_model)
 

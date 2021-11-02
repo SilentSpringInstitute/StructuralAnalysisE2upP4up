@@ -1,5 +1,6 @@
 from random import shuffle
 from os import path, listdir
+from shutil import copyfile
 import joblib
 from re import T, search
 from tensorflow.keras.models import load_model
@@ -201,7 +202,6 @@ class applyQSAR:
 
         self.p_pred_QSAR = p_filout
 
-
     def computeAD(self):
 
         # need to compute before the prediction
@@ -232,6 +232,9 @@ class applyQSAR:
             # set to test
             d_SMILES = {}
             for chem in d_pred_all.keys():
+                if chem in list(d_SMILES.keys()):
+                    continue
+                
                 if chem in list(self.d_set_train_act.keys()) or chem in list(self.d_set_train_inact.keys()):
                     continue
                 d_SMILES[chem] = self.d_set_test[chem]["SMILES"]
@@ -239,11 +242,15 @@ class applyQSAR:
             
             # train active
             for casrn_train in self.d_set_train_act.keys():
+                if casrn_train in list(d_SMILES.keys()):
+                    continue
                 d_SMILES[casrn_train] = self.d_set_train_act[casrn_train]["SMILES"]
                 f_matrix_chem.write("%s\t%s\t%s\n"%(casrn_train, "1", "train"))
             
             # train inactive
             for casrn_train in self.d_set_train_inact.keys():
+                if casrn_train in list(d_SMILES.keys()):
+                    continue
                 d_SMILES[casrn_train] = self.d_set_train_inact[casrn_train]["SMILES"]
                 f_matrix_chem.write("%s\t%s\t%s\n"%(casrn_train, "0", "train"))
             f_matrix_chem.close()
@@ -290,7 +297,6 @@ class applyQSAR:
                 filout.close()
 
             runExternal.computeADBasedOnSimilarityMatrix(p_matrix_sim, p_matrix_chem, pr_AD_sim)  
-
 
     def applyToxPrintSignifcant(self, pr_results):
 
@@ -369,12 +375,31 @@ class applyQSAR:
 
         self.p_model_toxprint = p_filout
 
-    
-    def mergePredToxPrintQSAR(self):
+    def mergePredToxPrintQSAR(self, AD_cutoff, nb_significant_toxPrint, QSAR_prob):
 
+        p_filout_filtered = "%sToxPrint_QSAR_filtered_AD_%s_ToxPrint_%s_QSAR_%s.csv"%(self.pr_out, AD_cutoff, nb_significant_toxPrint, QSAR_prob)
+        if path.exists(p_filout_filtered):
+            self.d_pred_merged = toolbox.loadMatrix(p_filout_filtered)
+            return 
+        
         d_QSAR_pred = toolbox.loadMatrix(self.p_pred_QSAR)
         d_toxprint_pred = toolbox.loadMatrix(self.p_model_toxprint)
 
+        # load AD
+        d_sim_matrix = toolbox.loadMatrix(self.pr_out + "AD/chem_similarity/matrix_sim.csv")
+        d_chem = toolbox.loadMatrix(self.pr_out + "AD/chem_similarity/chem.csv")
+
+        d_AD = {}
+        for chem in d_chem.keys():
+            if d_chem[chem]["set"] == "test":
+                d_AD[chem] = []
+                for chem_sim in d_sim_matrix.keys():
+                    if d_chem[chem_sim]["set"] == "train":
+                        try:d_AD[chem].append(float(d_sim_matrix[chem_sim][chem]))
+                        except: pass
+            else:
+                # case of chemical in the train
+                continue
         p_filout = self.pr_out + "ToxPrint_QSAR.csv"
         filout = open(p_filout, "w")
         filout.write("CASRN\tChemical name\tnb Toxprint (***)\tnb Toxprint (**)\tnb Toxprint (*)\tPred RF\tPred RF balanced\tAvg. RF\tAD distance to first neighbord\n")
@@ -382,9 +407,49 @@ class applyQSAR:
         for casrn in d_toxprint_pred.keys():
             if d_toxprint_pred[casrn]["In train"] == "1" or d_toxprint_pred[casrn]["In test"] == "1":
                 continue
-            filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(casrn, d_toxprint_pred[casrn]["Chemical name"], d_toxprint_pred[casrn]["***"], d_toxprint_pred[casrn]["**"], d_toxprint_pred[casrn]["*"], d_QSAR_pred[casrn]["RF_py_ghost"], d_QSAR_pred[casrn]["RF_balanced_ghost"], d_QSAR_pred[casrn]["Avg RF"]))
+            try: d_QSAR_pred[casrn]
+            except: continue
+            try: d_AD[casrn]
+            except:continue
+            filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(casrn, d_toxprint_pred[casrn]["Chemical name"], d_toxprint_pred[casrn]["***"], d_toxprint_pred[casrn]["**"], d_toxprint_pred[casrn]["*"], d_QSAR_pred[casrn]["RF_py_ghost"], d_QSAR_pred[casrn]["RF_balanced_ghost"], d_QSAR_pred[casrn]["Avg RF"], max(d_AD[casrn])))
         filout.close()
 
 
+        # add file filtered on RF balanced
+        d_pred_merged = toolbox.loadMatrix(p_filout)
+        filout = open(p_filout_filtered, "w")
+        filout.write("CASRN\tChemical name\tnb Toxprint (***)\tnb Toxprint (***)\tnb Toxprint (*)\tPred RF balanced\tAD distance to first neighbord\n")
 
-        return
+        for casrn in d_pred_merged.keys():
+            if float(d_pred_merged[casrn]["AD distance to first neighbord"]) < AD_cutoff:
+                continue
+            if float(d_pred_merged[casrn]["nb Toxprint (***)"]) < nb_significant_toxPrint:
+                continue
+            if float(d_pred_merged[casrn]["Pred RF balanced"]) < QSAR_prob:
+                continue
+
+            try: d_QSAR_pred[casrn]
+            except: continue
+            try: d_AD[casrn]
+            except:continue
+            filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(casrn, d_pred_merged[casrn]["Chemical name"], d_pred_merged[casrn]["nb Toxprint (***)"], d_pred_merged[casrn]["nb Toxprint (**)"], d_pred_merged[casrn]["nb Toxprint (*)"], d_pred_merged[casrn]["Pred RF balanced"], d_pred_merged[casrn]["AD distance to first neighbord"]))
+        filout.close()
+        self.d_pred_merged = toolbox.loadMatrix(p_filout_filtered)
+
+        # define a plot with significant toxprint and QSAR prob
+        runExternal.predictPlot(p_filout_filtered)
+
+
+    def extractStructure(self):
+
+        if not "d_pred_merged" in self.__dict__:
+            print("Need to load the prediction with selection criteria first")
+            return
+
+        pr_struct = pathFolder.createFolder("%s/structures/"%(self.pr_out))
+        pr_all_structure = self.c_dataset.pr_desc + "PNG/"
+        for casrn in self.d_pred_merged:
+            if path.exists(pr_all_structure + casrn + ".png"):
+                copyfile(pr_all_structure + casrn + ".png", pr_struct + casrn + ".png")
+        
+

@@ -233,6 +233,10 @@ def PCA_2sets(p_train, p_test, pr_out):
     cmd = "./PCA_2set.R %s %s %s"%(p_train, p_test, pr_out)
     runRCMD(cmd)
 
+def predictPlot(p_filin_pred, pr_out):
+    cmd = "./predictPlot.R %s %s"%(p_filin_pred, pr_out)
+    runRCMD(cmd)
+
 ##############
 # run biotransformer tool
 

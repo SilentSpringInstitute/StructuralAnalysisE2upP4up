@@ -4,6 +4,7 @@ import runExternal
 import toolbox
 import DNN
 import SVM
+import ML_toolbox
 
 from os import path, listdir, rename, remove
 from re import search
@@ -11,6 +12,7 @@ from numpy import mean, std
 from copy import deepcopy
 from shutil import copyfile
 from random import shuffle, uniform
+from statistics import mean
 
 
 class QSAR:
@@ -68,6 +70,7 @@ class QSAR:
         l_run = list(range(1, self.nb_repetition + 1))
         shuffle(l_run)
 
+        ####l_run = [1]############### SHORTCUT
         # reduce number of run
         for run in l_run:
             pr_run = pathFolder.createFolder(self.pr_out + str(run) + "/")
@@ -285,6 +288,9 @@ class QSAR:
 
         c_RFb = RandomForest.RandomForest(self.p_train, self.p_test, self.p_AC50, self.n_foldCV, "RF_balanced", 1, pr_run)
         c_RFb.run_main()
+
+        # consensus RF modeling
+        self.consensusModel(["RF_py_ghost", "RF_balanced_ghost"], pr_run)
 
         # summarize the run
         self.writeSumFile(pr_run)    
@@ -785,6 +791,88 @@ class QSAR:
 
         return 
 
+    def consensusModel(self, l_model_to_combine, pr_run):
+        """
+        Only available for model build in python with train_pred.csv and test_pred.csv file in model folder
+        """
+        
+        pr_out = pathFolder.createFolder(pr_run + "__".join(l_model_to_combine) + "/")
+        
+        d_consensus = {"train":{}, "test":{}}
+        
+        d_correction = {}
+        # if ghost need to correct prediction
+        for model_to_combine in l_model_to_combine:
+            pr_model = pr_run + model_to_combine
+            if search("ghost", model_to_combine):
+                p_prob_cutoff = pr_model + "/ghost_threshold.txt"
+                filin = open(p_prob_cutoff, "r")
+                cutoff = float(filin.read())
+                filin.close()
+
+                d_correction[model_to_combine] = cutoff
+            
+            else:
+                d_correction[model_to_combine] = 0.5
+
+                #            y_pred = [cutoff * float(y) / 0.5 for y in y_pred]
+
+        for model_to_combine in l_model_to_combine:
+            pr_model = pr_run + model_to_combine
+
+            p_train = pr_model + "/train_pred.csv"
+            d_train = toolbox.loadMatrix(p_train, sep = ",")
+            for id in d_train.keys():
+                try:d_consensus["train"][id]
+                except:d_consensus["train"][id] = []
+
+                try:d_consensus["train"][id].append(d_correction[model_to_combine] * float(d_train[id]["Pred"]) / 0.5)
+                except: pass
+
+            p_test = pr_model + "/test_pred.csv"
+            d_test = toolbox.loadMatrix(p_test, sep = ",")
+            for id in d_test.keys():
+                try:d_consensus["test"][id]
+                except:d_consensus["test"][id] = []
+
+                try:d_consensus["test"][id].append(d_correction[model_to_combine] * float(d_test[id]["Pred"]) / 0.5)
+                except: pass
+
+        # open dtrain and dtest desc for real value
+        d_train_all = toolbox.loadMatrix(self.p_train, sep = ",")
+        d_test_all = toolbox.loadMatrix(self.p_test, sep = ",")
+
+        # combine model by avg prediction
+        l_train_pred = []
+        l_train_real = []
+        for id in d_consensus["train"].keys():
+            l_train_pred.append([mean(d_consensus["train"][id])])
+            l_train_real.append(float(d_train_all[id]["Aff"]))
+
+        l_test_pred = []
+        l_test_real = []
+        for id in d_consensus["test"].keys():
+            l_test_pred.append([mean(d_consensus["test"][id])])
+            l_test_real.append(float(d_test_all[id]["Aff"]))
+
+        # need to have preformance
+        d_perf_train = ML_toolbox.performance(l_train_real, l_train_pred, "classification", 0.5)
+        d_perf_test = ML_toolbox.performance(l_test_real, l_test_pred, "classification", 0.5)
+
+        # write output
+        p_filout = pr_out + "combined_perf.csv"
+
+        filout = open(p_filout, "w")
+        l_criteria = ["Acc", "b-Acc", "MCC", "Recall", "AUC", "Se", "Sp", "f1b"]
+        
+        filout.write("\t%s\n"%("\t".join(l_criteria)))
+        
+        # for CV only put -
+        filout.write("CV-%s\t%s\n"%("__".join(l_model_to_combine), "\t".join(["NA" for criteria in l_criteria])))
+        filout.write("Train-%s\t%s\n"%("__".join(l_model_to_combine), "\t".join([str(d_perf_train[criteria]) for criteria in l_criteria])))
+        filout.write("Test-%s\t%s\n"%("__".join(l_model_to_combine), "\t".join([str(d_perf_test[criteria]) for criteria in l_criteria])))
+        filout.close() 
+
     def combineRepetitionNoSampled(self):
         """
         Combine repetition model for analysis where the model is not a sampling
@@ -845,7 +933,9 @@ class QSAR:
             for ML in d_out[run]["CV"].keys():
                 for criteria in l_criteria: 
                     if not criteria in list(d_out[run]["CV"][ML].keys()): d_out[run]["CV"][ML][criteria] = "NA" 
-                    else: d_out[run]["CV"][ML][criteria] = "%.2f"%(float(d_out[run]["CV"][ML][criteria]))
+                    else: 
+                        try:d_out[run]["CV"][ML][criteria] = "%.2f"%(float(d_out[run]["CV"][ML][criteria]))
+                        except:d_out[run]["CV"][ML][criteria] =  "NA"
                     if not criteria in list(d_out[run]["train"][ML].keys()): d_out[run]["train"][ML][criteria] = "NA"
                     else: d_out[run]["train"][ML][criteria] = "%.2f"%(float(d_out[run]["train"][ML][criteria]))
                     if not criteria in list(d_out[run]["test"][ML].keys()): d_out[run]["test"][ML][criteria] = "NA"
