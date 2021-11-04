@@ -296,7 +296,7 @@ class applyQSAR:
                     filout.write("\n")
                 filout.close()
 
-            runExternal.computeADBasedOnSimilarityMatrix(p_matrix_sim, p_matrix_chem, pr_AD_sim)  
+            runExternal.computeADBasedOnSimilarityMatrixForPred(p_matrix_sim, p_matrix_chem, self.dataset_test, pr_AD_sim)  
 
     def applyToxPrintSignifcant(self, pr_results):
 
@@ -418,7 +418,7 @@ class applyQSAR:
         # add file filtered on RF balanced
         d_pred_merged = toolbox.loadMatrix(p_filout)
         filout = open(p_filout_filtered, "w")
-        filout.write("CASRN\tChemical name\tnb Toxprint (***)\tnb Toxprint (***)\tnb Toxprint (*)\tPred RF balanced\tAD distance to first neighbord\n")
+        filout.write("CASRN\tChemical name\tnb Toxprint (***)\tnb Toxprint (**)\tnb Toxprint (*)\tPred RF balanced\tAD distance to first neighbord\n")
 
         for casrn in d_pred_merged.keys():
             if float(d_pred_merged[casrn]["AD distance to first neighbord"]) < AD_cutoff:
@@ -437,7 +437,7 @@ class applyQSAR:
         self.d_pred_merged = toolbox.loadMatrix(p_filout_filtered)
 
         # define a plot with significant toxprint and QSAR prob
-        runExternal.predictPlot(p_filout_filtered)
+        runExternal.predictPlot(p_filout_filtered, self.pr_out)
 
 
     def extractStructure(self):
@@ -448,7 +448,7 @@ class applyQSAR:
 
         pr_struct = pathFolder.createFolder("%s/structures/"%(self.pr_out))
         pr_all_structure = self.c_dataset.pr_desc + "PNG/"
-        for casrn in self.d_pred_merged:
+        for casrn in self.d_pred_merged.keys():
             if path.exists(pr_all_structure + casrn + ".png"):
                 copyfile(pr_all_structure + casrn + ".png", pr_struct + casrn + ".png")
         

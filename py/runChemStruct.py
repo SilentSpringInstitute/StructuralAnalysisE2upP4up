@@ -222,6 +222,15 @@ class runChemStruct:
                 p_png_desc = self.pr_desc + "PNG/" + chem + ".png"
                 if path.exists(p_png_desc):
                     copyfile(p_png_desc, pr_png_list + chem + ".png")
+                else:
+                    #compute PNG
+                    c_compdesc = CompDesc.CompDesc(d_dataset[chem]["SMILES"], self.pr_desc)
+                    c_compdesc.prepChem()
+                    if c_compdesc.err == 1:
+                        continue
+                    c_compdesc.computePNG()
+                    if path.exists(p_png_desc):
+                        copyfile(p_png_desc, pr_png_list + chem + ".png")
 
     def compute_similarity_with_hormones(self, p_hormones, FP, metric):
         """

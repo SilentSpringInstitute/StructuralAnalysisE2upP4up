@@ -872,9 +872,8 @@ class MCcrossref:
 
         # put png in a different folder
         #############################
-        #pr_png_by_list = pathFolder.createFolder(self.pr_out + "png_by_list/")
+        pr_png_by_list = pathFolder.createFolder(self.pr_out + "png_by_list/")
         #self.c_Desc.png_by_list(pr_png_by_list)
-
 
         # load Toxprint by list
         ##########################

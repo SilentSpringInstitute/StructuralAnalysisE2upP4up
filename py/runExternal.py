@@ -213,6 +213,13 @@ def computeADBasedOnSimilarityMatrix(p_sim_matrix, p_matrix_chem, pr_AD_sim):
     cmd = "./ADSimilarityBased.R %s %s %s"%(p_sim_matrix, p_matrix_chem, pr_AD_sim)
     runRQSARModeling(cmd)
 
+def computeADBasedOnSimilarityMatrixForPred(p_sim_matrix, p_matrix_chem, chem_to_pred, pr_AD_sim):
+    """
+    Same script that the function before but integrate in the project
+    """
+    cmd = "./ADSimilarityBased.R %s %s %s"%(p_sim_matrix, p_matrix_chem, chem_to_pred, pr_AD_sim)
+    runRCMD(cmd)
+
 def drawRadialPlotAC50(p_filin, pr_out):
     cmd = "./radialPlotAC50.R %s %s"%(p_filin, pr_out)
     runRCMD(cmd)
