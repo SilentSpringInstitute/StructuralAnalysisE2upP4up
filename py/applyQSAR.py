@@ -296,7 +296,7 @@ class applyQSAR:
                     filout.write("\n")
                 filout.close()
 
-            runExternal.computeADBasedOnSimilarityMatrixForPred(p_matrix_sim, p_matrix_chem, self.dataset_test, pr_AD_sim)  
+            runExternal.computeADBasedOnSimilarityMatrixForPred(p_matrix_sim, p_matrix_chem, pr_AD_sim)  
 
     def applyToxPrintSignifcant(self, pr_results):
 
@@ -418,12 +418,14 @@ class applyQSAR:
         # add file filtered on RF balanced
         d_pred_merged = toolbox.loadMatrix(p_filout)
         filout = open(p_filout_filtered, "w")
-        filout.write("CASRN\tChemical name\tnb Toxprint (***)\tnb Toxprint (**)\tnb Toxprint (*)\tPred RF balanced\tAD distance to first neighbord\n")
+        filout.write("CASRN\tChemical name\tnb Toxprint (***)\tnb Toxprint (**)\tnb Toxprint (*)\tnb Toxprint signif\tPred RF balanced\tAD distance to first neighbord\n")
 
         for casrn in d_pred_merged.keys():
+            nb_toxprint = float(d_pred_merged[casrn]["nb Toxprint (***)"]) + float(d_pred_merged[casrn]["nb Toxprint (**)"]) + float(d_pred_merged[casrn]["nb Toxprint (*)"])
+            d_pred_merged[casrn]["nb Toxprint signif"] = str(nb_toxprint)
             if float(d_pred_merged[casrn]["AD distance to first neighbord"]) < AD_cutoff:
                 continue
-            if float(d_pred_merged[casrn]["nb Toxprint (***)"]) < nb_significant_toxPrint:
+            if nb_toxprint < nb_significant_toxPrint:
                 continue
             if float(d_pred_merged[casrn]["Pred RF balanced"]) < QSAR_prob:
                 continue
@@ -432,10 +434,10 @@ class applyQSAR:
             except: continue
             try: d_AD[casrn]
             except:continue
-            filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(casrn, d_pred_merged[casrn]["Chemical name"], d_pred_merged[casrn]["nb Toxprint (***)"], d_pred_merged[casrn]["nb Toxprint (**)"], d_pred_merged[casrn]["nb Toxprint (*)"], d_pred_merged[casrn]["Pred RF balanced"], d_pred_merged[casrn]["AD distance to first neighbord"]))
+            filout.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(casrn, d_pred_merged[casrn]["Chemical name"], d_pred_merged[casrn]["nb Toxprint (***)"], d_pred_merged[casrn]["nb Toxprint (**)"], d_pred_merged[casrn]["nb Toxprint (*)"], d_pred_merged[casrn]["nb Toxprint signif"], d_pred_merged[casrn]["Pred RF balanced"], d_pred_merged[casrn]["AD distance to first neighbord"]))
         filout.close()
         self.d_pred_merged = toolbox.loadMatrix(p_filout_filtered)
-
+        sss
         # define a plot with significant toxprint and QSAR prob
         runExternal.predictPlot(p_filout_filtered, self.pr_out)
 

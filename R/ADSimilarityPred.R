@@ -10,13 +10,11 @@ library(tripack)
 args <- commandArgs(TRUE)
 p_sim_matrix = args[1]
 p_matrix_chem = args[2]
-chemical_pred = args[3]
-pr_out = args[4]
+pr_out = args[3]
 
-p_sim_matrix = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/predMC_E2/AD/chem_similarity/matrix_sim.csv"
-p_matrix_chem = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/predMC_E2/AD/chem_similarity/chem.csv"
-chemical_pred = "MC"
-pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/predMC_E2/AD/chem_similarity/"
+#p_sim_matrix = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/predMC_E2/AD/chem_similarity/matrix_sim.csv"
+#p_matrix_chem = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/predMC_E2/AD/chem_similarity/chem.csv"
+#pr_out = "/mnt/c/Users/AlexandreBorrel/research/SSI/E2up_P4up/results/predMC_E2/AD/chem_similarity/"
 
 
 d_chem = read.csv(p_matrix_chem, sep = "\t", row.names = 1)
