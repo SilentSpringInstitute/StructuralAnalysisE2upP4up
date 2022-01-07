@@ -129,7 +129,7 @@ class RandomForest:
             # save descriptor importance
             if CV == 0:
                 sorted_idx = rf_random.best_estimator_.feature_importances_.argsort()
-                rcParams.update({'figure.autolayout': True})
+                rcParams.update({'figure.autolayout': True, "font.size":15})
                 plt.figure(figsize=(6,8))
                 plt.barh(array(self.l_features_train)[sorted_idx][-10:], rf_random.best_estimator_.feature_importances_[sorted_idx][-10:], color=(0.2, 0.4, 0.6, 0.6))
                 plt.xlabel("Random Forest Feature Importance")

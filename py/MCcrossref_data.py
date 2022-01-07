@@ -197,7 +197,7 @@ class MCcrossref:
                 for chem in self.d_steroid_active.keys():
                     d_d_chem[list_chem].append(chem)
                     l_CASRN.append(chem)
-            elif list_chem == "ERagonist":
+            elif list_chem == "ER-agonist":
                 for chem in self.d_ERagonist.keys():
                     d_d_chem[list_chem].append(chem)
                     l_CASRN.append(chem)
@@ -832,7 +832,8 @@ class MCcrossref:
         ######
         #self.overlapBetweenListChem(["MC", "genotoxic", "Steroid-up", "ER-agonist"])
         #self.overlapBetweenListChem(["MC", "Steroid", "ER"])
-        #self.overlapBetweenListChem(["MC", "Steroid", "ER-agonist", "genotoxic"])
+        #self.overlapBetweenListChem(["MC", "ER-agonist", "ER-antagonist"])
+        #self.overlapBetweenListChem(["MC", "ER-agonist"])
         #self.overlapBetweenListChem(["MC", "Steroid-up", "ER-agonist", "genotoxic"])
         #self.overlapBetweenListChem(["Steroid", "E2up", "P4up"])
         #self.overlapBetweenListChem(["E2up", "P4up", "H295R"])

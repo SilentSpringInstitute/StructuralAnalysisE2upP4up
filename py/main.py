@@ -6,6 +6,7 @@ import merge_MCcrossWithStereo
 import pathFolder
 import buildQSAR
 import applyQSAR
+import pubmedSearch
 
 # Define folders #
 ##################
@@ -32,14 +33,14 @@ MAX_QUANTILE = 90
 
 # LOAD Steroidogenesis data from Karmaus2016 #
 ##############################################
-c_Stereo = steroidogenesis_data.Steroidogenesis_data(PR_DATA, PR_RESULTS)
-c_Stereo.main()
+#c_Stereo = steroidogenesis_data.Steroidogenesis_data(PR_DATA, PR_RESULTS)
+#c_Stereo.main()
 
 
 # LOAD AND RUN MC crossref ANALYSIS #
 #####################################
-c_MCcrossref = MCcrossref_data.MCcrossref(p_listChem, p_exposure, p_hormones, COR_VAL, MAX_QUANTILE, PR_ROOT + "comptox/", PR_ROOT)
-c_MCcrossref.main()
+#c_MCcrossref = MCcrossref_data.MCcrossref(p_listChem, p_exposure, p_hormones, COR_VAL, MAX_QUANTILE, PR_ROOT + "comptox/", PR_ROOT)
+#c_MCcrossref.main()
 
 # overlap with ToxCast - aromatase assays
 ##########################################
@@ -68,8 +69,9 @@ c_MCcrossref.main()
 #c_QSAR_E2up.prepDesc()
 #c_QSAR_E2up.computeSimMatrix()# similarity matrix for the AD
 #c_QSAR_E2up.runQSARs()# no sampling add
+
 # best model selected manually
-n_E2best_run = 2
+#n_E2best_run = 2
 
 
 # undersampling with variable active rate
@@ -99,7 +101,8 @@ n_E2best_run = 2
 #c_QSAR_P4up.computeSimMatrix()# similarity matrix for the AD
 #c_QSAR_P4up.runQSARs()# no sampling add
 ### best model selected manually
-n_P4best_run = 3
+#n_P4best_run = 3
+
 
 # undersampling with variable active rate
 #######################
@@ -115,26 +118,48 @@ n_P4best_run = 3
 
 # predict MC with E2 - P4 QSAR models
 ###################
-pr_model_E2up = PR_RESULTS + "QSAR_E2_H295R_nosampling_nosingledosecheck_noborderline/rdkit-OPERA-toxprint_0.9-0/classQSAR/" + str(n_E2best_run) + "/"
-pr_model_P4up = PR_RESULTS + "QSAR_E2_H295R_nosampling_nosingledosecheck_noborderline/rdkit-OPERA-toxprint_0.9-0/classQSAR/" + str(n_P4best_run) + "/"
+#pr_model_E2up = PR_RESULTS + "QSAR_E2_H295R_nosampling_nosingledosecheck_noborderline/rdkit-OPERA-toxprint_0.9-0/classQSAR/" + str(n_E2best_run) + "/"
+#pr_model_P4up = PR_RESULTS + "QSAR_E2_H295R_nosampling_nosingledosecheck_noborderline/rdkit-OPERA-toxprint_0.9-0/classQSAR/" + str(n_P4best_run) + "/"
 
-pr_E2MC_pred = pathFolder.createFolder(PR_RESULTS + "predMC_E2/")
-c_applyQSARE2 = applyQSAR.applyQSAR(c_MCcrossref, pr_model_E2up, pr_E2MC_pred)
-c_applyQSARE2.loadDataFromCrossRef("MC", ["E2up", "H295R"], 1)
-c_applyQSARE2.buildDescSet(["rdkit", "OPERA", "toxprint"])
-c_applyQSARE2.applyQSARModels()
-c_applyQSARE2.computeAD()
-c_applyQSARE2.applyToxPrintSignifcant(PR_RESULTS)
-c_applyQSARE2.mergePredToxPrintQSAR(AD_cutoff = 0.75, nb_significant_toxPrint = 3, QSAR_prob= 0.5)
-c_applyQSARE2.extractStructure()
+#pr_E2MC_pred = pathFolder.createFolder(PR_RESULTS + "predMC_E2/")
+#c_applyQSARE2 = applyQSAR.applyQSAR(c_MCcrossref, pr_model_E2up, pr_E2MC_pred)
+#c_applyQSARE2.loadDataFromCrossRef("MC", ["E2up", "H295R"], 1)
+#c_applyQSARE2.buildDescSet(["rdkit", "OPERA", "toxprint"])
+#c_applyQSARE2.applyQSARModels()
+#c_applyQSARE2.computeAD()
+#c_applyQSARE2.applyToxPrintSignifcant(PR_RESULTS)
+#c_applyQSARE2.mergePredToxPrintQSAR(AD_cutoff = 0.75, nb_significant_toxPrint = 3, QSAR_prob= 0.5)
+#c_applyQSARE2.extractStructure()
+
+#pr_P4MC_pred = pathFolder.createFolder(PR_RESULTS + "predMC_P4/")
+#c_applyQSARP4 = applyQSAR.applyQSAR(c_MCcrossref, pr_model_P4up, pr_P4MC_pred)
+#c_applyQSARP4.loadDataFromCrossRef("MC", ["P4up", "H295R"], 1)
+#c_applyQSARP4.buildDescSet(["rdkit", "OPERA", "toxprint"])
+#c_applyQSARP4.applyQSARModels()
+#c_applyQSARP4.computeAD()
+#c_applyQSARP4.applyToxPrintSignifcant(PR_RESULTS)
+#c_applyQSARP4.mergePredToxPrintQSAR(AD_cutoff = 0.75, nb_significant_toxPrint = 3, QSAR_prob= 0.5)
+#c_applyQSARP4.extractStructure()
 
 
-pr_P4MC_pred = pathFolder.createFolder(PR_RESULTS + "predMC_P4/")
-c_applyQSARP4 = applyQSAR.applyQSAR(c_MCcrossref, pr_model_P4up, pr_P4MC_pred)
-c_applyQSARP4.loadDataFromCrossRef("MC", ["P4up", "H295R"], 1)
-c_applyQSARP4.buildDescSet(["rdkit", "OPERA", "toxprint"])
-c_applyQSARP4.applyQSARModels()
-c_applyQSARP4.computeAD()
-c_applyQSARP4.applyToxPrintSignifcant(PR_RESULTS)
-c_applyQSARP4.mergePredToxPrintQSAR(AD_cutoff = 0.75, nb_significant_toxPrint = 3, QSAR_prob= 0.5)
-c_applyQSARP4.extractStructure()
+#####
+# literrature search for evidence of stereoidogenesis
+#
+email = "borrel@silentspring.org"
+
+# need to load a xlx file with the prediction and the pubmed research for each chemicals
+p_pred_E2up_xlx = PR_DATA + "pred_MC/ToxPrint_QSAR_E2up.xlsx"
+p_pred_P4up_xlx = PR_DATA + "pred_MC/ToxPrint_QSAR_P4up.xlsx"
+
+l_term_to_screen_E2 = ["estradiol", "stereoidogenesis", "aromatase"]
+l_term_to_screen_P4 = ["stereoidogenesis", "progesterone"]
+
+#### do litt search for E2up
+#pr_litt_E2 = pathFolder.createFolder(PR_RESULTS + "LittMC_E2/")
+#c_litt_E2 = pubmedSearch.pubmedSearch(p_pred_E2up_xlx, l_term_to_screen_E2, pr_litt_E2, email)
+#c_litt_E2.do_search(l_term_to_screen_E2)
+
+#### do litt search for P4up
+pr_litt_P4 = pathFolder.createFolder(PR_RESULTS + "LittMC_P4/")
+c_litt_P4 = pubmedSearch.pubmedSearch(p_pred_P4up_xlx, l_term_to_screen_P4, pr_litt_P4, email)
+c_litt_P4.do_search(l_term_to_screen_P4)
