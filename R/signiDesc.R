@@ -53,17 +53,19 @@ for(desc in l_desc){
   if (is.na(pval) == TRUE){
     d_out = rbind(d_out, c(desc, "NA", "-", "NA", "NA", "NA"))
   }else{
-    M_desc1 = mean(d_desc1[,desc])
-    M_desc2 = mean(d_desc2[,desc])
+    M_desc1 = mean(d_desc1[,desc], na.rm = TRUE)
+    M_desc2 = mean(d_desc2[,desc], na.rm = TRUE)
+    SD_desc1 = sd(d_desc1[,desc], na.rm = TRUE)
+    SD_desc2 = sd(d_desc2[,desc], na.rm = TRUE)
     signif = signifPvalue(pval)
-    d_out = rbind(d_out, c(desc, round(pval, 4), signif, isparametric, M_desc1, M_desc2))
+    d_out = rbind(d_out, c(desc, round(pval, 4), signif, isparametric, M_desc1, SD_desc1, M_desc2, SD_desc2))
   }
 
 }
 
 
-colnames(d_out) = c("Desc", "Pval", "significatif", "isparametric", "M1", "M2")
+colnames(d_out) = c("Desc", "Pval", "significatif", "isparametric", "M1", "SD1", "M2", "SD2")
 d_out = as.data.frame(d_out)
 d_out$Pval = as.double(d_out$Pval)
 d_out = d_out[order(d_out$Pval), ]
-write.csv(d_out, paste(pr_out, "_signif_desc.csv"))
+write.csv(d_out, paste(pr_out, "_signif_desc.csv", sep = ""))

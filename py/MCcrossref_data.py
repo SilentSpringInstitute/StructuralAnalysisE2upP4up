@@ -612,10 +612,10 @@ class MCcrossref:
             return 
         
         # with molecular descriptors - quantitative with 
-        pr_rdkit = pathFolder.createFolder(pr_out + "rdkit/")
-        pr_opera = pathFolder.createFolder(pr_out + "opera/")
-        runExternal.comparisonDesc(self.c_Desc.d_desc[l_datasets[0]]["rdkit"], self.c_Desc.d_desc[l_datasets[1]]["rdkit"], pr_rdkit)
-        runExternal.comparisonDesc(self.c_Desc.d_desc[l_datasets[0]]["OPERA"], self.c_Desc.d_desc[l_datasets[1]]["OPERA"], pr_opera)
+        p_rdkit = pr_out + "rdkit"
+        p_opera = pr_out + "opera"
+        runExternal.comparisonDesc(self.c_Desc.d_desc[l_datasets[0]]["rdkit"], self.c_Desc.d_desc[l_datasets[1]]["rdkit"], p_rdkit)
+        runExternal.comparisonDesc(self.c_Desc.d_desc[l_datasets[0]]["OPERA"], self.c_Desc.d_desc[l_datasets[1]]["OPERA"], p_opera)
 
         # toxprint as descriptor - comparison qualitative proportion
         pr_toxprint = pathFolder.createFolder(pr_out + "Toxprint/")
@@ -904,9 +904,9 @@ class MCcrossref:
 
         # Comparison between two list of chemicals descriptor
         #####
-        #self.ComparisonTwoChemicalLists(["E2up", "H295R"])
-        #self.ComparisonTwoChemicalLists(["P4up", "H295R"])
-        #self.ComparisonTwoChemicalLists(["E2up", "P4up"])
+        self.ComparisonTwoChemicalLists(["E2up", "H295R"])
+        self.ComparisonTwoChemicalLists(["P4up", "H295R"])
+        self.ComparisonTwoChemicalLists(["E2up", "P4up"])
 
         
 

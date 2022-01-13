@@ -30,7 +30,7 @@ class searching:
                 self.Query = "(" + self.Query + ") " + connect.upper() + " (" + strin + ")"
             else:
                 self.Query = "(" + self.Query + ") " + connect.upper() + " (" + strin + " [" + keyQuery + "]" ")"
-
+                
 
     def search(self, w=False):
 
@@ -45,20 +45,23 @@ class searching:
 
         handle = Entrez.esearch(db="pubmed", term=self.Query, retmax="10000000")
         result = Entrez.read(handle)
-        if w == True:
-            l_id = result["IdList"]
-            l_title = []
-            for id in l_id:
-                pubmed_entry = Entrez.efetch(db="pubmed", id=id, retmode="xml")
-                pubmed_results = Entrez.read(pubmed_entry)
-                article = pubmed_results['PubmedArticle'][0]['MedlineCitation']['Article']
-                try:date = article["ArticleDate"][0]["Year"]
-                except: 
-                    try:date = article["Journal"]["JournalIssue"]["PubDate"]["Year"]
-                    except: date = "----"
+        
+        l_id = result["IdList"]
+        l_title = []
+        for id in l_id:
+            pubmed_entry = Entrez.efetch(db="pubmed", id=id, retmode="xml")
+            pubmed_results = Entrez.read(pubmed_entry)
+            try: article = pubmed_results['PubmedArticle'][0]['MedlineCitation']['Article']
+            except:continue
+            try:date = article["ArticleDate"][0]["Year"]
+            except: 
+                try:date = article["Journal"]["JournalIssue"]["PubDate"]["Year"]
+                except: date = "----"
                     
-                w_article = "%s; %s; %s"%(article["ArticleTitle"], date, id)
-                l_title.append(w_article)
+            w_article = "%s; %s; %s"%(article["ArticleTitle"], date, id)
+            l_title.append(w_article)
+        if w == True:
             self.fsum.write("\"%s\"\t\"%s\"\t\"%s\"\t\"%s\"\n"%(self.nameQ, self.Query.replace("\"", "'"), result["Count"], "\n".join(l_title)))
-        return result
+        self.l_articles = l_title
+        self.count = result["Count"]
 
