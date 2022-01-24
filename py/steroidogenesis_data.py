@@ -170,6 +170,5 @@ class Steroidogenesis_data:
         self.loadsinglehitc()
         self.summaryHitc()
         self.loadChemicalCR()
-
-        #self.corHormoneEndpoint()
+        self.corHormoneEndpoint()
 
