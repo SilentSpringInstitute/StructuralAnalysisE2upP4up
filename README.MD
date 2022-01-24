@@ -31,7 +31,7 @@ Here put link to requiered input files
 
 # Run the script
 A Jupiter notebook was developed to run all analysis partially or completely. <br>
-> sources/py/main.ipynb
+> py/main.ipynb
 
 <br><br><br>
 
