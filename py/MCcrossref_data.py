@@ -3,6 +3,7 @@ from copy import deepcopy
 from shutil import copyfile
 from re import search
 import math
+import xlsxwriter
 
 import pathFolder
 import dataset
@@ -353,7 +354,7 @@ class MCcrossref:
         for CASRN in self.d_MC.keys():
             if not CASRN in list(d_all.keys()):
                 d_all[CASRN] = {}
-                d_all[CASRN]["name"] = self.d_MC[CASRN]["name"]
+                d_all[CASRN]["name"] = self.d_MC[CASRN]["Chemical name"]
                 d_all[CASRN]["SMILES"] = self.d_MC[CASRN]["SMILES"]
                 if self.d_MC[CASRN]["Genotoxic_CCRIS/QSAR/ToxValDB"] == "":
                     d_all[CASRN]["genotox"] = "NA"
@@ -570,7 +571,7 @@ class MCcrossref:
         p_FPMatrix = self.c_FP.d_FPMatrix[dataset]
 
         #load the analysis class
-        c_MakePlot = MakePlots_fromDesc.MakePlots_fromDesc(p_dataset=self.d_dataset[dataset], p_FP=p_FPMatrix, pr_out=pr_out)
+        c_MakePlot = MakePlotsListChem.MakePlotsListChem(p_dataset=self.d_dataset[dataset], p_FP=p_FPMatrix, pr_out=pr_out)
         
         if hclust == 1:
             c_MakePlot.hclusterFromFPByProp()
@@ -788,7 +789,7 @@ class MCcrossref:
 
             runExternal.corHormSimClassActive(p_filout,dataset)
 
-    def ChemClassifByCPDAT(self, dataset, SOM = 0):
+    def ChemClassifByCPDAT(self, dataset, SOM = 0, SOM_size=12):
 
         # load cpdat class
         if not "c_cpdat" in self.__dict__:
@@ -823,6 +824,36 @@ class MCcrossref:
             c_MakePlot.SOMHormoneSimilarity()
 
         return
+
+    def writeSet(self, chem_set, pr_litt):
+        
+        # write in XLS the list of chemical with their name
+        p_xlx_out = pr_litt + chem_set + ".xlsx"
+        workbook = xlsxwriter.Workbook(p_xlx_out)
+        worksheet = workbook.add_worksheet()
+        l_headers = ["CASRN", "Chemical name"]
+        [worksheet.write(0, i_col, l_headers[i_col]) for i_col in range(0, len(l_headers))]
+        
+        row = 1
+        if chem_set == "E2up":
+            for chem in self.d_E2up_active.keys():
+                worksheet.write(row, 0, chem)
+                worksheet.write(row, 1, self.d_E2up_active[chem]["Chemical name"])
+                row = row + 1
+        elif chem_set == "P4up":
+            for chem in self.d_P4up_active.keys():
+                worksheet.write(row, 0, chem)
+                worksheet.write(row, 1, self.d_P4up_active[chem]["Chemical name"])
+                row = row + 1
+        elif chem_set == "MC":
+            for chem in self.d_MC.keys():
+                worksheet.write(row, 0, chem)
+                worksheet.write(row, 1, self.d_MC[chem]["Chemical name"])
+                row = row + 1
+                
+        workbook.close()
+        
+        return p_xlx_out
 
     def main(self):
 
