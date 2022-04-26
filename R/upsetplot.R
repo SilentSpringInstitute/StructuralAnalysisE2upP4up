@@ -12,7 +12,7 @@ library(eulerr)
 args <- commandArgs(TRUE)
 pgene = args[1]
 
-pgene = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/OverlapList/MC-E2up-P4up-H295R/upset_matrix"
+#pgene = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/OverlapList/MC-E2up-P4up-H295R/upset_matrix"
 
 dgene = read.csv(pgene, sep = "\t", header = TRUE)
 rownames(dgene) = dgene[,1]

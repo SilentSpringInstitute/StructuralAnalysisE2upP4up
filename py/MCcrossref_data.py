@@ -33,18 +33,43 @@ class MCcrossref:
 
         self.pr_desc = pathFolder.createFolder(self.pr_out + "DESC/")
     
+    def load_Karmaus2016_haggard2018(self):
+        
+        # load karmaus - list chemicals tested -> supp file 9
+        p_chem_karmaus = self.pr_data + "karmaus_2016_SI/kfw002_Supplementary_Data/toxsci-15-0570-File009.csv"
+        l_d_sample = toolbox.loadMatrixToList(p_chem_karmaus, sep = ",")
+        d_karmaus = {}
+        for d_sample in l_d_sample:
+            casrn = d_sample["casn"]
+            if not casrn in list(d_karmaus.keys()) and not casrn == "":
+                d_karmaus[casrn] = []
+            d_karmaus[casrn].append(d_sample)
+        
+        print(len(list(d_karmaus.keys())))
+        
+        
+        # haggard - list chemicals tested
+        p_cr_chem = self.pr_data + "haggard_2018_SI/Haggard_et_al_Supplemental_Files_Revision1_30Oct2017/Supp1_Normalized_MTT_cell_viability_data_10Aug2017.csv"
+        l_d_sample = toolbox.loadMatrixToList(p_cr_chem, sep = ",")
+        d_haggard = {}
+        for d_sample in l_d_sample:
+            casrn = d_sample["casn"]
+            if casrn == "":
+                continue
+            if not casrn in list(d_haggard.keys()):
+                d_haggard[casrn] = []
+            d_haggard[casrn].append(d_sample)
+                
+        
+        l_onlyInHaggard = [chem for chem in d_haggard.keys() if not chem in list(d_karmaus.keys())]
+        l_out = list(set(list(d_haggard.keys()) + list(d_karmaus.keys())))
+        
+        return 
+    
     def loadCrossRefExcel(self, rm_radiation=1):
 
-        self.d_MC = toolbox.loadExcelSheet(self.p_crossref, name_sheet='Updated 2021 MClist', k_head = "CASRN")
-        if rm_radiation == 1:
-            l_chem = list(self.d_MC.keys())
-            nb_chem  = len(l_chem)
-            i = 0
-            while i < nb_chem:
-                if search("radiation", str(self.d_MC[l_chem[i]]["chemical_use SEE CPDAT-EXPOCAST SPREADSHEET"]).lower()):
-                    del self.d_MC[l_chem[i]]
-                i = i + 1
-
+        self.d_MC = toolbox.loadExcelSheet(self.p_crossref, name_sheet='Updated 2022 MC', k_head = "CASRN")
+        
         # load E2up need to load 2 sheet to have SMILES        
         # 1- load AC50 from bethsaida EHP
         self.d_E2up = toolbox.loadExcelSheet(self.p_crossref, name_sheet='E2-up', k_head = "CASRN")
@@ -86,14 +111,14 @@ class MCcrossref:
 
         d_out = {}
         for chem in self.d_MC.keys():
-            genotox = self.d_MC[chem]["Genotoxic_CCRIS/QSAR/ToxValDB"]
-            try:
-                genotox = float(genotox)
-            except:pass
-            if type(genotox) == float and math.isnan(genotox) == True:
+            genotox = self.d_MC[chem]["Genotoxicity"]
+            if genotox == "-":
                 genotox = "not tested"
-            elif genotox == 'genotoxic radiation':
+            elif genotox == 'positive':
                 genotox = "genotoxic"
+            else:
+                genotox = "non genotoxic"
+            
             if not genotox in list(d_out.keys()):
                 d_out[genotox] = {}
             d_out[genotox][chem] = deepcopy(self.d_MC[chem])
@@ -356,10 +381,10 @@ class MCcrossref:
                 d_all[CASRN] = {}
                 d_all[CASRN]["name"] = self.d_MC[CASRN]["Chemical name"]
                 d_all[CASRN]["SMILES"] = self.d_MC[CASRN]["SMILES"]
-                if self.d_MC[CASRN]["Genotoxic_CCRIS/QSAR/ToxValDB"] == "":
+                if self.d_MC[CASRN]["Genotoxicity"] == "-":
                     d_all[CASRN]["genotox"] = "NA"
                 else:
-                    d_all[CASRN]["genotox"] = self.d_MC[CASRN]["Genotoxic_CCRIS/QSAR/ToxValDB"]
+                    d_all[CASRN]["genotox"] = self.d_MC[CASRN]["Genotoxicity"]
                 d_all[CASRN]["MC"] = "1"
                 d_all[CASRN]["ER"] = []
                 d_all[CASRN]["P4up"] = "NA"
@@ -859,6 +884,7 @@ class MCcrossref:
 
         # prepare set of chemicals - split by list
         self.prepSets(["ER", "MC", "Steroid", "E2up", "P4up", "all", "Steroid-up", "ERagonist", "genotoxic", "H295R"])
+        
         # compute Venn diagram - overlap between list of chemicals
         ######
         #self.overlapBetweenListChem(["MC", "genotoxic", "Steroid-up", "ER-agonist"])
@@ -866,13 +892,14 @@ class MCcrossref:
         #self.overlapBetweenListChem(["MC", "ER-agonist", "ER-antagonist"])
         #self.overlapBetweenListChem(["MC", "ER-agonist"])
         #self.overlapBetweenListChem(["MC", "Steroid-up", "ER-agonist", "genotoxic"])
+        #self.overlapBetweenListChem(["E2up", "P4up", "ER-agonist", "H295R"])
         #self.overlapBetweenListChem(["Steroid", "E2up", "P4up"])
-        #self.overlapBetweenListChem(["E2up", "P4up", "H295R"])
+        self.overlapBetweenListChem(["E2up", "P4up", "H295R"])
         #self.overlapBetweenListChem(["MC", "genotoxic", "H295R"])
         #self.overlapBetweenListChem(["E2up", "P4up"])
         #self.overlapBetweenListChem(["MC", "E2up"])
-        #self.overlapBetweenListChem(["MC", "E2up", "P4up", "H295R"])
-        
+        self.overlapBetweenListChem(["MC", "E2up", "P4up", "H295R"])
+        ss
         # analyse class of chemical by MC
         ####
         #self.ChemClassesByMC()

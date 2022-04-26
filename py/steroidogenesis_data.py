@@ -158,7 +158,7 @@ class Steroidogenesis_data:
         filout.close()     
 
         # plot correlation
-        runExternal.corHormResponse(p_filout, pr_out)
+        runExternal.corHormResponse(p_filout)
 
 
     def main(self):
