@@ -1,0 +1,4 @@
+	Acc	b-Acc	MCC	Recall	AUC	Se	Sp	f1b
+CV-RF_balanced	0.76	0.86	0.47	1.00	0.86	1.00	0.73	0.36
+Train-RF_balanced	0.76	0.86	0.47	1.00	0.86	1.00	0.73	0.36
+Test-RF_balanced	0.73	0.80	0.39	0.89	0.80	0.89	0.71	0.31

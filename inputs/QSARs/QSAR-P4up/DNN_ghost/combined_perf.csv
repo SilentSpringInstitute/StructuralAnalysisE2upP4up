@@ -1,0 +1,4 @@
+	Acc	b-Acc	MCC	Recall	AUC	Se	Sp	f1b
+CV-DNN_ghost	0.83	0.62	0.24	0.36	0.62	0.36	0.89	0.30
+Train-DNN_ghost	0.52	0.71	0.27	0.97	0.71	0.97	0.46	0.21
+Test-DNN_ghost	0.50	0.67	0.21	0.89	0.67	0.89	0.45	0.19

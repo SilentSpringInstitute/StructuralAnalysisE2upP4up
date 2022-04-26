@@ -9,8 +9,6 @@ library(ggplot2)
 args <- commandArgs(TRUE)
 p_exposure = args[1]
   
-p_exposure = "/mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/ClassCPDAT_E2up/board_exposure"
-
 d_exp = read.csv(p_exposure, sep = "\t", header = TRUE)
 rownames(d_exp) = d_exp$Board.exposure
 l_class = d_exp$Board.exposure

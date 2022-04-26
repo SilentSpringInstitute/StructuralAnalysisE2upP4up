@@ -22,8 +22,8 @@ class MCcrossref:
     def __init__(self, p_crossref, p_exposure, p_hormones, COR_VAL, MAX_QUANTILE, pr_ToxPrints, pr_root):
 
         self.pr_toxprint = pr_ToxPrints
-        self.pr_out = pr_root + "results/"
-        self.pr_data = pr_root + "data/"
+        self.pr_out = pr_root + "outputs/"
+        self.pr_data = pr_root + "inputs/"
         self.p_crossref = p_crossref
         self.p_exposure = p_exposure
         self.p_hormones = p_hormones
@@ -34,7 +34,10 @@ class MCcrossref:
         self.pr_desc = pathFolder.createFolder(self.pr_out + "DESC/")
     
     def load_Karmaus2016_haggard2018(self):
-        
+        """
+        Process data from haggard 2018 and karmaus 2016 publication
+        - not used anymore
+        """
         # load karmaus - list chemicals tested -> supp file 9
         p_chem_karmaus = self.pr_data + "karmaus_2016_SI/kfw002_Supplementary_Data/toxsci-15-0570-File009.csv"
         l_d_sample = toolbox.loadMatrixToList(p_chem_karmaus, sep = ",")
@@ -66,7 +69,7 @@ class MCcrossref:
         
         return 
     
-    def loadCrossRefExcel(self, rm_radiation=1):
+    def loadCrossRefExcel(self):
 
         self.d_MC = toolbox.loadExcelSheet(self.p_crossref, name_sheet='Updated 2022 MC', k_head = "CASRN")
         
@@ -899,7 +902,7 @@ class MCcrossref:
         #self.overlapBetweenListChem(["E2up", "P4up"])
         #self.overlapBetweenListChem(["MC", "E2up"])
         self.overlapBetweenListChem(["MC", "E2up", "P4up", "H295R"])
-        ss
+
         # analyse class of chemical by MC
         ####
         #self.ChemClassesByMC()

@@ -1,0 +1,4 @@
+	Acc	b-Acc	MCC	Recall	AUC	Se	Sp	f1b
+CV-RF_py_ghost	0.99	0.99	0.95	0.98	0.99	0.98	0.99	0.93
+Train-RF_py_ghost	0.99	0.99	0.94	0.98	0.99	0.98	0.99	0.93
+Test-RF_py_ghost	0.89	0.66	0.37	0.37	0.66	0.37	0.96	0.47

@@ -1,0 +1,949 @@
+"CASRN","DTXSID","chem_name","MC","SteroidSynth","ERactivity","gentox","Consumer","Diet","Pharma","Pesticide","Industrial","HPV","U95intake","P65_Cancer","P65_Dev"
+"X",NA,"Ionizing radiation","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"100-42-5","DTXSID2021284","Styrene","MC",NA,NA,"positive","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more","Cancer",NA
+"1010-61-3",NA,"4-Hydroxyaminoquinoline 1-oxide hydrochloride","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"101-14-4","DTXSID5020865","4,4'-Methylenebis(2-chloroaniline)","MC",NA,NA,"positive","Consumer_cp","Diet_cp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"105650-23-5","DTXSID3037628","2-Amino-1methyl-6-phenylimidazo [4,5-b]pyridine","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,"Cancer",NA
+"10589-74-9","DTXSID4020084","1-Amyl-1-nitrosourea","MC",NA,NA,"positive",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"106-50-3","DTXSID9021138","1,4-Benzenediamine","MC","E2P4up","weak_agonist","positive","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"106-91-2","DTXSID0025361","Glycidyl methacrylate","MC",NA,NA,"positive","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"106-93-4","DTXSID3020415","1,2-Dibromoethane","MC",NA,"not_agonist","positive","Consumer_cp_exp","Diet_cp",NA,"Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more","Cancer","Dev_M"
+"106-99-0","DTXSID3020203","1,3-Butadiene","MC",NA,NA,"positive","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer","Dev_F_M"
+"107-05-1","DTXSID4039231","Allyl chloride","MC",NA,NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"107-06-2","DTXSID6020438","1,2-Dichloroethane","MC",NA,NA,"positive","Consumer_cp_exp","Diet_FDA_cp",NA,"Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more","Cancer",NA
+"107-13-1","DTXSID5020029","Acrylonitrile","MC",NA,"not_agonist","positive","Consumer_cp","Diet_cp_exp",NA,"Pesticide_exp","Industrial_exp","HPV","100 ug/kg/day or more","Cancer",NA
+"1071-83-6","DTXSID1024122","Glyphosate","MC",NA,NA,"positive","Consumer_cp_exp","Diet_cp",NA,"Pesticide_cp_exp","Industrial_exp","HPV","Less than 1 ug/kg/day","Cancer",NA
+"109-99-9","DTXSID1021328","Tetrahydrofuran","MC",NA,NA,"positive","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"110559-84-7","DTXSID4020610","1-Ethylnitroso-3-(2-oxopropyl)urea","MC",NA,NA,"no test",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"11097-69-1","DTXSID5020100","Aroclor 1254","MC",NA,NA,"negative",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"1120-71-4","DTXSID8021195","1,3-Propane sultone","MC","negative","not_agonist","positive","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"113-38-2","DTXSID8023000","Estradiol dipropionate","MC",NA,NA,"no test","Consumer_cp",NA,NA,NA,NA,NA,NA,NA,NA
+"118745-11-2",NA,"N-hydroxy-n-formyl-trans-4-aminostilbene","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"118745-12-3",NA,"N-hydroxy-n-propionyl-trans-4-aminostilbene","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"119-90-4","DTXSID3025091","3,3'-Dimethoxybenzidine","MC","E2P4up","not_agonist","positive",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"119-93-7","DTXSID5024059","3,3'-Dimethylbenzidine","MC","E2P4up","agonist","positive","Consumer_cp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"121-14-2","DTXSID0020529","2,4-Dinitrotoluene","MC","negative","not_agonist","positive","Consumer_exp","Diet_cp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer","Dev_M"
+"121-66-4","DTXSID6020066","2-Amino-5-nitrothiazole","MC",NA,NA,"positive","Consumer_cp",NA,NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"121-75-5","DTXSID4020791","Malathion","MC","E2P4up","not_agonist","positive","Consumer_cp_exp","Diet_cp","Pharma_FDA_Rx","Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day","Cancer",NA
+"122-66-7","DTXSID7020710","1,2-Diphenylhydrazine","MC","E2up","not_agonist","positive","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"123-91-1","DTXSID4020533","1,4-Dioxane","MC",NA,NA,"positive","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"126-07-8","DTXSID8020674","Griseofulvin","MC","negative",NA,"positive",NA,NA,"Pharma_FDA_Rx","Pesticide_exp",NA,NA,"Less than 1 ug/kg/day","Cancer",NA
+"126-99-8","DTXSID5020316","Chloroprene","MC",NA,NA,"positive","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"127-18-4","DTXSID2021319","Tetrachloroethylene","MC",NA,NA,"positive","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_exp",NA,"HPV","100 ug/kg/day or more","Cancer",NA
+"12789-03-6","DTXSID5023954","Technical chlordane","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"132832-26-9","DTXSID30157814","anti-Benzo(a)chrysene-11,12-diol-13,14-epoxide","MC",NA,NA,"positive",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"13345-61-4","DTXSID80158119","Benz(a)anthracene-7-carboxaldehyde, 12-methyl-","MC",NA,NA,"no test","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"13394-86-0","DTXSID50158429","2',3-Dimethyl-4-aminobiphenyl","MC",NA,NA,"positive",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"13743-07-2","DTXSID1020726","1-(2-Hydroxyethyl)-1-nitrosourea","MC",NA,NA,"positive",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"138857-19-9",NA,"Anti-4,5-dihydroxy-6,6a-epoxy-4,5,6,6a-tetrahydrobenzo[j]fluoranthene","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"138857-21-3",NA,"Anti-9,10-dihydroxy-11,12-epoxy-9,10,11,12-tetrahydrobenzo[j]fluoranthene","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"139-94-6","DTXSID1020936","Nithiazide","MC",NA,NA,"positive",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"142713-78-8","DTXSID7020506","Dimethylaminoethylnitrosoethylurea, nitrite salt","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"148-82-3","DTXSID6020804","Melphalan","MC",NA,NA,"positive",NA,NA,"Pharma_FDA_Rx",NA,NA,NA,NA,"Cancer","Dev"
+"149-17-7","DTXSID3020758","Isonicotinic acid vanillylidenehydrazide","MC",NA,NA,"no test",NA,NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"14962-28-8","DTXSID7074539","4-Hydroxy-2',4',6'-trichlorobiphenyl","MC",NA,NA,"no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"153-78-6","DTXSID1049223","2-Aminofluorene","MC",NA,NA,"positive",NA,NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"153926-04-6",NA,"anti-dibenzo[a,l]pyrene-11,12-dihydrodiol-13,14-epoxide","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"16170-75-5","DTXSID40273998","Sodium beta-4-methoxybenzoyl-beta-bromoacrylate","MC",NA,NA,"no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"16301-26-1","DTXSID4020585","Z-Ethyl-O,N,N-azoxyethane","MC",NA,NA,"negative","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"1694-09-3","DTXSID7021441","Benzyl Violet 4B","MC",NA,NA,"positive",NA,"Diet_FDA_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day","Cancer",NA
+"1746-01-6","DTXSID2021315","2,3,7,8-Tetrachlorodibenzo-p-dioxin","MC",NA,NA,"negative",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer","Dev"
+"18774-85-1","DTXSID6020698","N-Hexylnitrosourea","MC",NA,NA,"positive",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"189-55-9","DTXSID9059751","Dibenzo[a,i]pyrene","MC",NA,NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"189-64-0","DTXSID4059752","Dibenzo[a,h]pyrene","MC",NA,NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"19044-88-3","DTXSID8024238","Oryzalin","MC","negative","not_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"1912-24-9","DTXSID9020112","Atrazine","MC","E2P4up","not_agonist","negative","Consumer_cp_exp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,"Dev_F"
+"191-30-0","DTXSID9059753","Dibenzo[a,l]pyrene","MC",NA,NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"1937-37-7","DTXSID7020184","C.I. Direct Black 38","MC",NA,NA,"positive",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"20325-40-0","DTXSID1020485","3,3'-Dimethoxybenzidine dihydrochloride","MC","E2P4up","not_agonist","positive",NA,NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"20830-81-3","DTXSID7022883","Daunorubicin","MC",NA,NA,"positive",NA,NA,"Pharma_FDA_Rx",NA,NA,NA,NA,"Cancer",NA
+"2113-61-3","DTXSID0020072","4-Biphenylamine hydrochloride","MC",NA,NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"21638-36-8","DTXSID2020848","4-Methyl-1-[(5-nitrofurfurylidene)amino]-2-imidazolidinone","MC",NA,NA,"positive",NA,NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"21725-46-2","DTXSID1023990","Cyanazine","MC","E2up","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,"Dev"
+"21739-91-3","DTXSID5020368","Cytembena","MC","E2P4up",NA,"positive",NA,NA,NA,"Pesticide_exp",NA,NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"21928-82-5","DTXSID3020883","(N-6)-(Methylnitroso)adenosine","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"22398-80-7","DTXSID3031444","Indium phosphide","MC",NA,NA,"negative",NA,NA,NA,NA,NA,NA,NA,"Cancer",NA
+"23214-92-8","DTXSID8021480","Doxorubicin","MC",NA,NA,"positive",NA,NA,"Pharma_FDA_Rx",NA,NA,NA,NA,NA,NA
+"2393-53-5","DTXSID00946752","17-Oxoestra-1(10),2,4-trien-3-yl benzoate","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"2425-06-1","DTXSID4020242","Captafol","MC","E2P4up","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day","Cancer",NA
+"24554-26-5","DTXSID4020953","N-(4-(5-Nitro-2-furyl)-2-thiazolyl)formamide","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"2593-15-9","DTXSID3032547","Etridiazole","MC","E2P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"25962-77-0",NA,"Trans-2-[(dimethylamino)methylimino]-5-[2-(5-nitro-2-furyl)vinyl]-1,3,4-oxadiazole","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"26049-68-3","DTXSID8020705","2-Hydrazino-4-(5-nitro-2-furyl)thiazole","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"26049-69-4","DTXSID1020518","2-(2,2-Dimethylhydrazino)-4-(5-nitro-2-furyl)thiazole","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"26049-70-7","DTXSID3020706","2-Hydrazino-4-(4-nitrophenyl)thiazole","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"26049-71-8","DTXSID3020704","2-Hydrazino-4-(4-aminophenyl) thiazole","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"26471-62-5","DTXSID0024341","Toluene diisocyanate","MC",NA,NA,"positive","Consumer_cp","Diet_cp",NA,NA,NA,"HPV",NA,"Cancer",NA
+"28754-68-9","DTXSID1020061","trans-5-Amino-3[2-(5-nitro-2-furyl)vinyl]-1,2,4-oxadiazole","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"297-76-7","DTXSID4020614","Ethynodiol diacetate","MC",NA,NA,"no test",NA,NA,"Pharma_FDA_Rx",NA,NA,NA,NA,NA,NA
+"302-01-2","DTXSID3020702","Hydrazine","MC",NA,NA,"positive","Consumer_cp","Diet_FDA",NA,NA,NA,"HPV",NA,"Cancer",NA
+"302-15-8","DTXSID9020875","Methylhydrazine sulfate","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,"Cancer",NA
+"302-22-7","DTXSID6020274","Chlormadinone acetate","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"3031-51-4","DTXSID4020909","(S)-Furaltadone hydrochloride","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"303-47-9","DTXSID7021073","Ochratoxin A","MC",NA,NA,"positive",NA,"Diet_naturally_occurring",NA,NA,NA,NA,NA,"Cancer",NA
+"305-03-3","DTXSID7020263","Chlorambucil","MC",NA,NA,"positive",NA,NA,"Pharma_FDA_Rx",NA,NA,NA,NA,"Cancer","Dev"
+"3096-50-2","DTXSID6021088","N-(9-Oxo-2-fluorenyl)acetamide","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"320-67-2","DTXSID9020116","5-Azacytidine","MC",NA,NA,"positive",NA,NA,"Pharma_FDA_Rx",NA,NA,NA,NA,"Cancer",NA
+"32852-21-4","DTXSID7020639","Formic acid 2-(4-methyl-2-thiazolyl)hydrazide","MC",NA,NA,"no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"3296-90-0","DTXSID9020164","Pentaerythritol dibromide","MC","negative","not_agonist","positive",NA,NA,NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more","Cancer",NA
+"330-54-1","DTXSID0020446","Diuron","MC","negative","not_agonist","positive","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,"HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"33372-39-3","DTXSID3020176","4-Bis(2-hydroxyethyl)amino-2-(5-nitro-2-thienyl)quinazoline","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"335-67-1","DTXSID8031865","Perfluorooctanoic acid","MC","negative","not_agonist","positive","Consumer_cp_exp","Diet_cp_exp",NA,NA,NA,NA,"Less than 1 ug/kg/day",NA,"Dev"
+"3546-10-9","DTXSID6021119","Phenesterin","MC",NA,NA,"negative",NA,NA,NA,NA,NA,NA,NA,"Cancer",NA
+"3570-75-0","DTXSID6020640","Formic acid 2-[4-(5-nitro-2-furyl)-2-thiazolyl]hydrazide","MC",NA,NA,"positive",NA,NA,"Pharma_cp",NA,NA,NA,NA,"Cancer",NA
+"3604-87-3","DTXSID2020553","alpha-Ecdysone","MC",NA,NA,"no test",NA,"Diet_naturally_occurring",NA,NA,NA,NA,NA,NA,NA
+"363-17-7","DTXSID3020629","N-(2-Fluorenyl)-2,2,2-trifluoroacetamide","MC",NA,NA,"no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"366-70-1","DTXSID3021190","Procarbazine hydrochloride","MC",NA,NA,"positive",NA,NA,"Pharma_FDA_Rx","Pesticide_exp",NA,NA,"Less than 1 ug/kg/day","Cancer","Dev"
+"3688-53-7","DTXSID9020033","AF-2","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,"Cancer",NA
+"3775-55-1","DTXSID2020058","2-Amino-5-(5-nitro-2-furyl)-1,3,4-oxadiazole","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"3778-73-2","DTXSID7020760","Ifosfamide","MC",NA,NA,"positive","Consumer_cp",NA,"Pharma_FDA_Rx",NA,NA,NA,NA,NA,"Dev"
+"3795-88-8","DTXSID6043834","Levofuraltadone","MC",NA,NA,"no test",NA,NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"39156-41-7","DTXSID7020398","2,4-Diaminoanisole sulfate","MC",NA,NA,"positive","Consumer_cp",NA,NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"4075-79-0","DTXSID8039243","4-Acetylaminobiphenyl","MC",NA,NA,"positive",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"42011-48-3","DTXSID9021394","2,2,2-Trifluoro-N-[4-(5-nitro-2-furyl)-2-thiazolyl]acetamide","MC",NA,NA,"positive",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"42397-65-9","DTXSID2073514","1,8-Dinitropyrene","MC",NA,NA,"positive",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"4342-03-4","DTXSID0020369","Dacarbazine","MC",NA,NA,"positive","Consumer_cp",NA,"Pharma_FDA_Rx",NA,NA,NA,NA,"Cancer","Dev"
+"443-48-1","DTXSID2020892","Metronidazole","MC",NA,NA,"positive","Consumer_cp","Diet_cp","Pharma_FDA_Rx","Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day","Cancer",NA
+"446-72-0","DTXSID5022308","Genistein","MC","negative","agonist","positive",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"4680-78-8","DTXSID3020671","FD&C Green No. 1","MC",NA,NA,"no test",NA,"Diet_FDA_cp",NA,"Pesticide_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"488-41-5","DTXSID7022918","Dibromomannitol","MC",NA,NA,"positive",NA,NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"49540-32-1","DTXSID20197820","1,3-Diethyl-1-nitrosourea","MC",NA,NA,"no test",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"50-07-7","DTXSID2020898","Mitomycin C","MC",NA,NA,"positive",NA,NA,"Pharma_FDA_Rx",NA,NA,NA,NA,"Cancer",NA
+"50-18-0","DTXSID5020364","Cyclophosphamide","MC",NA,NA,"positive",NA,NA,"Pharma_FDA_Rx",NA,NA,NA,NA,"Cancer","Dev_F_M"
+"50-27-1","DTXSID9022366","Estriol","MC",NA,"agonist","positive","Consumer_cp","Diet_cp",NA,NA,NA,NA,NA,NA,NA
+"50-28-2","DTXSID0020573","17beta-Estradiol","MC",NA,"agonist","positive","Consumer_cp","Diet_cp","Pharma_FDA_Rx",NA,NA,NA,NA,"Cancer",NA
+"50-32-8","DTXSID2020139","Benzo(a)pyrene","MC",NA,NA,"positive","Consumer_cp_exp","Diet_cp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"5036-03-3","DTXSID1020724","1-(2-Hydroxyethyl)-3-[(5-nitrofurfurylidene)amino]-2-imidazolidinone","MC",NA,NA,"positive",NA,NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"50-55-5","DTXSID7021237","Reserpine","MC",NA,"not_agonist","negative","Consumer_cp",NA,"Pharma_FDA_discontinued",NA,NA,NA,NA,"Cancer",NA
+"51264-14-3","DTXSID4022604","Amsacrine","MC",NA,NA,"positive",NA,NA,"Pharma_cp",NA,NA,NA,NA,"Cancer",NA
+"51325-35-0","DTXSID9020954","N,N'-[6-(5-Nitro-2-furyl)-S-triazine-2,4-diyl]bisacetamide","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"51630-58-1","DTXSID101017940","Fenvalerate","MC","negative","not_agonist","positive","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"51-79-6","DTXSID9021427","Urethane","MC","negative","not_agonist","positive","Consumer_exp",NA,"Pharma_cp",NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer","Dev"
+"52-24-4","DTXSID0021339","Thiotepa","MC",NA,NA,"positive","Consumer_cp",NA,"Pharma_FDA_Rx",NA,NA,NA,NA,"Cancer",NA
+"52-76-6","DTXSID4021478","Lynestrenol","MC","negative",NA,"positive","Consumer_exp",NA,"Pharma_cp",NA,NA,NA,"Less than 1 ug/kg/day","Cancer",NA
+"531-18-0","DTXSID1020693","Hexamethylolmelamine","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"53-16-7","DTXSID4022367","Estrone","MC",NA,"agonist","positive","Consumer_cp","Diet_cp_exp","Pharma_FDA_discontinued",NA,NA,NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"531-76-0","DTXSID9031569","Merphalan","MC",NA,NA,"no test",NA,NA,"Pharma_cp",NA,NA,NA,NA,"Cancer",NA
+"531-82-8","DTXSID9020952","N-[4-(5-Nitro-2-furyl)-2-thiazolyl]acetamide","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,"Cancer",NA
+"531-85-1","DTXSID7020138","Benzidine dihydrochloride","MC",NA,NA,"positive",NA,NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"53-70-3","DTXSID9020409","Dibenz(a,h)anthracene","MC",NA,"not_agonist","positive","Consumer_cp_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"53757-28-1","DTXSID4020951","4-(5-Nitro-2-furyl)thiazole","MC",NA,NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"53-86-1","DTXSID9020740","1-(p-Chlorobenzoyl)-5-methoxy-2-methyl-Indole-3-acetic acid","MC","negative","not_agonist","positive",NA,NA,"Pharma_FDA_Rx",NA,NA,NA,NA,NA,NA
+"53-95-2","DTXSID2020719","N-Hydroxy-2-acetylaminofluorene","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"53-96-3","DTXSID0039227","2-Acetylaminofluorene","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,"Cancer",NA
+"5405-53-8","DTXSID8075253","9H-Fluorene, 2,7-dinitro-","MC",NA,NA,"positive",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"542-75-6","DTXSID1022057","1,3-Dichloropropene","MC",NA,NA,"positive","Consumer_cp_exp","Diet_cp",NA,"Pesticide_cp_exp","Industrial_exp","HPV","100 ug/kg/day or more","Cancer",NA
+"54-31-9","DTXSID6020648","Furosemide","MC","negative",NA,"positive","Consumer_cp","Diet_cp","Pharma_FDA_Rx","Pesticide_cp",NA,"HPV",NA,NA,NA
+"54-85-3","DTXSID8020755","Isoniazid","MC","negative","not_agonist","positive",NA,NA,"Pharma_FDA_Rx",NA,NA,NA,NA,NA,NA
+"55120-47-3","DTXSID10203641","N,N'-Dimethylnitrosourea","MC",NA,NA,"no test",NA,"Diet_exp",NA,"Pesticide_exp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"55-18-5","DTXSID2021028","N-Nitrosodiethylamine","MC","negative","not_agonist","positive","Consumer_exp","Diet_cp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"551-92-8","DTXSID5020497","1,2-Dimethyl-5-nitroimidazole","MC",NA,NA,"positive","Consumer_exp",NA,"Pharma_cp",NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"5522-43-0","DTXSID6020983","1-Nitropyrene","MC",NA,NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"55283-68-6","DTXSID8032386","N-Ethyl-N-(2-methyl-2-propenyl)-2,6-dinitro-4-(trifluoromethyl)benzenamine","MC","negative","weak_agonist","positive","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"555-84-0","DTXSID2020973","1-[(5-Nitrofurfurylidene)amino]-2-imidazolidinone","MC",NA,NA,"positive",NA,NA,"Pharma_cp",NA,NA,NA,NA,"Cancer",NA
+"556-52-5","DTXSID4020666","Glycidol","MC","negative","not_agonist","positive","Consumer_exp","Diet_exp",NA,"Pesticide_exp","Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"5589-96-8","DTXSID4024642","Bromochloroacetic acid","MC",NA,NA,"positive","Consumer_exp",NA,NA,"Pesticide_exp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"56-23-5","DTXSID8020250","Carbon tetrachloride","MC",NA,NA,"positive","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Less than 1 ug/kg/day","Cancer",NA
+"56-38-2","DTXSID7021100","Parathion","MC","E2P4up","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day","Cancer",NA
+"56-49-5","DTXSID0020862","3-Methylcholanthrene","MC",NA,NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"56-53-1","DTXSID3020465","Diethylstilbestrol","MC","E2up","agonist","positive",NA,NA,"Pharma_FDA_discontinued",NA,NA,NA,NA,"Cancer","Dev"
+"56654-52-5","DTXSID8020418","1,3-Dibutyl-1-nitrosourea","MC",NA,NA,"positive",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"56932-45-7","DTXSID20205479","N1-(Tris(hydroxymethyl))methyl-4-nitro-1,2-phenylenediamine","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"5694-00-8","DTXSID2031374","Glycidamide","MC","negative",NA,"positive",NA,"Diet_exp",NA,NA,NA,NA,"Less than 1 ug/kg/day",NA,NA
+"569-61-9","DTXSID1021247","C.I. Basic Red 9 monohydrochloride","MC",NA,NA,"positive","Consumer_cp",NA,NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day","Cancer",NA
+"57-47-6","DTXSID3023471","Physostigmine","MC",NA,NA,"negative",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"57-63-6","DTXSID5020576","17alpha-Ethinylestradiol","MC",NA,"agonist","positive","Consumer_cp","Diet_cp","Pharma_FDA_Rx","Pesticide_cp",NA,NA,NA,"Cancer","Dev"
+"57-83-0","DTXSID3022370","Progesterone","MC",NA,"weak_agonist","positive","Consumer_cp","Diet_cp","Pharma_FDA_Rx","Pesticide_cp",NA,NA,NA,"Cancer",NA
+"57835-92-4","DTXSID5074844","4-Nitropyrene","MC",NA,NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"57-97-6","DTXSID1020510","7,12-Dimethylbenz(a)anthracene","MC","E2up","not_agonist","positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"58-22-0","DTXSID8022371","Testosterone","MC",NA,NA,"no test",NA,"Diet_cp","Pharma_FDA_Rx",NA,NA,NA,NA,"Cancer",NA
+"5834-17-3","DTXSID9020825","2-Methoxy-3-aminodibenzofuran","MC",NA,NA,"no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"58917-67-2","DTXSID9036779","Benzo(a)pyrene diolepoxide 1","MC",NA,NA,"positive",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"59-35-8","DTXSID0020496","4,6-Dimethyl-2-(5-nitro-2-furyl) pyrimidine","MC",NA,NA,"no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"595-33-5","DTXSID9040683","Megestrol acetate","MC",NA,NA,"positive","Consumer_cp",NA,"Pharma_FDA_Rx",NA,NA,NA,NA,"Cancer","Dev"
+"59-87-0","DTXSID5020944","Nitrofurazone","MC","negative","not_agonist","positive","Consumer_cp",NA,"Pharma_FDA_discontinued",NA,NA,NA,NA,"Cancer",NA
+"602-87-9","DTXSID3020960","5-Nitroacenaphthene","MC",NA,NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"60391-92-6","DTXSID3020251","Carboxymethylnitrosourea","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,"Cancer",NA
+"60-57-1","DTXSID9020453","Dieldrin","MC","negative","weak_agonist","positive","Consumer_cp","Diet_cp","Pharma_cp","Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day","Cancer",NA
+"607-57-8","DTXSID2020971","2-Nitrofluorene","MC",NA,NA,"positive",NA,NA,NA,"Pesticide_exp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"612-82-8","DTXSID6020511","3,3'-Dimethylbenzidine dihydrochloride","MC","E2P4up","agonist","positive",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"613-13-8","DTXSID2024458","2-Aminoanthracene","MC",NA,NA,"positive",NA,NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"613-35-4","DTXSID9036854","N,N'-Diacetylbenzidine","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,"Cancer",NA
+"61-57-4","DTXSID6045244","Niridazole","MC",NA,NA,"positive",NA,NA,"Pharma_cp",NA,NA,NA,NA,"Cancer",NA
+"62-44-2","DTXSID1021116","Phenacetin","MC",NA,NA,"positive",NA,NA,"Pharma_cp","Pesticide_exp",NA,NA,"Less than 1 ug/kg/day","Cancer",NA
+"62450-07-1","DTXSID5043768","Trp-P-2","MC",NA,NA,"positive",NA,"Diet_naturally_occurring",NA,NA,NA,NA,NA,"Cancer",NA
+"62-50-0","DTXSID6025309","Ethyl methanesulfonate","MC",NA,NA,"positive","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"63019-65-8","DTXSID8020389","N-1-Diacetamidofluorene","MC",NA,NA,"no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"630-20-6","DTXSID2021317","1,1,1,2-Tetrachloroethane","MC",NA,NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"630-56-8","DTXSID6043915","Hydroxyprogesterone caproate","MC","negative","weak_agonist","no test",NA,NA,"Pharma_FDA_Rx",NA,NA,NA,NA,NA,NA
+"636-21-5","DTXSID7021364","2-Methylaniline hydrochloride","MC",NA,"not_agonist","positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"63642-17-1","DTXSID1020851","N-(N-Methyl-N-nitrosocarbamoyl)-l-ornithine","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"64-17-5","DTXSID9020584","Ethanol","MC",NA,NA,"positive","Consumer_cp_exp","Diet_FDA_cp_exp","Pharma_cp","Pesticide_cp_exp",NA,"HPV","100 ug/kg/day or more","Cancer",NA
+"6459-94-5","DTXSID8021224","C.I. Acid Red 114","MC",NA,"not_agonist","positive",NA,NA,NA,"Pesticide_exp","Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"66-75-1","DTXSID8026270","Uracil mustard","MC",NA,NA,"positive",NA,NA,"Pharma_FDA_discontinued",NA,NA,NA,NA,"Cancer","Dev_F_M"
+"67-20-9","DTXSID7020972","Nitrofurantoin","MC","negative","not_agonist","positive",NA,NA,"Pharma_FDA_Rx",NA,NA,NA,NA,NA,"Dev_M"
+"67651-34-7","DTXSID5022350","2,3,4,5-Tetrachloro-4'-biphenylol","MC",NA,NA,"no test",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"68162-13-0",NA,"Trans-7,12-Dimethylbenz(a)anthracene-3,4-dihydrodiol","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"68-22-4","DTXSID9023380","Norethindrone","MC","negative","agonist","negative",NA,NA,"Pharma_FDA_Rx",NA,NA,NA,NA,"Cancer","Dev"
+"68-23-5","DTXSID3021069","Norethynodrel","MC",NA,NA,"positive",NA,NA,"Pharma_FDA_discontinued",NA,NA,NA,NA,"Cancer",NA
+"684-93-5","DTXSID4021006","N-Nitroso-N-methylurea","MC",NA,"not_agonist","positive",NA,"Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"7008-42-6","DTXSID0020026","Acronycine","MC",NA,NA,"no test",NA,NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"712-68-5","DTXSID7020059","2-Amino-5-(5-nitro-2-furyl)-1,3,4-thiadiazole","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,"Cancer",NA
+"71-43-2","DTXSID3039242","Benzene","MC",NA,NA,"positive","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer","Dev_M"
+"71-58-9","DTXSID0025527","Medroxyprogesterone acetate","MC",NA,NA,"negative","Consumer_cp","Diet_cp","Pharma_FDA_Rx","Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day","Cancer","Dev"
+"71609-22-8","DTXSID60221855","N-Hydroxy-N,N'-diacetylbenzidine","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"720-69-4","DTXSID7020396","4,6-Diamino-2-(5-nitro-2-furyl)-s-triazine","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"72254-58-1","DTXSID5021417","Trp-P-2 acetate","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"72-33-3","DTXSID0020814","Mestranol","MC","negative","agonist","positive",NA,NA,"Pharma_FDA_discontinued",NA,NA,NA,NA,"Cancer","Dev"
+"72479-23-3","DTXSID50222775","1-Nitroso-1-ethyl-3-methylurea","MC",NA,NA,"no test",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"7496-02-8","DTXSID9075454","6-Nitrochrysene","MC",NA,NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"75-01-4","DTXSID8021434","Vinyl chloride","MC",NA,NA,"positive","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more","Cancer",NA
+"75-02-5","DTXSID3021435","Vinyl fluoride","MC",NA,NA,"positive","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more","Cancer",NA
+"75-07-0","DTXSID5039224","Acetaldehyde","MC","negative",NA,"positive","Consumer_cp","Diet_FDA_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"75-09-2","DTXSID0020868","Dichloromethane","MC",NA,NA,"positive","Consumer_cp","Diet_FDA_cp_exp",NA,"Pesticide_exp","Industrial_exp","HPV","100 ug/kg/day or more","Cancer",NA
+"75198-31-1","DTXSID0020947","3-(5-Nitro-2-furyl)-imidazo(1,2-alpha) pyridine","MC",NA,NA,"no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"75-21-8","DTXSID0020600","Ethylene oxide","MC",NA,NA,"positive","Consumer_cp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more","Cancer","Dev_F_M"
+"75321-20-9","DTXSID5074975","1,3-Dinitropyrene","MC",NA,NA,"positive",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"75-35-4","DTXSID8021438","1,1-Dichloroethylene","MC",NA,NA,"positive","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"75-52-5","DTXSID2020977","Nitromethane","MC",NA,NA,"positive","Consumer_cp_exp","Diet_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Less than 1 ug/kg/day","Cancer",NA
+"75-55-8","DTXSID8024286","Propyleneimine","MC",NA,NA,"positive",NA,"Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"75-56-9","DTXSID5021207","1,2-Propylene oxide","MC",NA,NA,"positive","Consumer_cp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more","Cancer",NA
+"759-73-9","DTXSID8020593","1-Ethyl-1-nitrosourea","MC",NA,NA,"positive",NA,NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"760-56-5","DTXSID3020049","1-Allyl-1-nitrosourea","MC",NA,NA,"no test",NA,"Diet_exp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"76-06-2","DTXSID0020315","Chloropicrin","MC",NA,NA,"positive","Consumer_cp_exp","Diet_cp",NA,"Pesticide_cp_exp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"76180-96-6","DTXSID4020745","2-Amino-3-methyl-3H-imidazo[4,5-f]quinoline","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,"Cancer",NA
+"77094-11-2","DTXSID6020800","MeIQ","MC",NA,NA,"positive",NA,"Diet_naturally_occurring",NA,NA,NA,NA,NA,"Cancer",NA
+"77439-76-0","DTXSID6020276","3-Chloro-4-(dichloromethyl)-5-hydroxy-2(5H)-furanone","MC",NA,NA,"positive",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day","Cancer",NA
+"77-46-3","DTXSID1021295","4,4'-Sulfonylbisacetanilide","MC",NA,NA,"negative",NA,NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"77500-04-0","DTXSID1020801","MeIQx","MC",NA,NA,"positive",NA,"Diet_naturally_occurring",NA,NA,NA,NA,NA,"Cancer",NA
+"78587-05-0","DTXSID7024299","Hexythiazox","MC","E2P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"78-79-5","DTXSID2020761","Isoprene","MC",NA,NA,"positive","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more","Cancer",NA
+"78-87-5","DTXSID0020448","1,2-Dichloropropane","MC",NA,NA,"positive","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp_exp","Industrial_exp","HPV","100 ug/kg/day or more","Cancer",NA
+"79-01-6","DTXSID0021383","Trichloroethylene","MC",NA,NA,"positive","Consumer_exp","Diet_FDA_cp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer","Dev_M"
+"79-06-1","DTXSID5020027","Acrylamide","MC","negative","not_agonist","positive","Consumer_cp","Diet_cp_exp",NA,NA,NA,"HPV","100 ug/kg/day or more","Cancer","Dev_M"
+"80-05-7","DTXSID7020182","Bisphenol A","MC","E2up","agonist","positive","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp",NA,"HPV","Between 1 to 100 ug/kg/day",NA,"Dev_F"
+"8015-12-1","DTXSID7021071","Norlestrin","MC",NA,NA,"negative",NA,NA,"Pharma_FDA_Rx",NA,NA,NA,NA,NA,NA
+"82617-23-0","DTXSID801002821","Oxiran-2-yl hydrogen carbonimidate","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"83349-67-1",NA,"Anti-1,2,3,10b-tetrahydrofluoranthene-2,3-diol 1,10b-oxide","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"834-24-2","DTXSID001019381","4-aminostilbene","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"838-88-0","DTXSID5020867","4,4'-Diamino-3,3'-dimethyldiphenylmethane","MC","P4up","weak_agonist","positive",NA,NA,NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"843-23-2",NA,"Trans-n-hydroxy-4-acetylaminostilbene","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"869-01-2","DTXSID2020214","N-Butyl-N-nitrosourea","MC",NA,NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"87625-62-5","DTXSID20892005","Ptaquiloside","MC",NA,NA,"positive",NA,"Diet_naturally_occurring",NA,NA,NA,NA,NA,NA,NA
+"88133-11-3","DTXSID7020132","Bemitradine","MC",NA,NA,"negative",NA,NA,"Pharma_cp","Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"88-72-2","DTXSID4025791","2-Nitrotoluene","MC","negative","not_agonist","positive","Consumer_exp",NA,NA,NA,"Industrial_exp","HPV","Less than 1 ug/kg/day","Cancer",NA
+"91-94-1","DTXSID6020432","3,3'-Dichlorobenzidine","MC",NA,NA,"positive","Consumer_cp",NA,NA,NA,"Industrial_exp","HPV","Less than 1 ug/kg/day","Cancer",NA
+"92-67-1","DTXSID5020071","4-Biphenylamine","MC",NA,NA,"positive","Consumer_cp_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"92-87-5","DTXSID2020137","Benzidine","MC","E2P4up","weak_agonist","positive",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"93-15-2","DTXSID5025607","Methyleugenol","MC","E2up","not_agonist","negative","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"100 ug/kg/day or more","Cancer",NA
+"95-06-7","DTXSID7021289","Sulfallate","MC",NA,NA,"positive","Consumer_exp",NA,NA,"Pesticide_cp_exp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"95-53-4","DTXSID1026164","2-Methylaniline","MC","negative","not_agonist","positive","Consumer_cp_exp","Diet_cp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"95-80-7","DTXSID4020402","2,4-Diaminotoluene","MC","P4up","not_agonist","positive","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"96-09-3","DTXSID2021286","Styrene oxide","MC","negative","not_agonist","positive","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"96-12-8","DTXSID3020413","1,2-Dibromo-3-chloropropane","MC",NA,NA,"positive","Consumer_exp","Diet_cp",NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer","Dev_M"
+"96-13-9","DTXSID7021817","2,3-Dibromopropanol","MC",NA,NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"96-18-4","DTXSID9021390","1,2,3-Trichloropropane","MC","negative","not_agonist","positive","Consumer_cp_exp","Diet_cp",NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more","Cancer",NA
+"96724-44-6","DTXSID5020609","1-Ethylnitroso-3-(2-hydroxyethyl)urea","MC",NA,NA,"no test",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"96724-45-7","DTXSID6020725","1-(2-Hydroxyethyl)-nitroso-3-ethylurea","MC",NA,NA,"no test",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"97-56-3","DTXSID1020069","o-Aminoazotoluene","MC","E2P4up","agonist","positive",NA,NA,NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"979-32-8","DTXSID8023004","Estradiol valerate","MC",NA,NA,"no test","Consumer_cp",NA,"Pharma_FDA_Rx",NA,NA,NA,NA,NA,NA
+"98-95-3","DTXSID3020964","Nitrobenzene","MC","negative","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_exp","Industrial_exp","HPV","Less than 1 ug/kg/day","Cancer","Dev_M"
+"99-59-2","DTXSID0020943","5-Nitro-o-anisidine","MC","P4up","not_agonist","positive",NA,NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"various","DTXSID9024069","2,4-/2,6-Dinitrotoluene mixture","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,"Cancer",NA
+"X",NA,"4'OH-PCB-61","MC",NA,NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"62-73-7","DTXSID5020449","Dichlorvos","MC","P4up","not_agonist","positive","Consumer_cp_exp","Diet_cp","Pharma_cp","Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day","Cancer",NA
+"122-34-9","DTXSID4021268","Simazine","MC","E2P4up","not_agonist","negative","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,"Dev_F"
+"133-07-3","DTXSID0021385","Folpet","MC","negative","not_agonist","positive","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day","Cancer",NA
+"139-40-2","DTXSID3021196","Propazine","MC","E2up","not_agonist","negative","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,"Dev_F"
+"15972-60-8","DTXSID1022265","Alachlor","MC","negative","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day","Cancer",NA
+"55335-06-3","DTXSID0032497","Triclopyr","MC","negative","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"55406-53-6","DTXSID0028038","3-Iodo-2-propynyl-N-butylcarbamate","MC","negative","not_agonist","negative","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"5915-41-3","DTXSID4027608","Terbutylazine","MC","E2P4up","weak_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"732-11-6","DTXSID5024261","Phosmet","MC","P4up","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"129-73-7","DTXSID7031531","Leucomalachite green","MC",NA,NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"1420-04-8","DTXSID3020338","Clonitralid","MC",NA,NA,"no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"532-27-4","DTXSID9020293","2-Chloroacetophenone","MC","negative","weak_agonist","positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"569-64-2","DTXSID1025512","Malachite green","MC","negative",NA,"positive","Consumer_cp",NA,NA,"Pesticide_cp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"57117-31-4","DTXSID7030066","2,3,4,7,8-Pentachlorodibenzofuran","MC",NA,NA,"no test",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"7336-20-1","DTXSID2020397","4,4'-Diamino-2,2'-stilbenedisulfonic acid, disodium salt","MC",NA,NA,"negative",NA,NA,NA,NA,"Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"75-34-3","DTXSID1020437","1,1-Dichloroethane","MC",NA,NA,"positive","Consumer_cp_exp","Diet_cp",NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more","Cancer",NA
+"97-54-1","DTXSID7022413","Isoeugenol","MC","E2P4up","weak_agonist","positive","Consumer_cp","Diet_FDA_cp_exp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"834-12-8","DTXSID1023869","Ametryn","MC","E2P4up","not_agonist","positive","Consumer_cp_exp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Between 1 to 100 ug/kg/day",NA,NA
+"65277-42-1","DTXSID7029879","Ketoconazole",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_exp","Pharma_FDA_Rx_OTC",NA,NA,NA,"Less than 1 ug/kg/day",NA,NA
+"76578-14-8","DTXSID9023889","Quizalofop-ethyl",NA,"E2P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,"Dev_M"
+"122-39-4","DTXSID4021975","Diphenylamine",NA,"E2P4up","not_agonist","positive","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,"HPV","Between 1 to 100 ug/kg/day",NA,NA
+"15299-99-7","DTXSID5024211","Napropamide",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"23950-58-5","DTXSID2020420","Propyzamide",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day","Cancer",NA
+"1007-28-9","DTXSID0037495","Deisopropylatrazine",NA,"E2P4up","not_agonist","negative",NA,"Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,"Dev_F"
+"68694-11-1","DTXSID2032500","Triflumizole",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"76738-62-0","DTXSID2024242","Paclobutrazol",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"87818-31-3","DTXSID3034456","Cinmethylin",NA,"E2up","weak_agonist","no test","Consumer_cp_exp",NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"52-68-6","DTXSID0021389","Trichlorfon",NA,"negative","weak_agonist","positive","Consumer_cp_exp","Diet_cp","Pharma_cp","Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"105512-06-9","DTXSID6032354","Clodinafop-propargyl",NA,"E2P4up","not_agonist","no test","Consumer_cp","Diet_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"126833-17-8","DTXSID3032549","Fenhexamid",NA,"P4up","agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"122-14-5","DTXSID4032613","Fenitrothion",NA,"E2P4up","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"23422-53-9","DTXSID4032405","Formetanate hydrochloride",NA,"E2P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"709-98-8","DTXSID8022111","Propanil",NA,"P4up","not_agonist","negative","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,NA
+"95737-68-1","DTXSID1032640","Pyriproxyfen",NA,"E2up","weak_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"950-37-8","DTXSID5020819","Methidathion",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"79538-32-2","DTXSID5032577","Tefluthrin",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"51-03-6","DTXSID1021166","Piperonyl butoxide",NA,"E2up","not_agonist","negative","Consumer_cp_exp","Diet_cp","Pharma_FDA_discontinued","Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"333-41-5","DTXSID9020407","Diazinon",NA,"E2P4up","weak_agonist","negative","Consumer_cp_exp","Diet_cp","Pharma_cp","Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,NA
+"115-29-7","DTXSID1020560","Endosulfan",NA,"negative","weak_agonist","positive","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,NA
+"50594-66-6","DTXSID0020022","Acifluorfen",NA,"E2P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,NA
+"6153-64-6","DTXSID4023412","Oxytetracycline dihydrate",NA,"P4up","not_agonist","no test",NA,"Diet_exp",NA,"Pesticide_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"8018-01-7","DTXSID0034695","Mancozeb",NA,"E2P4up","not_agonist","negative","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day","Cancer",NA
+"131-11-3","DTXSID3022455","Dimethyl phthalate",NA,"E2up","not_agonist","positive","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"42509-80-8","DTXSID7034676","Isazofos",NA,"E2P4up","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"116714-46-6","DTXSID5034773","Novaluron",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"94361-06-5","DTXSID0032601","Cyproconazole",NA,"E2up","weak_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"148477-71-8","DTXSID6034928","Spirodiclofen",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day","Cancer",NA
+"35554-44-0","DTXSID8024151","Imazalil",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp_exp","Pharma_cp","Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day","Cancer",NA
+"87546-18-7","DTXSID2032554","Flumiclorac-pentyl",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"119446-68-3","DTXSID4032372","Difenoconazole",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"149979-41-9","DTXSID7034252","Tepraloxydim",NA,"P4up","not_agonist","no test","Consumer_cp",NA,NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"41198-08-7","DTXSID3032464","Profenofos",NA,"E2P4up","not_agonist","positive","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"56-72-4","DTXSID2020347","Coumaphos",NA,"E2P4up","not_agonist","positive","Consumer_cp","Diet_cp","Pharma_cp","Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"66230-04-4","DTXSID4032667","Esfenvalerate",NA,"E2up","not_agonist","negative","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"74051-80-2","DTXSID9024304","Sethoxydim",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"82558-50-7","DTXSID8024159","Isoxaben",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"31218-83-4","DTXSID7032470","Propetamphos",NA,"E2P4up","not_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"55219-65-3","DTXSID0032493","Triadimenol",NA,"negative","weak_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,NA
+"67747-09-5","DTXSID4024270","Prochloraz",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,NA
+"1582-09-8","DTXSID4021395","Trifluralin",NA,"negative","weak_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,NA
+"114311-32-9","DTXSID3034664","Imazamox",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"57837-19-1","DTXSID6024175","Metalaxyl",NA,"P4up","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"84-74-2","DTXSID2021781","Dibutyl phthalate",NA,"negative","weak_agonist","positive","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Less than 1 ug/kg/day",NA,"Dev_F_M"
+"131341-86-1","DTXSID2032398","Fludioxonil",NA,"negative","weak_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"118134-30-8","DTXSID1034212","Spiroxamine",NA,"E2up","not_agonist","no test","Consumer_cp_exp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"94-74-6","DTXSID4024195","MCPA",NA,"P4up","not_agonist","negative","Consumer_cp_exp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Between 1 to 100 ug/kg/day",NA,NA
+"71751-41-2","DTXSID8023892","Abamectin",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp","Pharma_cp","Pesticide_cp",NA,NA,NA,NA,"Dev"
+"153233-91-1","DTXSID8034586","Etoxazole",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"66441-23-4","DTXSID2032392","Fenoxaprop-ethyl",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,"Dev"
+"4376-20-9","DTXSID2025680","MEHP",NA,"P4up","not_agonist","negative","Consumer_exp",NA,NA,"Pesticide_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"12427-38-2","DTXSID9020794","Maneb",NA,"P4up","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day","Cancer",NA
+"298-00-0","DTXSID1020855","Methyl parathion",NA,"E2P4up","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,NA
+"131983-72-7","DTXSID0032655","Triticonazole",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"52315-07-8","DTXSID1023998","Cypermethrin",NA,"E2up","weak_agonist","positive","Consumer_cp_exp","Diet_cp","Pharma_cp","Pesticide_cp_exp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"62924-70-3","DTXSID7032553","Flumetralin",NA,"P4up","agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"5234-68-4","DTXSID0023951","Carboxin",NA,"E2up","not_agonist","negative","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,NA
+"90-43-7","DTXSID2021151","2-Phenylphenol",NA,"E2up","not_agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day","Cancer",NA
+"82657-04-3","DTXSID9020160","Bifenthrin",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"97886-45-8","DTXSID9032379","Dithiopyr",NA,"negative","weak_agonist","no test","Consumer_cp_exp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"22781-23-3","DTXSID9032327","Bendiocarb",NA,"E2P4up","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"117718-60-2","DTXSID1032488","Thiazopyr",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"2675-77-6","DTXSID2024793","Chloroneb",NA,"E2up","not_agonist","positive","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"42874-03-3","DTXSID7024241","Oxyfluorfen",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"27314-13-2","DTXSID8024234","Norflurazon",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"63-25-2","DTXSID9020247","Carbaryl",NA,"E2up","not_agonist","positive","Consumer_cp_exp","Diet_cp","Pharma_cp","Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day","Cancer","Dev_F_M"
+"83657-24-3","DTXSID2040363","Diniconazole",NA,"P4up","not_agonist","no test","Consumer_cp",NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"1698-60-8","DTXSID3034872","Chloridazon",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,"HPV","Between 1 to 100 ug/kg/day",NA,NA
+"210880-92-5","DTXSID2034465","Clothianidin",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"1596-84-5","DTXSID9020370","Daminozide",NA,"negative","weak_agonist","negative","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"66332-96-5","DTXSID8024109","Flutolanil",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"114-26-1","DTXSID7021948","Propoxur",NA,"E2up","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day","Cancer",NA
+"314-40-9","DTXSID4022020","Bromacil",NA,"E2up","not_agonist","negative","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"33629-47-9","DTXSID3032337","Butralin",NA,"E2P4up","weak_agonist","negative","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"51338-27-3","DTXSID0032605","Diclofop-methyl",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day","Cancer","Dev"
+"60168-88-9","DTXSID2032390","Fenarimol",NA,"negative","agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"29232-93-7","DTXSID0024266","Pirimiphos-methyl",NA,"E2P4up","weak_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,NA
+"1134-23-2","DTXSID6032356","Cycloate",NA,"E2up","not_agonist","negative","Consumer_cp_exp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Between 1 to 100 ug/kg/day",NA,"Dev"
+"129630-19-9","DTXSID8034871","Pyraflufen-ethyl",NA,"E2P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"103361-09-7","DTXSID7032555","Flumioxazin",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"120-32-1","DTXSID5020154","Clorophene",NA,"E2P4up","weak_agonist","negative","Consumer_cp","Diet_cp_exp","Pharma_cp","Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,NA
+"101-21-3","DTXSID7020764","Chlorpropham",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"122836-35-5","DTXSID6032645","Sulfentrazone",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"110488-70-5","DTXSID7034545","Dimethomorph",NA,"E2P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"40487-42-1","DTXSID7024245","Pendimethalin",NA,"negative","weak_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"2212-67-1","DTXSID6024206","Molinate",NA,"E2up","not_agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,"HPV","Between 1 to 100 ug/kg/day",NA,"Dev_F_M"
+"117-81-7","DTXSID5020607","Di(2-ethylhexyl) phthalate",NA,"E2P4up","not_agonist","positive","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more","Cancer","Dev_M"
+"52645-53-1","DTXSID8022292","Permethrin",NA,"E2up","not_agonist","positive","Consumer_cp_exp","Diet_cp","Pharma_FDA_Rx_OTC","Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"101-05-3","DTXSID9020089","Anilazine",NA,"E2P4up","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,NA
+"1861-40-1","DTXSID3023899","Benfluralin",NA,"P4up","weak_agonist","negative","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"55-38-9","DTXSID8020620","Fenthion",NA,"E2P4up","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,NA
+"81777-89-1","DTXSID1032355","Clomazone",NA,"E2P4up","not_agonist","negative","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"79241-46-6","DTXSID0034855","Fluazifop-P-butyl",NA,"E2P4up","weak_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"7287-19-6","DTXSID4024272","Prometryn",NA,"E2up","not_agonist","no test","Consumer_cp_exp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"741-58-2","DTXSID9032329","Bensulide",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"39515-41-8","DTXSID0024002","Fenpropathrin",NA,"negative","weak_agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"5598-13-0","DTXSID6032352","Chlorpyrifos-methyl",NA,"E2P4up","not_agonist","negative","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,NA
+"23031-36-9","DTXSID0032572","Prallethrin",NA,"E2P4up","not_agonist","no test","Consumer_cp_exp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"72-43-5","DTXSID9020827","Methoxychlor",NA,"negative","agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"2310-17-0","DTXSID1024259","Phosalone",NA,"P4up","not_agonist","negative","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"121552-61-2","DTXSID1032359","Cyprodinil",NA,"negative","weak_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"13194-48-4","DTXSID4032611","Ethoprop",NA,"E2up","not_agonist","positive","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"1610-18-0","DTXSID6022341","Prometon",NA,"E2P4up","not_agonist","no test","Consumer_cp_exp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"68359-37-5","DTXSID5035957","Cyfluthrin",NA,"E2up","not_agonist","negative","Consumer_cp_exp","Diet_cp","Pharma_cp","Pesticide_cp_exp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"128639-02-1","DTXSID4032532","Carfentrazone-ethyl",NA,"E2P4up","not_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"135158-54-2","DTXSID1032519","Acibenzolar-S-methyl",NA,"E2up","not_agonist","negative","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"54593-83-8","DTXSID2032344","Chlorethoxyfos",NA,"negative","weak_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"298-04-4","DTXSID0022018","Disulfoton",NA,"negative","weak_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"36734-19-7","DTXSID3024154","Iprodione",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day","Cancer",NA
+"77501-63-4","DTXSID7024160","Lactofen",NA,"E2P4up","not_agonist","negative","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"114369-43-6","DTXSID8032548","Fenbuconazole",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"86-50-0","DTXSID3020122","Azinphos-methyl",NA,"P4up","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,NA
+"101-77-9","DTXSID6022422","4,4'-Methylenedianiline",NA,"E2P4up","not_agonist","positive","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"629-76-5","DTXSID0027270","1-Pentadecanol",NA,"E2up","not_agonist","no test","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"553-26-4","DTXSID2027200","4,4'-Bipyridine",NA,"E2P4up","not_agonist","positive",NA,NA,NA,NA,"Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"112-38-9","DTXSID8035001","10-Undecenoic acid",NA,"E2P4up","not_agonist","negative","Consumer_cp_exp","Diet_FDA_cp",NA,"Pesticide_cp_exp","Industrial_exp",NA,"100 ug/kg/day or more",NA,NA
+"NOCAS_47291","DTXSID5047291","CI-1044",NA,"E2P4up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"79-39-0","DTXSID8029600","Methacrylamide",NA,"E2up","not_agonist","positive","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"NOCAS_47377","DTXSID0047377","AVE6324",NA,"negative","weak_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"2943-75-1","DTXSID2029246","Triethoxyoctylsilane",NA,"E2up","not_agonist","negative","Consumer_exp",NA,NA,NA,"Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"52-01-7","DTXSID6034186","Spironolactone",NA,"P4up","not_agonist","no test",NA,NA,"Pharma_FDA_Rx",NA,NA,NA,NA,"Cancer",NA
+"89-83-8","DTXSID6034972","Thymol",NA,"E2up","not_agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp","Pharma_cp","Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"98-54-4","DTXSID1020221","4-tert-Butylphenol",NA,"E2P4up","agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"92-84-2","DTXSID5021126","Phenothiazine",NA,"E2up","weak_agonist","negative","Consumer_cp_exp","Diet_cp_exp","Pharma_cp",NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"2772-45-4","DTXSID7029241","2,4-Bis(1-methyl-1-phenylethyl)phenol",NA,"negative","weak_agonist","no test",NA,"Diet_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"2433-14-9","DTXSID3040722","4-Cyclohexylcyclohexanol",NA,"E2up","weak_agonist","no test","Consumer_exp",NA,NA,"Pesticide_exp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"69-74-9","DTXSID5024891","Cytarabine hydrochloride",NA,"negative","weak_agonist","positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"106-47-8","DTXSID9020295","4-Chloroaniline",NA,"E2P4up","not_agonist","positive","Consumer_cp_exp",NA,NA,"Pesticide_exp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"103-65-1","DTXSID3042219","Propylbenzene",NA,"E2up","not_agonist","no test","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"446-86-6","DTXSID4020119","Azathioprine",NA,"P4up","not_agonist","positive",NA,NA,"Pharma_FDA_Rx",NA,NA,NA,NA,"Cancer","Dev"
+"496-72-0","DTXSID9024930","3,4-Diaminotoluene",NA,"E2P4up","not_agonist","positive",NA,NA,NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"NOCAS_47267","DTXSID3047267","CP-642931",NA,"P4up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"445295-04-5","DTXSID6047282","CP-671305",NA,"E2P4up","not_agonist","no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"368832-42-2","DTXSID1047283","CP-728663",NA,"P4up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"55285-14-8","DTXSID5023950","Carbosulfan",NA,"negative","weak_agonist","no test","Consumer_cp",NA,NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,NA
+"136-77-6","DTXSID1020699","4-Hexylresorcinol",NA,"negative","weak_agonist","positive","Consumer_cp_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"2104-64-5","DTXSID7022174","EPN",NA,"E2P4up","weak_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"1987-50-4","DTXSID2037714","4-Heptylphenol",NA,"negative","agonist","no test","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"79902-63-9","DTXSID0023581","Simvastatin",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_exp","Pharma_FDA_Rx",NA,NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"106-44-5","DTXSID7021869","p-Cresol",NA,"E2P4up","not_agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_exp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"1338-43-8","DTXSID6027397","Sorbitan, mono-(9Z)-9-octadecenoate",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_FDA_cp_exp","Pharma_cp","Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"754-91-6","DTXSID3038939","PFOSA",NA,"negative","weak_agonist","no test","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"102-06-7","DTXSID3025178","1,3-Diphenylguanidine",NA,"E2up","not_agonist","positive","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"548-62-9","DTXSID5020653","Gentian Violet",NA,"P4up","not_agonist","positive","Consumer_cp",NA,"Pharma_FDA_discontinued","Pesticide_cp",NA,NA,NA,"Cancer",NA
+"50-78-2","DTXSID5020108","Aspirin",NA,"E2up","not_agonist","positive","Consumer_cp",NA,"Pharma_FDA_Rx_OTC",NA,"Industrial_exp","HPV","100 ug/kg/day or more",NA,"Dev_F"
+"797-63-7","DTXSID3036496","Norgestrel",NA,"E2P4up","agonist","negative","Consumer_cp",NA,"Pharma_FDA_Rx","Pesticide_cp",NA,NA,NA,NA,"Dev_F"
+"668981-02-0","DTXSID0047294","CP-863187",NA,"P4up","not_agonist","no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"1061517-62-1","DTXSID4047337","PharmaGSID_47337",NA,"P4up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"87-62-7","DTXSID8026307","2,6-Dimethylaniline",NA,"P4up","not_agonist","positive","Consumer_exp",NA,NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"99-71-8","DTXSID7022332","4-(Butan-2-yl)phenol",NA,"E2P4up","agonist","no test","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"131-17-9","DTXSID7020392","Diallyl phthalate",NA,"negative","weak_agonist","positive","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"143-50-0","DTXSID1020770","Kepone",NA,"negative","agonist","negative","Consumer_cp",NA,NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day","Cancer","Dev"
+"33228-44-3","DTXSID0040707","4-Pentylaniline",NA,"P4up","weak_agonist","no test","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"59-30-3","DTXSID0022519","Folic acid",NA,"E2up","not_agonist","positive","Consumer_cp","Diet_FDA_cp","Pharma_FDA_Rx","Pesticide_cp",NA,NA,NA,NA,NA
+"87-86-5","DTXSID7021106","Pentachlorophenol",NA,"E2P4up","not_agonist","positive","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp","Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"676116-04-4","DTXSID7047271","PD 0343701",NA,"P4up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"13071-79-9","DTXSID2022254","Terbufos",NA,"negative","weak_agonist","negative","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"120-71-8","DTXSID1020350","2-Methoxy-5-methylaniline",NA,"P4up","not_agonist","positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"100 ug/kg/day or more","Cancer",NA
+"6893-02-3","DTXSID8023216","3,5,3'-Triiodothyronine",NA,"negative","agonist","no test","Consumer_cp",NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"210826-40-7","DTXSID2047301","CP-456773",NA,"E2P4up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"1806-26-4","DTXSID9022312","4-Octylphenol",NA,"negative","agonist","no test","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"1260-17-9","DTXSID9022817","Carminic acid",NA,"E2up","not_agonist","positive",NA,"Diet_FDA_cp","Pharma_cp",NA,NA,NA,NA,NA,NA
+"57-11-4","DTXSID8021642","Octadecanoic acid",NA,"negative","agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp","Pharma_cp","Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"107-98-2","DTXSID8024284","1-Methoxy-2-propanol",NA,"negative","weak_agonist","negative","Consumer_cp_exp","Diet_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"94-13-3","DTXSID4022527","Propylparaben",NA,"P4up","agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"138472-01-2","DTXSID2048167","FR900409",NA,"P4up",NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"117-79-3","DTXSID6020068","2-Aminoanthraquinone",NA,"E2P4up","weak_agonist","positive",NA,NA,NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"149062-75-9","DTXSID9047259","PharmaGSID_47259",NA,"E2up","not_agonist","no test",NA,NA,"Pharma_cp","Pesticide_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"313994-79-5","DTXSID0047327","MK-578",NA,"E2up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"24602-86-6","DTXSID3041376","Tridemorph",NA,"E2up","not_agonist","no test","Consumer_cp_exp","Diet_exp",NA,"Pesticide_cp_exp",NA,"HPV","Between 1 to 100 ug/kg/day",NA,NA
+"606-20-2","DTXSID5020528","2,6-Dinitrotoluene",NA,"E2up","not_agonist","positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer","Dev_M"
+"105-67-9","DTXSID2021864","2,4-Dimethylphenol",NA,"E2P4up","not_agonist","positive","Consumer_cp_exp","Diet_exp",NA,"Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"41481-66-7","DTXSID9047598","4,4'-Sulfonylbis[2-(prop-2-en-1-yl)phenol]",NA,"P4up","weak_agonist","no test",NA,NA,NA,NA,"Industrial_exp",NA,"100 ug/kg/day or more",NA,NA
+"140-56-7","DTXSID6040371","Fenaminosulf",NA,"P4up","not_agonist","positive","Consumer_cp",NA,NA,"Pesticide_cp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"139-13-9","DTXSID6020939","Nitrilotriacetic acid",NA,"E2up","weak_agonist","positive","Consumer_cp_exp","Diet_exp",NA,"Pesticide_cp_exp",NA,NA,"100 ug/kg/day or more","Cancer",NA
+"89-72-5","DTXSID2022331","2-(Butan-2-yl)phenol",NA,"E2up","not_agonist","positive","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"7378-99-6","DTXSID2036299","N,N-Dimethyloctylamine",NA,"E2up","not_agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"678-39-7","DTXSID7029904","1,1,2,2-Tetrahydroperfluoro-1-decanol",NA,"negative","weak_agonist","negative","Consumer_cp_exp","Diet_cp",NA,NA,"Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"171866-31-2","DTXSID8047264","CP-283097",NA,"E2up","weak_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"58-55-9","DTXSID5021336","Theophylline",NA,"E2up","not_agonist","positive","Consumer_cp","Diet_cp_exp","Pharma_FDA_Rx","Pesticide_cp_exp",NA,"HPV","Between 1 to 100 ug/kg/day",NA,NA
+"27955-94-8","DTXSID2037712","4,4',4""-Ethane-1,1,1-triyltriphenol",NA,"negative","agonist","negative",NA,"Diet_exp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"112-05-0","DTXSID3021641","Nonanoic acid",NA,"E2up","not_agonist","negative","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"120-83-2","DTXSID1020439","2,4-Dichlorophenol",NA,"E2P4up","not_agonist","positive",NA,NA,NA,"Pesticide_exp",NA,"HPV","100 ug/kg/day or more",NA,NA
+"32809-16-8","DTXSID9033923","Procymidone",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"789-02-6","DTXSID6022345","o,p'-DDT",NA,"negative","agonist","positive",NA,"Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,"Dev_F_M"
+"298-02-2","DTXSID4032459","Phorate",NA,"E2up","weak_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"151506-44-4","DTXSID6048175","FR140423",NA,"E2up",NA,"no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"744-45-6","DTXSID8037752","Diphenyl isophthalate",NA,"E2up","weak_agonist","no test",NA,"Diet_exp",NA,NA,"Industrial_exp",NA,"100 ug/kg/day or more",NA,NA
+"627-93-0","DTXSID8025096","Dimethyl adipate",NA,"E2up","not_agonist","no test","Consumer_cp_exp","Diet_FDA_exp",NA,"Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"NOCAS_47330","DTXSID9047330","PharmaGSID_47330",NA,"E2P4up","not_agonist","no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"94-59-7","DTXSID0021254","Safrole",NA,"E2up","not_agonist","positive","Consumer_exp","Diet_FDA_cp_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"108-45-2","DTXSID4021137","1,3-Benzenediamine",NA,"P4up","not_agonist","positive","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"147-24-0","DTXSID4020537","Diphenhydramine hydrochloride",NA,"E2up","not_agonist","positive","Consumer_cp","Diet_exp","Pharma_FDA_Rx_OTC",NA,NA,NA,"Less than 1 ug/kg/day",NA,NA
+"77-40-7","DTXSID4022442","Bisphenol B",NA,"P4up","agonist","no test","Consumer_cp","Diet_cp_exp",NA,NA,NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"77-09-8","DTXSID0021125","Phenolphthalein",NA,"P4up","agonist","positive","Consumer_cp",NA,"Pharma_cp",NA,NA,NA,NA,"Cancer",NA
+"4455-26-9","DTXSID9042209","N-Methyldioctylamine",NA,"E2up","not_agonist","no test","Consumer_exp",NA,NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"101-02-0","DTXSID0026252","Triphenyl phosphite",NA,"E2P4up","not_agonist","negative","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"13292-46-1","DTXSID6021244","Rifampicin",NA,"P4up","not_agonist","no test",NA,"Diet_exp","Pharma_cp",NA,NA,NA,"Between 1 to 100 ug/kg/day",NA,"Dev_F"
+"99-97-8","DTXSID0021832","N,N,4-Trimethylaniline",NA,"E2up","not_agonist","positive","Consumer_cp_exp","Diet_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"123-51-3","DTXSID3025469","Isopentyl alcohol",NA,"P4up",NA,"negative","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_exp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"712-50-5","DTXSID5048182","Cyclohexylphenylketone",NA,"negative","weak_agonist","negative","Consumer_cp_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"6344-67-8","DTXSID9047540","3-Hydroxyfluorene",NA,"E2P4up","weak_agonist","no test",NA,NA,NA,"Pesticide_exp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"97-77-8","DTXSID1021322","Disulfiram",NA,"P4up","not_agonist","positive","Consumer_cp","Diet_cp_exp","Pharma_FDA_Rx",NA,"Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"15307-79-6","DTXSID3037208","Diclofenac sodium",NA,"E2up","not_agonist","negative",NA,NA,"Pharma_FDA_Rx_OTC",NA,NA,NA,NA,NA,NA
+"56-55-3","DTXSID5023902","Benz(a)anthracene",NA,"E2P4up","weak_agonist","positive","Consumer_cp_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"112-00-5","DTXSID1026900","Dodecyltrimethylammonium chloride",NA,"E2up","not_agonist","negative","Consumer_cp_exp",NA,NA,"Pesticide_cp_exp",NA,"HPV","100 ug/kg/day or more",NA,NA
+"95-95-4","DTXSID4024359","2,4,5-Trichlorophenol",NA,"E2up","not_agonist","positive",NA,NA,NA,"Pesticide_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"124-94-7","DTXSID1040742","Triamcinolone",NA,"E2P4up","weak_agonist","no test","Consumer_cp",NA,"Pharma_FDA_discontinued",NA,NA,NA,NA,NA,NA
+"2416-94-6","DTXSID6022187","2,3,6-Trimethylphenol",NA,"P4up","not_agonist","positive","Consumer_exp","Diet_FDA_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"1861-32-1","DTXSID0024000","Chlorthal-dimethyl",NA,"E2P4up","not_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"84371-65-3","DTXSID5023322","Mifepristone",NA,"P4up","not_agonist","no test",NA,NA,"Pharma_FDA_Rx",NA,NA,NA,NA,NA,NA
+"1191-50-0","DTXSID4042416","Sodium myristyl sulfate",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"119-61-9","DTXSID0021961","Benzophenone",NA,"E2up","weak_agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp_exp",NA,"HPV","100 ug/kg/day or more","Cancer",NA
+"123-31-9","DTXSID7020716","Hydroquinone",NA,"E2P4up","not_agonist","positive","Consumer_cp","Diet_cp_exp","Pharma_FDA_Rx","Pesticide_cp_exp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"103-69-5","DTXSID1025271","N-Ethylaniline",NA,"E2up","not_agonist","negative","Consumer_exp",NA,NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"101-55-3","DTXSID8023927","p-Bromodiphenyl ether",NA,"E2up","not_agonist","no test",NA,NA,NA,"Pesticide_exp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"82640-04-8","DTXSID1034181","Raloxifene hydrochloride",NA,"negative","weak_agonist","no test","Consumer_cp",NA,"Pharma_FDA_Rx",NA,NA,NA,NA,NA,NA
+"120-61-6","DTXSID0020498","Dimethyl terephthalate",NA,"E2up","not_agonist","positive","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"84-16-2","DTXSID2022381","meso-Hexestrol",NA,"E2up","agonist","positive",NA,"Diet_exp",NA,NA,NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"6055-19-2","DTXSID6024888","Cyclophosphamide monohydrate",NA,"negative","agonist","positive",NA,NA,NA,NA,NA,NA,NA,"Cancer","Dev_F_M"
+"139340-56-0","DTXSID0047246","Darbufelone mesylate",NA,"P4up","not_agonist","no test",NA,NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"5349-51-9","DTXSID9040716","4-(2-Methylbutan-2-yl)cyclohexanol",NA,"negative","agonist","no test","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"106-87-6","DTXSID0020604","4-Vinyl-1-cyclohexene dioxide",NA,"E2up","not_agonist","positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"100 ug/kg/day or more","Cancer","Dev_F_M"
+"2392-39-4","DTXSID3047429","Dexamethasone sodium phosphate",NA,"P4up","not_agonist","no test",NA,"Diet_exp","Pharma_FDA_Rx",NA,NA,NA,"Less than 1 ug/kg/day",NA,NA
+"84-69-5","DTXSID9022522","Diisobutyl phthalate",NA,"E2up","weak_agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"140-66-9","DTXSID9022360","4-(1,1,3,3-Tetramethylbutyl)phenol",NA,"negative","agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"181640-09-5","DTXSID4047339","SR144190",NA,"E2up","not_agonist","no test",NA,NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"108-44-1","DTXSID1026792","3-Methylaniline",NA,"E2P4up","not_agonist","negative","Consumer_exp",NA,NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"128-04-1","DTXSID6027050","Sodium dimethyldithiocarbamate",NA,"P4up","not_agonist","positive","Consumer_cp_exp","Diet_FDA_exp",NA,"Pesticide_cp_exp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,"Dev"
+"112-72-1","DTXSID9026926","1-Tetradecanol",NA,"E2up","not_agonist","negative","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"349495-42-7","DTXSID3047263","PharmaGSID_47263",NA,"E2P4up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"7758-19-2","DTXSID8021272","Sodium chlorite",NA,"E2up",NA,"positive","Consumer_cp","Diet_FDA_cp","Pharma_cp","Pesticide_cp",NA,"HPV",NA,NA,NA
+"111-15-9","DTXSID9021928","2-Ethoxyethyl acetate",NA,"E2up","not_agonist","positive","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Less than 1 ug/kg/day",NA,"Dev_M"
+"290352-28-2","DTXSID7047306","CP-634384",NA,"E2P4up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"95-65-8","DTXSID4024062","3,4-Dimethylphenol",NA,"E2P4up","not_agonist","negative","Consumer_exp","Diet_FDA_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"72-54-8","DTXSID4020373","p,p'-DDD",NA,"negative","weak_agonist","positive",NA,"Diet_cp",NA,"Pesticide_cp","Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"563-12-2","DTXSID2024086","Ethion",NA,"E2P4up","weak_agonist","negative","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"439687-69-1","DTXSID7047358","Nelivaptan",NA,"P4up","not_agonist","no test",NA,NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"131-55-5","DTXSID5041306","2,2',4,4'-Tetrahydroxybenzophenone",NA,"P4up","agonist","no test","Consumer_cp_exp",NA,NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"95-54-5","DTXSID3025881","1,2-Phenylenediamine",NA,"E2P4up","not_agonist","positive",NA,"Diet_exp",NA,NA,"Industrial_exp","HPV","Less than 1 ug/kg/day","Cancer",NA
+"100-02-7","DTXSID0021834","4-Nitrophenol",NA,"E2P4up","not_agonist","positive","Consumer_exp",NA,NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"106-30-9","DTXSID1040112","Ethyl heptanoate",NA,"negative","weak_agonist","negative","Consumer_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"100-51-6","DTXSID5020152","Benzyl alcohol",NA,"E2up","not_agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp","Pharma_FDA_discontinued","Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"76-03-9","DTXSID1021378","Trichloroacetic acid",NA,"E2up","not_agonist","positive","Consumer_cp_exp",NA,NA,"Pesticide_cp_exp",NA,"HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"50-29-3","DTXSID4020375","p,p'-DDT",NA,NA,"agonist","positive","Consumer_cp","Diet_cp","Pharma_cp","Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day","Cancer","Dev_F_M"
+"2385-85-5","DTXSID7020895","Mirex",NA,"E2up","not_agonist","negative","Consumer_cp_exp","Diet_cp",NA,"Pesticide_cp_exp","Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"101-80-4","DTXSID0021094","4,4'-Oxydianiline",NA,"P4up","not_agonist","positive",NA,"Diet_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"15310-01-7","DTXSID7041623","Benodanil",NA,"E2up","not_agonist","no test","Consumer_cp",NA,NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"95-57-8","DTXSID5021544","2-Chlorophenol",NA,"E2up","not_agonist","negative","Consumer_exp",NA,NA,"Pesticide_exp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"55290-64-7","DTXSID0024052","Dimethipin",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"85-68-7","DTXSID3020205","Butyl benzyl phthalate",NA,"negative","agonist","positive","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,"Dev"
+"3056-17-5","DTXSID1023819","Stavudine",NA,"P4up","not_agonist","positive","Consumer_cp",NA,"Pharma_FDA_tentative_approval",NA,NA,NA,NA,NA,NA
+"NOCAS_47311","DTXSID6047311","GSK163929B",NA,"E2up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"104-67-6","DTXSID4034287","5-Heptyldihydro-2(3H)-furanone",NA,"P4up","not_agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"33820-53-0","DTXSID8024157","Isopropalin",NA,"negative","weak_agonist","no test","Consumer_cp_exp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"120-12-7","DTXSID0023878","Anthracene",NA,"E2up","weak_agonist","positive","Consumer_cp_exp","Diet_cp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"88-60-8","DTXSID2026529","2-tert-Butyl-5-methylphenol",NA,"E2up","weak_agonist","positive","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"NOCAS_47299","DTXSID5047299","CP-422935",NA,"E2P4up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"4904-61-4","DTXSID8027581","1,5,9-Cyclododecatriene",NA,"E2up","not_agonist","negative","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"121-79-9","DTXSID5021201","Propyl gallate",NA,"negative","weak_agonist","positive","Consumer_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"6624-73-3","DTXSID5047538","Pentane-1,5-diyl dibenzoate",NA,"E2up","not_agonist","no test","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"264618-44-2","DTXSID8047341","SSR146977",NA,"E2up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"99-55-8","DTXSID4020959","2-Methyl-5-nitroaniline",NA,"P4up","not_agonist","positive","Consumer_cp",NA,NA,NA,"Industrial_exp",NA,"100 ug/kg/day or more",NA,NA
+"80-46-6","DTXSID8021771","4-(2-Methylbutan-2-yl)phenol",NA,"E2up","agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"111-77-3","DTXSID3025049","Diethylene glycol monomethyl ether",NA,"E2up","not_agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"162706-14-1","DTXSID2047309","UK-156819",NA,"P4up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"220860-50-4","DTXSID4047254","CP-457920",NA,"E2P4up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"91-53-2","DTXSID9020582","Ethoxyquin",NA,"E2P4up","not_agonist","positive","Consumer_cp","Diet_FDA_cp_exp",NA,"Pesticide_cp_exp",NA,"HPV","Between 1 to 100 ug/kg/day",NA,NA
+"94-26-8","DTXSID3020209","Butylparaben",NA,"P4up","agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"68392-35-8","DTXSID3037094","4-Hydroxytamoxifen",NA,"negative","weak_agonist","no test",NA,NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"57-74-9","DTXSID7020267","Chlordane",NA,"negative","weak_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day","Cancer",NA
+"95-50-1","DTXSID6020430","1,2-Dichlorobenzene",NA,"E2up","not_agonist","positive","Consumer_exp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"80-43-3","DTXSID1025017","Dicumyl peroxide",NA,NA,"agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"288104-79-0","DTXSID2047357","Surinabant",NA,"negative","weak_agonist","no test",NA,NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"4449-51-8","DTXSID6043709","Cyclopamine",NA,"E2P4up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"62-38-4","DTXSID7021150","Phenylmercuric acetate",NA,"P4up","not_agonist","negative","Consumer_cp",NA,NA,NA,NA,"HPV",NA,NA,NA
+"2783-94-0","DTXSID6021456","FD&C Yellow 6",NA,"E2P4up","not_agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp","Pharma_cp","Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"35256-85-0","DTXSID5041691","Butam",NA,"E2up","weak_agonist","no test","Consumer_cp_exp",NA,NA,"Pesticide_cp_exp",NA,"HPV","Between 1 to 100 ug/kg/day",NA,NA
+"3319-31-1","DTXSID9026265","Tris(2-ethylhexyl) trimellitate",NA,"negative","agonist","negative","Consumer_exp",NA,NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"88-06-2","DTXSID5021386","2,4,6-Trichlorophenol",NA,"E2P4up","not_agonist","positive","Consumer_cp",NA,NA,"Pesticide_cp_exp",NA,"HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"NOCAS_47366","DTXSID1047366","SAR115740",NA,"P4up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"8000-34-8","DTXSID8044175","Clove leaf oil",NA,"E2up","not_agonist","positive","Consumer_cp","Diet_FDA_cp",NA,"Pesticide_cp",NA,NA,NA,NA,NA
+"108-67-8","DTXSID6026797","1,3,5-Trimethylbenzene",NA,"E2up","not_agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_exp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"145742-28-5","DTXSID9047251","CP-122721",NA,"E2up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"5315-79-7","DTXSID1038298","1-Hydroxypyrene",NA,"P4up","not_agonist","no test",NA,NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"53894-23-8","DTXSID5028033","Triisononyl trimellitate",NA,"E2up","not_agonist","negative",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"215297-27-1","DTXSID1047289","UK-343664",NA,"E2P4up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"94-28-0","DTXSID3026564","Triethylene glycol bis(2-ethylhexanoate)",NA,"E2up","not_agonist","negative","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"131-18-0","DTXSID5031131","Dipentyl phthalate",NA,"negative","weak_agonist","no test","Consumer_cp_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"127308-82-1","DTXSID9047257","Zamifenacin",NA,"negative","weak_agonist","no test",NA,NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"599-64-4","DTXSID3022536","4-Cumylphenol",NA,"negative","agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"59-50-7","DTXSID4021717","4-Chloro-3-methylphenol",NA,"E2P4up","weak_agonist","positive","Consumer_cp","Diet_cp_exp","Pharma_cp","Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"51-52-5","DTXSID5021209","6-Propyl-2-thiouracil",NA,"negative","agonist","negative",NA,NA,"Pharma_cp","Pesticide_exp",NA,NA,"Less than 1 ug/kg/day","Cancer","Dev"
+"2835-95-2","DTXSID9024489","5-Amino-2-methylphenol",NA,"E2P4up","not_agonist","positive","Consumer_cp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"96-70-8","DTXSID4044581","2-tert-Butyl-4-ethylphenol",NA,"negative","weak_agonist","no test","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"427-51-0","DTXSID5020366","Cyproterone acetate",NA,"P4up","not_agonist","positive","Consumer_cp",NA,"Pharma_cp","Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"486-66-8","DTXSID9022310","Daidzein",NA,"E2P4up","agonist","positive",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"NOCAS_47248","DTXSID0047248","CI-1018",NA,"E2P4up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"205-99-2","DTXSID0023907","Benzo(b)fluoranthene",NA,"negative","weak_agonist","positive","Consumer_cp_exp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"10222-01-2","DTXSID5032361","2,2-Dibromo-3-nitrilopropionamide",NA,"E2P4up","not_agonist","no test","Consumer_cp","Diet_FDA_exp",NA,"Pesticide_cp_exp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"58-93-5","DTXSID2020713","Hydrochlorothiazide",NA,"E2up","not_agonist","positive","Consumer_cp","Diet_cp","Pharma_FDA_Rx","Pesticide_cp",NA,"HPV",NA,NA,NA
+"97-53-0","DTXSID9020617","Eugenol",NA,"E2up","not_agonist","positive","Consumer_cp","Diet_FDA_exp",NA,"Pesticide_cp","Industrial_exp",NA,"100 ug/kg/day or more",NA,NA
+"4291-63-8","DTXSID8022828","Cladribine",NA,"E2up","weak_agonist","positive","Consumer_cp",NA,"Pharma_FDA_Rx",NA,NA,NA,NA,NA,"Dev"
+"68-26-8","DTXSID3023556","Retinol",NA,"P4up","not_agonist","positive","Consumer_exp","Diet_FDA_cp_exp","Pharma_cp","Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,"Dev"
+"214535-77-0","DTXSID2047278","CP-457677",NA,"E2P4up","not_agonist","no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"10161-33-8","DTXSID0034192","17beta-Trenbolone",NA,"negative","agonist","negative",NA,"Diet_cp","Pharma_cp",NA,NA,NA,NA,NA,NA
+"26172-55-4","DTXSID9034286","5-Chloro-2-methyl-3(2H)-isothiazolone",NA,"P4up","not_agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"1563-66-2","DTXSID9020249","Carbofuran",NA,"E2up","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp","Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"117-39-5","DTXSID4021218","Quercetin",NA,"negative","agonist","positive","Consumer_cp",NA,NA,"Pesticide_cp",NA,NA,NA,NA,NA
+"608-73-1","DTXSID7020687","1,2,3,4,5,6-Hexachlorocyclohexane",NA,"E2P4up",NA,"no test","Consumer_cp",NA,NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"112733-06-9","DTXSID0047296","Zenarestat",NA,"E2P4up","not_agonist","no test",NA,NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"6846-50-0","DTXSID1027635","2,2,4-Trimethyl-1,3-pentanediol diisobutyrate",NA,"negative","weak_agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"115-86-6","DTXSID1021952","Triphenyl phosphate",NA,"E2up","weak_agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"120-47-8","DTXSID9022528","Ethylparaben",NA,"E2P4up","weak_agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"208-96-8","DTXSID3023845","Acenaphthylene",NA,"E2up","not_agonist","no test","Consumer_cp_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"1068967-96-3","DTXSID8047391","SAR102608",NA,"E2up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"84852-15-3","DTXSID5029055","4-Nonylphenol, branched",NA,"negative","agonist","negative","Consumer_cp","Diet_cp",NA,NA,NA,NA,NA,NA,NA
+"127-51-5","DTXSID7027047","alpha-Isomethylionone",NA,"negative","weak_agonist","negative","Consumer_cp_exp","Diet_FDA_cp",NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"101-61-1","DTXSID5020869","4,4'-Methylenebis(N,N-dimethylaniline)",NA,"P4up","weak_agonist","positive",NA,NA,NA,NA,NA,NA,NA,"Cancer",NA
+"101-54-2","DTXSID7025895","N-Phenyl-1,4-benzenediamine",NA,"P4up","not_agonist","positive","Consumer_cp",NA,NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"NOCAS_47334","DTXSID9047334","MK-968",NA,"E2up","not_agonist","no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"460081-99-6","DTXSID9048510","PharmaGSID_48510",NA,"E2P4up",NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"262376-75-0","DTXSID9047338","HMR1426",NA,"E2P4up","weak_agonist","no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"99-76-3","DTXSID4022529","Methylparaben",NA,"E2P4up","not_agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"54-11-5","DTXSID1020930","Nicotine",NA,"P4up","not_agonist","positive","Consumer_cp_exp","Diet_cp","Pharma_FDA_Rx_OTC","Pesticide_cp",NA,NA,"Less than 1 ug/kg/day",NA,"Dev"
+"50-41-9","DTXSID8020337","Clomiphene citrate (1:1)",NA,"negative","weak_agonist","positive",NA,NA,NA,NA,NA,NA,NA,"Cancer","Dev"
+"10540-29-1","DTXSID1034187","Tamoxifen",NA,"negative","weak_agonist","positive",NA,"Diet_cp_exp","Pharma_cp",NA,NA,NA,"Less than 1 ug/kg/day","Cancer",NA
+"1843-05-6","DTXSID9027441","Octabenzone",NA,"E2up","not_agonist","negative","Consumer_cp","Diet_cp_exp","Pharma_cp","Pesticide_cp_exp",NA,"HPV","100 ug/kg/day or more",NA,NA
+"103-33-3","DTXSID8020123","Azobenzene",NA,"E2P4up","not_agonist","positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"78-63-7","DTXSID9025110","2,5-Dimethyl-2,5-di-(tert-butylperoxy)hexane",NA,"negative","weak_agonist","negative","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"206-44-0","DTXSID3024104","Fluoranthene",NA,"E2up","not_agonist","positive","Consumer_cp_exp","Diet_cp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"189003-92-7","DTXSID2047355","Trelanserin",NA,"E2up","not_agonist","no test",NA,NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"129-00-0","DTXSID3024289","Pyrene",NA,"E2up","not_agonist","positive","Consumer_cp_exp","Diet_cp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"60-09-3","DTXSID6024460","4-Aminoazobenzene",NA,"E2P4up","weak_agonist","positive",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"1836-75-5","DTXSID7020970","Nitrofen",NA,"E2P4up","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day","Cancer",NA
+"NOCAS_47349","DTXSID8047349","AVE8488",NA,"E2P4up",NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"102-76-1","DTXSID3026691","Triacetin",NA,"negative","weak_agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp","Pharma_cp","Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"253450-09-8","DTXSID2047270","Besonprodil",NA,"P4up","not_agonist","no test",NA,NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"86-30-6","DTXSID6021030","N-Nitrosodiphenylamine",NA,"E2up","weak_agonist","positive","Consumer_cp_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"84-66-2","DTXSID7021780","Diethyl phthalate",NA,"E2up","not_agonist","positive","Consumer_cp_exp","Diet_cp_exp","Pharma_cp","Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"51-24-1","DTXSID2045232","Tiratricol",NA,"P4up","agonist","no test",NA,NA,"Pharma_cp","Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"686756-87-6","DTXSID4048519","PharmaGSID_48519",NA,"E2up",NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"121-00-6","DTXSID7040788","2-tert-Butyl-4-methoxyphenol",NA,"E2up","weak_agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"82385-42-0","DTXSID7021992","Sodium saccharin hydrate",NA,"negative","weak_agonist","no test",NA,NA,NA,"Pesticide_cp_exp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"135-19-3","DTXSID5027061","2-Naphthalenol",NA,"E2P4up","weak_agonist","negative","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"353280-07-6","DTXSID1047281","CP-612372",NA,"E2P4up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"91-59-8","DTXSID2020921","2-Naphthylamine",NA,"E2P4up","not_agonist","positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"79-94-7","DTXSID1026081","3,3',5,5'-Tetrabromobisphenol A",NA,"E2P4up","not_agonist","negative","Consumer_cp",NA,NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"302-79-4","DTXSID7021239","all-trans-Retinoic acid",NA,"P4up","not_agonist","no test",NA,NA,"Pharma_cp","Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,"Dev"
+"2243-62-1","DTXSID3020916","1,5-Naphthalenediamine",NA,"E2P4up","not_agonist","positive",NA,NA,NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"155990-20-8","DTXSID8047347","SR271425",NA,"negative","weak_agonist","no test",NA,NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"110235-47-7","DTXSID4042121","Mepanipyrim",NA,"E2up","not_agonist","no test","Consumer_cp",NA,NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day","Cancer",NA
+"501027-49-2","DTXSID2047307","PD-0333941",NA,"E2up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"1034-01-1","DTXSID4040713","Octyl gallate",NA,"P4up","weak_agonist","no test","Consumer_cp","Diet_FDA_cp_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"54965-24-1","DTXSID8021301","Tamoxifen citrate",NA,"negative","weak_agonist","negative","Consumer_cp","Diet_exp","Pharma_FDA_Rx",NA,NA,NA,"Between 1 to 100 ug/kg/day",NA,"Dev"
+"1478-61-1","DTXSID7037717","Bisphenol AF",NA,"P4up","agonist","negative",NA,"Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"298198-52-4","DTXSID2047359","SSR180711",NA,"E2up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"104-40-5","DTXSID5033836","4-Nonylphenol",NA,"negative","weak_agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"199171-88-5","DTXSID9047253","CP-401387",NA,"E2P4up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"120-80-9","DTXSID3020257","Catechol",NA,"E2P4up","weak_agonist","positive",NA,"Diet_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"15619-48-4","DTXSID8044593","1-Benzylquinolinium chloride",NA,"P4up",NA,"no test","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"100 ug/kg/day or more",NA,NA
+"NOCAS_48516","DTXSID9048516","PharmaGSID_48516",NA,"E2up",NA,"no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"159138-81-5","DTXSID3047344","Cariporide mesylate",NA,"negative","weak_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"53-03-2","DTXSID4021185","Prednisone",NA,"negative","weak_agonist","positive",NA,NA,"Pharma_FDA_Rx",NA,NA,NA,NA,NA,NA
+"NOCAS_47374","DTXSID5047374","SSR161421",NA,"E2P4up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"121-33-5","DTXSID0021969","4-Hydroxy-3-methoxybenzaldehyde",NA,"E2up","not_agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp_exp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"2687-25-4","DTXSID4027494","2,3-Diaminotoluene",NA,"E2P4up","not_agonist","positive","Consumer_exp",NA,NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"2144-53-8","DTXSID3047558","Tridecafluorohexylethyl methacrylate",NA,"negative","weak_agonist","negative","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"92-68-2","DTXSID8040721","4-Cyclohexylcyclohexanone",NA,"negative","weak_agonist","no test","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"91082-17-6","DTXSID1047526","C10-21 sulfonic acids phenyl esters",NA,"E2up","not_agonist","negative",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"2921-88-2","DTXSID4020458","Chlorpyrifos",NA,"E2P4up","weak_agonist","positive","Consumer_cp_exp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,"Dev"
+"95-83-0","DTXSID5020283","4-Chloro-1,2-diaminobenzene",NA,"P4up","not_agonist","positive",NA,NA,NA,"Pesticide_exp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"105624-86-0","DTXSID1046970","5HPP-33",NA,"P4up","agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"86-73-7","DTXSID8024105","Fluorene",NA,"E2up","not_agonist","positive","Consumer_cp",NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"NOCAS_48514","DTXSID9048514","PharmaGSID_48514",NA,"P4up",NA,"no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"602-01-7","DTXSID4027236","2,3-Dinitrotoluene",NA,"E2P4up","not_agonist","positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"81-90-3","DTXSID5022439","Phenolphthalin",NA,"E2P4up","weak_agonist","no test",NA,NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"80-08-0","DTXSID4020371","Dapsone",NA,"E2P4up","not_agonist","positive","Consumer_cp","Diet_cp_exp","Pharma_FDA_Rx","Pesticide_cp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"136042-19-8","DTXSID1048178","FR130739",NA,"E2P4up",NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"72-55-9","DTXSID9020374","p,p'-DDE",NA,"negative","weak_agonist","positive",NA,"Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day","Cancer","Dev_M"
+"85532-75-8","DTXSID7041097","PK 11195",NA,"E2P4up","not_agonist","no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"842-07-9","DTXSID4021135","C.I. Solvent Yellow 14",NA,"E2P4up","agonist","positive","Consumer_cp",NA,NA,"Pesticide_cp_exp","Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"499-75-2","DTXSID6042074","Isopropyl-o-cresol",NA,"E2P4up","not_agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"6152-33-6","DTXSID1040794","Sodium 2-phenylphenate tetrahydrate",NA,"E2P4up","not_agonist","no test","Consumer_cp","Diet_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"135-20-6","DTXSID1020352","Cupferron",NA,"negative","weak_agonist","positive","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"1330-78-5","DTXSID4021391","Tricresyl phosphate",NA,"E2up","not_agonist","negative","Consumer_cp",NA,NA,NA,NA,"HPV",NA,NA,NA
+"10081-67-1","DTXSID0027721","4-(2-Phenylpropan-2-yl)-N-[4-(2-phenylpropan-2-yl)phenyl]aniline",NA,"P4up","not_agonist","negative","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"24851-98-7","DTXSID2029325","Methyl dihydrojasmonate",NA,"E2up","not_agonist","negative","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"4712-55-4","DTXSID7041889","Diphenyl phosphite",NA,"E2up","agonist","no test",NA,NA,NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"6259-76-3","DTXSID4038924","Hexyl salicylate",NA,"E2up","weak_agonist","negative","Consumer_cp_exp","Diet_exp",NA,"Pesticide_cp_exp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"26027-38-3","DTXSID2036588","Polyoxyethylene(10)nonylphenyl ether",NA,"negative","weak_agonist","negative","Consumer_cp","Diet_cp",NA,"Pesticide_cp",NA,NA,NA,NA,NA
+"1072-15-7","DTXSID7047487","Sulfuric acid, monononyl ester, sodium salt",NA,"negative","weak_agonist","no test",NA,NA,NA,"Pesticide_exp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"94-47-3","DTXSID9047590","2-Phenylethyl benzoate",NA,"E2up","not_agonist","negative","Consumer_exp","Diet_FDA_cp_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"68555-86-2","DTXSID7044718","Acid Orange 156",NA,"E2P4up","not_agonist","no test",NA,NA,NA,NA,"Industrial_exp",NA,"100 ug/kg/day or more",NA,NA
+"143-08-8","DTXSID6022008","1-Nonanol",NA,"P4up","not_agonist","no test","Consumer_cp_exp","Diet_FDA_exp",NA,"Pesticide_cp_exp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"818-61-1","DTXSID2022123","2-Hydroxyethyl acrylate",NA,"E2P4up","not_agonist","positive","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"683-18-1","DTXSID8027292","Dibutyltin dichloride",NA,"E2up","not_agonist","positive","Consumer_cp","Diet_cp",NA,NA,NA,"HPV",NA,NA,NA
+"587-85-9","DTXSID3042130","Diphenylmercury(II)",NA,"E2P4up","not_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"95-13-6","DTXSID8042052","Indene",NA,"negative","weak_agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"89-87-2","DTXSID2025135","1,3-Dimethyl-4-nitrobenzene",NA,"negative","weak_agonist","positive","Consumer_exp",NA,NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"92-04-6","DTXSID0022353","2-Chloro-4-phenylphenol",NA,"negative","agonist","no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"101-81-5","DTXSID1041891","Diphenylmethane",NA,NA,"weak_agonist","no test","Consumer_cp_exp","Diet_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"9016-87-9","DTXSID3047473","Polymethylene polyphenyl isocynate",NA,"E2up","not_agonist","positive",NA,NA,NA,"Pesticide_cp",NA,"HPV",NA,NA,NA
+"101463-69-8","DTXSID1041978","Flufenoxuron",NA,"E2up","not_agonist","no test","Consumer_cp",NA,NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"520-36-5","DTXSID6022391","Apigenin",NA,"E2P4up","agonist","positive",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"311-45-5","DTXSID6024046","Paraoxon",NA,"E2up","not_agonist","positive",NA,NA,NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"1335-46-2","DTXSID0029214","Methylionone",NA,"E2up","not_agonist","negative",NA,NA,NA,"Pesticide_cp",NA,"HPV",NA,NA,NA
+"93-08-3","DTXSID2041389","2'-Acetonaphthone",NA,"E2up","not_agonist","positive","Consumer_exp","Diet_FDA",NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"120-18-3","DTXSID5044788","Naphthalene-2-sulfonic acid",NA,"E2up","not_agonist","no test",NA,"Diet_exp",NA,NA,"Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"110-43-0","DTXSID5021916","2-Heptanone",NA,"E2up","not_agonist","negative","Consumer_cp_exp","Diet_FDA_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"451-40-1","DTXSID6044430","1,2-Diphenylethanone",NA,"E2up","weak_agonist","no test","Consumer_cp_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"61-73-4","DTXSID0023296","Methylene blue",NA,"P4up","not_agonist","positive","Consumer_cp","Diet_cp_exp","Pharma_FDA_Rx","Pesticide_cp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"118-58-1","DTXSID1024598","Benzyl salicylate",NA,"E2up","weak_agonist","negative","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp_exp",NA,"HPV","100 ug/kg/day or more",NA,NA
+"128-95-0","DTXSID2041252","1,4-Diaminoanthraquinone",NA,"E2P4up","not_agonist","positive","Consumer_cp",NA,NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"94-60-0","DTXSID3026566","Dimethyl hexahydroterephthalate",NA,"E2up","not_agonist","positive","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"84-61-7","DTXSID5025021","Dicyclohexyl phthalate",NA,"negative","weak_agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"88-74-4","DTXSID1025726","2-Nitroaniline",NA,"E2up","not_agonist","positive",NA,NA,NA,NA,"Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"109-46-6","DTXSID8042187","N,N'-Dibutylthiourea",NA,"E2up","not_agonist","negative","Consumer_exp","Diet_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"1638-22-8","DTXSID3047425","4-Butylphenol",NA,"E2up","agonist","no test","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"2110-18-1","DTXSID7042356","2-(3-Phenylpropyl)pyridine",NA,"E2P4up","weak_agonist","no test","Consumer_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"16587-71-6","DTXSID4047127","4-(tert-Pentyl)-cyclohexanone",NA,NA,"weak_agonist","negative","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"139-02-6","DTXSID4027072","Sodium phenolate",NA,"E2up","not_agonist","no test","Consumer_cp_exp","Diet_exp",NA,"Pesticide_cp_exp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"120-14-9","DTXSID7026285","Veratraldehyde",NA,"E2up","weak_agonist","positive","Consumer_exp","Diet_FDA_cp_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"142-18-7","DTXSID5041275","1-Monolaurin",NA,"E2up","not_agonist","negative","Consumer_cp","Diet_exp",NA,"Pesticide_cp_exp","Industrial_exp",NA,"100 ug/kg/day or more",NA,NA
+"2934-05-6","DTXSID7042273","2,4-Diisopropylphenol",NA,"E2up","not_agonist","no test","Consumer_exp",NA,NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"66575-29-9","DTXSID8040484","Forskolin",NA,"E2P4up","weak_agonist","no test",NA,NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"4065-45-6","DTXSID2042436","Sulisobenzone",NA,"E2up","not_agonist","negative","Consumer_cp",NA,"Pharma_cp","Pesticide_cp","Industrial_exp",NA,"100 ug/kg/day or more",NA,NA
+"68515-48-0","DTXSID5028665","DINP branched",NA,"P4up","not_agonist","negative",NA,"Diet_cp",NA,NA,NA,"HPV",NA,NA,NA
+"7011-83-8","DTXSID3041299","Dihydrojasmone lactone",NA,"E2up","not_agonist","negative","Consumer_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"1563-38-8","DTXSID2027414","2,3-Dihydro-2,2-dimethyl-7-benzofuranol",NA,"E2up","not_agonist","negative","Consumer_exp",NA,NA,"Pesticide_exp",NA,"HPV","Less than 1 ug/kg/day",NA,NA
+"88-69-7","DTXSID2044391","2-Isopropylphenol",NA,"E2up","not_agonist","negative","Consumer_exp","Diet_FDA_cp_exp",NA,NA,"Industrial_exp",NA,"100 ug/kg/day or more",NA,NA
+"94-91-7","DTXSID2041200","N,N'-Disalicylidene-1,2-diaminopropane",NA,"E2P4up","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp","Industrial_exp",NA,"100 ug/kg/day or more",NA,NA
+"21245-02-3","DTXSID7029320","2-Ethylhexyl 4-(dimethylamino)benzoate",NA,"E2up","weak_agonist","negative","Consumer_cp_exp",NA,NA,"Pesticide_cp","Industrial_exp",NA,"100 ug/kg/day or more",NA,NA
+"99-86-5","DTXSID9041237","alpha-Terpinene",NA,"E2up","weak_agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"104-66-5","DTXSID5026706","1,2-Diphenoxyethane",NA,"E2up","not_agonist","positive","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"110-97-4","DTXSID8020179","Diisopropanolamine",NA,NA,"weak_agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"90-30-2","DTXSID2025892","N-Phenyl-1-naphthylamine",NA,"negative","weak_agonist","negative","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"13826-35-2","DTXSID7027756","3-Phenoxybenzenemethanol",NA,"E2up","weak_agonist","negative",NA,NA,NA,"Pesticide_exp",NA,"HPV","Between 1 to 100 ug/kg/day",NA,NA
+"94-18-8","DTXSID9022526","Benzylparaben",NA,"P4up","agonist","no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"960-71-4","DTXSID6027345","Triphenylborane",NA,"E2up","agonist","no test","Consumer_exp",NA,NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"118-79-6","DTXSID6021959","2,4,6-Tribromophenol",NA,"E2P4up","not_agonist","positive",NA,NA,NA,"Pesticide_exp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"32388-55-9","DTXSID4029353","1-Cedr-8-en-9-ylethanone",NA,"negative","weak_agonist","negative","Consumer_exp","Diet_exp",NA,"Pesticide_cp_exp",NA,"HPV","Between 1 to 100 ug/kg/day",NA,NA
+"4940-11-8","DTXSID5041516","2-Ethyl-3-hydroxy-4H-pyran-4-one",NA,"E2up","not_agonist","positive","Consumer_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"14816-18-3","DTXSID8034324","Phoxim",NA,"E2P4up","agonist","positive","Consumer_cp",NA,"Pharma_cp","Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"133855-98-8","DTXSID1040372","Epoxiconazole",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"827-21-4","DTXSID1041639","Sodium m-xylene-4-sulfonate",NA,"negative","weak_agonist","no test",NA,NA,NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"99607-70-2","DTXSID3041794","Cloquintocet-mexyl",NA,"E2P4up","not_agonist","negative","Consumer_cp",NA,NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"13684-63-4","DTXSID1024255","Phenmedipham",NA,"E2up","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,NA
+"104-54-1","DTXSID9041491","3-Phenyl-2-propen-1-ol",NA,"E2up","not_agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"92-69-3","DTXSID7021152","4-Phenylphenol",NA,"E2P4up","agonist","positive","Consumer_cp","Diet_cp_exp",NA,"Pesticide_exp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"21145-77-7","DTXSID7041544","6-Acetyl-1,1,2,4,4,7-hexamethyltetralin",NA,"negative","weak_agonist","negative","Consumer_exp","Diet_cp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"496-46-8","DTXSID6031380","Glycoluril",NA,NA,"weak_agonist","negative",NA,NA,NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"605-45-8","DTXSID2040731","Diisopropyl phthalate",NA,"E2up","not_agonist","no test","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"2491-38-5","DTXSID4034576","2-Bromo-4-hydroxyacetophenone",NA,"negative","weak_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"97-52-9","DTXSID0038700","2-Methoxy-4-nitroaniline",NA,"P4up","not_agonist","positive",NA,NA,NA,NA,"Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"620-17-7","DTXSID0022480","3-Ethylphenol",NA,"E2up","not_agonist","no test","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"108-39-4","DTXSID6024200","m-Cresol",NA,"E2up","not_agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"120-46-7","DTXSID3041247","1,3-Diphenyl-1,3-propanedione",NA,"E2up","weak_agonist","no test","Consumer_cp_exp",NA,NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"122453-73-0","DTXSID9032533","Chlorfenapyr",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"919-30-2","DTXSID2027333","3-Aminopropyltriethoxysilane",NA,"E2up","not_agonist","negative","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"1459-93-4","DTXSID8027402","Dimethyl isophthalate",NA,"E2up","not_agonist","positive","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"126-00-1","DTXSID0022436","Diphenolic acid",NA,NA,"agonist","positive","Consumer_cp","Diet_cp_exp",NA,NA,NA,NA,"Less than 1 ug/kg/day",NA,NA
+"156-10-5","DTXSID1021031","4-Nitrosodiphenylamine",NA,"negative","weak_agonist","positive",NA,NA,NA,"Pesticide_exp","Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"55512-33-9","DTXSID2032639","Pyridate",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,"HPV","Less than 1 ug/kg/day",NA,NA
+"1031-07-8","DTXSID3037541","Endosulfan sulfate",NA,"E2up","not_agonist","no test",NA,"Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"104-43-8","DTXSID1022508","4-Dodecylphenol",NA,"negative","agonist","no test","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"131-57-7","DTXSID3022405","2-Hydroxy-4-methoxybenzophenone",NA,"E2up","weak_agonist","positive","Consumer_cp_exp","Diet_cp_exp","Pharma_cp","Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"80-09-1","DTXSID3022409","4,4'-Sulfonyldiphenol",NA,"P4up","agonist","positive","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"1214-39-7","DTXSID7032630","N-Benzyladenine",NA,"E2P4up","not_agonist","negative","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"532-02-5","DTXSID4041442","Sodium 2-naphthalenesulfonate",NA,"E2up","not_agonist","negative",NA,"Diet_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"99-07-0","DTXSID0025101","3-Dimethylaminophenol",NA,"E2up","not_agonist","positive","Consumer_exp",NA,NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"67485-29-4","DTXSID6023868","Hydramethylnon",NA,"negative","agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,"Dev_M"
+"31519-22-9","DTXSID0037730","1,4-Dihydroxy-2-naphthoic acid",NA,"P4up","not_agonist","no test",NA,NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"27306-78-1","DTXSID1040611","Silwet L77",NA,"P4up","not_agonist","no test","Consumer_cp",NA,NA,"Pesticide_cp",NA,NA,NA,NA,NA
+"491-80-5","DTXSID1022394","Biochanin A",NA,"P4up","agonist","positive",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"118-56-9","DTXSID1026241","3,3,5-Trimethylcyclohexyl salicylate",NA,"E2up","weak_agonist","negative","Consumer_cp_exp","Diet_exp","Pharma_cp","Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"4602-84-0","DTXSID3032389","Farnesol",NA,"negative","weak_agonist","negative","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"500-38-9","DTXSID5022437","Nordihydroguaiaretic acid",NA,"P4up","weak_agonist","positive","Consumer_cp","Diet_FDA_cp",NA,NA,NA,NA,NA,NA,NA
+"26002-80-2","DTXSID7032688","Phenothrin",NA,"E2up","not_agonist","positive","Consumer_cp_exp","Diet_cp","Pharma_cp","Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"51632-16-7","DTXSID6028022","1-(Bromomethyl)-3-phenoxybenzene",NA,"E2up","weak_agonist","no test","Consumer_exp",NA,NA,"Pesticide_exp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"97-23-4","DTXSID6021824","Dichlorophen",NA,"E2up","not_agonist","positive","Consumer_cp","Diet_cp_exp","Pharma_cp","Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,"Dev"
+"959-98-8","DTXSID9037539","Endosulfan I",NA,"negative","weak_agonist","negative",NA,"Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"2390-60-5","DTXSID5038888","Basic Blue 7",NA,"P4up","not_agonist","no test",NA,NA,NA,"Pesticide_cp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"2610-11-9","DTXSID5041726","C.I. Direct Red 81 disodium salt",NA,"E2up","not_agonist","negative",NA,NA,NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"5153-25-3","DTXSID4022525","2-Ethylhexylparaben",NA,"negative","agonist","no test","Consumer_exp","Diet_exp",NA,"Pesticide_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"29385-43-1","DTXSID0026171","Tolyltriazole",NA,"E2up","not_agonist","positive",NA,NA,"Pharma_cp","Pesticide_cp",NA,"HPV",NA,NA,NA
+"21662-09-9","DTXSID5041514","(4Z)-4-Decenal",NA,"E2up","not_agonist","no test","Consumer_exp","Diet_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"81741-28-8","DTXSID9034997","Tributyltetradecylphosphonium chloride",NA,"negative","weak_agonist","no test","Consumer_cp_exp",NA,NA,"Pesticide_cp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"122-42-9","DTXSID7020766","Propham",NA,"E2up","not_agonist","no test","Consumer_cp_exp","Diet_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"140-10-3","DTXSID5022489","E-Cinnamic acid",NA,"negative","agonist","positive","Consumer_cp_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"87-25-2","DTXSID6025272","Ethyl anthranilate",NA,"E2up","not_agonist","negative","Consumer_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"4468-42-2","DTXSID4041492","3-Phenylhexane",NA,"E2up","not_agonist","no test","Consumer_exp","Diet_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"53-19-0","DTXSID9020372","o,p'-DDD",NA,"negative","agonist","positive",NA,"Diet_cp","Pharma_cp","Pesticide_cp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"68959-20-6","DTXSID5035589","Disiquonium chloride",NA,"negative","weak_agonist","no test","Consumer_cp_exp",NA,"Pharma_cp","Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"2122-70-5","DTXSID3034583","Ethyl 1-naphthaleneacetate",NA,"E2up","not_agonist","no test","Consumer_cp_exp","Diet_exp",NA,"Pesticide_cp_exp",NA,NA,"100 ug/kg/day or more",NA,NA
+"1742-14-9","DTXSID9029223","1,1-Bis(3,4-dimethylphenyl)ethane",NA,"E2up","not_agonist","no test","Consumer_exp",NA,NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"1241-94-7","DTXSID1025300","2-Ethylhexyl diphenyl phosphate",NA,"negative","weak_agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"6190-65-4","DTXSID5037494","Deethylatrazine",NA,"E2P4up","not_agonist","negative",NA,"Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,"Dev_F"
+"87-68-3","DTXSID7020683","Hexachloro-1,3-butadiene",NA,"E2P4up","not_agonist","positive","Consumer_cp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day","Cancer",NA
+"108-68-9","DTXSID1025148","3,5-Dimethylphenol",NA,"E2up","not_agonist","negative","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"71283-80-2","DTXSID2034598","Fenoxaprop-P-ethyl",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"868-85-9","DTXSID5020493","Dimethyl hydrogen phosphite",NA,NA,"weak_agonist","positive","Consumer_exp",NA,NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"101-37-1","DTXSID8037754","2,4,6-Tris(allyloxy)-1,3,5-triazine",NA,"E2P4up","not_agonist","negative","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"94-80-4","DTXSID5020443","2,4-D 1-butyl ester",NA,"E2up","not_agonist","negative","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"120-51-4","DTXSID8029153","Benzyl benzoate",NA,"E2up","not_agonist","negative","Consumer_cp_exp","Diet_FDA_cp_exp","Pharma_FDA_discontinued","Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"118-82-1","DTXSID7022411","4,4'-Methylenebis(2,6-di-t-butylphenol)",NA,"E2up","not_agonist","negative","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"118-55-8","DTXSID6021957","Phenyl salicylate",NA,"E2up","not_agonist","negative",NA,"Diet_FDA_cp_exp",NA,"Pesticide_exp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"101-83-7","DTXSID6025018","Dicyclohexylamine",NA,"E2up","not_agonist","positive","Consumer_cp_exp","Diet_cp_exp","Pharma_cp",NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"35400-43-2","DTXSID8032675","Sulprofos",NA,"E2P4up","weak_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"2492-26-4","DTXSID1026035","Sodium 2-mercaptobenzothiolate",NA,"P4up","not_agonist","positive","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,"HPV","100 ug/kg/day or more",NA,NA
+"27344-41-8","DTXSID6036467","Disodium 4,4'-bis(2-sulfostyryl)biphenyl",NA,"E2up","not_agonist","no test",NA,"Diet_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"645-56-7","DTXSID9022100","4-Propylphenol",NA,"E2P4up","weak_agonist","no test","Consumer_exp","Diet_FDA_cp_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"14371-10-9","DTXSID6024834","(2E)-3-Phenylprop-2-enal",NA,"negative","weak_agonist","positive","Consumer_cp_exp","Diet_exp",NA,"Pesticide_exp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"654055-01-3","DTXSID3040776","Morin hydrate",NA,"E2up","weak_agonist","no test",NA,"Diet_naturally_occurring",NA,NA,NA,NA,NA,NA,NA
+"633-96-5","DTXSID0038881","C.I. Acid Orange 7",NA,"E2up","not_agonist","negative","Consumer_cp",NA,"Pharma_cp","Pesticide_cp_exp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"125116-23-6","DTXSID4034497","Metconazole",NA,"negative","weak_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"645-62-5","DTXSID4025296","2-Ethyl-2-hexenal",NA,"P4up","not_agonist","negative","Consumer_exp","Diet_FDA_cp_exp",NA,NA,"Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"103-41-3","DTXSID3041663","Benzyl cinnamate",NA,"E2up","not_agonist","negative","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"98730-04-2","DTXSID3029572","Benoxacor",NA,"P4up","not_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"100 ug/kg/day or more",NA,NA
+"143390-89-0","DTXSID2032558","Kresoxim-methyl",NA,"negative","weak_agonist","negative","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"87-01-4","DTXSID6041422","7-(Dimethylamino)-4-methylcoumarin",NA,"E2P4up","not_agonist","no test",NA,NA,NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"28804-88-8","DTXSID7025130","Dimethylnaphthalene",NA,"E2up","not_agonist","negative",NA,NA,NA,"Pesticide_cp",NA,NA,NA,NA,NA
+"618-45-1","DTXSID0044571","3-Isopropylphenol",NA,"E2P4up","not_agonist","no test","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_exp","Industrial_exp",NA,"100 ug/kg/day or more",NA,NA
+"127-47-9","DTXSID6021240","Retinol acetate",NA,"P4up","not_agonist","positive",NA,"Diet_FDA_cp_exp",NA,"Pesticide_cp_exp",NA,"HPV","Between 1 to 100 ug/kg/day",NA,NA
+"73-31-4","DTXSID1022421","Melatonin",NA,"P4up","not_agonist","negative","Consumer_cp","Diet_cp","Pharma_cp","Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"2554-06-5","DTXSID3038808","1,3,5,7-Tetramethyl-1,3,5,7-tetravinylcyclotetrasiloxane",NA,"E2up","weak_agonist","positive","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"480-40-0","DTXSID1022396","Chrysin",NA,"P4up","agonist","no test",NA,NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"95-76-1","DTXSID7021815","3,4-Dichloroaniline",NA,"E2P4up","not_agonist","positive","Consumer_exp","Diet_cp_exp",NA,"Pesticide_cp_exp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"4707-47-5","DTXSID9041653","Methyl 2,4-dihydroxy-3,6-dimethylbenzoate",NA,"E2P4up","not_agonist","positive","Consumer_exp",NA,NA,"Pesticide_cp","Industrial_exp",NA,"100 ug/kg/day or more",NA,NA
+"27193-86-8","DTXSID1027926","Dodecylphenol",NA,"negative","agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp",NA,"HPV",NA,NA,NA
+"123-07-9","DTXSID4021977","4-Ethylphenol",NA,"E2up","not_agonist","positive","Consumer_exp","Diet_FDA_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"487-06-9","DTXSID1041421","5,7-Dimethoxy-2H-chromen-2-one",NA,"E2up","not_agonist","no test",NA,NA,NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"941-69-5","DTXSID0041274","1-Phenyl-1H-pyrrole-2,5-dione",NA,"E2P4up","not_agonist","positive",NA,NA,NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"120-56-9","DTXSID7029611","Triethylene glycol dibenzoate",NA,NA,"weak_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"93-16-3","DTXSID0052621","4-Prop-1-enylveratrole",NA,"E2up",NA,"no test","Consumer_exp","Diet_FDA_cp",NA,"Pesticide_exp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"120983-64-4","DTXSID3044338","Pyrasulfotole metabolite (SXX 0665)",NA,"P4up",NA,"no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"82-44-0","DTXSID7052571","1-Chloroanthraquinone",NA,"E2up",NA,"no test",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"2832-40-8","DTXSID6021450","C.I. Disperse Yellow 3",NA,"E2P4up",NA,"positive",NA,NA,NA,NA,NA,NA,NA,"Cancer",NA
+"135590-91-9","DTXSID6037564","Mefenpyr-diethyl",NA,"E2up",NA,"negative","Consumer_cp","Diet_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"364-76-1","DTXSID5052042","4-Fluoro-3-nitroaniline",NA,"E2P4up",NA,"no test",NA,NA,NA,"Pesticide_exp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"1207-12-1","DTXSID6052740","4,6-Dimethyldibenzothiophene",NA,"E2up",NA,"no test","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"101-72-4","DTXSID1025485","N-Isopropyl-N'-phenyl-p-phenylenediamine",NA,"E2up",NA,"negative","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"1121-78-4","DTXSID4051580","6-Methyl-3-hydroxypyridine",NA,"E2up",NA,"no test","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"92-91-1","DTXSID6052619","4'-Acetylbiphenyl",NA,"E2P4up",NA,"no test","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"6358-53-8","DTXSID6024838","C.I. Solvent Red 80",NA,"E2P4up",NA,"positive",NA,"Diet_FDA_cp",NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day","Cancer",NA
+"2481-94-9","DTXSID8041745","C.I. Solvent Yellow 56",NA,"E2up",NA,"negative","Consumer_exp",NA,NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"178928-70-6","DTXSID4034869","Prothioconazole",NA,"P4up",NA,"no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"610-39-9","DTXSID8027240","3,4-Dinitrotoluene",NA,"P4up",NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"13048-33-4","DTXSID9025401","1,6-Hexanediol diacrylate",NA,"P4up",NA,"negative","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"16867-04-2","DTXSID0051782","3-Hydroxy-2-pyridone",NA,"E2up",NA,"no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"1470-94-6","DTXSID0051732","Indan-5-ol",NA,"E2up",NA,"no test","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"612-83-9","DTXSID1020433","3,3'-Dichlorobenzidine dihydrochloride",NA,"E2up",NA,"positive",NA,NA,NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"2642-71-9","DTXSID5037498","Azinphos-ethyl",NA,"E2P4up",NA,"no test","Consumer_cp",NA,NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"100-43-6","DTXSID0051499","4-Vinylpyridine",NA,"E2up",NA,"negative","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"100 ug/kg/day or more",NA,NA
+"121-87-9","DTXSID4021973","2-Chloro-4-nitroaniline",NA,"E2up",NA,"positive",NA,NA,NA,"Pesticide_exp","Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"2032-65-7","DTXSID3032626","Methiocarb",NA,"E2P4up",NA,"no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"120-21-8","DTXSID0021963","4-(Diethylamino)benzaldehyde",NA,"E2P4up",NA,"no test","Consumer_cp_exp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"135-88-6","DTXSID4021131","N-Phenyl-2-naphthylamine",NA,"E2P4up",NA,"positive","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"111-34-2","DTXSID5051575","Butyl vinyl ether",NA,"P4up",NA,"negative","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"17557-23-2","DTXSID8025707","Neopentyl glycol diglycidyl ether",NA,"E2up",NA,"positive","Consumer_exp","Diet_exp",NA,"Pesticide_cp_exp",NA,NA,"100 ug/kg/day or more",NA,NA
+"134-85-0","DTXSID2051687","4-Chlorobenzophenone",NA,"E2up",NA,"negative",NA,NA,NA,"Pesticide_exp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"33693-04-8","DTXSID1042445","Terbumeton",NA,"E2up",NA,"no test","Consumer_cp",NA,NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"2588-04-7","DTXSID6042282","Phorate sulfone",NA,"P4up",NA,"no test",NA,"Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"2479-46-1","DTXSID8051914","1,3-Bis(4-aminophenoxy)benzene",NA,"E2P4up",NA,"positive",NA,NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"497-39-2","DTXSID1041502","4,6-Di-tert-butyl-m-cresol",NA,"E2up",NA,"no test","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"23726-91-2","DTXSID7051890","(E)-beta-Damascone",NA,"P4up",NA,"negative","Consumer_cp_exp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"2680-03-7","DTXSID0051944","N,N-Dimethylacrylamide",NA,"P4up",NA,"positive","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"2497-06-5","DTXSID8041901","Disulfoton sulfone",NA,"E2P4up",NA,"no test",NA,"Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"121-72-2","DTXSID9051618","N,N,3-Trimethylaniline",NA,"P4up",NA,"no test","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"108-48-5","DTXSID7051557","2,6-Dimethylpyridine",NA,"P4up",NA,"no test",NA,"Diet_FDA_cp_exp",NA,NA,"Industrial_exp",NA,"100 ug/kg/day or more",NA,NA
+"3120-74-9","DTXSID0051996","3-Methyl-4-(methylthio)phenol",NA,"E2P4up",NA,"negative","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"23696-85-7","DTXSID6041397","Damascenone",NA,"P4up",NA,"no test","Consumer_cp_exp","Diet_FDA_cp",NA,"Pesticide_cp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"452-58-4","DTXSID0051493","2,3-Diaminopyridine",NA,"P4up",NA,"no test",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"136-85-6","DTXSID1038743","5-Methyl-1H-benzotriazole",NA,"E2up",NA,"negative","Consumer_cp_exp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"23128-74-7","DTXSID5044233","Antioxidant 1098",NA,"P4up",NA,"negative","Consumer_cp","Diet_cp_exp",NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"14938-35-3","DTXSID9044164","4-Pentylphenol",NA,"E2up",NA,"no test","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"1885-14-9","DTXSID9044403","Phenyl carbonochloridate",NA,"E2up",NA,"no test","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"540-38-5","DTXSID4052186","4-Iodophenol",NA,"E2P4up",NA,"no test",NA,NA,NA,"Pesticide_exp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"94-86-0","DTXSID2047727","2-Ethoxy-5-(1-propenyl)phenol",NA,"E2P4up",NA,"positive","Consumer_exp","Diet_FDA_exp",NA,NA,NA,NA,"Less than 1 ug/kg/day",NA,NA
+"64091-91-4","DTXSID3020881","4-(N-Methyl-N-nitrosamino)-1-(3-pyridyl)-1-butanone",NA,"P4up",NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"563-04-2","DTXSID4026216","Tri-m-tolyl phosphate",NA,"E2up",NA,"negative",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"615-13-4","DTXSID7052288","1,3-Dihydro-2H-inden-2-one",NA,"P4up",NA,"no test","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"17354-14-2","DTXSID5044605","1,4-Bis(butylamino)anthracene-9,10-dione",NA,"E2P4up",NA,"positive","Consumer_cp",NA,NA,"Pesticide_cp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"122931-48-0","DTXSID1032642","Rimsulfuron",NA,"P4up",NA,"no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"150-19-6","DTXSID0022012","3-Methoxyphenol",NA,"E2P4up",NA,"no test","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"767-00-0","DTXSID9052509","4-Hydroxybenzonitrile",NA,"E2up",NA,"no test","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"79-97-0","DTXSID8047890","3,3'-Dimethylbisphenol A",NA,"E2up",NA,"positive",NA,"Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"580-51-8","DTXSID2022462","3-Phenylphenol",NA,"E2P4up",NA,"no test",NA,"Diet_exp",NA,"Pesticide_exp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"92-44-4","DTXSID2043903","2,3-Dihydroxynaphthalene",NA,"E2up",NA,"no test",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"638-07-3","DTXSID4044454","Ethyl 4-chloro-3-oxobutanoate",NA,"P4up",NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"700-06-1","DTXSID7031458","Indole-3-carbinol",NA,"E2up",NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"135-57-9","DTXSID7041629","2,2'-Dibenzoylaminodiphenyl disulfide",NA,"E2P4up",NA,"negative","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"25311-71-1","DTXSID8032417","Isofenphos",NA,"P4up",NA,"no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"61949-76-6","DTXSID0038338","(+/-)-cis-Permethrin",NA,"P4up",NA,"negative","Consumer_exp",NA,NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"98-29-3","DTXSID5024687","4-tert-Butylcatechol",NA,"E2P4up",NA,"positive","Consumer_cp","Diet_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"6283-25-6","DTXSID6038827","2-Chloro-5-nitroaniline",NA,"P4up",NA,"no test",NA,NA,NA,"Pesticide_exp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"3118-97-6","DTXSID5040706","C.I. Solvent Orange 7",NA,"E2up",NA,"positive",NA,NA,NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"212141-51-0","DTXSID5049073","Vatalanib dihydrochloride",NA,"P4up",NA,"no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"42978-66-5","DTXSID7028015","Tripropylene glycol diacrylate",NA,"P4up",NA,"no test","Consumer_cp_exp","Diet_exp",NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"86-28-2","DTXSID1052585","9-Ethylcarbazole",NA,"E2up",NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"50-33-9","DTXSID9021136","Phenylbutazone",NA,"P4up",NA,"positive",NA,NA,"Pharma_FDA_discontinued",NA,NA,NA,NA,NA,NA
+"86-98-6","DTXSID0052590","4,7-Dichloroquinoline",NA,"P4up",NA,"positive",NA,NA,NA,"Pesticide_exp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"624-18-0","DTXSID8021141","1,4-Benzenediamine dihydrochloride",NA,"E2up",NA,"positive",NA,NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"95-69-2","DTXSID1041508","4-Chloro-2-methylaniline",NA,"P4up",NA,"positive","Consumer_cp_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day","Cancer",NA
+"504-63-2","DTXSID8041246","1,3-Propanediol",NA,"E2P4up",NA,"positive","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"1319-77-3","DTXSID3024364","Cresol",NA,"E2P4up",NA,"negative","Consumer_cp","Diet_cp",NA,"Pesticide_cp",NA,"HPV",NA,NA,NA
+"1747-60-0","DTXSID9024485","2-Amino-6-methoxybenzothiazole",NA,"E2P4up",NA,"positive",NA,NA,NA,"Pesticide_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"603-36-1","DTXSID4052269","Triphenylstibine",NA,"P4up",NA,"positive",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"91-10-1","DTXSID2052607","2,6-Dimethoxyphenol",NA,"E2up",NA,"no test","Consumer_cp_exp","Diet_FDA_cp_exp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"78-30-8","DTXSID6032192","Tri-o-cresyl phosphate",NA,"E2P4up",NA,"positive","Consumer_cp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"5888-33-5","DTXSID5052250","Isobornyl acrylate",NA,"P4up",NA,"negative","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"6358-09-4","DTXSID9043855","2-Amino-6-chloro-4-nitrophenol",NA,"E2up",NA,"positive","Consumer_cp",NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"832-69-9","DTXSID6025648","1-Methyl phenanthrene",NA,"E2up",NA,"positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"611-20-1","DTXSID3041661","2-Hydroxybenzonitrile",NA,"E2P4up","not_agonist","negative","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"88-04-0","DTXSID0032316","4-Chloro-3,5-dimethylphenol",NA,"E2P4up","weak_agonist","no test","Consumer_cp_exp","Diet_cp_exp","Pharma_cp","Pesticide_cp_exp","Industrial_exp",NA,"100 ug/kg/day or more",NA,NA
+"4672-49-5","DTXSID40196931","Ethylene dimethanesulfonate",NA,"E2up",NA,"no test","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"2971-36-0","DTXSID8022325","2,2-Bis(4-hydroxyphenyl)-1,1,1-trichloroethane",NA,"E2P4up","agonist","no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"28159-98-0","DTXSID3032416","Cybutryne",NA,"E2P4up","not_agonist","no test","Consumer_cp_exp",NA,NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"59756-60-4","DTXSID8024107","Fluridone",NA,"E2up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp","Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"179465-71-5","DTXSID2047303","CJ-013790",NA,"E2up","weak_agonist","no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"1570-64-5","DTXSID5022510","4-Chloro-2-methylphenol",NA,"E2P4up","weak_agonist","positive",NA,"Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"108-46-3","DTXSID2021238","Resorcinol",NA,"P4up","not_agonist","positive","Consumer_cp","Diet_FDA_cp_exp",NA,"Pesticide_cp_exp",NA,"HPV","Between 1 to 100 ug/kg/day",NA,NA
+"125-84-8","DTXSID8022589","Aminoglutethimide",NA,"P4up","not_agonist","no test",NA,NA,"Pharma_FDA_discontinued",NA,NA,NA,NA,NA,"Dev"
+"525-79-1","DTXSID9035175","Kinetin",NA,"P4up","not_agonist","no test","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"585-34-2","DTXSID9044825","3-tert-Butylphenol",NA,"P4up","weak_agonist","no test","Consumer_cp_exp","Diet_exp",NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"583-78-8","DTXSID7025003","2,5-Dichlorophenol",NA,"P4up","not_agonist","negative",NA,NA,NA,"Pesticide_exp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"20265-97-8","DTXSID3020093","4-Methoxyaniline hydrochloride",NA,"P4up","not_agonist","positive","Consumer_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"102676-31-3","DTXSID4020618","Fadrozole hydrochloride",NA,"P4up","weak_agonist","no test",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"17924-92-4","DTXSID0021460","Zearalenone",NA,"P4up","agonist","positive",NA,"Diet_naturally_occurring",NA,NA,NA,NA,NA,NA,NA
+"57-91-0","DTXSID8022377","17alpha-Estradiol",NA,NA,"agonist","no test",NA,NA,"Pharma_FDA_Rx",NA,NA,NA,NA,NA,NA
+"474-86-2","DTXSID7047433","Equilin",NA,NA,"agonist","negative",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"58-18-4","DTXSID1033664","17-Methyltestosterone",NA,NA,"agonist","no test","Consumer_cp",NA,"Pharma_cp","Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,"Dev"
+"521-18-6","DTXSID9022364","5alpha-Dihydrotestosterone",NA,NA,"agonist","no test",NA,"Diet_cp","Pharma_cp",NA,NA,NA,NA,NA,NA
+"57-85-2","DTXSID9036515","Testosterone propionate",NA,NA,"agonist","no test","Consumer_cp",NA,"Pharma_FDA_discontinued",NA,NA,NA,NA,NA,NA
+"58-72-0","DTXSID3022320","Triphenylethylene",NA,NA,"agonist","no test","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Less than 1 ug/kg/day",NA,NA
+"53-43-0","DTXSID4020379","Dehydroepiandrosterone",NA,NA,"agonist","negative","Consumer_cp",NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"68-96-2","DTXSID6040747","17alpha-Hydroxyprogesterone",NA,NA,"agonist","positive",NA,NA,"Pharma_cp",NA,NA,NA,NA,NA,NA
+"17696-62-7","DTXSID4047882","Phenylparaben",NA,NA,"agonist","negative",NA,"Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"1085-12-7","DTXSID4022523","Heptylparaben",NA,NA,"agonist","no test","Consumer_exp","Diet_FDA_cp_exp",NA,"Pesticide_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"1219-38-1","DTXSID0047957","Octylparaben",NA,NA,"agonist","no test","Consumer_exp","Diet_exp",NA,"Pesticide_exp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"131-56-6","DTXSID8022406","2,4-Dihydroxybenzophenone",NA,NA,"agonist","no test","Consumer_exp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"520-18-3","DTXSID7020768","Kaempferol",NA,NA,"agonist","positive","Consumer_cp",NA,NA,NA,NA,NA,NA,NA,NA
+"6088-51-3","DTXSID7025429","6-Hydroxy-2-naphthyl disulfide",NA,NA,"agonist","negative",NA,NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"79-95-8","DTXSID3021770","2,2',6,6'-Tetrachlorobisphenol A",NA,NA,"agonist","no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"63-05-8","DTXSID8024523","4-Androstene-3,17-dione",NA,NA,"agonist","negative",NA,"Diet_cp",NA,NA,NA,NA,NA,"Cancer",NA
+"18979-55-0","DTXSID4048195","4-(Hexyloxy)phenol",NA,NA,"agonist","no test","Consumer_exp","Diet_exp",NA,"Pesticide_exp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"2919-66-6","DTXSID5048184","Melengestrol acetate",NA,NA,"agonist","no test","Consumer_cp","Diet_exp",NA,NA,NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"124-22-1","DTXSID3021984","1-Dodecanamine",NA,NA,"agonist","no test","Consumer_cp_exp",NA,NA,"Pesticide_cp_exp",NA,"HPV","Between 1 to 100 ug/kg/day",NA,NA
+"6683-19-8","DTXSID1027633","Irganox 1010",NA,NA,"agonist","negative","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp_exp",NA,"HPV","Between 1 to 100 ug/kg/day",NA,NA
+"141-79-7","DTXSID1029170","4-Methylpent-3-en-2-one",NA,NA,"agonist","negative","Consumer_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"53939-28-9","DTXSID1032303","(Z)-11-Hexadecenal",NA,NA,"weak_agonist","no test","Consumer_cp_exp","Diet_exp",NA,"Pesticide_cp_exp",NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"2440-22-4","DTXSID1027479","2-(2H-Benzotriazol-2-yl)-4-methylphenol",NA,NA,"weak_agonist","negative","Consumer_cp","Diet_cp_exp","Pharma_cp","Pesticide_cp_exp",NA,"HPV","Between 1 to 100 ug/kg/day",NA,NA
+"78473-71-9","DTXSID0048183","Enterolactone",NA,NA,"weak_agonist","negative",NA,"Diet_naturally_occurring",NA,NA,NA,NA,NA,NA,NA
+"319-85-7","DTXSID7020685","beta-Hexachlorocyclohexane",NA,NA,"weak_agonist","no test",NA,NA,NA,"Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"603-35-0","DTXSID5026251","Triphenylphosphine",NA,NA,"weak_agonist","negative",NA,"Diet_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"87-18-3","DTXSID9037745","4-tert-Butylphenyl salicylate",NA,NA,"weak_agonist","no test","Consumer_cp","Diet_cp_exp",NA,"Pesticide_exp",NA,NA,"100 ug/kg/day or more",NA,NA
+"96-83-3","DTXSID6023159","Iopanoic acid",NA,NA,"weak_agonist","no test","Consumer_cp","Diet_exp","Pharma_FDA_discontinued",NA,NA,NA,"Between 1 to 100 ug/kg/day",NA,NA
+"525-82-6","DTXSID2022048","Flavone",NA,NA,"weak_agonist","no test","Consumer_cp_exp",NA,NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"143-74-8","DTXSID8022408","Phenol red",NA,NA,"weak_agonist","no test",NA,NA,NA,"Pesticide_cp",NA,NA,NA,NA,NA
+"8007-70-3","DTXSID3024528","Anise oil",NA,NA,"weak_agonist","positive",NA,"Diet_FDA_cp",NA,"Pesticide_cp",NA,NA,NA,NA,NA
+"111-71-7","DTXSID0021597","Heptanal",NA,NA,"weak_agonist","negative","Consumer_cp_exp","Diet_FDA_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"63449-41-2","DTXSID1048122","C8-18-Alkydimethylbenzyl ammonium chlorides",NA,NA,"weak_agonist","negative","Consumer_cp",NA,NA,"Pesticide_cp",NA,NA,NA,NA,NA
+"107-30-2","DTXSID6020307","Chloromethyl methyl ether",NA,NA,"weak_agonist","positive","Consumer_cp_exp","Diet_FDA_cp_exp",NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day","Cancer",NA
+"106-48-9","DTXSID1021871","4-Chlorophenol",NA,NA,"weak_agonist","positive",NA,NA,NA,"Pesticide_exp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"90-02-8","DTXSID1021792","Salicylaldehyde",NA,NA,"weak_agonist","negative","Consumer_cp_exp","Diet_FDA_exp",NA,NA,"Industrial_exp","HPV","100 ug/kg/day or more",NA,NA
+"2396-68-1","DTXSID9048196","4-tert-Butylbenzenethiol",NA,NA,"weak_agonist","no test","Consumer_exp","Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"90-15-3","DTXSID6021793","1-Naphthol",NA,NA,"weak_agonist","positive","Consumer_cp","Diet_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"1724-39-6","DTXSID1027429","Cyclododecanol",NA,NA,"weak_agonist","negative","Consumer_exp",NA,NA,NA,"Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"99-89-8","DTXSID5042299","4-Isopropylphenol",NA,NA,"weak_agonist","no test","Consumer_cp_exp","Diet_cp_exp",NA,NA,"Industrial_exp",NA,"100 ug/kg/day or more",NA,NA
+"120511-73-1","DTXSID9022607","Anastrozole",NA,NA,"weak_agonist","no test","Consumer_cp",NA,"Pharma_FDA_Rx","Pesticide_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"105-55-5","DTXSID8020466","N,N'-Diethylthiourea",NA,NA,"weak_agonist","negative",NA,"Diet_cp",NA,"Pesticide_cp","Industrial_exp",NA,"100 ug/kg/day or more",NA,NA
+"161326-34-7","DTXSID2034590","Fenamidone",NA,NA,"weak_agonist","positive","Consumer_cp","Diet_cp",NA,"Pesticide_cp_exp",NA,NA,"Less than 1 ug/kg/day",NA,NA
+"117-99-7","DTXSID5047879","2-Hydroxybenzophenone",NA,NA,"weak_agonist","no test","Consumer_exp","Diet_exp",NA,"Pesticide_exp","Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA
+"108-21-4","DTXSID2025478","Isopropyl acetate",NA,NA,"weak_agonist","negative","Consumer_cp_exp","Diet_FDA_cp_exp",NA,"Pesticide_cp","Industrial_exp","HPV","Between 1 to 100 ug/kg/day",NA,NA
+"95-38-5","DTXSID2036112","1H-Imidazole-1-ethanol, 2-(8-heptadecenyl)-4,5-dihydro-",NA,NA,"weak_agonist","negative","Consumer_cp_exp","Diet_cp_exp",NA,"Pesticide_cp_exp","Industrial_exp","HPV","Less than 1 ug/kg/day",NA,NA
+"2457-01-4","DTXSID8044888","Barium bis(2-ethylhexanoate)",NA,NA,"weak_agonist","no test",NA,NA,NA,"Pesticide_cp",NA,NA,NA,NA,NA
+"620-92-8","DTXSID9022445","Bisphenol F",NA,NA,"weak_agonist","negative","Consumer_cp","Diet_exp",NA,NA,"Industrial_exp",NA,"Between 1 to 100 ug/kg/day",NA,NA

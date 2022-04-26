@@ -1,0 +1,4 @@
+	Acc	b-Acc	MCC	Recall	AUC	Se	Sp	f1b
+CV-SVMrbf	0.89	0.51	0.07	0.03	0.51	0.03	1.00	0.09
+Train-SVMrbf	1.00	1.00	1.00	1.00	1.00	1.00	1.00	1.00
+Test-SVMrbf	0.89	0.50	0.00	0.00	0.50	0.00	1.00	0.00

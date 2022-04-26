@@ -112,6 +112,11 @@ class buildQSAR:
         self.p_aff = p_filout
     
     def buildDescSet(self, l_desc):
+        """Function use to compile the descriptor set
+
+        Args:
+            l_desc (list): Type of descriptor to combine
+        """
         pr_desc = pathFolder.createFolder("%s%s_%s-%s/"%(self.pr_out,"-".join(l_desc), self.cor_val, self.quantile_desc))
 
         # toke for all chemicals

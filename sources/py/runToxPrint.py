@@ -15,7 +15,8 @@ class runToxPrint:
         self.pr_out = pr_out
 
     def loadToxPrint(self):
-
+        """Load from inputs/comptox the toxprint by chemicals
+        """
         d_toxprint = {}
         l_p_ToxPrint = listdir(self.pr_toxprint)
         for p_ToxPrint in l_p_ToxPrint:

@@ -1,0 +1,10 @@
+Descriptor file prepared: /mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/QSAR_E2_H295R_nosampling_nosingledosecheck_noborderline/rdkit-OPERA_0.9-0/Cleaned_Data/desc_cleaned.csv
+Descriptor file origine: /mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/QSAR_E2_H295R_nosampling_nosingledosecheck_noborderline/rdkit-OPERA_0.9-0/desc_global.csv
+Class file prepared: /mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/QSAR_E2_H295R_nosampling_nosingledosecheck_noborderline/rdkit-OPERA_0.9-0/Cleaned_Data/AC50_cleaned.csv
+Class file original: /mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/QSAR_E2_H295R_nosampling_nosingledosecheck_noborderline/aff.csv
+folder out: /mnt/c/Users/AlexandreBorrel/research/SSI/e2up_p4up/results/QSAR_E2_H295R_nosampling_nosingledosecheck_noborderline/rdkit-OPERA_0.9-0/classQSAR/2/
+Repetition: 5
+Nb sample: 10
+Fold cross_validation: 10
+Active rate: 0.0
+Split train-test set: 0.15

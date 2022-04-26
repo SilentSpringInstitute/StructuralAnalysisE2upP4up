@@ -1,0 +1,360 @@
+ACTIVATION: relu; Nb layers: 3; Epochs: 50; Batch size: 32;
+TRAINNING SET
+Acc: 0.8956
+b-Acc: 0.5386
+MCC: 0.2000
+Recall: 0.0833
+AUC: 0.5386
+Se: 0.0833
+Sp: 0.9938
+f1b: 0.2708
+TEST SET
+Acc: 0.9020
+b-Acc: 0.5534
+MCC: 0.2643
+Recall: 0.1111
+AUC: 0.5534
+Se: 0.1111
+Sp: 0.9956
+f1b: 0.3488
+[====================]
+ACTIVATION: relu; Nb layers: 3; Epochs: 50; Batch size: 64;
+TRAINNING SET
+Acc: 0.8921
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+TEST SET
+Acc: 0.8941
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+[====================]
+ACTIVATION: relu; Nb layers: 3; Epochs: 50; Batch size: 128;
+TRAINNING SET
+Acc: 0.8921
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+TEST SET
+Acc: 0.8941
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+[====================]
+ACTIVATION: relu; Nb layers: 3; Epochs: 100; Batch size: 32;
+TRAINNING SET
+Acc: 0.8921
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+TEST SET
+Acc: 0.8941
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+[====================]
+ACTIVATION: relu; Nb layers: 3; Epochs: 100; Batch size: 64;
+TRAINNING SET
+Acc: 0.8921
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+TEST SET
+Acc: 0.8941
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+[====================]
+ACTIVATION: relu; Nb layers: 3; Epochs: 100; Batch size: 128;
+TRAINNING SET
+Acc: 0.8921
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+TEST SET
+Acc: 0.8941
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+[====================]
+ACTIVATION: relu; Nb layers: 3; Epochs: 120; Batch size: 32;
+TRAINNING SET
+Acc: 0.8921
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+TEST SET
+Acc: 0.8941
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+[====================]
+ACTIVATION: relu; Nb layers: 3; Epochs: 120; Batch size: 64;
+TRAINNING SET
+Acc: 0.8921
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+TEST SET
+Acc: 0.8941
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+[====================]
+ACTIVATION: relu; Nb layers: 3; Epochs: 120; Batch size: 128;
+TRAINNING SET
+Acc: 0.8921
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+TEST SET
+Acc: 0.8941
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+[====================]
+ACTIVATION: selu; Nb layers: 3; Epochs: 50; Batch size: 32;
+TRAINNING SET
+Acc: 0.8921
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+TEST SET
+Acc: 0.8941
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+[====================]
+ACTIVATION: selu; Nb layers: 3; Epochs: 50; Batch size: 64;
+TRAINNING SET
+Acc: 0.8921
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+TEST SET
+Acc: 0.8941
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+[====================]
+ACTIVATION: selu; Nb layers: 3; Epochs: 50; Batch size: 128;
+TRAINNING SET
+Acc: 0.8921
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+TEST SET
+Acc: 0.8941
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+[====================]
+ACTIVATION: selu; Nb layers: 3; Epochs: 100; Batch size: 32;
+TRAINNING SET
+Acc: 0.8921
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+TEST SET
+Acc: 0.8941
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+[====================]
+ACTIVATION: selu; Nb layers: 3; Epochs: 100; Batch size: 64;
+TRAINNING SET
+Acc: 0.8921
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+TEST SET
+Acc: 0.8941
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+[====================]
+ACTIVATION: selu; Nb layers: 3; Epochs: 100; Batch size: 128;
+TRAINNING SET
+Acc: 0.8921
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+TEST SET
+Acc: 0.8941
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+[====================]
+ACTIVATION: selu; Nb layers: 3; Epochs: 120; Batch size: 32;
+TRAINNING SET
+Acc: 0.8921
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+TEST SET
+Acc: 0.8941
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+[====================]
+ACTIVATION: selu; Nb layers: 3; Epochs: 120; Batch size: 64;
+TRAINNING SET
+Acc: 0.8921
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+TEST SET
+Acc: 0.8941
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+[====================]
+ACTIVATION: selu; Nb layers: 3; Epochs: 120; Batch size: 128;
+TRAINNING SET
+Acc: 0.8921
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+TEST SET
+Acc: 0.8941
+b-Acc: 0.5000
+MCC: 0.0000
+Recall: 0.0000
+AUC: 0.5000
+Se: 0.0000
+Sp: 1.0000
+f1b: 0.0000
+[====================]
